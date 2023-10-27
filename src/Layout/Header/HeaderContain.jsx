@@ -8,6 +8,9 @@ import ItemCart from './ItemCart';
 import MaxMiniSize from './MaxMiniSize';
 import MoonLight from './MoonLight';
 import Notification from './Notification';
+import { toast } from 'react-toastify';
+
+
 import Language from './Langauge';
 import { firebase_app } from '../../Config/Config';
 import Bookmark from './Bookmark/index';
@@ -24,12 +27,10 @@ const HeaderContain = () => {// eslint-disable-next-line
   const auth0_profile = JSON.parse(localStorage.getItem('auth0_profile'));
   const history = useNavigate();
   const Logout = () => {
-    localStorage.removeItem('profileURL');
-    localStorage.removeItem('Name');
+    localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
-    firebase_app.auth().signOut();
-    history(`${process.env.PUBLIC_URL}/login`);
-    localStorage.setItem('authenticated', false);
+    // firebase_app.auth().signOut();
+    // history(`${process.env.PUBLIC_URL}/login`);  
   };
   return (
     <Fragment>

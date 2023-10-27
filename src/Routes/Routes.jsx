@@ -131,6 +131,7 @@ import TreeViews from '../Pages/Bonus UI/TreeView';
 import DragAndDrop from '../Pages/Bonus UI/DragAndDrop';
 import Steps from '../Pages/Bonus UI/Steps';
 
+
 export const routes = [
     { path: `${process.env.PUBLIC_URL}/dashboard/default/`, Component: <Default /> },
     { path: `${process.env.PUBLIC_URL}/dashboard/ecommerce/`, Component: <Ecommerce /> },
