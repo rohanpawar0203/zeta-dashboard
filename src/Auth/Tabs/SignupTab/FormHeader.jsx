@@ -6,8 +6,8 @@ const FormHeader = (props) => {
     return (
         <Fragment>
             <div>
-                <H4>{selected === 'firebase' ? 'Sign In' : 'Sign In With Jwt'}</H4>
-                <H6>{'Welcome back! Log in to your account.'}</H6>
+                <H4 >{selected === 'firebase' ? 'Sign Up' : 'Sign Up With Jwt'}</H4>
+                <H6 className='mb-3'>{'Welcome back! crete a new account.'}</H6>
             </div>
         </Fragment>
     );

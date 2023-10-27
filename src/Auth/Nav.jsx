@@ -16,7 +16,7 @@ const NavAuth = ({ callbackNav, selected }) => {
                     <span>{FIREBASE}</span>
                 </NavLink>
             </NavItem>
-            <NavItem>
+            {/* <NavItem>
                 <NavLink className={selected === 'jwt' ? 'active' : ''} onClick={() => callbackNav('jwt')}>
                     <Image attrImage={{ src: `${jwtImg}`, alt: '' }} />
                     <span>{JWT}</span>
@@ -27,7 +27,7 @@ const NavAuth = ({ callbackNav, selected }) => {
                     <Image attrImage={{ src: `${authImg}`, alt: '' }} />
                     <span>{AUTH0}</span>
                 </NavLink>
-            </NavItem>
+            </NavItem> */}
         </Nav>
     );
 };

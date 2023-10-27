@@ -9,10 +9,12 @@ import Callback from '../Auth/Callback';
 import { authRoutes } from './AuthRoutes';
 import PrivateRoute from './PrivateRoute';
 import Signin from '../Auth/Signin';
+import Signup from '../Auth/Signup';
 
 configureFakeBackend();
 const Routers = () => {
-  const [currentUser, setCurrentUser] = useState(false);
+  const [currentUser, setCurrentUser] = useState(localStorage.getItem('currentUser') || null);
+  const [token, settoken] = useState(localStorage.getItem('token') || null)
   const [authenticated, setAuthenticated] = useState(false);
   const jwt_token = localStorage.getItem('token');
   useEffect(() => {
@@ -36,7 +38,7 @@ const Routers = () => {
             <Suspense fallback={<Loader />}>
               <Routes>
                 <Route path={'/'} element={<PrivateRoute />}>
-                  {currentUser !== null || authenticated || jwt_token ?
+                  {currentUser  && token ?
                     <>
                       <Route exact
                         path={`${process.env.PUBLIC_URL}`}
@@ -51,6 +53,7 @@ const Routers = () => {
                 </Route>
                 <Route path={`${process.env.PUBLIC_URL}/callback`} render={() => <Callback />} />
                 <Route exact path={`${process.env.PUBLIC_URL}/login`} element={<Signin />} />
+                <Route exact path={`${process.env.PUBLIC_URL}/signup`} element={<Signup />} />
                 {authRoutes.map(({ path, Component }, i) => (
                   <Route path={path} element={Component} key={i} />
                 ))}

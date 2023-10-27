@@ -3,7 +3,9 @@ import { Button } from 'reactstrap';
 
 const Btn = (props) =>{
     const { children = '' } = props;
-    return <Button {...props.attrBtn}>{children}</Button>;
+    return <div>
+        <Button  {...props.attrBtn}>{children}</Button>
+    </div>;
 };
 
 export default Btn;
