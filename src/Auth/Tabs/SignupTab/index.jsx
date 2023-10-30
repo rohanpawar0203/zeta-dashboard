@@ -1,5 +1,5 @@
 
-import React, {useState, Fragment} from 'react';
+import React, {useState, Fragment, useRef} from 'react';
 import { Form, FormGroup, Input, InputGroup, InputGroupText, Label } from 'reactstrap';
 import { Btn, H5, UL } from '../../../AbstractElements';
 import { toast } from 'react-toastify';
@@ -11,17 +11,19 @@ import SignupWith from './SignupWith';
 
 const SignupTab = ({selected}) => {
     const [userData, setUserData] = useState({
-        emai: 'test@gmail.com',
-        password: 'test123',
-        companyName: 'abc',
-        contact : '1234567891',
-        websiteLink : 'www.abc.com',
-        planId : '001',
+        emai: '',
+        password: '',
+        companyName: '',
+        contact : '',
+        websiteLink : '',
+        planId : '',
         store : '',
         productList : '',
     })
+    const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [togglePassword, setTogglePassword] = useState(false);
+    const isErrors = useRef(false);
     const history = useNavigate();
     const handleFormChange = (e) => {
         const {value, name} = e.target;
@@ -31,6 +33,7 @@ const SignupTab = ({selected}) => {
         }));
     };
     const userSignup = async() => {
+        setLoading(true);
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -40,79 +43,113 @@ const SignupTab = ({selected}) => {
             const res = await fetch(`https://ulai.in/backend/auth/register`, requestOptions);
             const resBody = await res.json();
             if(`${res.status}` === '200'){
+                setLoading(false);
+                setUserData((pre) => {
+                    for(let key in pre){
+                    pre[key] = '';
+                    }
+                return pre;
+                })
                 toast.success('User signedup successfully')
                 history(`${process.env.PUBLIC_URL}/signin`)
+            }else{
+                toast.error(resBody?.msg)
             }
+
         }
             catch(err){
                 toast.error(err.message)
             }
+            setLoading(false);
         }
+    const formValidate = () => {
+            console.log('process.env', process.env);
+            isErrors.current = false;
+            setErrors({})
+            let errorsObj = {};
+            if (!userData?.email) {
+              errorsObj = { email: "Email ID is required!" };
+            }
+            else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(userData?.email)) {
+              errorsObj = {email: "Invalid Email ID!" };
+            }
+            if (!userData?.password) {
+              errorsObj = { ...errorsObj, password: "Password is required!" };
+            }
+            if (!userData?.companyName) {
+              errorsObj = { ...errorsObj, companyName: "Company Name is required!" };
+            }
+            if (!userData?.contact) {
+              errorsObj = { ...errorsObj, contact: "Contact Number is required!" };
+            }
+            else if (!/^(0|91)?[6-9][0-9]{9}$/.test(userData?.contact)) {
+                errorsObj = {...errorsObj, contact: "Invalid Contact Number!" };
+              }
+            if (!userData?.websiteLink) {
+              errorsObj = { ...errorsObj, websiteLink: "Company Website is required!" };
+            }
+            else if (!/^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/g.test(userData?.websiteLink)) {
+              errorsObj = { ...errorsObj, websiteLink: "Invalid website link!" };
+            }
+            if(Object.values(errorsObj).length > 0){
+                isErrors.current = Object.values(errorsObj).length > 0;
+                setErrors(errorsObj);
+            }
+          }
   return (
     <Fragment>
             <Form className="theme-form login-form">
                 <FormHeader selected={selected} />
                 <FormGroup className='m-0 first-form-group'>
-                    <Label className='p-0'>Company Name</Label>
+                    <Label className='p-0 mb-1 mt-2'>Company Name</Label>
                     <InputGroup>
                         <InputGroupText><i className='icon-email'></i></InputGroupText>
                         <Input name="companyName" className="form-control" type='text' onChange={e => handleFormChange(e)} placeholder="Company Name" required="" />
                     </InputGroup>
+                    {errors.companyName && <Label className="fw-bolder mt-2 errTxt">{errors?.companyName}</Label>}
                 </FormGroup>
                 <FormGroup className='m-0'>
-                    <Label className='p-0'>{EmailAddress}</Label>
+                    <Label className='p-0 mb-1 mt-2'>{EmailAddress}</Label>
                     <InputGroup>
                         <InputGroupText><i className='icon-email'></i></InputGroupText>
                         <Input className="form-control" type="email" name="email" required="" onChange={e => handleFormChange(e)} placeholder="Email Address" />
                     </InputGroup>
+                    {errors.email && <Label className="fw-bolder mt-2 errTxt">{errors?.email}</Label>}
                 </FormGroup>
                 <FormGroup className='m-0'> 
-                    <Label className='p-0'>{Password}</Label>
+                    <Label className='p-0 mb-1 mt-2'>{Password}</Label>
                     <InputGroup>
                         <InputGroupText><i className='icon-lock'></i></InputGroupText>
                         <Input className="form-control" name="password" type={togglePassword ? 'text' : 'password'} onChange={e => handleFormChange(e)} placeholder="Password" required="" />
                         <div className="show-hide" onClick={() => setTogglePassword(!togglePassword)}><span className={togglePassword ? '' : 'show'}></span></div>
                     </InputGroup>
+                    {errors.password && <Label className="fw-bolder mt-2 errTxt">{errors?.password}</Label>}
                 </FormGroup>
                 <FormGroup className='m-0'>
-                    <Label className='p-0'>Contact</Label>
+                    <Label className='p-0 mb-1 mt-2'>Contact</Label>
                     <InputGroup>
                         <InputGroupText><i className='icon-email'></i></InputGroupText>
                         <Input name="contact" className="form-control" type="text" onChange={e => handleFormChange(e)} placeholder="Contact Number" required="" />
                     </InputGroup>
+                    {errors.contact && <Label className="fw-bolder mt-2 errTxt">{errors?.contact}</Label>}
                 </FormGroup>
                 <FormGroup className='m-0'>
-                    <Label className='p-0'>Website Link</Label>
+                    <Label className='p-0 mb-1 mt-2'>Website Link</Label>
                     <InputGroup>
                         <InputGroupText><i className='icon-email'></i></InputGroupText>
                         <Input name="websiteLink" className="form-control" type="url" onChange={e => handleFormChange(e)} placeholder="Website URL" required="" />
                     </InputGroup>
-                </FormGroup>
-                <FormGroup className='m-0'>
-                    <Label className='p-0'>Plan ID</Label>
-                    <InputGroup>
-                        <InputGroupText><i className='icon-list'></i></InputGroupText>
-                        <Input name="planId" className="form-card-checklist" type='text' onChange={e => handleFormChange(e)} placeholder="Plan ID" required="" />
-                    </InputGroup>
-                </FormGroup>
-                <FormGroup className='m-0'>
-                    <Label className='p-0'>Store</Label>
-                    <InputGroup>
-                        <InputGroupText><i className='icon-email'></i></InputGroupText>
-                        <Input name="store" className="form-control" type={togglePassword ? 'text' : 'password'} onChange={e => handleFormChange(e)} placeholder="Store" required="" />
-                    </InputGroup>
-                </FormGroup>
-                <FormGroup className='mb-2'>
-                    <Label className='p-0'>Product List</Label>
-                    <InputGroup>
-                        <InputGroupText><i className='icon-list'></i></InputGroupText>
-                        <Input name="productList" className="form-control" type='text' onChange={e => handleFormChange(e)} placeholder="Product List" required="" />
-                    </InputGroup>
+                    {errors.websiteLink && <Label className="fw-bolder mt-2 errTxt">{errors?.websiteLink}</Label>}
                 </FormGroup>
                 {/* <FormPassword /> */}
-                <FormGroup className='m-0'>
+                <FormGroup className='mt-3'>
                     {selected === 'firebase' ?
-                        <Btn attrBtn={{ color: 'primary', className: 'btn-block', disabled: loading ? loading : loading, onClick: (e) => {userSignup()}}} >{loading ? 'LOADING...' : SignUp}</Btn>
+                        <Btn attrBtn={{ color: 'primary', className: 'btn-block', disabled: loading ? loading : loading, onClick: (e) => {
+                            formValidate();
+                            if(!isErrors.current){
+                                userSignup();
+                            }
+                        }}} >{loading ? 'LOADING...' : SignUp}</Btn>
                         :
                         <Btn attrBtn={{ color: 'primary', className: 'btn-block', disabled: loading ? loading : loading, onClick: (e) => {}}} >{loading ? 'LOADING...' : LoginWithJWT}</Btn>
                     }

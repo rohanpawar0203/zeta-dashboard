@@ -25,7 +25,8 @@ export const configureFakeBackend = () => {
                 }
 
                 // pass through any requests not handled above
-                realFetch(url, opts).then(response => resolve(response));    
+                realFetch(url, opts).then(response => resolve(response))
+                .catch((error) => reject(error));    
 
                 // private helper functions
 
