@@ -17,7 +17,7 @@ const Logins = () => {
    if(currentUser && token){
     history(`${process.env.PUBLIC_URL}/dashboard/default`)
    }
-  }, [])
+  }, [currentUser, token])
   
   return (
     <Container  fluid={true} className="p-0">

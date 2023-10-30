@@ -25,7 +25,6 @@ import AnimationThemeProvider from "./_helper/AnimationTheme/AnimationThemeProvi
 import CustomizerProvider from "./_helper/customizer/CustomizerProvider";
 
 function App() {
-  console.log('sssss')
   return (
     <Fragment>
       <CustomizerProvider>
