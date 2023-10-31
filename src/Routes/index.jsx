@@ -14,10 +14,11 @@ import Signup from '../Auth/Signup';
 configureFakeBackend();
 const Routers = () => {
   const [currentUser, setCurrentUser] = useState(localStorage.getItem('currentUser') || null);
-  const [token, settoken] = useState(localStorage.getItem('token') || null)
+  const [token, settoken] = useState((localStorage.getItem('token')) || null)
   const [authenticated, setAuthenticated] = useState(false);
   const jwt_token = localStorage.getItem('token');
   useEffect(() => {
+    console.log(token, currentUser);
     let abortController = new AbortController();
     const requestOptions = { method: 'GET', headers: authHeader() };
     fetch('/users', requestOptions).then(handleResponse);

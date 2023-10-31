@@ -42,6 +42,18 @@ export const MENUITEMS = [
         ]
     },
     {
+        menutitle: 'Dashboard',
+        Items: [
+            { path: `${process.env.PUBLIC_URL}/dashboard`, bookmark: true, icon: FilemanagerSvg, title: 'Dashboard', type: 'link' }
+        ]
+    },
+    {
+        menutitle: 'Bots',
+        Items: [
+            { path: `${process.env.PUBLIC_URL}/bots`, bookmark: true, icon: FilemanagerSvg, title: 'Bots', type: 'link' }
+        ]
+    },
+    {
         menutitle: 'Kanban Board',
         Items: [
             { path: `${process.env.PUBLIC_URL}/kanbanboard`, badge2: true, icon: KanbanSvg, title: 'Kanban Board', type: 'link' }

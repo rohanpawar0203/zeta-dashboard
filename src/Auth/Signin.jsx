@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router';
 
 const Logins = () => {
   const [selected, setSelected] = useState('firebase');
-  const [currentUser, setCurrentUser] = useState(localStorage.getItem('currentUser') || null);
-  const [token, settoken] = useState(localStorage.getItem('token') || null)
+  const [currentUser, setCurrentUser] = useState((localStorage.getItem('currentUser')) || null);
+  const [token, settoken] = useState((localStorage.getItem('token')) || null)
   const history = useNavigate()
   const callbackNav = ((select) => {
     setSelected(select);

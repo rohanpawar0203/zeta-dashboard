@@ -40,7 +40,7 @@ const SignupTab = ({selected}) => {
             body: (JSON.stringify({...userData})),
         };
         try{
-            const res = await fetch(`https://ulai.in/backend/auth/register`, requestOptions);
+            const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/register`, requestOptions);
             const resBody = await res.json();
             if(`${res.status}` === '200'){
                 setLoading(false);
