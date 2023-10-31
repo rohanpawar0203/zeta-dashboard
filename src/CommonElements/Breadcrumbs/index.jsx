@@ -18,11 +18,11 @@ const Breadcrumbs = (props) => {
               <div className="breadcrumb">
                 <Breadcrumb>
                   <BreadcrumbItem>
-                    <Link to={`${process.env.PUBLIC_URL}/dashboard/default`}>
+                    <Link to={`${process.env.PUBLIC_URL}/dashboard`}>
                       <Home />
                     </Link>
                   </BreadcrumbItem>
-                  <BreadcrumbItem>{parent}</BreadcrumbItem>
+                  {parent && (<BreadcrumbItem>{parent}</BreadcrumbItem>)}
                   <BreadcrumbItem active>{title}</BreadcrumbItem>
                 </Breadcrumb>
               </div>

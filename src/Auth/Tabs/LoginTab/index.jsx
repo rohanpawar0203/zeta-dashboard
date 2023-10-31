@@ -66,7 +66,7 @@ const LoginTab = ({ selected }) => {
     };
     try {
       const res = await fetch(
-        `https://ulai.in/backend/auth/login`,
+        `${process.env.REACT_APP_API_BASE_URL}/auth/login`,
         requestOptions
       );
       const resBody = await res.json();

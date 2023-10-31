@@ -5,13 +5,13 @@ import { turnOver } from '../../../Pages/Widgets/Charts/WidgetChartsData';
 import { Turnover } from '../../../Constant';
 import CommenHeader from '../../Charts/Commen';
 
-const TurnoverChart = () => {
+const TurnoverChart = ({chartName}) => {
   return (
     <Fragment>
       <Col xl="5" lg='12' className="xl-50">
         <div className="small-chart-widget chart-widgets-small">
           <Card>
-            <CommenHeader title={Turnover} />
+            <CommenHeader title={chartName} />
             <CardBody>
               <div className="chart-container">
                 <Row>

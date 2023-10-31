@@ -46,6 +46,7 @@ const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
     if (item.children) {
       item.active = !item.active;
     }
+    console.log('menu items ', MENUITEMS);
     setMainMenu({ mainmenu: MENUITEMS });
   };
   return (

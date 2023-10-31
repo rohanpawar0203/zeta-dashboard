@@ -4,8 +4,9 @@ import { firebase_app } from '../Config/Config';
 import { authHeader, handleResponse } from '../Services/Fack.Backend';
 
 const PrivateRoute = () => {
-    const [currentUser, setCurrentUser] = useState(localStorage.getItem('currentUser') || null);
-    const [token, settoken] = useState(localStorage.getItem('token') || null)
+    const [currentUser, setCurrentUser] = useState((localStorage.getItem('currentUser')) || null);
+  const [token, settoken] = useState((localStorage.getItem('token')) || null)
+  console.log(token, currentUser);
 
     return (
         currentUser && token ?
