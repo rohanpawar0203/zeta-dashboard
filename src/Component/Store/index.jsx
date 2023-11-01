@@ -1,16 +1,16 @@
 import React, { Fragment } from "react";
 import { Card, Col, Container, Row } from "reactstrap";
-import BotsContent from "./BotsContent";
+import StoreContent from "./StoreContent";
 
-const BotsContain = () => {
+const StoreContain = () => {
   return (
     <Fragment>
       <Container fluid={true}>
         <Row>
-          <BotsContent />
+          <StoreContent />
         </Row>
       </Container>
     </Fragment>
   );
 };
-export default BotsContain;
+export default StoreContain;
