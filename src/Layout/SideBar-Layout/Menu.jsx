@@ -48,9 +48,9 @@ export const MENUITEMS = [
         ]
     },
     {
-        menutitle: 'Bots',
+        menutitle: 'Store',
         Items: [
-            { path: `${process.env.PUBLIC_URL}/bots`, bookmark: true, icon: FilemanagerSvg, title: 'Bots', type: 'link' }
+            { path: `${process.env.PUBLIC_URL}/store`, bookmark: true, icon: FilemanagerSvg, title: 'Store', type: 'link' }
         ]
     },
     {

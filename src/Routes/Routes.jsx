@@ -8,7 +8,7 @@ import ProductPage from '../Pages/Ecommerce/ProductPage';
 import Products from '../Pages/Ecommerce/Products';
 import FileManager from '../Pages/FileManager';
 import DashBoard from '../Pages/Dash-board';
-import Bots from '../Pages/Bots';
+import Store from '../Pages/Store';
 import KanbanBoard from '../Pages/KanbanBoard';
 import CreateList from '../Pages/Project/Create List';
 import ProjectList from '../Pages/Project/Project List';
@@ -148,7 +148,7 @@ export const routes = [
     { path: `${process.env.PUBLIC_URL}/filemanager`, Component: <FileManager /> },
     { path: `${process.env.PUBLIC_URL}/dashboard`, Component: <DashBoard /> },
     
-    { path: `${process.env.PUBLIC_URL}/bots`, Component: <Bots /> },
+    { path: `${process.env.PUBLIC_URL}/store`, Component: <Store /> },
     { path: `${process.env.PUBLIC_URL}/kanbanboard`, Component: <KanbanBoard /> },
 
     { path: `${process.env.PUBLIC_URL}/ecommerce/product`, Component: <Products /> },
