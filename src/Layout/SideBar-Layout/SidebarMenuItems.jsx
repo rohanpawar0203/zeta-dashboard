@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState,useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { LI, UL } from '../../AbstractElements';
@@ -7,6 +7,7 @@ import { Label } from 'reactstrap';
 import { Back } from '../../Constant';
 
 const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
+  const user = JSON.parse((localStorage.getItem("currentUser")));
   // eslint-disable-next-line
   const [active, setActive] = useState(false);
   const { t } = useTranslation();
@@ -49,6 +50,21 @@ const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
     console.log('menu items ', MENUITEMS);
     setMainMenu({ mainmenu: MENUITEMS });
   };
+  useEffect(() => {
+    console.log(user.store);
+    if(user.store){
+      setMainMenu((pre) => (
+        pre.map((ele) => {
+          if(ele.menutitle === 'Store'){
+            ele.Items[0].path = `${process.env.PUBLIC_URL}/bots`
+            ele.Items[0].title = `Bot`
+          }
+          return ele;
+        })
+      ))
+    }
+  }, [])
+  
   return (
     <Fragment>
       <UL attrUL={{ className: 'custom-scrollbar simple-list sidebar-links mt-1', id: 'simple-bar' }}>
@@ -88,7 +104,7 @@ const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
                               </a>
                             </Fragment>
                           }
-                          {menuItem.type === 'link' && (
+                          {menuItem.type === 'link'  && (
                             <>
                               {menuItem.badge2 && <Label className="badge badge-light-danger">Latest</Label>}
                               <Link
