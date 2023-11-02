@@ -32,21 +32,114 @@ import {
 import ShopifyForm from "./components/shopifyForm";
 import Custom from './components/Custom'
 import Crawler from "./components/Crawler";
+import { useNavigate } from "react-router";
 
 const StoreContent = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [registerType, setregisterType] = useState('shopify');
+  const [submitLoader , setSubmitLoader] = useState(false);
   const [formData, setformData] = useState({});
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  const token = localStorage.getItem("token");
+  const history = useNavigate();
+
   
   const handleRegisterTypeChange = (e) =>{
     e.target.checked && setregisterType(e.target.value);
   }
 
-  const onSubmit = data => {
-    if (data) {
-      alert('You submitted the form and stuff!');
-    } else {
-      errors.showMessages();
+  const onSubmit = async(data) => {
+    try {
+      setSubmitLoader(true);
+      const body = {};
+      if (registerType === "bigCommerce") {
+        body.userId = user._id;
+        body.storeHash = data.storeHash;
+        body.xAuthToken = data.xAuthToken;
+        const res = await fetch(process.env.REACT_APP_API_BIG_COMMERCE_URL, {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const response = await res.json();
+        if (res.ok) {
+          setSubmitLoader(false);
+          toast.success("Profile created successfully");
+          history(`${process.env.PUBLIC_URL}/bots`)        } else {
+          setSubmitLoader(false);
+          toast.error(response.message);
+        }
+      } else if (registerType === "shopify") {
+        body.userId = user._id;
+        body.shopName = data.shopName;
+        body.xAuthToken = data.authToken;
+        console.log(process.env);
+        const res = await fetch(`${process.env.REACT_APP_API_SHOPIFY_STORE_URL}`, {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const response = await res.json();
+        if (res.ok) {
+          setSubmitLoader(false);
+          toast.success("Profile created successfully");
+          history(`${process.env.PUBLIC_URL}/bots`)
+        } else {
+          setSubmitLoader(false);
+          toast.error(response.message);
+        } 
+      } else if (registerType === "custom") {
+        const formData = new FormData();
+        formData.append("file", formData.file);
+        formData.append("userId", user._id);
+
+        const res = await fetch(process.env.REACT_APP_API_CUSTOM_URL, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const response = await res.json();
+        if (res.ok) {
+          setSubmitLoader(false);
+          toast.success("Profile created successfully");
+          history(`${process.env.PUBLIC_URL}/bots`)
+        } else {
+          setSubmitLoader(false);
+          toast.error(response.message);
+        }
+      } else if (registerType === "crawler") {
+        body.userId = user._id;
+        const res = await fetch(process.env.REACT_APP_API_CRAWLER_URL, {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const response = await res.json();
+        if (res.ok) {
+          setSubmitLoader(false);
+          toast.success("Profile created successfully");
+          history(`${process.env.PUBLIC_URL}/bots`)
+        } else {
+          setSubmitLoader(false);
+          toast.error(response.message);
+        }
+      }
+    } catch (err) {
+      setSubmitLoader(false);
+      toast.error(err);
     }
   };
   return (
@@ -59,7 +152,8 @@ const StoreContent = () => {
                 <Fragment>
       <Form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}>
         {registerType ==='shopify' && (<ShopifyForm errors={errors} register={register}/>)}
-        {registerType ==='custom' && (<Custom />)}
+        {registerType ==='custom' && (<Custom formData={formData} setformData={setformData}/>)}
+        {registerType ==='crawler' && (<Crawler />)}
         <Row>
         <Col md="8 mb-3">
         <H4>Registration Type</H4>

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -30,13 +30,26 @@ import Dropzone from 'react-dropzone-uploader';
 
 
 const Custom = () => {
-    const getUploadParams = ({ meta }) => {
-        return {
-            url: 'https://httpbin.org/post'
-        };
-    };
+  const [error, setError] = useState(null);
 
-    const handleChangeStatus = ({ meta, file }, status) => { };
+  const getUploadParams = ({ meta }) => {
+    return {
+        url: 'https://httpbin.org/post'
+    };
+};
+
+const handleChangeStatus = ({ meta, file }, status) => { 
+  console.log('yes');
+  const acceptedFileExtensions = [".csv", ".xls", '.xlsx'];
+
+  // Check if the file extension is allowed
+  if (!acceptedFileExtensions.some(ext => file.name.endsWith(ext))) {
+    return  setError('* Invalid file type')
+  }
+  const body = new FormData();
+  body.append('file', file);
+  console.log(file);
+};
   return (
     <Fragment>
       <Row>
@@ -53,10 +66,11 @@ const Custom = () => {
           </Row>
         </Col>
         <Col sm="3">
+        <Link to={`${process.env.REACT_APP_API_PRODUCT_TEMPLATE}`} className={`sidebar-link sidebar-title`}>                 
           <div className="btn btn-outline-primary ms-2 d-flex align-items-center justify-content-evenly">
             <Download />
             {"Download Template"}
-          </div>
+          </div></Link>
         </Col>
       </Row>
       <Row>
@@ -66,6 +80,7 @@ const Custom = () => {
               <Label>{'We support only a single CSV or Excel file (with 1 sheet) up to 5 MB in size.'}</Label>
               <Dropzone
                 className="dropzone"
+                accept=".csv, .xls, .xlsx"
                 getUploadParams={getUploadParams}
                 onChangeStatus={handleChangeStatus}
                 maxFiles={1}
@@ -73,6 +88,7 @@ const Custom = () => {
                 canCancel={false}
                 inputContent="Click to upload a file or drag and drop it here"
               />
+              <Label className="mt-2 text-red fw-bold">{error && error}</Label>
             </FormGroup>
           </div>
         </Col>

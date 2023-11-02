@@ -75,7 +75,7 @@ const LoginTab = ({ selected }) => {
         setPassword('');
       const { user, token } = resBody;
       localStorage.setItem("token", token);
-      localStorage.setItem("currentUser", user);
+      localStorage.setItem("currentUser", JSON.stringify(user));
       toast.success("User Logged In successfully");
       history(`${process.env.PUBLIC_URL}/dashboard/default`);
       }else{
