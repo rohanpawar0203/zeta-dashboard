@@ -23,6 +23,7 @@ import FormHeader from "./FormHeader";
 import FormPassword from "./FormPassword";
 import SignInWith from "./SignInWith";
 import { cls } from "react-image-crop";
+import { userLoginApi } from "../../../api";
 
 const LoginTab = ({ selected }) => {
   const [email, setEmail] = useState("");
@@ -66,7 +67,7 @@ const LoginTab = ({ selected }) => {
     };
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/login`,
+        userLoginApi,
         requestOptions
       );
       const resBody = await res.json();
@@ -150,7 +151,7 @@ const LoginTab = ({ selected }) => {
               className="show-hide"
               onClick={() => setTogglePassword(!togglePassword)}
               >
-              <span className={togglePassword ? "" : "show"}></span>
+              <span className={togglePassword ? "Hide" : "show"}></span>
             </div>
           </InputGroup>
                 {errors.password && <Label className="text-red fw-bolder mt-2 errTxt">{errors?.password}</Label>}

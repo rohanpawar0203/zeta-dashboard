@@ -9,7 +9,8 @@ import MaxMiniSize from './MaxMiniSize';
 import MoonLight from './MoonLight';
 import Notification from './Notification';
 import { toast } from 'react-toastify';
-
+import { useSelector, useDispatch } from 'react-redux'
+import { replaceBotItem } from '../SideBar-Layout/reduxSlice/menuItems.slice';
 
 import Language from './Langauge';
 import { firebase_app } from '../../Config/Config';
@@ -26,9 +27,11 @@ const HeaderContain = () => {// eslint-disable-next-line
   const authenticated = JSON.parse(localStorage.getItem('authenticated'));
   const auth0_profile = JSON.parse(localStorage.getItem('auth0_profile'));
   const history = useNavigate();
+  const dispatch = useDispatch();
+
   const Logout = () => {
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('token');
+    dispatch(replaceBotItem())
+    localStorage.clear();
     // firebase_app.auth().signOut();
     // history(`${process.env.PUBLIC_URL}/login`);  
   };

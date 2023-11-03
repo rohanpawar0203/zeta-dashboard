@@ -29,7 +29,7 @@ import { UploadProjectFile } from "../../../Constant";
 import Dropzone from 'react-dropzone-uploader';
 
 
-const Custom = () => {
+const Custom = ({formData, setformData}) => {
   const [error, setError] = useState(null);
 
   const getUploadParams = ({ meta }) => {
@@ -46,9 +46,7 @@ const handleChangeStatus = ({ meta, file }, status) => {
   if (!acceptedFileExtensions.some(ext => file.name.endsWith(ext))) {
     return  setError('* Invalid file type')
   }
-  const body = new FormData();
-  body.append('file', file);
-  console.log(file);
+  setformData((formData) => (formData.append('file', file)));
 };
   return (
     <Fragment>

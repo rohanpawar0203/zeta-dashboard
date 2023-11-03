@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect, useCallback, useContext } from 'react';
 import { Input } from 'reactstrap';
 import { MENUITEMS } from '../../SideBar-Layout/Menu';
+import { useSelector, useDispatch } from 'react-redux'
+import { updateMenuItems } from '../../SideBar-Layout/reduxSlice/menuItems.slice';
 import { LI, UL } from '../../../AbstractElements';
 import ListOfMenu from './ListOfMenu';
 import EmpltyClass from './EmptyClass';
@@ -11,7 +13,8 @@ import { HeaderBookmarkSvg } from '../../../Data/svgIcons';
 
 const Bookmarks = () => {
     // eslint-disable-next-line
-    const [mainmenu, setMainMenu] = useState(MENUITEMS);
+    // const [mainmenu, setMainMenu] = useState(MENUITEMS);
+    const mainmenu = useSelector(state => state.menuItems);
     const { setIsClose } = useContext(CustomContext);
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState(false);// eslint-disable-next-line

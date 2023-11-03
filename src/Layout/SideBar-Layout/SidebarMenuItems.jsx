@@ -5,9 +5,13 @@ import { LI, UL } from '../../AbstractElements';
 import { MENUITEMS } from './Menu';
 import { Label } from 'reactstrap';
 import { Back } from '../../Constant';
+import { useSelector, useDispatch } from 'react-redux'
+import { updateMenuItems, replaceStoreItem } from './reduxSlice/menuItems.slice';
 
-const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
-  const user = JSON.parse((localStorage.getItem("currentUser")));
+const SidebarMenuItems = ({  sidebartoogle, setNavActive }) => {
+  // const user = JSON.parse((localStorage.getItem("currentUser")));
+  const [user, setUser] = useState(JSON.parse((localStorage.getItem("currentUser"))) || null)
+  const dispatch = useDispatch();
   // eslint-disable-next-line
   const [active, setActive] = useState(false);
   const { t } = useTranslation();
@@ -47,23 +51,17 @@ const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
     if (item.children) {
       item.active = !item.active;
     }
-    console.log('menu items ', MENUITEMS);
-    setMainMenu({ mainmenu: MENUITEMS });
+    // console.log('menu items ', MENUITEMS);
+    // setMainMenu({ mainmenu: MENUITEMS });
+    dispatch(updateMenuItems(MENUITEMS))
   };
+  
   useEffect(() => {
-    console.log(user.store);
+    
     if(user.store){
-      setMainMenu((pre) => (
-        pre.map((ele) => {
-          if(ele.menutitle === 'Store'){
-            ele.Items[0].path = `${process.env.PUBLIC_URL}/bots`
-            ele.Items[0].title = `Bot`
-          }
-          return ele;
-        })
-      ))
+      dispatch(replaceStoreItem());
     }
-  }, [])
+  }, [user])
   
   return (
     <Fragment>

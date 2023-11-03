@@ -8,6 +8,8 @@ import { H4, H6, LI, P, UL, Image, H5, Btn } from "../../AbstractElements";
 import errorImg from "../../assets/images/search-not-found.png";
 import TurnoverChart from "../Widgets/ChartsWidgets/TurnoverChart";
 import { useForm } from 'react-hook-form';
+import { useSelector, useDispatch } from 'react-redux'
+import { replaceStoreItem, updateMenuItems } from "../../Layout/SideBar-Layout/reduxSlice/menuItems.slice";
 import {
   AddNew,
   AllFiles,
@@ -33,16 +35,17 @@ import ShopifyForm from "./components/shopifyForm";
 import Custom from './components/Custom'
 import Crawler from "./components/Crawler";
 import { useNavigate } from "react-router";
+import { bigCommerceUrl, shopifyStoreUrl, customUrl, crawlerUrl } from "../../api";
 
 const StoreContent = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [registerType, setregisterType] = useState('shopify');
   const [submitLoader , setSubmitLoader] = useState(false);
-  const [formData, setformData] = useState({});
+  const [formData, setformData] = useState(new FormData(d));
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const token = localStorage.getItem("token");
   const history = useNavigate();
-
+  const dispatch = useDispatch();
   
   const handleRegisterTypeChange = (e) =>{
     e.target.checked && setregisterType(e.target.value);
@@ -56,7 +59,7 @@ const StoreContent = () => {
         body.userId = user._id;
         body.storeHash = data.storeHash;
         body.xAuthToken = data.xAuthToken;
-        const res = await fetch(process.env.REACT_APP_API_BIG_COMMERCE_URL, {
+        const res = await fetch(bigCommerceUrl, {
           method: "POST",
           body: JSON.stringify(body),
           headers: {
@@ -66,9 +69,11 @@ const StoreContent = () => {
         });
         const response = await res.json();
         if (res.ok) {
+          dispatch(replaceStoreItem());
           setSubmitLoader(false);
           toast.success("Profile created successfully");
-          history(`${process.env.PUBLIC_URL}/bots`)        } else {
+          history(`${process.env.PUBLIC_URL}/bots`)
+        } else {
           setSubmitLoader(false);
           toast.error(response.message);
         }
@@ -77,7 +82,7 @@ const StoreContent = () => {
         body.shopName = data.shopName;
         body.xAuthToken = data.authToken;
         console.log(process.env);
-        const res = await fetch(`${process.env.REACT_APP_API_SHOPIFY_STORE_URL}`, {
+        const res = await fetch(shopifyStoreUrl, {
           method: "POST",
           body: JSON.stringify(body),
           headers: {
@@ -88,6 +93,7 @@ const StoreContent = () => {
 
         const response = await res.json();
         if (res.ok) {
+          dispatch(replaceStoreItem());
           setSubmitLoader(false);
           toast.success("Profile created successfully");
           history(`${process.env.PUBLIC_URL}/bots`)
@@ -96,19 +102,18 @@ const StoreContent = () => {
           toast.error(response.message);
         } 
       } else if (registerType === "custom") {
-        const formData = new FormData();
-        formData.append("file", formData.file);
-        formData.append("userId", user._id);
-
-        const res = await fetch(process.env.REACT_APP_API_CUSTOM_URL, {
+        let bodyData = formData;
+        bodyData.append("userId", user._id);
+        const res = await fetch(customUrl, {
           method: "POST",
-          body: formData,
+          body: bodyData,
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         const response = await res.json();
         if (res.ok) {
+          dispatch(replaceStoreItem());
           setSubmitLoader(false);
           toast.success("Profile created successfully");
           history(`${process.env.PUBLIC_URL}/bots`)
@@ -118,7 +123,7 @@ const StoreContent = () => {
         }
       } else if (registerType === "crawler") {
         body.userId = user._id;
-        const res = await fetch(process.env.REACT_APP_API_CRAWLER_URL, {
+        const res = await fetch(crawlerUrl, {
           method: "POST",
           body: JSON.stringify(body),
           headers: {
@@ -129,6 +134,7 @@ const StoreContent = () => {
 
         const response = await res.json();
         if (res.ok) {
+          dispatch(replaceStoreItem());
           setSubmitLoader(false);
           toast.success("Profile created successfully");
           history(`${process.env.PUBLIC_URL}/bots`)
@@ -142,6 +148,8 @@ const StoreContent = () => {
       toast.error(err);
     }
   };
+
+  
   return (
     <Fragment>
       <Fragment>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useContext, Fragment } from 'react';
 import { Col, Input } from 'reactstrap';
-import { MENUITEMS } from '../SideBar-Layout/Menu';
+// import { MENUITEMS } from '../SideBar-Layout/Menu';
+import { useSelector, useDispatch } from 'react-redux'
 import ListOfMenu from './Bookmark/ListOfMenu';
 import EmpltyClass from './Bookmark/EmptyClass';
 import CustomContext from '../../_helper/customizer';
@@ -8,7 +9,7 @@ import { Search } from 'react-feather';
 import { SearchIconss } from '../../Data/svgIcons';
 
 const Searchbar = () => {
-    const mainmenu = MENUITEMS;
+    const mainmenu = useSelector(state => state.menuItems);
     const [searchValue, setSearchValue] = useState('');
     const [searchIcon, setSearchIcon] = useState(false);
     const [searchToggle, setSearchToggle] = useState(false);

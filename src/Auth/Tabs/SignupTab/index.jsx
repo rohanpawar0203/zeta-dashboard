@@ -8,6 +8,7 @@ import { EmailAddress, LoginWithJWT, Password, SignUp } from '../../../Constant'
 import { handleResponse } from '../../../Services/Fack.Backend';
 import FormHeader from './FormHeader';
 import SignupWith from './SignupWith';
+import { userRegisterApi } from '../../../api';
 
 const SignupTab = ({selected}) => {
     const [userData, setUserData] = useState({
@@ -40,7 +41,7 @@ const SignupTab = ({selected}) => {
             body: (JSON.stringify({...userData})),
         };
         try{
-            const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/register`, requestOptions);
+            const res = await fetch(userRegisterApi, requestOptions);
             const resBody = await res.json();
             if(`${res.status}` === '200'){
                 setLoading(false);
@@ -121,7 +122,7 @@ const SignupTab = ({selected}) => {
                     <InputGroup>
                         <InputGroupText><i className='icon-lock'></i></InputGroupText>
                         <Input className="form-control" name="password" type={togglePassword ? 'text' : 'password'} onChange={e => handleFormChange(e)} placeholder="Password" required="" />
-                        <div className="show-hide" onClick={() => setTogglePassword(!togglePassword)}><span className={togglePassword ? '' : 'show'}></span></div>
+                        <div className="show-hide" onClick={() => setTogglePassword(!togglePassword)}><span className={togglePassword ? 'Hide' : 'show'}></span></div>
                     </InputGroup>
                     {errors.password && <Label className="fw-bolder mt-2 errTxt">{errors?.password}</Label>}
                 </FormGroup>

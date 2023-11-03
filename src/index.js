@@ -9,13 +9,18 @@ import '@fortawesome/react-fontawesome';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './i18n';
+import { Provider } from 'react-redux'
+import store from './ReduxStore/store';
 // import dotenv from 'dotenv';
 
 console.log("ENV", process.env.REACT_APP_API_BASE_URL)
 // dotenv.config();
 ReactDOM.render(
   // <React.StrictMode>
-  <App />
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
   /* </React.StrictMode>, */,
   document.getElementById('root')
 );

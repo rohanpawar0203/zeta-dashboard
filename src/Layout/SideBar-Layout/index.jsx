@@ -3,7 +3,8 @@ import SidebarIcon from './SidebarIcon';
 import SidebarLogo from './SidebarLogo';
 import SidebarMenu from './SidebarMenu';
 import { MENUITEMS } from './Menu';
-
+import { useSelector, useDispatch } from 'react-redux'
+import { updateMenuItems } from './reduxSlice/menuItems.slice';
 const SideBarLayout = (props) => {
     const id = window.location.pathname.split('/').pop();
     const layout = id;
@@ -12,7 +13,9 @@ const SideBarLayout = (props) => {
     const handleResize = () => {
         setWidth(window.innerWidth - 500);
     };
-    const [mainmenu, setMainMenu] = useState(MENUITEMS);
+    // const [mainmenu, setMainMenu] = useState(MENUITEMS);
+    const mainmenu = useSelector(state => state.menuItems);
+    const dispatch = useDispatch();
     const [sidebartoogle, setSidebartoogle] = useState(true);
     const handleScroll = () => {
         if (window.scrollY > 400) {
@@ -50,7 +53,8 @@ const SideBarLayout = (props) => {
             return menuItems;
         });
         item.active = !item.active;
-        setMainMenu({ mainmenu: MENUITEMS });
+        // setMainMenu({ mainmenu: MENUITEMS });
+        dispatch(updateMenuItems(MENUITEMS))
     };
     useEffect(() => {
         document.querySelector('.left-arrow').classList.add('d-none');
@@ -89,7 +93,7 @@ const SideBarLayout = (props) => {
         <Fragment>
             <SidebarLogo sidebartoogle={sidebartoogle} setSidebartoogle={setSidebartoogle} />
             <SidebarIcon />
-            <SidebarMenu setMainMenu={setMainMenu} props={props} sidebartoogle={sidebartoogle} setNavActive={setNavActive} width={width} mainmenu={mainmenu} />
+            <SidebarMenu  props={props} sidebartoogle={sidebartoogle} setNavActive={setNavActive} width={width} />
         </Fragment>
     );
 };
