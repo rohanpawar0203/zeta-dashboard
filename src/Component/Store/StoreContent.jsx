@@ -33,6 +33,7 @@ import ShopifyForm from "./components/shopifyForm";
 import Custom from './components/Custom'
 import Crawler from "./components/Crawler";
 import { useNavigate } from "react-router";
+import { bigCommerceUrl, shopifyStoreUrl, customUrl, crawlerUrl } from "../../api";
 
 const StoreContent = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -56,7 +57,7 @@ const StoreContent = () => {
         body.userId = user._id;
         body.storeHash = data.storeHash;
         body.xAuthToken = data.xAuthToken;
-        const res = await fetch(process.env.REACT_APP_API_BIG_COMMERCE_URL, {
+        const res = await fetch(bigCommerceUrl, {
           method: "POST",
           body: JSON.stringify(body),
           headers: {
@@ -77,7 +78,7 @@ const StoreContent = () => {
         body.shopName = data.shopName;
         body.xAuthToken = data.authToken;
         console.log(process.env);
-        const res = await fetch(`${process.env.REACT_APP_API_SHOPIFY_STORE_URL}`, {
+        const res = await fetch(shopifyStoreUrl, {
           method: "POST",
           body: JSON.stringify(body),
           headers: {
@@ -100,7 +101,7 @@ const StoreContent = () => {
         formData.append("file", formData.file);
         formData.append("userId", user._id);
 
-        const res = await fetch(process.env.REACT_APP_API_CUSTOM_URL, {
+        const res = await fetch(customUrl, {
           method: "POST",
           body: formData,
           headers: {
@@ -118,7 +119,7 @@ const StoreContent = () => {
         }
       } else if (registerType === "crawler") {
         body.userId = user._id;
-        const res = await fetch(process.env.REACT_APP_API_CRAWLER_URL, {
+        const res = await fetch(crawlerUrl, {
           method: "POST",
           body: JSON.stringify(body),
           headers: {

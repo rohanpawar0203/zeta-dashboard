@@ -30,3 +30,7 @@ export const FontawsomeDataApi = `${api}/fontawsomeData.json`;
 export const IcoDataApi = `${api}/icoData.json`;
 export const ThemifyDataApi = `${api}/themifyData.json`;
 
+export const bigCommerceUrl = `${process.env.REACT_APP_API_BASE_URL}/bigcommerce-store`;
+export const shopifyStoreUrl = `${process.env.REACT_APP_API_BASE_URL}/shopify-store`;
+export const customUrl = `${process.env.REACT_APP_API_BASE_URL}/custom-store`;
+export const crawlerUrl = `${process.env.REACT_APP_API_BASE_URL}/webCrawler`;
