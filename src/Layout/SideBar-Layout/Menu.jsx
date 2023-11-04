@@ -41,12 +41,12 @@ export const MENUITEMS = [
             { path: `${process.env.PUBLIC_URL}/filemanager`, bookmark: true, icon: FilemanagerSvg, title: 'File Manager', type: 'link' }
         ]
     },
-    {
-        menutitle: 'Dashboard',
-        Items: [
-            { path: `${process.env.PUBLIC_URL}/dashboard`, bookmark: true, icon: FilemanagerSvg, title: 'Dashboard', type: 'link' }
-        ]
-    },
+    // {
+    //     menutitle: 'Dashboard',
+    //     Items: [
+    //         { path: `${process.env.PUBLIC_URL}/dashboard`, bookmark: true, icon: FilemanagerSvg, title: 'Dashboard', type: 'link' }
+    //     ]
+    // },
     {
         menutitle: 'Store',
         Items: [

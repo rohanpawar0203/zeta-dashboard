@@ -2,12 +2,13 @@ import React, { Fragment, useState,useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { LI, UL } from '../../AbstractElements';
-import { MENUITEMS } from './Menu';
+// import { MENUITEMS } from './Menu';
 import { Label } from 'reactstrap';
 import { Back } from '../../Constant';
-
-const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
+import { GetMenuItemsProps } from '../../_helper/MenuItems/MenuItemsProvider';
+const SidebarMenuItems = ({  sidebartoogle, setNavActive }) => {
   const user = JSON.parse((localStorage.getItem("currentUser")));
+  const {data : menuitems , setData: setMainMenu,  handleForStore, handleForLogout} = GetMenuItemsProps();
   // eslint-disable-next-line
   const [active, setActive] = useState(false);
   const { t } = useTranslation();
@@ -24,7 +25,7 @@ const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
       }
     }
     if (!item.active) {
-      MENUITEMS.map((a) => {
+      menuitems.map((a) => {
         a.Items.filter((Items) => {
           if (a.Items.includes(item)) Items.active = false;
           if (!Items.children) return false;
@@ -47,22 +48,14 @@ const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
     if (item.children) {
       item.active = !item.active;
     }
-    console.log('menu items ', MENUITEMS);
-    setMainMenu({ mainmenu: MENUITEMS });
+    console.log('menu items ', menuitems);
+    setMainMenu(menuitems);
   };
   useEffect(() => {
-    console.log(user.store);
     if(user.store){
-      setMainMenu((pre) => (
-        pre.map((ele) => {
-          if(ele.menutitle === 'Store'){
-            ele.Items[0].path = `${process.env.PUBLIC_URL}/bots`
-            ele.Items[0].title = `Bot`
-          }
-          return ele;
-        })
-      ))
+      handleForStore();
     }
+    console.log('menuitems', );
   }, [])
   
   return (
@@ -79,7 +72,7 @@ const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
                   <LI attrLI={{ className: 'back-btn' }}>
                     <div className="mobile-back text-end"><span>{Back}</span><i className="fa fa-angle-right ps-2"></i></div>
                   </LI>
-                  {MENUITEMS.map((Item, i) => (
+                  {menuitems.map((Item, i) => (
                     < Fragment key={i} >
                       {Item.Items.map((menuItem, i) => (
                         <LI attrLI={{ className: 'sidebar-list' }} key={i}>

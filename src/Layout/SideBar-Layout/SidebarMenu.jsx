@@ -4,7 +4,7 @@ import SidebarMenuItems from './SidebarMenuItems';
 import ConfigDB from '../../Config/Theme-Config';
 import SidebarSection from './SidebarSection';
 
-const SidebarMenu = ({ setMainMenu, props, sidebartoogle, setNavActive, width }) => {
+const SidebarMenu = ({ props, sidebartoogle, setNavActive, width }) => {
   const [rightArrow, setRightArrow] = useState(false);
   const [leftArrow, setLeftArrow] = useState(false);
   const sidebar_types = localStorage.getItem('sidebar_types');
@@ -49,7 +49,7 @@ const SidebarMenu = ({ setMainMenu, props, sidebartoogle, setNavActive, width })
               ? { marginLeft: margin + 'px' }
               : { margin: '0px' }
           }>
-          <SidebarMenuItems setMainMenu={setMainMenu} props={props} sidebartoogle={sidebartoogle} setNavActive={setNavActive} />
+          <SidebarMenuItems  props={props} sidebartoogle={sidebartoogle} setNavActive={setNavActive} />
           <SidebarSection />
         </div>
         <div className={`right-arrow ${rightArrow ? 'd-none' : ''}`} onClick={scrollToRight}>

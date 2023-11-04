@@ -8,6 +8,7 @@ import { H4, H6, LI, P, UL, Image, H5, Btn } from "../../AbstractElements";
 import errorImg from "../../assets/images/search-not-found.png";
 import TurnoverChart from "../Widgets/ChartsWidgets/TurnoverChart";
 import { useForm } from 'react-hook-form';
+import { GetMenuItemsProps } from "../../_helper/MenuItems/MenuItemsProvider";
 import {
   AddNew,
   AllFiles,
@@ -43,7 +44,7 @@ const StoreContent = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const token = localStorage.getItem("token");
   const history = useNavigate();
-
+  const {handleForStore, handleForLogout} = GetMenuItemsProps();
   
   const handleRegisterTypeChange = (e) =>{
     e.target.checked && setregisterType(e.target.value);
@@ -67,9 +68,11 @@ const StoreContent = () => {
         });
         const response = await res.json();
         if (res.ok) {
+          handleForStore();
           setSubmitLoader(false);
           toast.success("Profile created successfully");
-          history(`${process.env.PUBLIC_URL}/bots`)        } else {
+          history(`${process.env.PUBLIC_URL}/bots`)} 
+          else {
           setSubmitLoader(false);
           toast.error(response.message);
         }
@@ -110,6 +113,7 @@ const StoreContent = () => {
         });
         const response = await res.json();
         if (res.ok) {
+          handleForStore();
           setSubmitLoader(false);
           toast.success("Profile created successfully");
           history(`${process.env.PUBLIC_URL}/bots`)
@@ -130,6 +134,7 @@ const StoreContent = () => {
 
         const response = await res.json();
         if (res.ok) {
+          handleForStore();
           setSubmitLoader(false);
           toast.success("Profile created successfully");
           history(`${process.env.PUBLIC_URL}/bots`)
