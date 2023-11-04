@@ -11,7 +11,7 @@ import SignupWith from './SignupWith';
 
 const SignupTab = ({selected}) => {
     const [userData, setUserData] = useState({
-        emai: '',
+        email: '',
         password: '',
         companyName: '',
         contact : '',
@@ -19,7 +19,7 @@ const SignupTab = ({selected}) => {
         planId : '',
         store : '',
         productList : '',
-    })
+    })  
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [togglePassword, setTogglePassword] = useState(false);
@@ -40,6 +40,7 @@ const SignupTab = ({selected}) => {
             body: (JSON.stringify({...userData})),
         };
         try{
+            console.log(userData);
             const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/register`, requestOptions);
             const resBody = await res.json();
             if(`${res.status}` === '200'){
