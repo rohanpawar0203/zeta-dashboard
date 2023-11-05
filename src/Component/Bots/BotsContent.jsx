@@ -4,7 +4,7 @@ import CountUp from "react-countup";
 import { Card, CardBody, Col, Media, Container, Row } from "reactstrap";
 import { toast } from "react-toastify";
 import { PlusSquare, Upload, card } from "react-feather";
-import { H4, H6, LI, P, UL, Image, H5 } from "../../AbstractElements";
+import { H4, H6, LI, P, UL, Image, H5, H3, H1 } from "../../AbstractElements";
 import errorImg from "../../assets/images/search-not-found.png";
 import TurnoverChart from "../Widgets/ChartsWidgets/TurnoverChart";
 import {
@@ -28,116 +28,32 @@ import {
   TruckSvg,
   TruckSvg1,
 } from "../Widgets/SvgIcons";
+import {BsCheckCircle} from 'react-icons/bs'
+
 
 const DashboardContent = () => {
+  const points = ['Create a fully customizable AI Bot within a few minutes, no code required.',
+'Embed it on your website as a chatbot or as an iFrame widget.',
+'Focus on the customers who matter to you the most.'
+]
   return (
     <Fragment>
-      <Fragment>
-        <Container fluid={true} className="general-widget">
-          <Row className="d-flex justify-content-evenly">
-            <Fragment>
-              <Col sm="6" xl="3" lg="10">
-                <Card className="o-hidden">
-                  <CardBody>
-                    <Media className="static-widget">
-                      <Media body>
-                        <H4 attrH6={{ className: "font-roboto" }}>
-                          Queries-resolved
-                        </H4>
-                        <H5 attrH4={{ className: "mb-0 counter" }}>
-                          <CountUp end={100} />
-                        </H5>
-                      </Media>
-                      <DollerSvg />
-                    </Media>
-                    <div className="progress-widget">
-                      <div className="progress sm-progress-bar progress-animate">
-                        <div
-                          className={"progress-gradient-success"}
-                          role="progressbar"
-                          style={{ width: "75%" }}
-                          aria-valuenow="75"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        >
-                          <span className="animate-circle"></span>
-                        </div>
-                      </div>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col sm="6" xl="3" lg="10">
-                <Card className="o-hidden">
-                  <CardBody>
-                    <Media className="static-widget">
-                      <Media body>
-                        <H4 attrH6={{ className: "font-roboto" }}>
-                          Messages received
-                        </H4>
-                        <H5 attrH4={{ className: "mb-0 counter" }}>
-                          <CountUp end={100} />
-                        </H5>
-                      </Media>
-                      <MessageSvg />
-                    </Media>
-                    <div className="progress-widget">
-                      <div className="progress sm-progress-bar progress-animate">
-                        <div
-                          className={"progress-gradient-primary"}
-                          role="progressbar"
-                          style={{ width: "75%" }}
-                          aria-valuenow="75"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        >
-                          <span className="animate-circle"></span>
-                        </div>
-                      </div>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col sm="6" xl="3" lg="10">
-                <Card className="o-hidden">
-                  <CardBody>
-                    <Media className="static-widget">
-                      <Media body>
-                        <H4 attrH6={{ className: "font-roboto" }}>
-                          Bot Messages sent{" "}
-                        </H4>
-                        <H5 attrH4={{ className: "mb-0 counter" }}>
-                          <CountUp end={100} />
-                        </H5>
-                      </Media>
-                      <MessageSvg />
-                    </Media>
-                    <div className="progress-widget">
-                      <div className="progress sm-progress-bar progress-animate">
-                        <div
-                          className={"progress-gradient-success"}
-                          role="progressbar"
-                          style={{ width: "75%" }}
-                          aria-valuenow="75"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        >
-                          <span className="animate-circle"></span>
-                        </div>
-                      </div>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Fragment>
-          </Row>
-          <Row>
-            <TurnoverChart chartName="Total Queries-resolved"/>
-            <TurnoverChart chartName="Total Messages received"/>
-            <TurnoverChart chartName="Total Messages sent by Bot"/>
-          </Row>
-        </Container>
-      </Fragment>
+       <div style={{ borderRadius: '1rem'}} className="container d-flex flex-column justify-content-evenly align-items-start  p-4 bg-white">
+        <div className="d-inline ">
+        <H4 attrH4={{ className: 'mt-0 mb-3' }}>Welcome to ulai Bot</H4>
+        </div>
+        <div className="d-flex flex-column align-items-center mb-3">
+          {points.map((ele,id) => (
+            <div className="w-100 d-flex  align-items-center mb-3">
+              <BsCheckCircle style={{height: '17px', width: '17px'}} className='text-primary m-0'/>
+              <H5 attrH5={{ className: 'my-0 ms-2' }}>{ele}</H5>
+            </div>
+          ))}
+        </div>
+        <div className="">
+        <button type="button" className="btn btn-primary btn-md">Create new bot</button>
+        </div>
+    </div>
     </Fragment>
   );
 };

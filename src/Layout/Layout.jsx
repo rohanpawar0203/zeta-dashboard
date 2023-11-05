@@ -58,7 +58,7 @@ const Layout = ({ children, classNames, ...rest }) => {
                 timeout={100}
                 classNames={animationTheme}
                 unmountOnExit
-              >
+              > 
                 <div>
                   <Outlet />
                 </div>
