@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import Breadcrumbs from '../../CommonElements/Breadcrumbs';
-import BotsContain from '../../Component/Bots';
+import BotContain from '../../Component/Bot';
 
-const Bots = () => {
+const Bot = () => {
   return (
     <Fragment>
       <Breadcrumbs parent="" title=" Home  " />
-      <BotsContain />
+      <BotContain />
     </Fragment>
   );
 };
-export default Bots;
+export default Bot;

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { MENUITEMS } from '../../Layout/SideBar-Layout/Menu';
 import { BlogSvg, BonusUISvg, ButtonsSvg, CalanderSvg, ChartsSvg, ChatSvg, ContactSvg, EcommerceSvg, EditorsSvg, EmailSvg, FAQSvg, FilemanagerSvg, FormsSvg, GallarySvg, HeaderBookmarkSvg, HomeSvg, IconsSvg, JobsearchSvg, KanbanSvg, KnowledgebaseSvg, LearningSvg, MapsSvg, OthersSvg, ProjectSvg, SamplePageSvg, SearchResultSvg, SocialappSvg, SupportTicketSvg, TablesSvg, TaskSvg, TodoSvg, UiKitsSvg, UsersComponentSvg, WidgetsSvg } from '../../Data/svgIcons';
 
@@ -6,6 +6,7 @@ const MenuItemsContext = createContext();
 
 export const MenuItemsContextProvider = ({ children }) => {
     const [data, setData] = useState([...MENUITEMS]);
+    const user = JSON.parse(localStorage.getItem('currentUser'));
     
     const handleForStore = () => {
         data.map((ele) => {
@@ -40,6 +41,17 @@ export const MenuItemsContextProvider = ({ children }) => {
         console.log(replacedItems);
         setData(replacedItems);
     };
+
+    useEffect(() => {
+      if( user && user.store){
+        setData(data.filter((ele) => (ele.menutitle !== 'Store')))
+    }
+    if(user && !user.store){
+        const elementsToRemove = ['Dashboard','Bots'];
+          setData((data.filter((ele) => (!elementsToRemove.includes(ele.menutitle)))));
+      }
+    }, [])
+    
 
     return (
       <MenuItemsContext.Provider value={{ data, setData, handleForStore, handleForLogout }}>

@@ -29,13 +29,15 @@ import {
   TruckSvg1,
 } from "../Widgets/SvgIcons";
 import {BsCheckCircle} from 'react-icons/bs'
+import CreateBotFormModal from "./components/CreateBotFormModal";
 
-
-const DashboardContent = () => {
+const BotContent = () => {
   const points = ['Create a fully customizable AI Bot within a few minutes, no code required.',
 'Embed it on your website as a chatbot or as an iFrame widget.',
 'Focus on the customers who matter to you the most.'
 ]
+const [modal, setModal] = useState(false);
+const toggle = () => setModal(!modal);
   return (
     <Fragment>
        <div style={{ borderRadius: '1rem'}} className="container d-flex flex-column justify-content-evenly align-items-start  p-4 bg-white">
@@ -51,10 +53,11 @@ const DashboardContent = () => {
           ))}
         </div>
         <div className="">
-        <button type="button" className="btn btn-primary btn-md">Create new bot</button>
+        <button type="button" className="btn btn-primary btn-md" onClick={toggle}>Create new bot</button>
+        <CreateBotFormModal modal={modal} NewMessage={'New Bot'} toggle={toggle}></CreateBotFormModal>
         </div>
     </div>
     </Fragment>
   );
 };
-export default DashboardContent;
+export default BotContent;

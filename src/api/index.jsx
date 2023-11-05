@@ -34,3 +34,4 @@ export const bigCommerceUrl = `${process.env.REACT_APP_API_BASE_URL}/bigcommerce
 export const shopifyStoreUrl = `${process.env.REACT_APP_API_BASE_URL}/shopify-store`;
 export const customUrl = `${process.env.REACT_APP_API_BASE_URL}/custom-store`;
 export const crawlerUrl = `${process.env.REACT_APP_API_BASE_URL}/webCrawler`;
+export const BotCreate = `${process.env.REACT_APP_API_BASE_URL}/bot`;

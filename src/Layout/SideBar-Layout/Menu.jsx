@@ -41,16 +41,28 @@ export const MENUITEMS = [
             { path: `${process.env.PUBLIC_URL}/filemanager`, bookmark: true, icon: FilemanagerSvg, title: 'File Manager', type: 'link' }
         ]
     },
-    // {
-    //     menutitle: 'Dashboard',
-    //     Items: [
-    //         { path: `${process.env.PUBLIC_URL}/dashboard`, bookmark: true, icon: FilemanagerSvg, title: 'Dashboard', type: 'link' }
-    //     ]
-    // },
+    {
+        menutitle: 'Dashboard',
+        Items: [
+            { path: `${process.env.PUBLIC_URL}/dashboard`, bookmark: true, icon: FilemanagerSvg, title: 'Dashboard', type: 'link' }
+        ]
+    },
     {
         menutitle: 'Store',
         Items: [
             { path: `${process.env.PUBLIC_URL}/store`, bookmark: true, icon: FilemanagerSvg, title: 'Store', type: 'link' }
+        ]
+    },
+    {
+        menutitle: 'Bot',
+        Items: [
+            { path: `${process.env.PUBLIC_URL}/bot`, bookmark: true, icon: FilemanagerSvg, title: 'Bot', type: 'link' }
+        ]
+    },
+    {
+        menutitle: 'Bots',
+        Items: [
+            { path: `${process.env.PUBLIC_URL}/bots`, bookmark: true, icon: FilemanagerSvg, title: 'Bots', type: 'link' }
         ]
     },
     {

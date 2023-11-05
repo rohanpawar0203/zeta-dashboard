@@ -2,19 +2,17 @@ import React, { Fragment, useEffect, useState } from 'react';
 import SidebarIcon from './SidebarIcon';
 import SidebarLogo from './SidebarLogo';
 import SidebarMenu from './SidebarMenu';
-import { GetMenuItemsProps } from '../../_helper/MenuItems/MenuItemsProvider';
+import { MENUITEMS } from './Menu';
 
 const SideBarLayout = (props) => {
     const id = window.location.pathname.split('/').pop();
     const layout = id;
-    let {data: MENUITEMS} = GetMenuItemsProps();
+
     const [width, setWidth] = useState(0);
     const handleResize = () => {
         setWidth(window.innerWidth - 500);
     };
-    let {data: mainmenu, setData: setMainMenu} = GetMenuItemsProps();
-    console.log('mainmenu ', mainmenu);
-    console.log('setMainMenu ', setMainMenu);
+    const [mainmenu, setMainMenu] = useState(MENUITEMS);
     const [sidebartoogle, setSidebartoogle] = useState(true);
     const handleScroll = () => {
         if (window.scrollY > 400) {
@@ -52,7 +50,7 @@ const SideBarLayout = (props) => {
             return menuItems;
         });
         item.active = !item.active;
-        setMainMenu(MENUITEMS);
+        setMainMenu({ mainmenu: MENUITEMS });
     };
     useEffect(() => {
         document.querySelector('.left-arrow').classList.add('d-none');
@@ -91,7 +89,7 @@ const SideBarLayout = (props) => {
         <Fragment>
             <SidebarLogo sidebartoogle={sidebartoogle} setSidebartoogle={setSidebartoogle} />
             <SidebarIcon />
-            <SidebarMenu  props={props} sidebartoogle={sidebartoogle} setNavActive={setNavActive} width={width}  />
+            <SidebarMenu setMainMenu={setMainMenu} props={props} sidebartoogle={sidebartoogle} setNavActive={setNavActive} width={width} mainmenu={mainmenu} />
         </Fragment>
     );
 };

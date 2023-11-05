@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
 import { Card, Col, Container, Row } from "reactstrap";
-import BotsContent from "./BotsContent";
+import BotContent from "./BotContent";
 
-const BotsContain = () => {
+const BotContain = () => {
   return (
     <Fragment>
-          <BotsContent />
+          <BotContent />
     </Fragment>
   );
 };
-export default BotsContain;
+export default BotContain;

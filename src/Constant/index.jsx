@@ -1471,3 +1471,6 @@ export const SocialApp = 'Social App';
 export const Bookmark = 'Bookmark';
 export const AddNewBookmark = 'Add New Bookmark';
 export const Back = 'Back';
+
+export const NewBot = 'New Bot';
+export const BotCreationQstn = 'What would you like to name your bot?';
