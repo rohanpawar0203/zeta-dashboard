@@ -30,7 +30,7 @@ const HeaderContain = () => {// eslint-disable-next-line
   const Logout = () => {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
-    handleForLogout();
+    // handleForLogout();
     // firebase_app.auth().signOut();
     // history(`${process.env.PUBLIC_URL}/login`);  
   };

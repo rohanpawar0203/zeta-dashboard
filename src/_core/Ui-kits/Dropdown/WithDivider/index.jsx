@@ -11,7 +11,7 @@ const WithDivider = () => {
           <H5>{DropdownWithDivider}</H5><span>{'Use a class'} <code>{'.dropdown-divider'}</code></span>
         </CardHeader>
         <CardBody>
-          <div className="dropdown-basic">
+          <div className="dropdown">
             <Dropdown>
               <Btn attrBtn={{ color: 'primary', className: 'dropbtn' }}  >{DropdownButton} <span><i className="icofont icofont-arrow-down"></i></span></Btn>
               <DropdownMenu className="dropdown-content">

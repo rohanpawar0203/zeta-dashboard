@@ -725,8 +725,10 @@ img.for-dark.media{
   .page-body-wrapper {
     background-color: $body-color;
     .page-body {
-      min-height: calc(100vh - #{$header-size});
-      margin-top: $header-size;
+      // min-height: calc(100vh - #{$header-size});
+      // margin-top: $header-size;
+      max-height: 100%;
+      border: 1px solid black;
       padding: $page-body-padding;
       position: relative;
       transition: 0.5s;

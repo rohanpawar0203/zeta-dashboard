@@ -68,10 +68,10 @@ const StoreContent = () => {
         });
         const response = await res.json();
         if (res.ok) {
-          handleForStore();
+          // handleForStore();
           setSubmitLoader(false);
           toast.success("Profile created successfully");
-          history(`${process.env.PUBLIC_URL}/bots`)} 
+          history(`${process.env.PUBLIC_URL}/bot`)} 
           else {
           setSubmitLoader(false);
           toast.error(response.message);
@@ -94,7 +94,7 @@ const StoreContent = () => {
         if (res.ok) {
           setSubmitLoader(false);
           toast.success("Profile created successfully");
-          history(`${process.env.PUBLIC_URL}/bots`)
+          history(`${process.env.PUBLIC_URL}/bot`)
         } else {
           setSubmitLoader(false);
           toast.error(response.message);
@@ -113,10 +113,10 @@ const StoreContent = () => {
         });
         const response = await res.json();
         if (res.ok) {
-          handleForStore();
+          // handleForStore();
           setSubmitLoader(false);
           toast.success("Profile created successfully");
-          history(`${process.env.PUBLIC_URL}/bots`)
+          history(`${process.env.PUBLIC_URL}/bot`)
         } else {
           setSubmitLoader(false);
           toast.error(response.message);
@@ -134,10 +134,10 @@ const StoreContent = () => {
 
         const response = await res.json();
         if (res.ok) {
-          handleForStore();
+          // handleForStore();
           setSubmitLoader(false);
           toast.success("Profile created successfully");
-          history(`${process.env.PUBLIC_URL}/bots`)
+          history(`${process.env.PUBLIC_URL}/bot`)
         } else {
           setSubmitLoader(false);
           toast.error(response.message);

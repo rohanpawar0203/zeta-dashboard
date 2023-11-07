@@ -42,15 +42,15 @@ export const MenuItemsContextProvider = ({ children }) => {
         setData(replacedItems);
     };
 
-    useEffect(() => {
-      if( user && user.store){
-        setData(data.filter((ele) => (ele.menutitle !== 'Store')))
-    }
-    if(user && !user.store){
-        const elementsToRemove = ['Dashboard','Bots'];
-          setData((data.filter((ele) => (!elementsToRemove.includes(ele.menutitle)))));
-      }
-    }, [])
+    // useEffect(() => {
+    //   if( user && user.store){
+    //     setData(data.filter((ele) => (ele.menutitle !== 'Store')))
+    // }
+    // if(user && !user.store){
+    //     const elementsToRemove = ['Dashboard','Bots'];
+    //       setData((data.filter((ele) => (!elementsToRemove.includes(ele.menutitle)))));
+    //   }
+    // }, [])
     
 
     return (

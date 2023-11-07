@@ -133,6 +133,7 @@ import TreeViews from '../Pages/Bonus UI/TreeView';
 import DragAndDrop from '../Pages/Bonus UI/DragAndDrop';
 import Steps from '../Pages/Bonus UI/Steps';
 import Bot from '../Pages/Bot';
+import Bots from '../Pages/Bots';
 
 
 export const routes = [
@@ -151,7 +152,7 @@ export const routes = [
     
     { path: `${process.env.PUBLIC_URL}/store`, Component: <Store /> },
     { path: `${process.env.PUBLIC_URL}/bot`, Component: <Bot /> },
-    { path: `${process.env.PUBLIC_URL}/bots`, Component: <Bot /> },
+    { path: `${process.env.PUBLIC_URL}/bots`, Component: <Bots /> },
     { path: `${process.env.PUBLIC_URL}/kanbanboard`, Component: <KanbanBoard /> },
 
     { path: `${process.env.PUBLIC_URL}/ecommerce/product`, Component: <Products /> },
