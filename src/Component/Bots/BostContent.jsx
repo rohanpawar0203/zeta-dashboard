@@ -55,6 +55,7 @@ import { BsCheckCircle } from "react-icons/bs";
 import CreateBotFormModal from "./components/CreateBotFormModal";
 import UpdateBotFormModal from "./components/UpdateBotFormModal";
 import { BotCreate } from "../../api";
+import { useNavigate } from "react-router-dom";
 
 const BotsContent = () => {
   const points = [
@@ -65,6 +66,7 @@ const BotsContent = () => {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   const [updatemodal, setupdateModal] = useState(false);
+  const history = useNavigate()
   const toggleUpdateModal = () => {
     setupdateModal(!updatemodal)
   };
@@ -100,6 +102,7 @@ const BotsContent = () => {
         setMyBots(responseData);
       } else {
         setMyBots([{botName: 'nemu',_id: '001'}]);
+        // setMyBots([]);
         toast.error(responseData.message);
       }
     } catch (error) {
@@ -174,7 +177,7 @@ const BotsContent = () => {
                   <H5 attrH5={{ className: "my-0 ms-2" }}>{myBot.botName}</H5>
                 </div>
                 <div className="d-flex justify-content-between align-items-center p-3">
-                  <button type="button" className="btn btn-primary me-2 btn-sm">
+                  <button onClick={() => {history(`${process.env.PUBLIC_URL}/bot/${myBot._id}`)}} type="button" className="btn btn-primary me-2 btn-sm">
                     View Bot
                   </button>
                   <Dropdown isOpen={dropdownOpen} toggle={toggleDropDown}>
