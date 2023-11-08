@@ -80,7 +80,6 @@ const StoreContent = () => {
         body.userId = user._id;
         body.shopName = data.shopName;
         body.xAuthToken = data.authToken;
-        console.log(process.env);
         const res = await fetch(shopifyStoreUrl, {
           method: "POST",
           body: JSON.stringify(body),

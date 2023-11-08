@@ -1473,4 +1473,5 @@ export const AddNewBookmark = 'Add New Bookmark';
 export const Back = 'Back';
 
 export const NewBot = 'New Bot';
+export const renameBot = 'Update Bot';
 export const BotCreationQstn = 'What would you like to name your bot?';

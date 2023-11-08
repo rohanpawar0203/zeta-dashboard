@@ -24,7 +24,6 @@ export const MenuItemsContextProvider = ({ children }) => {
             ]
         };
         setData([{...dashBoardItem}, ...data]);
-        console.log('did handle ', data);
     };
    
     const handleForLogout = () => {
@@ -38,7 +37,6 @@ export const MenuItemsContextProvider = ({ children }) => {
                 return ele;
             }
         });
-        console.log(replacedItems);
         setData(replacedItems);
     };
 

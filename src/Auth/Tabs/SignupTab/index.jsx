@@ -40,7 +40,6 @@ const SignupTab = ({selected}) => {
             body: (JSON.stringify({...userData})),
         };
         try{
-            console.log(userData);
             const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/register`, requestOptions);
             const resBody = await res.json();
             if(`${res.status}` === '200'){
@@ -64,7 +63,6 @@ const SignupTab = ({selected}) => {
             setLoading(false);
         }
     const formValidate = () => {
-            console.log('process.env', process.env);
             isErrors.current = false;
             setErrors({})
             let errorsObj = {};

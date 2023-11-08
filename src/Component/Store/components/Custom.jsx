@@ -39,7 +39,6 @@ const Custom = () => {
 };
 
 const handleChangeStatus = ({ meta, file }, status) => { 
-  console.log('yes');
   const acceptedFileExtensions = [".csv", ".xls", '.xlsx'];
 
   // Check if the file extension is allowed
@@ -48,7 +47,6 @@ const handleChangeStatus = ({ meta, file }, status) => {
   }
   const body = new FormData();
   body.append('file', file);
-  console.log(file);
 };
   return (
     <Fragment>

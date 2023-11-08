@@ -8,9 +8,7 @@ const Custom = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = data => {
-    console.log('yes');
     if (data !== '') {
-      console.log(data);
       alert('You submitted the form and stuff!');
     } else {
       errors.showMessages();
