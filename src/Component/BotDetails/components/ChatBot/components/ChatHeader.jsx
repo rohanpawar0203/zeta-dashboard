@@ -1,24 +1,20 @@
 import React, { Fragment, useContext } from 'react';
 import { Media } from 'reactstrap';
+import { H4, H5 } from '../../../../../AbstractElements';
 
 const ChatHeader = () => {
   
   
   return (
     <Fragment>
-      <div style={{background: 'orange', width:'300px', borderRadius: '10px', boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px'}} className="d-flex flex-column align-items-center  text-white p-2">
-        <p className='m-0 my-2'>Ulai</p>
-        <img      src="https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75"
-                    width={"42px"}
+      <div style={{background: 'orange', borderTopLeftRadius: '12px', borderTopRightRadius: '12px'}} className="w-100 d-flex flex-column align-items-center  text-white p-2">
+        <H4 attrH4={{className:'my-3 fw-bolder'}}>Ulai</H4>
+        <img  src="https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75"
+                    width={"60px"}
                     alt={'ulai bot'}
-                    height={"42px"}
-                    style={{
-                        padding: "4px",
-                        border: "1px solid #cbc6c2",
-                        borderRadius: "4px",
-                    }}
+                    height={"60px"}
                   />
-        <p className='m-0 my-2'>Our bot answers instantly</p>
+        <H5  attrH5={{className: 'mt-3 mb-2'}}>Our bot answers instantly</H5>
         </div>
     </Fragment>
   );
