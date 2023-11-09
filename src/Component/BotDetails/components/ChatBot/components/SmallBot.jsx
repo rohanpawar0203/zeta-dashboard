@@ -7,7 +7,7 @@ const SmallBot = ({setcloseSmallBot}) => {
     <div className="w-100 d-flex align-items-center justify-content-between mb-3">
       <div className="d-flex align-items-center">
       <img width={'30px'} height={'30px'} style={{objectFit: 'cover'}} src="https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75" alt="" />
-      <h6 className='m-0  ms-3'>Ulai</h6>
+      <h6 className='my-0 ms-3'>Ulai</h6>
       </div>
       <div onClick={() => {setcloseSmallBot(true)}}>
        <RxCross2 style={{width: '20px', height: '20px'}} />
