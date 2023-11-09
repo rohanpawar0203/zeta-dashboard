@@ -9,13 +9,13 @@ import { TfiHeadphoneAlt, TfiCommentsSmiley } from "react-icons/tfi";
 import { Ri24HoursLine } from "react-icons/ri";
 import { LuMessagesSquare } from "react-icons/lu";
 
-const BotIcons = ({ botIcons }) => {
+const BotIcons = ({ botIcons, setMyBot}) => {
   return (
     <>
       {botIcons.map((ele, i) => {
         if (ele === "BiBot") {
           return (
-            <div
+            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
               style={{ boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px;", boxSizing: 'border-box' }}
               className="p-2 rounded border border-lightgray d-flex justify-content-center align-items-center ms-3"
             >
@@ -25,7 +25,7 @@ const BotIcons = ({ botIcons }) => {
         }
         if (ele === "BsRobot") {
           return (
-            <div
+            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
               style={{ boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px;", boxSizing: 'border-box' }}
               className="p-1 rounded border border-lightgray d-flex justify-content-center align-items-center ms-3"
             >
@@ -35,7 +35,7 @@ const BotIcons = ({ botIcons }) => {
         }
         if (ele === "TbMessageDots") {
           return (
-            <div
+            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
               style={{ boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px;", boxSizing: 'border-box' }}
               className="p-1 rounded border border-lightgray d-flex justify-content-center align-items-center ms-3"
             >
@@ -45,7 +45,7 @@ const BotIcons = ({ botIcons }) => {
         }
         if (ele === "BiUser") {
           return (
-            <div
+            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
               style={{ boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px;", boxSizing: 'border-box' }}
               className="p-1 rounded border border-lightgray d-flex justify-content-center align-items-center ms-3"
             >
@@ -55,7 +55,7 @@ const BotIcons = ({ botIcons }) => {
         }
         if (ele === "AiOutlineQuestionCircle") {
           return (
-            <div
+            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
               style={{ boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px;", boxSizing: 'border-box' }}
               className="p-1 rounded border border-lightgray d-flex justify-content-center align-items-center ms-3"
             >
@@ -65,7 +65,7 @@ const BotIcons = ({ botIcons }) => {
         }
         if (ele === "TfiHeadphoneAlt") {
           return (
-            <div
+            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
               style={{ boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px;", boxSizing: 'border-box' }}
               className="p-1 rounded border border-lightgray d-flex justify-content-center align-items-center ms-3"
             >
@@ -75,7 +75,7 @@ const BotIcons = ({ botIcons }) => {
         }
         if (ele === "Ri24HoursLine") {
           return (
-            <div
+            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
               style={{ boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px;", boxSizing: 'border-box' }}
               className="p-1 rounded border border-lightgray d-flex justify-content-center align-items-center ms-3"
             >
@@ -85,7 +85,7 @@ const BotIcons = ({ botIcons }) => {
         }
         if (ele === "LuMessagesSquare") {
           return (
-            <div
+            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
               style={{ boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px;", boxSizing: 'border-box' }}
               className="p-1 rounded border border-lightgray d-flex justify-content-center align-items-center ms-3"
             >
@@ -95,7 +95,7 @@ const BotIcons = ({ botIcons }) => {
         }
         if (ele === "TfiCommentsSmiley") {
           return (
-            <div
+            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
               style={{ boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px;", boxSizing: 'border-box' }}
               className="p-1 rounded border border-lightgray d-flex justify-content-center align-items-center ms-3"
             >

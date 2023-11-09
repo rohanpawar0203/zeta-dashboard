@@ -1,10 +1,10 @@
 import React from 'react'
 
-const IconColors = ({colorOptions}) => {
+const IconColors = ({colorOptions, setMyBot}) => {
   return (
     <>
     {colorOptions.map((ele, i) => (
-      <div
+      <div onClick={() => setMyBot((pre) => ({...pre, accentColor: ele}))}
       style={{ boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px;", boxSizing: 'border-box' }}
       className="p-2 rounded border border-lightgray d-flex justify-content-center align-items-center ms-3"
     >

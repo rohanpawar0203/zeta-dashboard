@@ -70,6 +70,7 @@ const Customize = ({ myBot, setMyBot }) => {
                           className="form-control"
                           name="botName"
                           type="text"
+                          defaultValue={myBot?.botName}
                           placeholder="Bot Name"
                           {...register("botName", { required: true })}
                         />
@@ -84,6 +85,7 @@ const Customize = ({ myBot, setMyBot }) => {
                           className="form-control"
                           name="companyName"
                           type="text"
+                          defaultValue={myBot?.companyName}
                           placeholder="Company Name"
                           {...register("companyName", { required: true })}
                         />
@@ -96,13 +98,13 @@ const Customize = ({ myBot, setMyBot }) => {
                     <Row>
                         <Label htmlFor="validationCustom03">{"Chat bubble icon"}</Label>
                         <div className="w-100 d-flex  mb-2">
-                        <BotIcons botIcons={botIcons}/>
+                        <BotIcons botIcons={botIcons} setMyBot={setMyBot}/>
                         </div>
                     </Row>
                     <Row>
                         <Label htmlFor="validationCustom03">{"Accent colour"}</Label>
                         <div className="w-100 d-flex  mb-2">
-                        <IconColors colorOptions={colorOptions}/>
+                        <IconColors colorOptions={colorOptions} setMyBot={setMyBot}/>
                         </div>
                     </Row>
                     <Row>
@@ -112,13 +114,14 @@ const Customize = ({ myBot, setMyBot }) => {
                         </Label>
                         <input
                           className="form-control"
-                          name="subHeading"
+                          name="subheading"
                           type="text"
+                          defaultValue={myBot?.subheading}
                           placeholder="Subheading"
-                          {...register("subHeading", { required: true })}
+                          {...register("subheading", { required: true })}
                         />
                         <span>
-                          {errors.subHeading && "* Subheading is required"}
+                          {errors.subheading && "* Subheading is required"}
                         </span>
                         <div className="valid-feedback">{"Looks good!"}</div>
                       </Col>
@@ -128,10 +131,11 @@ const Customize = ({ myBot, setMyBot }) => {
                         </Label>
                         <input
                           className="form-control"
-                          name="inputboxPlaceholder"
+                          name="inputPlaceholder"
                           type="text"
+                          defaultValue={myBot?.inputPlaceholder}
                           placeholder="Input Box Placeholder"
-                          {...register("inputboxPlaceholder", { required: true })}
+                          {...register("inputPlaceholder", { required: true })}
                         />
                         <span>
                           {errors.inputboxPlaceholder && "* Input Box Placeholder"}
@@ -146,13 +150,14 @@ const Customize = ({ myBot, setMyBot }) => {
                         </Label>
                         <input
                           className="form-control"
-                          name="welcomeMsg"
+                          name="welcomeMessage"
                           type="text"
+                          defaultValue={myBot?.welcomeMessage}
                           placeholder="Welcome Message"
-                          {...register("welcomeMsg", { required: true })}
+                          {...register("welcomeMessage", { required: true })}
                         />
                         <span>
-                          {errors.welcomeMsg && "* Welcome Message is required"}
+                          {errors.welcomeMessage && "* Welcome Message is required"}
                         </span>
                         <div className="valid-feedback">{"Looks good!"}</div>
                       </Col>

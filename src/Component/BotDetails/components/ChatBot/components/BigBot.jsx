@@ -3,7 +3,7 @@ import { Col, Input, InputGroup, InputGroupText, Row, } from 'reactstrap';
 import {VscSend} from 'react-icons/vsc'
 import ChatHeader from './ChatHeader';
 import ScrollBar from 'react-perfect-scrollbar';
-const BigBot = () => {
+const BigBot = ({myBot}) => {
   return (
     <Fragment>
       <div style={{width:'350px', borderRadius: '12px', boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px', zIndex: '3', background:'white'}} 
@@ -21,13 +21,15 @@ const BigBot = () => {
        </div>
        </ScrollBar>
 
-       <div style={{zIndex: '2', paddding:'5px', borderRadius: '25px', border: "1px solid orange"}} className='d-flex'>
+      <div style={{borderBottomRightRadius: '25px', borderBottomLeftRadius: '25px'}} className='border border-lightgray p-2'>
+      <div style={{zIndex: '2', paddding:'5px', borderRadius: '25px', border: `1px solid ${myBot?.accentColor}`}} className='d-flex'>
             <Input style={{border: 'none', borderRadius: '25px'}} className="form-control" type="text" aria-label="Amount (to the nearest dollar)" placeholder='Send Message...'/>
             <InputGroupText className='d-flex justify-content-center align-items-center' 
-            style={{width: '50px', height:'50px', borderRadius: '50%', background: 'orange'}}>
+            style={{width: '50px', height:'50px', borderRadius: '50%', background: `${myBot?.accentColor}`}}>
              <VscSend className='text-white fw-bolder'/>
             </InputGroupText>
        </div>
+      </div>
       </div>    
     </Fragment>
   )
