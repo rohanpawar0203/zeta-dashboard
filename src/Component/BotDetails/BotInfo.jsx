@@ -32,6 +32,7 @@ import {BsCheckCircle} from 'react-icons/bs'
 import { BotCreate } from "../../api";
 import Customize from "./components/Customize";
 import Share from "./components/Share";
+import ChatBot from "./components/ChatBot";
 
 const BotInfoContent = ({boatId}) => {
   console.log('got here boat id ', boatId);
@@ -76,6 +77,8 @@ const BotInfoContent = ({boatId}) => {
       <Card>
         <CardBody>
           <Nav className="nav-pills">
+            <div className="w-100  d-flex justify-content-center align-items-center">
+            <div style={{background: 'whitesmoke'}} className="d-flex border border-lightgray p-1 rounded">
             <NavItem>
               <NavLink  className={pillTab === '1' ? 'active cursor-pointer' : 'cursor-pointer'} onClick={() => setpillTab('1')}>{"Settings"}</NavLink>
             </NavItem>
@@ -84,15 +87,18 @@ const BotInfoContent = ({boatId}) => {
             </NavItem>
             <NavItem>
             </NavItem>
+            </div>
+            </div>
           </Nav>
-          <TabContent activeTab={pillTab}>
+          <TabContent activeTab={pillTab} className="position-relative">
             <TabPane className="fade show h-100" tabId="1">
             <Customize myBot={myBot} setMyBot={setMyBot}/>
             </TabPane>
-            <TabPane tabId="2">
+              <TabPane tabId="2" className="vh-75">
             <Share myBot={myBot}/>
             </TabPane>
           </TabContent>
+          <ChatBot />
         </CardBody>
       </Card>
     </Col>

@@ -52,7 +52,7 @@ const Customize = ({ myBot, setMyBot }) => {
           <Col sm="12">
             <Card className="shadow-none">
               <CardHeader className="p-0 m-0 mt-2">
-                <H5 attrH5={{ className: "my-0 mt-2" }}>{"CustomStyles"}</H5>
+                <H5 attrH5={{ className: "my-0 mt-2" }}>{"Customize Bot"}</H5>
               </CardHeader>
               <CardBody className="p-0 m-0 pt-2">
                 <Fragment>
@@ -106,7 +106,7 @@ const Customize = ({ myBot, setMyBot }) => {
                         </div>
                     </Row>
                     <Row>
-                    <Col md="8 mb-3">
+                    <Col md="4 mb-3">
                         <Label htmlFor="validationCustom01">
                           {"Subheading"}
                         </Label>
@@ -119,6 +119,22 @@ const Customize = ({ myBot, setMyBot }) => {
                         />
                         <span>
                           {errors.subHeading && "* Subheading is required"}
+                        </span>
+                        <div className="valid-feedback">{"Looks good!"}</div>
+                      </Col>
+                      <Col md="4 mb-3">
+                        <Label htmlFor="validationCustom01">
+                          {"Input Box Placeholder"}
+                        </Label>
+                        <input
+                          className="form-control"
+                          name="inputboxPlaceholder"
+                          type="text"
+                          placeholder="Input Box Placeholder"
+                          {...register("inputboxPlaceholder", { required: true })}
+                        />
+                        <span>
+                          {errors.inputboxPlaceholder && "* Input Box Placeholder"}
                         </span>
                         <div className="valid-feedback">{"Looks good!"}</div>
                       </Col>
@@ -142,22 +158,7 @@ const Customize = ({ myBot, setMyBot }) => {
                       </Col>
                     </Row>
                     <Row>
-                    <Col md="8 mb-3">
-                        <Label htmlFor="validationCustom01">
-                          {"Input Box Placeholder"}
-                        </Label>
-                        <input
-                          className="form-control"
-                          name="inputboxPlaceholder"
-                          type="text"
-                          placeholder="Input Box Placeholder"
-                          {...register("inputboxPlaceholder", { required: true })}
-                        />
-                        <span>
-                          {errors.inputboxPlaceholder && "* Input Box Placeholder"}
-                        </span>
-                        <div className="valid-feedback">{"Looks good!"}</div>
-                      </Col>
+                    
                     </Row>
                     <Btn attrBtn={{ color: "primary" }}>{"Submit form"}</Btn>
                   </Form>
