@@ -45,7 +45,7 @@ const ChatBot = ({myBot, setMyBot}) => {
         <div className="mb-2">
         <BigBot myBot={myBot}/>
         </div>
-        <div onClick={() => {setbot('smallBot')}} style={{width: '50px', height: '50px', borderRadius: '50%', background: 'purple'}} className='d-flex align-items-center justify-content-center'> 
+        <div onClick={() => {setbot('smallBot')}} style={{width: '50px', height: '50px', borderRadius: '50%', background: myBot?.accentColor}} className='d-flex align-items-center justify-content-center'> 
         <BsChevronDown  style={{width: '30px', height: '30px', color: 'white', fontWeight: '600'}}/>
         </div> 
        </div>

@@ -2,6 +2,7 @@ import React from 'react'
 import { RxCross2 } from 'react-icons/rx'
 
 const SmallBot = ({setcloseSmallBot, myBot}) => {
+  console.log('bot info ', myBot);
   return (
     <div style={{width:'300px', borderRadius: '10px', boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px', zIndex: '3', background:'white'}} className='border  p-3'>
     <div className="w-100 d-flex align-items-center justify-content-between mb-3">
@@ -13,7 +14,7 @@ const SmallBot = ({setcloseSmallBot, myBot}) => {
        <RxCross2 style={{width: '20px', height: '20px'}} />
       </div>
     </div>
-    <p className='m-0' style={{fontSize: '16px'}}>Hey there, how can I help you?</p>
+    <p className='m-0' style={{fontSize: '16px'}}>{myBot?.welcomeMessage}</p>
    </div>
   )
 }

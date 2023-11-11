@@ -2,12 +2,12 @@ import React, { Fragment, useContext } from 'react';
 import { Media } from 'reactstrap';
 import { H4, H5 } from '../../../../../AbstractElements';
 
-const ChatHeader = () => {
+const ChatHeader = ({myBot}) => {
   
   
   return (
     <Fragment>
-      <div style={{background: 'orange', borderTopLeftRadius: '12px', borderTopRightRadius: '12px'}} className="w-100 d-flex flex-column align-items-center  text-white p-2">
+      <div style={{background: myBot?.accentColor, borderTopLeftRadius: '12px', borderTopRightRadius: '12px'}} className="w-100 d-flex flex-column align-items-center  text-white p-2">
         <H4 attrH4={{className:'my-3 fw-bolder'}}>Ulai</H4>
         <img  src="https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75"
                     width={"60px"}
