@@ -36,6 +36,7 @@ export const MENUITEMS = [
         ]
     },
     {
+
         menutitle: 'File Manager',
         Items: [
             { path: `${process.env.PUBLIC_URL}/filemanager`, bookmark: true, icon: FilemanagerSvg, title: 'File Manager', type: 'link' }
@@ -51,6 +52,12 @@ export const MENUITEMS = [
         menutitle: 'Store',
         Items: [
             { path: `${process.env.PUBLIC_URL}/store`, bookmark: true, icon: FilemanagerSvg, title: 'Store', type: 'link' }
+        ]
+    },
+    {
+        menutitle: 'Tickets',
+        Items: [
+            { path: `${process.env.PUBLIC_URL}/tickets`, bookmark: true, icon: FilemanagerSvg, title: 'Tickets', type: 'link' }
         ]
     },
     {
