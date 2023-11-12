@@ -7,11 +7,12 @@ import { Col, Card, CardHeader, Table,
     Dropdown,
     DropdownToggle, } from 'reactstrap';
 import { useNavigate } from 'react-router';
-import { H5 } from '../../../AbstractElements';
+import { H4, H5 } from '../../../AbstractElements';
 import AutomaiteBackend from './automaiteBackend';
 import UpdateAgentFormModal from './UpdateAgentFormModal';
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import axios from 'axios';
+import AgentDeleteModal from './AgentDeleteModal';
 
 
 const AgentsTable = () => {
@@ -21,6 +22,8 @@ const AgentsTable = () => {
     const history = useNavigate();
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
+    const [deleteModal, setdeleteModal] = useState(false);
+    const toggleDeleteModal = () => setdeleteModal(!modal);
     const [agentID, setagentID] = useState('')
     const [updatemodal, setupdateModal] = useState(false);
     const [HoveredAgent, setHoveredAgent] = useState(false);
@@ -129,7 +132,7 @@ const AgentsTable = () => {
                         }}
                         className="d-flex justify-content-center align-items-center rounded"
                         onMouseEnter={() => {
-                          setHoveredAgent(item?.productId);
+                          setHoveredAgent(item?._id);
                         }}
                         onMouseLeave={() => {
                           setHoveredAgent('');
@@ -152,7 +155,10 @@ const AgentsTable = () => {
                       }}>
                         <H5 attrH5={{ className: "my-0 ms-2 fw-bolder mb-1" }}>Edit Agent</H5>
                       </DropdownItem>
-                      <DropdownItem onClick={() => {}}>
+                      <DropdownItem onClick={() => {
+                        setagentID(item?._id);
+                        toggleDeleteModal();
+                      }}>
                       <H5 attrH5={{ className: "my-0 ms-2 fw-bolder mb-1" }}>Delete Agent</H5>
                       </DropdownItem>
                     </DropdownMenu>
@@ -163,16 +169,22 @@ const AgentsTable = () => {
                 }
               </tbody>
             </Table>
-            <UpdateAgentFormModal modal={modal} NewMessage={'New Bot'} toggle={toggle} title='Update Agent' 
+            <UpdateAgentFormModal modal={modal} NewMessage={'Update Agent'} toggle={toggle} title='Update Agent' 
             agentUpdatePayload={agentUpdatePayload} setagentUpdatePayload={setagentUpdatePayload} 
             fetchAgentsData={handleGetData} 
             agentID={agentID}></UpdateAgentFormModal>
+            <AgentDeleteModal title={'Delete Agent'} modal={deleteModal} toggle={toggleDeleteModal} event={() => {handleDelete(agentID)}}/>
           </div>
         </Card>
       </Col>
       ) : 
       (
-      <h1>You don't have any agents</h1>
+       <div style={{height: '75vh'}} className='w-100 d-flex flex-column justify-content-center align-items-center bg-white'>
+        <H4 attrH4={{className: 'my-2'}}>You Don't have any agents</H4>
+        <button type="button" class="btn btn-success" onClick={() => {
+            history(`${process.env.PUBLIC_URL}/add-agents`)
+        }}>Create New Agent</button>
+       </div>
       )}
     </Fragment>
   )

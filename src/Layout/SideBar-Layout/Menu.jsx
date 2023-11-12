@@ -60,6 +60,12 @@ export const MENUITEMS = [
         ]
     },
     {
+        menutitle: 'Agents',
+        Items: [
+            { path: `${process.env.PUBLIC_URL}/add-agents`, bookmark: true, icon: FilemanagerSvg, title: 'Add Agents', type: 'link' }
+        ]
+    },
+    {
         menutitle: 'Bot',
         Items: [
             { path: `${process.env.PUBLIC_URL}/bot`, bookmark: true, icon: FilemanagerSvg, title: 'Bot', type: 'link' }
