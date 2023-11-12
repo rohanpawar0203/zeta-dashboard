@@ -36,4 +36,5 @@ export const customUrl = `${process.env.REACT_APP_API_BASE_URL}/custom-store`;
 export const crawlerUrl = `${process.env.REACT_APP_API_BASE_URL}/webCrawler`;
 export const BotCreate = `${process.env.REACT_APP_API_BASE_URL}/bot`;
 export const ProductsListAPI = `${process.env.REACT_APP_API_BASE_URL}/product-list`;
+export const AgentAPI = `${process.env.REACT_APP_API_BASE_URL}/agent`;
 
