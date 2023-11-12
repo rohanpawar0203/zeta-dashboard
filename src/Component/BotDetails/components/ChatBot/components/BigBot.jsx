@@ -4,6 +4,7 @@ import {VscSend} from 'react-icons/vsc'
 import ChatHeader from './ChatHeader';
 import ScrollBar from 'react-perfect-scrollbar';
 import { toast } from 'react-toastify';
+import { BotCreate } from '../../../../../api';
 const BigBot = ({myBot}) => {
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState("");
@@ -25,7 +26,7 @@ const BigBot = ({myBot}) => {
     setUserMessage("");
 
     try {
-      const response = await fetch("https://www.ulai.in/backend/bot/chat", {
+      const response = await fetch(`${BotCreate}/chat`, {
         method: "POST",
         body: JSON.stringify(sendData),
         headers: {

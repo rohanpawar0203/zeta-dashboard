@@ -135,6 +135,7 @@ import Steps from '../Pages/Bonus UI/Steps';
 import Bot from '../Pages/Bot';
 import Bots from '../Pages/Bots';
 import BotInfo from '../Pages/Bot Info';
+import Products2 from '../Pages/Products';
 
 
 export const routes = [
@@ -158,6 +159,7 @@ export const routes = [
     { path: `${process.env.PUBLIC_URL}/kanbanboard`, Component: <KanbanBoard /> },
 
     { path: `${process.env.PUBLIC_URL}/ecommerce/product`, Component: <Products /> },
+    { path: `${process.env.PUBLIC_URL}/products`, Component: <Products2 /> },
     { path: `${process.env.PUBLIC_URL}/ecommerce/productpage`, Component: <ProductPage /> },
     { path: `${process.env.PUBLIC_URL}/ecommerce/productlist`, Component: <ProductList /> },
     { path: `${process.env.PUBLIC_URL}/ecommerce/paymentdetails`, Component: <PaymentDetails /> },
