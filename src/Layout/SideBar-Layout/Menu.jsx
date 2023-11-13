@@ -55,6 +55,12 @@ export const MENUITEMS = [
         ]
     },
     {
+        menutitle: 'Request a feature',
+        Items: [
+            { path: `${process.env.REACT_APP_API_ULAI_CANNY}`, bookmark: true, icon: FilemanagerSvg, title: 'Request a feature', type: 'link' }
+        ]
+    },
+    {
         menutitle: 'Tickets',
         Items: [
             { path: `${process.env.PUBLIC_URL}/tickets`, bookmark: true, icon: FilemanagerSvg, title: 'Tickets', type: 'link' }
@@ -64,6 +70,12 @@ export const MENUITEMS = [
         menutitle: 'Agents',
         Items: [
             { path: `${process.env.PUBLIC_URL}/agents`, bookmark: true, icon: FilemanagerSvg, title: 'Agents', type: 'link' }
+        ]
+    },
+    {
+        menutitle: 'Custom Flow',
+        Items: [
+            { path: `${process.env.PUBLIC_URL}/custom-chat-flow`, bookmark: true, icon: FilemanagerSvg, title: 'Custom Flow', type: 'link' }
         ]
     },
     {

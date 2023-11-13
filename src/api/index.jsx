@@ -38,4 +38,8 @@ export const BotCreate = `${process.env.REACT_APP_API_BASE_URL}/bot`;
 export const ProductsListAPI = `${process.env.REACT_APP_API_BASE_URL}/product-list`;
 export const AgentAPI = `${process.env.REACT_APP_API_BASE_URL}/agent`;
 export const TicketsAPI = `${process.env.REACT_APP_API_BASE_URL}/tickets`;
+export const CreateContextAPI = `${process.env.REACT_APP_API_BASE_URL}/context/add`;
+export const DeleteContextAPI = `${process.env.REACT_APP_API_BASE_URL}/context/delete`;
+export const GetAllContextsAPI = `${process.env.REACT_APP_API_BASE_URL}/context/getAll`;
+export const GetContextAPI = `${process.env.REACT_APP_API_BASE_URL}/context/`;
 

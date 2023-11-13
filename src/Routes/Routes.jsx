@@ -139,6 +139,7 @@ import Products2 from '../Pages/Products';
 import Agents from '../Pages/Agents'
 import AddAgents from '../Pages/Add Agents'
 import Tickets from '../Pages/Tickets'
+import CustomFlow from '../Pages/Custom Flow'
 
 
 export const routes = [
@@ -159,6 +160,7 @@ export const routes = [
     { path: `${process.env.PUBLIC_URL}/tickets`, Component: <Tickets /> },
     { path: `${process.env.PUBLIC_URL}/agents`, Component: <Agents /> },
     { path: `${process.env.PUBLIC_URL}/add-agents`, Component: <AddAgents /> },
+    { path: `${process.env.PUBLIC_URL}/custom-chat-flow`, Component: <CustomFlow /> },
     { path: `${process.env.PUBLIC_URL}/bot`, Component: <Bot /> },
     { path: `${process.env.PUBLIC_URL}/bots`, Component: <Bots /> },
     { path: `${process.env.PUBLIC_URL}/bot/:boatId`, Component: <BotInfo /> },
