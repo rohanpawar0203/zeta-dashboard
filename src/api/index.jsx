@@ -42,4 +42,5 @@ export const CreateContextAPI = `${process.env.REACT_APP_API_BASE_URL}/context/a
 export const DeleteContextAPI = `${process.env.REACT_APP_API_BASE_URL}/context/delete`;
 export const GetAllContextsAPI = `${process.env.REACT_APP_API_BASE_URL}/context/getAll`;
 export const GetContextAPI = `${process.env.REACT_APP_API_BASE_URL}/context/`;
+export const GetConversationsAPI = `${process.env.REACT_APP_API_BASE_URL}/conversation`;
 

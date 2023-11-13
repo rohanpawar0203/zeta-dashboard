@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Context from './index';
-import { ChatApi, ChatMemberApi } from '../../api';
+import { ChatApi, ChatMemberApi, GetConversationsAPI } from '../../api';
 
 const ChatProvider = (props) => {
   const [allMemberss, setAllMembers] = useState([]);
@@ -10,19 +10,29 @@ const ChatProvider = (props) => {
   const [currentUserr, setCurrentUser] = useState();
   const [selectedUserr, setSelectedUser] = useState();
   const [sidebarToggle, setSidebarToggle] = useState(false);
+  const userData = JSON.parse(localStorage.getItem('currentUser'));
+  const token = localStorage.getItem('token');
 
   const getChatMembersData = async () => {
     try {
-      await axios.get(ChatMemberApi).then((resp) => {
-        setAllMembers(resp.data);
-      });
+      const orgId = userData.userId ? userData.userId : userData._id;
+      const resp = await axios.get(
+        `${GetConversationsAPI}/${orgId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setMembers(resp.data);
+      console.log('memberss ', resp.data);
     } catch (error) {
       console.log('error', error);
     }
   };
   useEffect(() => {
     getChatMembersData();
-  }, [setAllMembers]);
+  }, []);
 
   const getMembersSuccess = (chats) => {
     setCurrentUser(chats[0]);
@@ -159,7 +169,7 @@ const ChatProvider = (props) => {
   };
 
   const changeChat = (userID) => {
-    setSelectedUser(allMemberss.find((x) => x.id === userID));
+    setSelectedUser(memberss.find((x) => x._id === userID));
   };
 
   const searchMember = (keywords) => {

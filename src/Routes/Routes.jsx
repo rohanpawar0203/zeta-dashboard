@@ -140,6 +140,7 @@ import Agents from '../Pages/Agents'
 import AddAgents from '../Pages/Add Agents'
 import Tickets from '../Pages/Tickets'
 import CustomFlow from '../Pages/Custom Flow'
+import ChatsPanel from '../Pages/Chats Panel/ChatApp'
 
 
 export const routes = [
@@ -183,6 +184,7 @@ export const routes = [
     { path: `${process.env.PUBLIC_URL}/email/compose`, Component: <Compose /> },
 
     { path: `${process.env.PUBLIC_URL}/chat/chatapp`, Component: <ChatApp /> },
+    { path: `${process.env.PUBLIC_URL}/chats-panel`, Component: <ChatsPanel /> },
     { path: `${process.env.PUBLIC_URL}/chat/videocall`, Component: <VideoChat /> },
 
     { path: `${process.env.PUBLIC_URL}/users/userprofile`, Component: <UsersProfile /> },
