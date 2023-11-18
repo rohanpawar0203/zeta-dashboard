@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import ChatAppContext from '../../../_helper/chat-app/index';
 import { Image, LI, UL } from '../../../AbstractElements';
 import errorImg from '../../../assets/images/search-not-found.png';
@@ -7,12 +7,14 @@ import CurrentUser from './CurrentUser';
 import { Media } from 'reactstrap';
 import { FaRegUser } from 'react-icons/fa';
 import UserProfile from '../../../assets/images/user/userProfile.png'
-import appStore from '../../Live Chats/Client/AppStore';
+import { toast } from 'react-toastify';
 
-const ChatStatus = ({}) => {
-  const { selectedUserr, memberss, currentUserr, chatss, changeChat, createNewChatAsyn, setCurrentLocationPathName } = useContext(ChatAppContext);
+const ChatStatus = ({checkValid}) => {
+  const { selectedUserr, memberss, currentUserr, chatss, changeChat, createNewChatAsyn, appStore, setCurrentLocationPathName} = useContext(ChatAppContext);
+  const { liveConversation, isConnected,  } = appStore;
+;
+
   const userData = JSON.parse(localStorage.getItem('currentUser'));
-  const { liveConversation, isConnected,  } = appStore();
   const changeChatClick = (e, selectedUserId) => {
     // const currentUserId = currentUserr.id;
     const currentChat = memberss.find(
@@ -35,19 +37,19 @@ const ChatStatus = ({}) => {
       <div className="chat-box">
         <div className="chat-left-aside">
           {/* <CurrentUser /> */}
-          <h5>All Chats</h5>
+          <h5>Your Inbox</h5>
           <div className="people-list" id="people-list">
             <SearchChatList />
-            {memberss && memberss.length > 0 ? (
+            {liveConversation && liveConversation.length > 0 ? (
               <UL attrUL={{ className: 'simple-list list custom-scrollbar' }}>
-                {memberss.filter((x) => x._id !== userData._id).map((item, i) => {
+                {liveConversation?.map((item, i) => {
                   return (
                     <LI  attrLI={{
                       className: `clearfix border border-white ${activeChat === item?._id && 'bg-light border-primary'}`,
                       style: {cursor: 'pointer'},
                       onClick: (e) => {
                         activeChat = item._id;
-                        changeChatClick(e, item._id)
+                        checkValid(item)
                         console.log(activeChat, item._id);
                       }
                     }} key={i}>
@@ -81,3 +83,7 @@ const ChatStatus = ({}) => {
   );
 };
 export default ChatStatus;
+
+/*
+
+*/

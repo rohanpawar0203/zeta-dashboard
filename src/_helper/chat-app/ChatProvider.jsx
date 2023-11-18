@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import Context from './index';
 import { ChatApi, ChatMemberApi, GetConversationsAPI } from '../../api';
 
-const ChatProvider = (props) => {
+export const ChatProvider = (props) => {
   const [allMemberss, setAllMembers] = useState([]);
   const [memberss, setMembers] = useState();
   const [chatss, setChats] = useState([]);
@@ -12,6 +12,41 @@ const ChatProvider = (props) => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
   const userData = JSON.parse(localStorage.getItem('currentUser'));
   const token = localStorage.getItem('token');
+  const [appStore, setappStore] = useState({
+  isConnected: false,
+  userData: "",
+  token: "",
+  conversation: [],
+  allAgents: [],
+  liveConversationNewEntry: [],
+  currentLocationPathname: "",
+  // setUserData: (data) => set({ userData: data }),
+//   setConversation: (data) => set({ conversation: data }),
+  // setToken: (data) => set({ token: data }),
+  profileCreated: false,
+  // setProfileCreated: (status) => set({ profileCreated: status }),
+  botCreated: false,
+  // setBotCreated: (status) => set({ botCreated: status }),
+  newProductModalId: null,
+  // setNewProductModalId: (status) => set({ newProductModalId: status }),
+  liveConversation: [],
+  // setLiveConversation: (data) => set({ liveConversation: data }),
+  // setLiveConversationNewEntry: (data) => set({ liveConversationNewEntry: data }),
+  // setIsConnected: (status) => set({ isConnected: status }),
+  // setAllAgents: (data) => set({ allAgents: data }),
+  // setCurrentLocationPathName: (data) => set({ currentLocationPathname: data }),
+  })
+
+  const setUserData = (data) => setappStore((pre) => ({...pre, userData: data }));
+  const setConversation = (data) => setappStore((pre) => ({...pre, conversation: data }));
+  const setToken = (data) => setappStore((pre) => ({...pre, token: data }));
+  const setProfileCreated = (data) => setappStore((pre) => ({...pre, profileCreated: data }));
+  const setBotCreated = (data) => setappStore((pre) => ({...pre, botCreated: data }));
+  const setNewProductModalId = (data) => setappStore((pre) => ({...pre, newProductModalId: data }));
+  const setLiveConversation = (data) => setappStore((pre) => ({...pre, liveConversation: data }));
+  const setLiveConversationNewEntry = (data) => setappStore((pre) => ({...pre, liveConversationNewEntry: data }));
+  const setIsConnected = (data) => setappStore((pre) => ({...pre, isConnected: data }));
+  const setAllAgents = (data) => setappStore((pre) => ({...pre, allAgents: data }));
 
   const getChatMembersData = async () => {
     try {
@@ -204,6 +239,17 @@ const ChatProvider = (props) => {
         createNewChatAsyn: createNewChatAsyn,
         changeChat: changeChat,
         searchMember: searchMember,
+         setUserData,
+         setConversation,
+         setToken,
+         setProfileCreated,
+         setBotCreated,
+         setNewProductModalId,
+         setLiveConversation,
+         setLiveConversationNewEntry,
+         setIsConnected,
+         setAllAgents,
+         appStore
       }}
     >
       {props.children}
@@ -211,4 +257,4 @@ const ChatProvider = (props) => {
   );
 };
 
-export default ChatProvider;
+

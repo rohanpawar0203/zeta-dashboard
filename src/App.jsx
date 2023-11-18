@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import "./App.css";
 import Routers from "./Routes";
 import BookmarkProvider from "./_helper/bookmark/BookmarkProvider";
-import ChatProvider from "./_helper/chat-app/ChatProvider";
+import {ChatProvider} from "./_helper/chat-app/ChatProvider";
 import ContactProvider from "./_helper/Contact/ContactProvider";
 import CartProvider from "./_helper/ecommerce/cart/CartProvider";
 import FilterProvider from "./_helper/ecommerce/filter/FilterProvider";

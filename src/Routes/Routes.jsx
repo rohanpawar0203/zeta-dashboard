@@ -141,6 +141,7 @@ import AddAgents from '../Pages/Add Agents'
 import Tickets from '../Pages/Tickets'
 import CustomFlow from '../Pages/Custom Flow'
 import ChatsPanel from '../Pages/Chats Panel/ChatApp'
+import LiveChatPanel from '../Pages/Live Chats/ChatApp'
 
 
 export const routes = [
@@ -185,6 +186,7 @@ export const routes = [
 
     { path: `${process.env.PUBLIC_URL}/chat/chatapp`, Component: <ChatApp /> },
     { path: `${process.env.PUBLIC_URL}/chats-panel`, Component: <ChatsPanel /> },
+    { path: `${process.env.PUBLIC_URL}/live-chat`, Component: <LiveChatPanel /> },
     { path: `${process.env.PUBLIC_URL}/chat/videocall`, Component: <VideoChat /> },
 
     { path: `${process.env.PUBLIC_URL}/users/userprofile`, Component: <UsersProfile /> },

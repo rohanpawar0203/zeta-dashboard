@@ -41,6 +41,11 @@ export const TicketsAPI = `${process.env.REACT_APP_API_BASE_URL}/tickets`;
 export const CreateContextAPI = `${process.env.REACT_APP_API_BASE_URL}/context/add`;
 export const DeleteContextAPI = `${process.env.REACT_APP_API_BASE_URL}/context/delete`;
 export const GetAllContextsAPI = `${process.env.REACT_APP_API_BASE_URL}/context/getAll`;
-export const GetContextAPI = `${process.env.REACT_APP_API_BASE_URL}/context/`;
+export const GetContextAPI = `${process.env.REACT_APP_API_BASE_URL}/context`;
 export const GetConversationsAPI = `${process.env.REACT_APP_API_BASE_URL}/conversation`;
+export const LiveChatsAPI = `${process.env.REACT_APP_API_AGENT_LIVE_CHAT}`;
+export const AgentLiveChatAPI = `${process.env.REACT_APP_API_AGENT_LIVE_CHAT}/api`;
+export const AddQuestionAPI = `${process.env.REACT_APP_API_BASE_URL}/question/add`;
+export const EditQuestionAPI = `${process.env.REACT_APP_API_BASE_URL}/question/edit`;
+export const DeleteQuestionAPI = `${process.env.REACT_APP_API_BASE_URL}/question/delete`;
 

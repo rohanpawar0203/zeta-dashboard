@@ -84,7 +84,7 @@ const CustomFlowContent = () => {
             <ContextTable data={data} getAllContexts={getAllContexts} setEditContext={setEditContext}/> 
            ) : 
            <QuestionsContextProvider>
-           <ConxtEditElement contextID={editContext?.contextID}/>
+           <ConxtEditElement contextID={editContext?.contextID} setEditContext={setEditContext}/>
            </QuestionsContextProvider> }
           <CreateContextModal modal={modal} NewMessage={'Create Context'} 
           toggle={toggle} title='Create Context' setData={setData}/>

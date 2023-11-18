@@ -11,7 +11,7 @@ import { MdAddCircle } from 'react-icons/md';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import { GetQuestionsContextValues } from '../contexts/QuestionsContext';
 import AddQuestion from './AddQuestion';
-const ConxtEditElement = ({contextID}) => {
+const ConxtEditElement = ({contextID, setEditContext}) => {
     const { currentQuestion, setCurrentQuestion, quiz, setQuiz}  = GetQuestionsContextValues();
 
   const fetchQuizData = async (contextID) => {
@@ -31,14 +31,16 @@ const ConxtEditElement = ({contextID}) => {
       const data = await fetchQuizData(contextID);
       setQuiz(data?.data);
     };
-    fetchData();
+    if(contextID){
+      fetchData();
+    }
   }, [contextID]);
 
   return (
     <Fragment>
       <Col className="col-12">
        <div className="d-flex align-items-center sub-title">
-       <BiArrowBack style={{height: '25px', width: '25px'}}/>
+       <BiArrowBack style={{height: '25px', width: '25px'}} onClick={() => {setEditContext((pre) => ({mode: false, contextID: null}))}}/>
         <H4  attrH4={{ className: 'fw-bolder my-0 mx-2' }} >{quiz?.title}</H4>
        <AiFillEdit style={{height: '20px', width: '20px'}}/>
        </div>

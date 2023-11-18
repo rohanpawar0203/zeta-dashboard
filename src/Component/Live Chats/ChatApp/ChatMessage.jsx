@@ -3,12 +3,15 @@ import ChatAppContext from '../../../_helper/chat-app/index';
 import { Image, LI, UL } from '../../../AbstractElements';
 import start_conversion from '../../../assets/images/start-conversion.jpg';
 import  UserProfile  from '../../../assets/images/user/userProfile.png';
+import { toast } from 'react-toastify';
+import { joinSession } from '../Client/wss';
+import appStore from '../Client/AppStore';
 
-const ChatMessage = () => {
-  const { allMemberss, chatss, selectedUserr, currentUserr, fetchChatMemberAsyn, fetchChatAsyn, } = useContext(ChatAppContext);
+const ChatMessage = ({viewConversation,showKeyboard, setViewConversation}) => {
+  const { allMemberss, chatss, selectedUserr, currentUserr, fetchChatMemberAsyn, fetchChatAsyn} = useContext(ChatAppContext);
   const user = JSON.parse(localStorage.getItem('currentUser'));
-  const botImgSrc = 'https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75';
-
+  const { liveConversation, setLiveConversation} = appStore();
+  ;
   const selectedChat = selectedUserr?.chat ? selectedUserr?.chat : [];
   var activeChat = 0;
   if (selectedUserr != null) activeChat = selectedUserr.id;
@@ -16,25 +19,35 @@ const ChatMessage = () => {
   const dynamicImage = (image) => {
     return images(`./${image}`);
   };
+  
+  
+  useEffect(() => {
+    if (showKeyboard == true) {
+      toast.success("Live chat connected!");
+      // console.log(viewConversation.roomId)
+      joinSession(viewConversation.roomId);
+    }
+  }, []);
+
   return (
     <Fragment>
-      {allMemberss && chatss && selectedUserr ?
+      {viewConversation?.chat ?
         <div  className="chat-history chat-msg-box custom-scrollbar">
-          {selectedChat && selectedChat.length > 0 ? (
-            selectedChat.map((item, index) => {
+          {viewConversation?.chat && viewConversation?.chat?.length > 0 ? (
+            viewConversation?.chat?.map((item, index) => {
               return (
                 <UL attrUL={{ className: 'simple-list' }} key={index}>
                   <LI attrLI={{ className: 'clearfix' }}>
-                    <div style={{backgroundColor:`${item?.from !== 'BOT' ? '#18FFFF' : '#64FFDA' }`, color: 'black'}} className={`message my-message  ${item?.from !== "BOT"
+                    <div style={{backgroundColor:'#bbdefb', color: 'black'}} className={`message my-message  ${item?.sender !== user?._id
                       ? '' : 'pull-right other-message'}`}>
                       <Image attrImage={{
-                        src: `${item?.from !== 'BOT' ? UserProfile : botImgSrc }`,
-                        className: `rounded-circle ${item?.from !== "BOT"
+                        src: `${UserProfile}`
+                        , className: `rounded-circle ${item.sender !== user?._id
                           ? 'float-start ' : 'float-end '}chat-user-img img-30`, alt: ''
                       }} />
                       < div className="message-data text-end">
                         <span className="message-data-time">
-                        {`${item?.from}`}   {(new Date(item?.time)).toLocaleString()}
+                        {`+${item?.phoneNumber}`}   {(new Date(item?.time)).toLocaleString()}
                         </span>
                       </div>
                       {`${item?.message}`}

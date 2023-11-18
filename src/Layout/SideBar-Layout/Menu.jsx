@@ -85,6 +85,12 @@ export const MENUITEMS = [
         ]
     },
     {
+        menutitle: 'Live Chats',
+        Items: [
+            { path: `${process.env.PUBLIC_URL}/live-chat`, bookmark: true, icon: FilemanagerSvg, title: 'Live Chats', type: 'link' }
+        ]
+    },
+    {
         menutitle: 'Agents',
         Items: [
             { path: `${process.env.PUBLIC_URL}/add-agents`, bookmark: true, icon: FilemanagerSvg, title: 'Add Agents', type: 'link' }
