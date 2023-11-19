@@ -86,8 +86,16 @@ const ProductsTable = () => {
     <Fragment>
       <Col sm="12">
         <Card>
-          <CardHeader>
+          <CardHeader className='w-100 d-flex justify-content-between'>
+            <div>
             <H5>{'Products'}</H5>
+            </div>
+            <div>
+            <button type="button" class="btn btn-success" onClick={() => {
+            setselectedProductId('');
+            toggle();
+          }}>Add New Product</button>
+            </div>
           </CardHeader>
           <div className="table-responsive">
             <Table>
@@ -115,7 +123,7 @@ const ProductsTable = () => {
                         if(!pre){
                          return item?.productId
                         }else{
-                        return pre?.productId?.split('').reverse().join('')
+                        return null;
                         }
                       })}}>
                     <DropdownToggle
@@ -149,6 +157,7 @@ const ProductsTable = () => {
                     </DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem onClick={() => {
+                        console.log(item?._id);
                         setselectedProductId(item?._id)
                         toggle();
                       }}>

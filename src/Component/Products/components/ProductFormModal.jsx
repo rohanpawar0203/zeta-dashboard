@@ -11,7 +11,7 @@ import { ProductsListAPI } from '../../../api';
 const ProductFormModal = ({modal, title, toggle, productID, fetchProductData}) => {
   const [initialData, setInitialData] = useState({});
   const { register, handleSubmit, formState: { errors } } = useForm({
-    defaultValues:{
+    values:{
       ...initialData
     }
   });
@@ -102,6 +102,7 @@ const ProductFormModal = ({modal, title, toggle, productID, fetchProductData}) =
           }
         );
         const response = await res.json();
+        console.log(response);
         setInitialData({
           productId: response?.productId || "",
           productName: response?.productName || "",
@@ -128,7 +129,7 @@ const ProductFormModal = ({modal, title, toggle, productID, fetchProductData}) =
       setInitialData({
           productId:  "",
           productName:  "",
-          productSku:  "",
+          productSku:  "",  
           productType:  "",
           price:  "",
       });
