@@ -38,24 +38,11 @@ const submitHandler = async (payload) => {
   .then((res) => {
     console.log(res.data.data);
     setData(res.data.data);
-    toast({
-      description: "Context created successfully",
-      position: "top",
-      status: "success",
-      isClosable: true,
-      duration: 4500,
-    });
+    toast.success("Context created successfully");
     toggle();
   })
   .catch((err) => {
-    toast({
-      description: "Something went wrong",
-      title: "",
-      position: "top",
-      status: "error",
-      isClosable: true,
-      duration: 4500,
-    });
+    toast.error("Something went wrong");
   });
   };
 

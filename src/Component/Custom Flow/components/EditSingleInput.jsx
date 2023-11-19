@@ -73,7 +73,7 @@ const EditSingleInput = (
             </Input>            
           </FormGroup>
            <div className="d-flex mt-3">
-            <div style={{width: '30%'}}></div>
+            <div style={{width: '50%'}}>
             <FormGroup >
             <Label>{'Next Question'}</Label>
             <Input  
@@ -102,7 +102,9 @@ const EditSingleInput = (
           <option value="">End Quiz</option>
             </Input>            
           </FormGroup>
-            <div style={{width: '30%'}} className="ms-3">
+            </div>
+           
+            <div style={{width: '50%'}} className="ms-3">
             <FormGroup>
                   <Label>{" Sku Id "}</Label>
                   <Input

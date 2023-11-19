@@ -9,6 +9,7 @@ import DeleteQuestionModal from "./DeleteQuestionModal";
 import EditMultipleOption from "./EditMultipleOption";
 import EditSingleInput from "./EditSingleInput";
 import EditContent from "./EditContent";
+import { AiOutlineDelete } from "react-icons/ai";
 
 const validateMultipleOptionChoices = (data) => {
     for (let i = 0; i < data.length; i++) {
@@ -84,8 +85,7 @@ const EditQuestion = () => {
         setCurrentQuestion(null);
       })
       .catch((err) => {
-        toast.success({title: err.response.data.error,
-        description: "Something went wrong"});
+        toast.error("Something went wrong");
       });
   };
 
@@ -98,25 +98,13 @@ const EditQuestion = () => {
         }
       )
       .then((res) => {
-        toast.success({
-          description: "Question removed successfully",
-          position: "top",
-          isClosable: true,
-          duration: 4500,
-        });
+        toast.success("Question removed successfully");
         setQuiz(res.data.data);
         setCurrentQuestion(null);
       })
       .catch((err) => {
         console.log(err);
-        toast.success({
-          title: err.response.data.error,
-          description: "Something went wrong",
-          status: "error",
-          position: "top",
-          isClosable: true,
-          duration: 4500,
-        });
+        toast.error("Something went wrong");
       });
   };
   return (
@@ -152,24 +140,27 @@ const EditQuestion = () => {
             setContentChoice={setContentChoice}
           />
         ) : null}
-            <div className="d-flex gap-2 justify-content-end">
+            <div className="d-flex gap-2 align-items-center justify-content-end">
                 <DeleteQuestionModal 
                 modal={modal}
                 title={'Delete Question'} 
                 toggle={toggle} 
                 event={() => {handleDeleteQuestion(currentQuestion._id)}} />
+                <div className="d-flex gap-1 align-items-center">
+                <AiOutlineDelete style={{width: '20px', height: '20px', color: 'red', cursor: 'pointer'}} onClick={toggle}/>
                 <Btn
             attrBtn={{
               color: "success",
               size: "md",
               active: true,
               disabled: false,
-              outline: false,
-              type: 'submit'
+              outline: false
             }}
           >
             {'UPDATE QUESTION'}
           </Btn>
+                </div>
+                
             </div>
             </Form>
          </div>

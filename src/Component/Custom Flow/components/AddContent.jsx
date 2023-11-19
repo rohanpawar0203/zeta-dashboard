@@ -58,7 +58,7 @@ const AddContent = () => {
       })
       .catch((err) => {
         console.log(err);
-        toast("Something went wrong");
+        toast.error("Something went wrong");
       });
   };
 

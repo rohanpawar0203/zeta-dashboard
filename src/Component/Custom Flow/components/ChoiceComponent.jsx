@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Btn, H1, H4, H5 } from '../../../AbstractElements';
+import { Btn, H1, H4, H5, Image } from '../../../AbstractElements';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
 import { toast, useToast } from 'react-toastify';
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
@@ -25,13 +25,7 @@ const ChoiceComponent = ({setMultipleChoice, multipleChoice, id}) => {
 
   const handleAdd = () => {
     if (singleChoice.title === "" || !singleChoice.title) {
-      toast({
-        description: "Option content cannot be empty",
-        status: "error",
-        duration: 4500,
-        position: "top",
-        isClosable: "true",
-      });
+      toast.error( "Option content cannot be empty");
       return;
     }
     setStatus(status === "add" ? "edit" : "add");
@@ -58,8 +52,8 @@ const ChoiceComponent = ({setMultipleChoice, multipleChoice, id}) => {
   };
 
   return (
-    <div className='d-flex align-items-center  justify-content-end'>
-        <div style={{width: '80%'}} className='d-flex flex-column'>
+    <div className='w-100 d-flex align-items-center'>
+        <div style={{width: '100%'}} className='d-flex flex-column'>
         <div className='d-flex'>
          <div className='w-50'>
          <FormGroup>
@@ -79,9 +73,9 @@ const ChoiceComponent = ({setMultipleChoice, multipleChoice, id}) => {
                  <img src={singleChoice.imageUrl}
                   alt={singleChoice.title}
                   style={{
-                    width: "45px",
-                    height: "120px",
-                    border:"1px solid black",
+                    width: "100px",
+                    height: "100px",
+                    border:"1px solid lightgray",
                     objectFit: 'cover'
                   }}
                   className='me-3'
@@ -112,13 +106,14 @@ const ChoiceComponent = ({setMultipleChoice, multipleChoice, id}) => {
          </div>
         </div> 
         <div className='d-flex mt-1'>
-        <div className='w-50'>
+        <div className='w-auto'>
         <FormGroup>
             <Label>{'Next Question'}</Label>
             <Input  isDisabled={status === "edit"}
               onChange={handleChange}
               name="nextQuestion"
-              placeholder="Select next question"  >
+              placeholder="Select next question"  type='select'>
+              <option value="">Select next question</option>
             {quiz.allQuestions.map((el) => {
                 if (el.questionId._id !== currentQuestion._id) {
                   return (
@@ -141,7 +136,7 @@ const ChoiceComponent = ({setMultipleChoice, multipleChoice, id}) => {
           </FormGroup>
         </div>
 
-        <div className='w-50 mx-2'>
+        <div className='w-auto mx-2'>
         <FormGroup>
             <Label>{' Sku Id '}</Label>
             <Input onChange={(e) => {handleChange(e)}}  name="skuId"
@@ -150,12 +145,12 @@ const ChoiceComponent = ({setMultipleChoice, multipleChoice, id}) => {
             </Input>            
           </FormGroup>
         </div>
-        </div> 
-        </div>
-
-        <div style={{width: 'auto'}} className='d-flex align-items-center  justify-content-end'>
+         
+        <div style={{width: 'auto'}} className='d-flex flex-column align-items-center  justify-content-end'>
         {status === "add" ? (
-            <Btn
+           <FormGroup>
+           <Label>{' '}</Label>
+           <Btn
             attrBtn={{
               color: "info",
               size: "md",
@@ -163,12 +158,16 @@ const ChoiceComponent = ({setMultipleChoice, multipleChoice, id}) => {
               disabled: false,
               outline: true,
               onClick: () => {handleAdd()},
-              className: 'py-2 px-3'
+              className: 'py-2 px-3 my-0'
             }}
           >
             {'Add Option'}
           </Btn>
+         </FormGroup>
+           
         ) : (
+          <FormGroup>
+          <Label>{' '}</Label>
             <Btn
             attrBtn={{
               color: "success",
@@ -176,14 +175,20 @@ const ChoiceComponent = ({setMultipleChoice, multipleChoice, id}) => {
               active: true,
               disabled: false,
               outline: true,
-              onClick:{handleEdit},
-              className: 'py-2 px-3'
+              onClick: () => {handleEdit()},
+              className: 'py-2 px-3 my-0'
             }}
           >
             {'Edit Option'}
           </Btn>
+          </FormGroup>
         ) }
         </div>
+
+        </div> 
+        </div>
+
+        
     </div>
   )
 }

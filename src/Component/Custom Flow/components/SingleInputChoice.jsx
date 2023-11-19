@@ -16,7 +16,7 @@ const SingleInput = ({setSingleInputChoice, singleInputChoice}) => {
         setSingleInputChoice({ ...singleInputChoice, [name]: value });
       };
   return (
-    <div className='d-flex justify-content-between flex-1 align-items-center'>
+    <div className='d-flex gap-2 align-items-center'>
         <FormGroup>
             <Label>{'Next question *'}</Label>
             <Input onChange={(e) => {handleChange(e)}} name="nextQuestion" id="0" type="select" required=""  placeholder="Select next question"  >
@@ -37,10 +37,9 @@ const SingleInput = ({setSingleInputChoice, singleInputChoice}) => {
               );
             }
           })}
+          <option value="Select next question">Select next question</option>
           <option value="">End Quiz</option>
             </Input>            
-            {/* <span className='text-danger fw-bolder'>{errors.type && '* Question Type is required'}</span> */}
-            <div className="valid-feedback">{'Looks good!'}</div>
           </FormGroup>
           <FormGroup>
             <Label>{'Title *'}</Label>

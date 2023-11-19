@@ -11,6 +11,8 @@ import { MdAddCircle } from 'react-icons/md';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import { GetQuestionsContextValues } from '../contexts/QuestionsContext';
 import AddQuestion from './AddQuestion';
+import ScrollBar from 'react-perfect-scrollbar';
+import QuestionList from './QuestionList';
 const ConxtEditElement = ({contextID, setEditContext}) => {
     const { currentQuestion, setCurrentQuestion, quiz, setQuiz}  = GetQuestionsContextValues();
 
@@ -58,13 +60,17 @@ const ConxtEditElement = ({contextID, setEditContext}) => {
       </Col>
       <Row>
       <Col className='w-50 vh-75'>
-        <div className="shadow-sm shadow-showcase p-2 mx-0">
-          <H5 attrH5={{ className: 'm-0 f-18' }} >{SmallShadow}</H5>
+      <div style={{height: '550px'}} className="shadow-sm  shadow-showcase p-2 mx-0">
+        <ScrollBar className='vertical-scroll ps-container ps-theme-default ps-active-y h-100'>
+          <QuestionList contextID={contextID}/>
+          </ScrollBar>
         </div>
       </Col>
-      <Col className='w-50 vh-75'>
-        <div className="shadow-sm shadow-showcase p-2 mx-0">
+      <Col className='w-50'> 
+        <div style={{height: '550px'}} className="shadow-sm  shadow-showcase p-2 mx-0">
+        <ScrollBar className='vertical-scroll ps-container ps-theme-default ps-active-y h-100'>
           <AddQuestion />
+          </ScrollBar>
         </div>
       </Col>
       </Row>

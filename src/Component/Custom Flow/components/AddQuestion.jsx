@@ -47,7 +47,8 @@ const AddQuestion = () => {
       const { value, name } = e.target;
       setNewQuestion({ ...newQuestion, [name]: value });
     };
-    const handleAddQuestion = () => {
+    const handleAddQuestion = (e) => {
+      e.preventDefault();
       let payload = {};
       if (newQuestion?.type === "Single Input") {
         payload = {
@@ -83,13 +84,13 @@ const AddQuestion = () => {
           },
         })
         .then((res) => {
-          toast.success("Question added successfully")
           setQuiz(res.data.data);
           setCurrentQuestion(null);
+          toast.success("Question added successfully")
         })
         .catch((err) => {
           console.log(err);
-          toast.success("Something went wrong")
+          toast.error("Something went wrong")
         });
     };
   return (
@@ -100,13 +101,13 @@ const AddQuestion = () => {
             <H4 attr4={{className: 'my-2'}}>
                 <u>Add New Question</u>
             </H4>
-          <Form className="needs-validation" noValidate="" onSubmit={() => {handleAddQuestion()}}>
+          <Form className="needs-validation" noValidate="" onSubmit={(e) => {handleAddQuestion(e)}}>
           <FormGroup>
             <Label>{'Question Type *'}</Label>
             <Input onChange={(e) => {handleChange(e)}} name="type" value={newQuestion?.type} type="select" required={true}  placeholder="Select type">
+            <option value="">Select type</option>
             <option value="Multiple Choice">Multiple Choice</option>
             <option value="Single Input">Single Input</option>
-            <option value="">Select type</option>
             </Input>            
             {/* <span className='text-danger fw-bolder'>{errors.type && '* Question Type is required'}</span> */}
             <div className="valid-feedback">{'Looks good!'}</div>
@@ -154,7 +155,7 @@ const AddQuestion = () => {
         ) : currentQuestion === "content" ? (
           <AddContent/>
         ) : (
-          currentQuestion &&  <EditQuestion />
+          currentQuestion &&  <EditQuestion />  
         )}
     </div>
   )

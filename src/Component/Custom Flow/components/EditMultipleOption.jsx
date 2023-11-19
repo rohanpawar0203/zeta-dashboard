@@ -57,8 +57,8 @@ const EditMultipleOption = ({
     setMultipleChoice(updatedChoices);
   };
   return (
-    <div>
-      <FormGroup>
+    <div className="w-100 d-flex flex-column"> 
+        <FormGroup>
         <Label>{"Title *"}</Label>
         <Input
           onChange={(e) => {
@@ -102,11 +102,10 @@ const EditMultipleOption = ({
         {multipleChoice?.map((el) => (
           <div
             key={el._id}
-            style={{ borderBottom: '"1px solid lightgrey' }}
-            className="d-flex justify-content-end pb-2 mb-2 align-items-end mt-4"
+            style={{width: '100%', border: '1px solid black' }}
+            className="d-flex flex-column pb-2 mb-2 align-items-start mt-4"
           >
-            <div style={{ width: "80%" }} className="d-flex flex-column"></div>
-            <div className="d-flex">
+            <div className="d-flex" >
               <div style={{ width: "50%" }}>
                 <FormGroup>
                   <Label>{"Option Title *"}</Label>
@@ -133,10 +132,11 @@ const EditMultipleOption = ({
                           src={el.imageUrl}
                           alt={el.title}
                           style={{
-                            width: "45px",
-                            height: "120px",
-                            border: "1px solid black",
+                            width: "100px",
+                            height: "100px",
+                            border: "1px solid lightgray",
                             objectFit: "cover",
+                            borderRadius:'4px'
                           }}
                           className="me-3"
                         />
@@ -213,7 +213,7 @@ const EditMultipleOption = ({
               <div style={{ width: "50%" }} className="mx-2">
                 <FormGroup>
                   <Label>{" Sku Id "}</Label>
-                  <Input
+                  <Input className="form-control"
                     onChange={handleMultipleOptionChoice}
                     name="skuId"
                     value={el.skuId || ""}
