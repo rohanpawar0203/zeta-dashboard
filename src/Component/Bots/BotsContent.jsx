@@ -81,9 +81,9 @@ const BotsContent = () => {
     background: "whitesmoke",
     cursor: "pointer",
   };
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownBotOpen, setDropdownBotOpen] = useState('');
 
-  const toggleDropDown = () => setDropdownOpen((prevState) => !prevState);
+  const toggleDropDownBot = (id) => setDropdownBotOpen(id);
 
   const getAllBot = async () => {
     try {
@@ -173,7 +173,11 @@ const BotsContent = () => {
         )}
         {myBots.length > 0 && (
           <>
-            <H6 className="mb-2 fw-bolder text-gray">1 live bots</H6>
+           <div className="w-100 d-flex justify-content-between align-items-center px-2">
+           <H6 className="mb-2 fw-bolder text-gray">1 live bots</H6>
+            <button type="button" className="btn btn-primary btn-md" onClick={toggle}>Create new bot</button>
+           <CreateBotFormModal modal={modal} NewMessage={'New Bot'} toggle={toggle} getAllBot={getAllBot}></CreateBotFormModal>
+           </div>
             {myBots.map((myBot, i) => (
               <div
                 key={i}
@@ -197,7 +201,9 @@ const BotsContent = () => {
                   <button onClick={() => {history(`${process.env.PUBLIC_URL}/bot/${myBot._id}`)}} type="button" className="btn btn-primary me-2 btn-sm">
                     View Bot
                   </button>
-                  <Dropdown isOpen={dropdownOpen} toggle={toggleDropDown}>
+                  <Dropdown isOpen={myBot._id === dropdownBotOpen} toggle={() => {toggleDropDownBot((pre) => {
+                    return !pre ? myBot._id : null;
+                  })}}>
                     <DropdownToggle
                       aria-expanded
                       data-toggle="dropdown"
@@ -208,11 +214,11 @@ const BotsContent = () => {
                           width: "30px",
                           height: "30px",
                           border: "1px solid lightgray",
-                          ...(isHovered && hoverStyle),
+                          ...(myBot._id === isHovered && hoverStyle),
                         }}
                         className="d-flex justify-content-center align-items-center rounded"
                         onMouseEnter={() => {
-                          setisHovered(true);
+                          setisHovered(myBot._id);
                         }}
                         onMouseLeave={() => {
                           setisHovered(false);

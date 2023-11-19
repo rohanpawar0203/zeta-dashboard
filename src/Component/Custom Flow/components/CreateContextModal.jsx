@@ -8,7 +8,7 @@ import { AgentAPI, BotCreate, CreateContextAPI, ProductsListAPI } from '../../..
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
-const CreateContextModal = ({modal, title, toggle, setData}) => {
+const CreateContextModal = ({modal, title, toggle, setData, getAllContexts}) => {
   const [formValues, setformValues] = useState({botName: '', error: ''});
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const token = localStorage.getItem("token");
@@ -16,7 +16,7 @@ const CreateContextModal = ({modal, title, toggle, setData}) => {
    
 
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({
   });
   
   const onSubmit = data => {
@@ -38,16 +38,20 @@ const submitHandler = async (payload) => {
   .then((res) => {
     console.log(res.data.data);
     setData(res.data.data);
+    reset();
+    getAllContexts();
     toast.success("Context created successfully");
     toggle();
   })
   .catch((err) => {
+    toggle();
+    reset();
     toast.error("Something went wrong");
   });
   };
 
   return (
-    <CommonModal isOpen={modal} title={NewBot} toggler={toggle} event={handleSubmit(onSubmit)} submitTxt={'Create'}>
+    <CommonModal isOpen={modal} title={title} toggler={toggle} event={handleSubmit(onSubmit)} submitTxt={'Create'}>
       <Form className="needs-validation" noValidate="">
           <FormGroup >
             <Label>{'Context Name'}</Label>

@@ -67,11 +67,10 @@ const CustomFlowContent = () => {
           {!editContext?.mode && (
             <div className="w-100 d-flex justify-content-end align-items-center mb-3 mx-4">
             <Btn  attrBtn={{
-                        className: "btn-pill me-2",
+                        className: "me-2",
                         color: 'success',
                         outline:  false,
                         onClick: () => {
-                          console.log('working');
                           toggle();
                         }
                       }}
@@ -83,10 +82,13 @@ const CustomFlowContent = () => {
            {data.length > 0 && !editContext?.mode ? (
             <ContextTable data={data} getAllContexts={getAllContexts} setEditContext={setEditContext}/> 
            ) : 
-           <QuestionsContextProvider>
-           <ConxtEditElement contextID={editContext?.contextID} setEditContext={setEditContext}/>
-           </QuestionsContextProvider> }
-          <CreateContextModal modal={modal} NewMessage={'Create Context'} 
+            editContext?.mode ?  (
+            <QuestionsContextProvider>
+            <ConxtEditElement contextID={editContext?.contextID} setEditContext={setEditContext}/>
+            </QuestionsContextProvider> 
+           ) : null
+           }
+          <CreateContextModal modal={modal} NewMessage={'Create Context'}  getAllContexts={getAllContexts}
           toggle={toggle} title='Create Context' setData={setData}/>
         </Card>
         </Col>
