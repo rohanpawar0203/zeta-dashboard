@@ -13,6 +13,7 @@ import UpdateAgentFormModal from './UpdateAgentFormModal';
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import axios from 'axios';
 import AgentDeleteModal from './AgentDeleteModal';
+import AddAgentModal from './AddAgentModal';
 
 
 const AgentsTable = () => {
@@ -22,8 +23,10 @@ const AgentsTable = () => {
     const history = useNavigate();
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
+    const [agentAddModal, setagentAddModal] = useState(false);
+    const toggleagentAddModal = () => setagentAddModal(!agentAddModal);
     const [deleteModal, setdeleteModal] = useState(false);
-    const toggleDeleteModal = () => setdeleteModal(!modal);
+    const toggleDeleteModal = () => setdeleteModal(!deleteModal);
     const [agentID, setagentID] = useState('')
     const [updatemodal, setupdateModal] = useState(false);
     const [HoveredAgent, setHoveredAgent] = useState(false);
@@ -62,22 +65,12 @@ const AgentsTable = () => {
             }
           );
           console.log("resp", resp.data);
-          toast({
-            title: "User deleted Successfully!",
-            status: "success",
-            position: "top",
-            isClosable: true,
-            duration: 4500,
-          });
+          toggleDeleteModal();
+          toast.success("User deleted Successfully!");
           handleGetData();
         } catch (error) {
-          toast({
-            title: "Something went wrong",
-            status: "error",
-            position: "top",
-            isClosable: true,
-            duration: 4500,
-          });
+          toggleDeleteModal();
+          toast.error("Something went wrong");
           console.log("error", error);
         }
       };
@@ -87,13 +80,20 @@ const AgentsTable = () => {
       }, []);
   return (
     <Fragment>
-      {agents.length > 0 ? (
         <Col sm="12">
         <Card>
-          <CardHeader>
+          <CardHeader className="w-100 d-flex justify-content-between">
             <H5>{'All Agents'}</H5>
+            <div>
+           <button type="button" class="btn btn-success" onClick={() => {
+            toggleagentAddModal();
+        }}>Create New Agent</button>
+        <AddAgentModal modal={agentAddModal} toggle={toggleagentAddModal} handleGetData={handleGetData}/>
+      </div>
           </CardHeader>
-          <div className="table-responsive vh-100">
+          <div style={{width: '100%', height: '500px'}}>
+          {agents.length > 0 && (
+          <div className="table-responsive">
             <Table>
               <thead>
                 <tr className='table-primary'>
@@ -175,17 +175,11 @@ const AgentsTable = () => {
             agentID={agentID}></UpdateAgentFormModal>
             <AgentDeleteModal title={'Delete Agent'} modal={deleteModal} toggle={toggleDeleteModal} event={() => {handleDelete(agentID)}}/>
           </div>
+          )
+          }
+          </div>
         </Card>
       </Col>
-      ) : 
-      (
-       <div style={{height: '75vh'}} className='w-100 d-flex flex-column justify-content-center align-items-center bg-white'>
-        <H4 attrH4={{className: 'my-2'}}>You Don't have any agents</H4>
-        <button type="button" class="btn btn-success" onClick={() => {
-            history(`${process.env.PUBLIC_URL}/add-agents`)
-        }}>Create New Agent</button>
-       </div>
-      )}
     </Fragment>
   )
 }

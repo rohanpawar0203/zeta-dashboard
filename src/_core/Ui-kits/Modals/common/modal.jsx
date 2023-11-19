@@ -13,8 +13,12 @@ const CommonModal = (props) => {
         {props.children}
       </ModalBody>
       <ModalFooter>
+        {props?.event && 
+        <>
         <Btn attrBtn={{ color: 'secondary', onClick: props.toggler }} >{Close}</Btn>
-        <Btn attrBtn={{ color: `${props?.delete ? 'danger': 'primary'}`, onClick: props?.event }}>{props?.delete ? props?.delete : props?.submitTxt ? props?.submitTxt : Submit}</Btn>
+        <Btn attrBtn={{ color: `${props?.delete ? 'danger': 'primary'}`, onClick: props?.event }}>{props?.delete ? props?.delete : props?.submitTxt ? props?.submitTxt : Submit}</Btn> 
+        </>
+        }
       </ModalFooter>
     </Modal>
   );

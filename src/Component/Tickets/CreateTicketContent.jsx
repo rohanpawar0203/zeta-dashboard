@@ -39,7 +39,7 @@ import AutomaiteBackend from "../Agents/components/automaiteBackend";
 
 
 const CreateTicketContent = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm({});
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({});
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const token = localStorage.getItem("token");
   const history = useNavigate();
@@ -95,8 +95,9 @@ const CreateTicketContent = () => {
         data: data,
       };
       await axios.request(config);
-      toast.success("Ticket Created successfully");
+      reset();
       setPayload(intialPayload)
+      toast.success("Ticket Created successfully");
     } catch (error) {
       toast.error("Something went wrong");
       toast.error(`${error.response.data.error}`);
@@ -130,7 +131,7 @@ const CreateTicketContent = () => {
           <FormGroup>
             <Label>{'Query Details *'}</Label>
             <Textarea className="form-control" name="query" type="text" placeholder="Query" {...register('query', { required: true })} />
-            <span className='text-danger fw-bolder'>{errors.query && '* Password is required'}</span>
+            <span className='text-danger fw-bolder'>{errors.query && '* Query Details is required'}</span>
             <div className="valid-feedback">{'Looks good!'}</div>
           </FormGroup>
           <FormGroup>
