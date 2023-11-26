@@ -9,6 +9,7 @@ export const ChatProvider = (props) => {
   const [chatss, setChats] = useState([]);
   const [currentUserr, setCurrentUser] = useState();
   const [selectedUserr, setSelectedUser] = useState();
+  const [liveUser, setliveUser] = useState();
   const [sidebarToggle, setSidebarToggle] = useState(false);
   const userData = JSON.parse(localStorage.getItem('currentUser'));
   const token = localStorage.getItem('token');
@@ -65,9 +66,6 @@ export const ChatProvider = (props) => {
       console.log('error', error);
     }
   };
-  useEffect(() => {
-    getChatMembersData();
-  }, []);
 
   const getMembersSuccess = (chats) => {
     setCurrentUser(chats[0]);
@@ -226,6 +224,7 @@ export const ChatProvider = (props) => {
         allMemberss,
         chatss,
         selectedUserr,
+        liveUser, 
         currentUserr,
         memberss,
         sidebarToggle,
@@ -249,7 +248,8 @@ export const ChatProvider = (props) => {
          setLiveConversationNewEntry,
          setIsConnected,
          setAllAgents,
-         appStore
+         getChatMembersData,
+         setliveUser
       }}
     >
       {props.children}

@@ -24,6 +24,7 @@ import FormPassword from "./FormPassword";
 import SignInWith from "./SignInWith";
 import { cls } from "react-image-crop";
 import { connectWithSocketIOServer } from "../../../Component/Live Chats/Client/wss";
+import appStore from "../../../Component/Live Chats/Client/AppStore";
 
 
 const LoginTab = ({ selected }) => {
@@ -78,9 +79,11 @@ const LoginTab = ({ selected }) => {
       const { user, token } = resBody;
       localStorage.setItem("token", token);
       localStorage.setItem("currentUser", JSON.stringify(user));
+      appStore.getState().setUserData(user);
+      appStore.getState().setToken(token);
       connectWithSocketIOServer();
       toast.success("User Logged In successfully");
-      history(`${process.env.PUBLIC_URL}/dashboard/default`);
+      history(`${process.env.PUBLIC_URL}/dashboard`);
       }else{
           toast.error(`${resBody.msg}`);
       }

@@ -6,10 +6,10 @@ import UserProfile from '../../../assets/images/user/userProfile.png'
 
 
 const ChatHeader = () => {
-  const { selectedUserr } = useContext(ChatAppContext);
+  const { liveUser } = useContext(ChatAppContext);
   return (
     <Fragment>
-      {selectedUserr && (
+      {liveUser && (
       <Media className="chat-header clearfix d-flex align-items-center">
         <Image
           attrImage={{
@@ -18,8 +18,8 @@ const ChatHeader = () => {
         <Media body>
           <div className="about">
             <div className="name f-4">
-              {selectedUserr ? selectedUserr.phoneNumber : ''}
-              {selectedUserr && selectedUserr.typing ? (
+              {liveUser ? liveUser.phoneNumber : ''}
+              {liveUser && liveUser.typing ? (
                 <span className="font-primary f-12"> Typing...</span>
               ) : ('')}
             </div>

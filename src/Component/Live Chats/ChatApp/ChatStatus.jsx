@@ -1,36 +1,38 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect} from 'react';
 import ChatAppContext from '../../../_helper/chat-app/index';
 import { Image, LI, UL } from '../../../AbstractElements';
 import errorImg from '../../../assets/images/search-not-found.png';
 import SearchChatList from './SearchChatList';
-import CurrentUser from './CurrentUser';
 import { Media } from 'reactstrap';
-import { FaRegUser } from 'react-icons/fa';
 import UserProfile from '../../../assets/images/user/userProfile.png'
-import { toast } from 'react-toastify';
+import appStore from '../Client/AppStore';
 
 const ChatStatus = ({checkValid}) => {
-  const { selectedUserr, memberss, currentUserr, chatss, changeChat, createNewChatAsyn, appStore, setCurrentLocationPathName} = useContext(ChatAppContext);
-  const { liveConversation, isConnected,  } = appStore;
+  const { liveUser, setliveUser} = useContext(ChatAppContext);
+  const { liveConversation  } = appStore();
 ;
+console.log('liveConversation ', liveConversation);
 
-  const userData = JSON.parse(localStorage.getItem('currentUser'));
-  const changeChatClick = (e, selectedUserId) => {
-    // const currentUserId = currentUserr.id;
-    const currentChat = memberss.find(
-      (x) =>
-        x._id === (selectedUserId)
-    );
-    if (currentChat) {
-      changeChat(selectedUserId);
-    } 
-    // else {
-    //   createNewChatAsyn(currentUserId, selectedUserId, chatss);
-    // }
-  };
-  var activeChat = 0;
-  if (selectedUserr != null) activeChat = selectedUserr._id;
+function calculateTimePassed(timestamp) {
+  const currentTime = new Date().getTime();
+  timestamp = new Date(timestamp).getTime();
+  const timeDifference = currentTime - timestamp;
+  const seconds = Math.floor(timeDifference / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  let timePassedString = "";
+  if (days > 0) return (timePassedString += `${days}d`);
+  if (hours > 0) return (timePassedString += `${hours % 24}h`);
+  if (minutes > 0) return (timePassedString += `${minutes % 60}m`);
+  if (seconds > 0) return (timePassedString += `${seconds % 60}s`);
+  console.log('timePassedString ', timePassedString);
+  return timePassedString;
+}
   
+var activeChat = 0;
+if (liveUser != null) activeChat = liveUser._id;
 
   return (
     <Fragment>
@@ -50,7 +52,7 @@ const ChatStatus = ({checkValid}) => {
                       onClick: (e) => {
                         activeChat = item._id;
                         checkValid(item)
-                        console.log(activeChat, item._id);
+                        setliveUser(item)
                       }
                     }} key={i}>
                       <Media className='d-flex align-items-center'>
@@ -63,9 +65,12 @@ const ChatStatus = ({checkValid}) => {
                         {/* <div className={`status-circle ${item.online === true ? 'online' : 'offline'}`}
                         ></div> */}
                         <Media body>
-                          <div className="about">
+                          <div className="w-100 about">
                             <div className="name">{item?.phoneNumber}</div>
+                            <div className="w-100 d-flex justify-content-between align-items-center pe-1">
                             <div className="status">{item?.chat[item?.chat.length - 1]?.message}</div>
+                            <div className="status fw-bolder">{calculateTimePassed(item?.chat[item?.chat.length - 1].time)}</div>
+                            </div>
                             </div>
                         </Media>
                       </Media>

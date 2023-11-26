@@ -3,6 +3,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { AgentLiveChatAPI, GetConversationsAPI, LiveChatsAPI } from "../../../api";
 import appStore from "./AppStore";
+const { v4: uuidv4 } = require("uuid");
+
 // import { setLiveConversation } from "../components/dashboard/liveChat/liveChat";
 const SERVER = process.env.REACT_APP_API_SERVER;
 const user = JSON.parse(localStorage.getItem('currentUser'));
@@ -13,11 +15,12 @@ var socket = null;
 
 export const connectWithSocketIOServer = () => {
   socket =  io(SERVER, {
-    // path: "/agent-live-chat-socket/"
+    path: "/agent-live-chat-socket/"
   });
 
   socket.on("connect", () => {
-    appStore.getState().setIsConnected(true);    agentConnected();
+    appStore.getState().setIsConnected(true);    
+    agentConnected();
     getLiveRooms();
     console.log("Bot Connected with Server");
   });
@@ -51,7 +54,7 @@ export const connectWithSocketIOServer = () => {
   socket.on("message-recieved", (data) => {
     let newMessage = JSON.parse(data);
     const newArray = appStore.getState().liveConversation.map((el) => {
-      if (el.chatSessionId == newMessage.roomId) {
+      if (el.chatSessionId === newMessage.roomId) {
         el.chat = [
           ...el.chat,
           { time: newMessage.time, message: newMessage.message, from: "USER" },
@@ -59,9 +62,13 @@ export const connectWithSocketIOServer = () => {
       }
       return el;
     });
+    if(newMessage.identity === "BOT" || newMessage.identity === "AGENT") {
+      appStore.getState().messageType(newMessage);
+    }
     appStore.getState().setLiveConversation(newArray);
         // console.log("newMessage", appStore.getState().liveConversation);
   });
+  
   socket.on("disconnect", function () {
     appStore.getState().setIsConnected(false);
     console.log("client socketio disconnect!");
@@ -76,7 +83,7 @@ export const connectWithSocketIOServer = () => {
   });
 };
 export const getRoomExists = async (roomId) => {
-  // const serverApi = "http://localhost:8081/api";
+  // const serverApi = "http://localhost:8081";
   const serverApi = `${AgentLiveChatAPI}`;
   const response = await axios.get(`${serverApi}/room-exists/${roomId}`);
   return response.data;
@@ -90,10 +97,29 @@ export const agentConnected = async () => {
   };
   socket.emit("agent-connected", JSON.stringify(data));
 };
-export const createNewRoom = (identity) => {
+export const createOrConnectRoom = async (identity) => {
+  let roomId = localStorage.getItem("connectionId");
   const data = {
-    identity,
+    identity: "USER",
+    defaultConnection: socket.id,
+    roomId: roomId,
+    organization_id: appStore.getState().botDetails.userId,
   };
+  if (!data.organization_id) return;
+  if (roomId == undefined || roomId === null || roomId === "null") {
+    data.roomId = uuidv4();
+    localStorage.setItem("connectionId", data.roomId);
+  } else {
+    const resp = await getRoomExists(roomId);
+    if (!resp.roomExists) {
+      socket.emit("create-new-room", data);
+    }
+    appStore.getState().setRoomId(data);
+    socket.emit("join-room", data);
+    return;
+  }
+  appStore.getState().setRoomId(data);
+  console.log(data);
   socket.emit("create-new-room", data);
 };
 
@@ -131,10 +157,11 @@ const setLiveConversations = async () => {
     const liveConversationNewEntry = appStore.getState().liveConversationNewEntry;
     const conversation = appStore.getState().conversation;
     const userData = appStore.getState().userData;
+    console.log(userData);
     const token = appStore.getState().token;
     const orgId = userData.userId ? userData.userId : userData._id;
-    if (liveConversationNewEntry.length != 0) {
-      if (conversation.length == 0) {
+    if (liveConversationNewEntry.length !== 0) {
+      if (conversation.length === 0) {
         try {
           const resp = await axios.get(
             `${GetConversationsAPI}/${orgId}`,

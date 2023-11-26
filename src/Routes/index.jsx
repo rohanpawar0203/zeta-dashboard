@@ -10,6 +10,7 @@ import { authRoutes } from './AuthRoutes';
 import PrivateRoute from './PrivateRoute';
 import Signin from '../Auth/Signin';
 import Signup from '../Auth/Signup';
+import { connectWithSocketIOServer } from '../Component/Live Chats/Client/wss';
 
 configureFakeBackend();
 const Routers = () => {
@@ -19,16 +20,9 @@ const Routers = () => {
   const jwt_token = localStorage.getItem('token');
   useEffect(() => {
     console.log(token, currentUser);
-    let abortController = new AbortController();
-    const requestOptions = { method: 'GET', headers: authHeader() };
-    fetch('/users', requestOptions).then(handleResponse);
-    firebase_app.auth().onAuthStateChanged(setCurrentUser);
-    setAuthenticated(JSON.parse(localStorage.getItem('authenticated')));
-    console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
-    console.disableYellowBox = true;
-    return () => {
-      abortController.abort();
-    };
+    if(token && currentUser){
+      connectWithSocketIOServer();
+    }
   }, []);
 
   return (

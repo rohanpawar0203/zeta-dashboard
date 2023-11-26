@@ -28,8 +28,14 @@ import {
   TruckSvg,
   TruckSvg1,
 } from "../Widgets/SvgIcons";
+import { connectWithSocketIOServer } from "../Live Chats/Client/wss";
 
 const DashboardContent = () => {
+
+  useEffect(() => {
+    connectWithSocketIOServer();
+  }, [])
+  
   return (
     <Fragment>
       <Fragment>

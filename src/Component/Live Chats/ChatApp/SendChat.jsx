@@ -4,61 +4,64 @@ import Picker from 'emoji-picker-react';
 import { Send } from '../../../Constant/index';
 import ChatAppContext from '../../../_helper/chat-app/index';
 import { Btn, Image } from '../../../AbstractElements';
+import { joinSession, sendDataToConnectedUser }  from '../Client/wss';
+import appStore from '../Client/AppStore';
+import { toast } from 'react-toastify';
 
-const SendChat = () => {
+const SendChat = ({viewConversation,showKeyboard, setViewConversation}) => {
+  const { liveConversation, setLiveConversation} = appStore();
 
-  const [messageInput, setMessageInput] = useState('');
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const toggleEmojiPicker = () => {
-    setShowEmojiPicker(!showEmojiPicker);
-  };
-  const { chatss, selectedUserr, currentUserr, sendMessageAsyn, replyByUserAsyn } = useContext(ChatAppContext);
+  const [msg, setMsg] = useState("");
 
-  const addEmoji = (emoji) => {
-    const text = `${messageInput}${emoji.native}`;
-    setShowEmojiPicker(false);
-    setMessageInput(text);
-  };
   const handleMessageChange = (message) => {
-    setMessageInput(message);
-  };
-
+    setMsg(message);
+  }
   const handleMessagePress = (e) => {
-    if (e.key === 'Enter' || e === 'send') {
-      var container = document.querySelector('.chat-history');
-      setTimeout(function () {
-        container.scrollBy({ top: 200, behavior: 'smooth' });
-      }, 310);
-
-      let currentUserId = currentUserr.id;
-      let selectedUserId = selectedUserr.id;
-      let selectedUserName = selectedUserr.name;
-
-      if (messageInput.length > 0) {
-        sendMessageAsyn(currentUserId, selectedUserId, messageInput, chatss);
-        setMessageInput('');
-        setTimeout(() => {
-          const replyMessage =
-            'Hey This is ' +
-            selectedUserName +
-            ', Sorry I busy right now, I will text you later';
-          if (selectedUserr.online === true)
-            document.querySelector('.status-circle').classList.add('online');
-          selectedUserr.online = true;
-          replyByUserAsyn(currentUserId, selectedUserId, replyMessage, chatss);
-        }, 5000);
+    if(e.key === 'Enter'){
+      if(!msg || msg === ''){
+        toast.error('Please enter valid message text !');
+      }else{
+        sendMsg();
       }
     }
+  }
+
+  function getCustomTimestamp() {
+    const currentTimeMs = Date.now();
+    return currentTimeMs;
+  }
+  const sendMsg = () => {
+    sendDataToConnectedUser({
+      message: msg,
+      phoneNumber: viewConversation.phoneNumber,
+      time: getCustomTimestamp(),
+      // chatSessionId: viewConversation.chatSessionId,
+      roomId: viewConversation.chatSessionId,
+      identity: "AGENT",
+      productList: [],
+      productData: [],
+    });
+    const newArray = liveConversation.map((el) => {
+      if (el.chatSessionId === viewConversation.chatSessionId) {
+        el.chat = [
+          ...el.chat,
+          { time: getCustomTimestamp(), message: msg, from: "AGENT" },
+        ];
+      }
+      return el;
+    });
+    setMsg("");
+    setLiveConversation(newArray);
+    // setLoading(false);
   };
   return (
     <div className="chat-message clearfix">
       <Row>
-        <div>{showEmojiPicker ? (
-          <Picker set="apple" emojiSize={30} onSelect={addEmoji} />) : null}
+        <div>
         </div>
         <Col xl="12" className="d-flex">
           <div className="smiley-box bg-primary">
-            <div className="picker" onClick={() => toggleEmojiPicker()}>
+            <div className="picker">
               <Image attrImage={{ src: `${require('../../../assets/images/smiley.png')}`, alt: '' }} /></div>
           </div>
           <InputGroup className="text-box">
@@ -66,10 +69,10 @@ const SendChat = () => {
               type="text"
               className="form-control input-txt-bx"
               placeholder="Type a message......"
-              value={messageInput}
+              defaultValue={msg}
               onKeyPress={(e) => handleMessagePress(e)}
               onChange={(e) => handleMessageChange(e.target.value)} />
-            <Btn attrBtn={{ color: 'primary', onClick: () => handleMessagePress('send') }}  >
+            <Btn attrBtn={{ color: 'primary', onClick: () => sendMsg(), disabled: !msg || msg === '' }}>
               {Send}
             </Btn>
           </InputGroup>

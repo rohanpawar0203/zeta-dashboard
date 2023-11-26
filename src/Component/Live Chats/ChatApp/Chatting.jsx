@@ -7,16 +7,17 @@ import SendChat from './SendChat';
 import ChatAppContext from '../../../_helper/chat-app';
 import { Image } from '../../../AbstractElements';
 import errorImg from '../../../assets/images/search-not-found.png';
+import appStore from '../Client/AppStore';
 
 const Chatting = ({viewConversation,showKeyboard, setViewConversation}) => {
-  const { selectedUserr, memberss, currentUserr, chatss, changeChat, createNewChatAsyn } = useContext(ChatAppContext);
-
+  const { liveUser } = useContext(ChatAppContext);
+  console.log('in chatting ', viewConversation);
   return (
     <Fragment>
       <Row className="chat-box">
         <Col className="chat-right-aside">
           <div className="chat">
-            {selectedUserr ? <>
+            {liveUser ? <>
               <ChatHeader />
             <ChatMessage viewConversation={viewConversation}
               showKeyboard={showKeyboard}
@@ -26,7 +27,7 @@ const Chatting = ({viewConversation,showKeyboard, setViewConversation}) => {
                 <Image attrImage={{ style: {width: '200px', height: '200px', objectFit: 'cover'}, className: 'm-auto', src: errorImg, alt: '' }} />
               </div>
             )}
-            {/* <SendChat /> */}
+           { liveUser ? <SendChat viewConversation={viewConversation} showKeyboard={showKeyboard} setViewConversation={setViewConversation}/> : null }
           </div>
         </Col>
         <ChatMenu />
