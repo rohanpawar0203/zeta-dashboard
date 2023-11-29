@@ -49,33 +49,21 @@ export const MENUITEMS = [
         ]
     },
     {
+        menutitle: 'Bot',
+        Items: [
+            { path: `${process.env.PUBLIC_URL}/bot`, bookmark: true, icon: FilemanagerSvg, title: 'Bot', type: 'link' }
+        ]
+    },
+    {
+        menutitle: 'Bots',
+        Items: [
+            { path: `${process.env.PUBLIC_URL}/bots`, bookmark: true, icon: FilemanagerSvg, title: 'Bots', type: 'link' }
+        ]
+    },
+    {
         menutitle: 'Store',
         Items: [
             { path: `${process.env.PUBLIC_URL}/store`, bookmark: true, icon: FilemanagerSvg, title: 'Store', type: 'link' }
-        ]
-    },
-    {
-        menutitle: 'Request a feature',
-        Items: [
-            { path: `${process.env.REACT_APP_API_ULAI_CANNY}`, bookmark: true, icon: FilemanagerSvg, title: 'Request a feature', type: 'link' }
-        ]
-    },
-    {
-        menutitle: 'Tickets',
-        Items: [
-            { path: `${process.env.PUBLIC_URL}/tickets`, bookmark: true, icon: FilemanagerSvg, title: 'Tickets', type: 'link' }
-        ]
-    },
-    {
-        menutitle: 'Agents',
-        Items: [
-            { path: `${process.env.PUBLIC_URL}/agents`, bookmark: true, icon: FilemanagerSvg, title: 'Agents', type: 'link' }
-        ]
-    },
-    {
-        menutitle: 'Custom Flow',
-        Items: [
-            { path: `${process.env.PUBLIC_URL}/custom-chat-flow`, bookmark: true, icon: FilemanagerSvg, title: 'Custom Flow', type: 'link' }
         ]
     },
     {
@@ -91,21 +79,33 @@ export const MENUITEMS = [
         ]
     },
     {
-        menutitle: 'Bot',
+        menutitle: 'Custom Flow',
         Items: [
-            { path: `${process.env.PUBLIC_URL}/bot`, bookmark: true, icon: FilemanagerSvg, title: 'Bot', type: 'link' }
-        ]
-    },
-    {
-        menutitle: 'Bots',
-        Items: [
-            { path: `${process.env.PUBLIC_URL}/bots`, bookmark: true, icon: FilemanagerSvg, title: 'Bots', type: 'link' }
+            { path: `${process.env.PUBLIC_URL}/custom-chat-flow`, bookmark: true, icon: FilemanagerSvg, title: 'Custom Flow', type: 'link' }
         ]
     },
     {
         menutitle: 'Products',
         Items: [
             { path: `${process.env.PUBLIC_URL}/products`, bookmark: true, icon: FilemanagerSvg, title: 'Products', type: 'link' }
+        ]
+    },
+    {
+        menutitle: 'Agents',
+        Items: [
+            { path: `${process.env.PUBLIC_URL}/agents`, bookmark: true, icon: FilemanagerSvg, title: 'Agents', type: 'link' }
+        ]
+    },
+    {
+        menutitle: 'Request a feature',
+        Items: [
+            { path: `${process.env.REACT_APP_API_ULAI_CANNY}`, bookmark: true, icon: FilemanagerSvg, title: 'Request a feature', type: 'link' }
+        ]
+    },
+    {
+        menutitle: 'Tickets',
+        Items: [
+            { path: `${process.env.PUBLIC_URL}/tickets`, bookmark: true, icon: FilemanagerSvg, title: 'Tickets', type: 'link' }
         ]
     },
     // {

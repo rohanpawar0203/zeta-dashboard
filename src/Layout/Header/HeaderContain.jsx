@@ -15,6 +15,7 @@ import Language from './Langauge';
 import { firebase_app } from '../../Config/Config';
 import Bookmark from './Bookmark/index';
 import { Account, Inbox, LogOut, Taskboard } from '../../Constant';
+import appStore from '../../Component/Live Chats/Client/AppStore';
 
 const HeaderContain = () => {// eslint-disable-next-line
   const [profile, setProfile] = useState('');
@@ -30,6 +31,8 @@ const HeaderContain = () => {// eslint-disable-next-line
   const Logout = () => {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
+    appStore.getState().setUserData({});
+    appStore.getState().setToken('');
     // handleForLogout();
     // firebase_app.auth().signOut();
     // history(`${process.env.PUBLIC_URL}/login`);  

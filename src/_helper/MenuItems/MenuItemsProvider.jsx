@@ -1,29 +1,17 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { MENUITEMS } from '../../Layout/SideBar-Layout/Menu';
 import { BlogSvg, BonusUISvg, ButtonsSvg, CalanderSvg, ChartsSvg, ChatSvg, ContactSvg, EcommerceSvg, EditorsSvg, EmailSvg, FAQSvg, FilemanagerSvg, FormsSvg, GallarySvg, HeaderBookmarkSvg, HomeSvg, IconsSvg, JobsearchSvg, KanbanSvg, KnowledgebaseSvg, LearningSvg, MapsSvg, OthersSvg, ProjectSvg, SamplePageSvg, SearchResultSvg, SocialappSvg, SupportTicketSvg, TablesSvg, TaskSvg, TodoSvg, UiKitsSvg, UsersComponentSvg, WidgetsSvg } from '../../Data/svgIcons';
+import appStore from '../../Component/Live Chats/Client/AppStore';
 
 const MenuItemsContext = createContext();
 
 export const MenuItemsContextProvider = ({ children }) => {
     const [data, setData] = useState([...MENUITEMS]);
-    const user = JSON.parse(localStorage.getItem('currentUser'));
+    const {userData} = appStore.getState();
     
     const handleForStore = () => {
-        data.map((ele) => {
-            if(ele.menutitle === 'Store'){
-            ele.menutitle = 'Bot';
-            ele.Items[0].path = `${process.env.PUBLIC_URL}/bots`;
-            ele.Items[0].title = 'Bots'
-            }
-            return ele;
-        });
-        let dashBoardItem = {
-            menutitle: 'Dashboard',
-            Items: [
-                { path: `${process.env.PUBLIC_URL}/dashboard`, bookmark: true, icon: FilemanagerSvg, title: 'Dashboard', type: 'link' }
-            ]
-        };
-        setData([{...dashBoardItem}, ...data]);
+        let filteredItems = data.filter((ele) => (ele.menutitle !== 'Store'))
+        setData([...filteredItems]);
     };
    
     const handleForLogout = () => {
@@ -39,16 +27,21 @@ export const MenuItemsContextProvider = ({ children }) => {
         });
         setData(replacedItems);
     };
-
-    // useEffect(() => {
-    //   if( user && user.store){
-    //     setData(data.filter((ele) => (ele.menutitle !== 'Store')))
-    // }
-    // if(user && !user.store){
-    //     const elementsToRemove = ['Dashboard','Bots'];
-    //       setData((data.filter((ele) => (!elementsToRemove.includes(ele.menutitle)))));
-    //   }
-    // }, [])
+    
+    const handleFilterForAgent = () => {
+        let replacedItems = data.filter((ele) => (ele.menutitle === 'Live Chats'));
+        setData(replacedItems);
+    }
+    
+    useEffect(() => {
+        console.log('currentUser', userData);
+      if(userData?.userId){
+        handleFilterForAgent();
+      }
+      if(userData?.store){
+        handleForStore();
+      }
+    }, [userData]);
     
 
     return (
