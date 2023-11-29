@@ -1,55 +1,78 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Col, Input, InputGroup, InputGroupText, Row, } from 'reactstrap';
 import {VscSend} from 'react-icons/vsc'
 import ChatHeader from './ChatHeader';
 import ScrollBar from 'react-perfect-scrollbar';
 import { toast } from 'react-toastify';
 import { BotCreate } from '../../../../../api';
+import { createOrConnectRoom, sendDataToConnectedUser } from '../../../../Live Chats/Client/wss';
+import appStore from '../../../../Live Chats/Client/AppStore';
 const BigBot = ({myBot}) => {
-  const [messages, setMessages] = useState([]);
+  const { messages, setMessages, setBotDetails, botDetails, roomId, showTyping } = appStore.getState();
+  // const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState("");
   const token = (localStorage.getItem('token'));
   const user = JSON.parse(localStorage.getItem('currentUser'));
   const botAvatar = "https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75"
 
+  // const sendMessageToBot = async () => {
+  //   const sendData = {
+  //     sessionId: `91${user?.contact}@c.us`, 
+  //     message: userMessage,
+  //     phoneNumber: `91${user?.contact}`,
+  //     organization_id: myBot.userId,
+  //     type: myBot.botType,
+  //   };
+
+  //   setMessages((prev) => [...prev, { text: userMessage, user: true }]);
+
+  //   setUserMessage("");
+
+  //   try {
+  //     const response = await fetch(`${BotCreate}/chat`, {
+  //       method: "POST",
+  //       body: JSON.stringify(sendData),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+
+  //     const responseData = await response.json();
+  //     if (response.ok) {
+  //       if (responseData.response.message) {
+  //         setMessages((prev) => [
+  //           ...prev,
+  //           { text: responseData.response.message, user: false },
+  //         ]);
+  //       } 
+  //     } else {
+  //       toast.error(responseData.response.message || responseData.message);
+  //     }
+  //   } catch (error) {
+  //     toast.error(error);
+  //   }
+  // };
+
   const sendMessageToBot = async () => {
-    const sendData = {
-      sessionId: `91${user?.contact}@c.us`, 
+    const sendData = JSON.stringify({
+      identity: "USER",
       message: userMessage,
-      phoneNumber: `91${user?.contact}`,
+      roomId: roomId.roomId,
       organization_id: myBot.userId,
       type: myBot.botType,
-    };
-
-    setMessages((prev) => [...prev, { text: userMessage, user: true }]);
+      time: "",
+    });
+    sendDataToConnectedUser(sendData);
+    setMessages(userMessage, true);
 
     setUserMessage("");
-
-    try {
-      const response = await fetch(`${BotCreate}/chat`, {
-        method: "POST",
-        body: JSON.stringify(sendData),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const responseData = await response.json();
-      if (response.ok) {
-        if (responseData.response.message) {
-          setMessages((prev) => [
-            ...prev,
-            { text: responseData.response.message, user: false },
-          ]);
-        }
-      } else {
-        toast.error(responseData.response.message || responseData.message);
-      }
-    } catch (error) {
-      toast.error(error);
-    }
   };
+
+  useEffect(() => {
+    createOrConnectRoom();
+  }, [myBot])
+  
   return (
     <Fragment>
       <div style={{width:'350px', borderRadius: '12px', boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px', zIndex: '3', background:'white'}} 

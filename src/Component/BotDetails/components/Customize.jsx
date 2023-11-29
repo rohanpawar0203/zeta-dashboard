@@ -25,9 +25,18 @@ const Customize = ({ myBot, setMyBot }) => {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
-  } = useForm();
-  
+  } = useForm({
+    defaultValues: {
+      botName: myBot.botName,
+      companyName: myBot.companyName,
+      subheading: myBot.subheading,
+      welcomeMessage: myBot.welcomeMessage,
+      inputboxPlaceholder: myBot.inputboxPlaceholder,
+    }
+  });
+  getValues();
    const [botIcons, setbotIcons] = useState(['BiBot', 'BsRobot', 'TbMessageDots', 'BiUser', 'AiOutlineQuestionCircle', 'TfiHeadphoneAlt', 'Ri24HoursLine', 'LuMessagesSquare', 'TfiCommentsSmiley'])
    const colorOptions = [
     "#705CF6",
@@ -64,12 +73,13 @@ const Customize = ({ myBot, setMyBot }) => {
   };
 
   const onSubmit = (data) => {
+    console.log(data);
     if (data !== "") {
       setMyBot((pre) => ({...pre, ...data}));
       updateBotInfo();
       
     } else {
-      errors.showMessages();
+      // errors.showMessages();
     }
   };
   return (
@@ -97,8 +107,8 @@ const Customize = ({ myBot, setMyBot }) => {
                             className="form-control"
                             name="botName"
                             type="text"
-                            defaultValue={myBot?.botName}
-                            placeholder="Bot Name"
+                            placeholder={myBot?.botName}
+                            // placeholder="Bot Name"
                             {...register("botName", { required: true })}
                           />
                         <span>
@@ -112,8 +122,8 @@ const Customize = ({ myBot, setMyBot }) => {
                           className="form-control"
                           name="companyName"
                           type="text"
-                          defaultValue={myBot?.companyName}
-                          placeholder="Company Name"
+                          placeholder={myBot?.companyName}
+                          // placeholder="Company Name"
                           {...register("companyName", { required: true })}
                         />
                         <span>
@@ -143,8 +153,8 @@ const Customize = ({ myBot, setMyBot }) => {
                           className="form-control"
                           name="subheading"
                           type="text"
-                          defaultValue={myBot?.subheading}
-                          placeholder="Subheading"
+                          placeholder={myBot?.subheading}
+                          // placeholder="Subheading"
                           {...register("subheading", { required: true })}
                         />
                         <span>
@@ -160,8 +170,8 @@ const Customize = ({ myBot, setMyBot }) => {
                           className="form-control"
                           name="inputPlaceholder"
                           type="text"
-                          defaultValue={myBot?.inputPlaceholder}
-                          placeholder="Input Box Placeholder"
+                          placeholder={myBot?.inputPlaceholder}
+                          // placeholder="Input Box Placeholder"
                           {...register("inputPlaceholder", { required: true })}
                         />
                         <span>
@@ -179,8 +189,8 @@ const Customize = ({ myBot, setMyBot }) => {
                           className="form-control"
                           name="welcomeMessage"
                           type="text"
-                          defaultValue={myBot?.welcomeMessage}
-                          placeholder="Welcome Message"
+                          placeholder={myBot?.welcomeMessage}
+                          // placeholder="Welcome Message"
                           {...register("welcomeMessage", { required: true })}
                         />
                         <span>
@@ -192,7 +202,7 @@ const Customize = ({ myBot, setMyBot }) => {
                     <Row>
                     
                     </Row>
-                    <Btn attrBtn={{ color: "primary" }}>{"Submit form"}</Btn>
+                    <Btn attrBtn={{ color: "primary"}}>{"Submit form"}</Btn>
                   </Form>
                 </Fragment>
               </CardBody>

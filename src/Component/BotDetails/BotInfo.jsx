@@ -33,27 +33,12 @@ import { BotCreate } from "../../api";
 import Customize from "./components/Customize";
 import Share from "./components/Share";
 import ChatBot from "./components/ChatBot";
+import appStore from "../Live Chats/Client/AppStore";
 
 const BotInfoContent = ({boatId}) => {
+  const {setBotDetails} = appStore.getState();
   console.log('got here boat id ', boatId);
-  const [myBot, setMyBot] = useState({
-    "_id": "654bb43769a5df1f26afe709",
-    "userId": "654b1c4a69a5df1f26afe62f",
-    "botName": "nemu",
-    "botType": "csv",
-    "companyName": "Ulai",
-    "botAvatar": "https://writesonic-frontend.s3.us-east-1.amazonaws.com/frontend-assets/templates-new/BotsonicNew.png",
-    "companyLogo": "https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black.png",
-    "bubbleIcon": "BiBot",
-    "accentColor": "#705CF6",
-    "subheading": "Our bot answers instantly",
-    "welcomeMessage": "Hey there, how can I help you?",
-    "inputPlaceholder": "Send a message...",
-    "showFloating": true,
-    "createdAt": "2023-11-08T16:15:51.322Z",
-    "updatedAt": "2023-11-08T16:15:51.322Z",
-    "__v": 0
-});
+  const [myBot, setMyBot] = useState({});
   const [pillTab, setpillTab] = useState('1');
 
   useEffect(() => {
@@ -74,44 +59,9 @@ const BotInfoContent = ({boatId}) => {
         const responseData = await response.json();
         console.log('resond ', responseData);
         if (response.ok) {
-          // setMyBot(responseData);
-          setMyBot({
-            "_id": "654bb43769a5df1f26afe709",
-            "userId": "654b1c4a69a5df1f26afe62f",
-            "botName": "nemu",
-            "botType": "csv",
-            "companyName": "Ulai",
-            "botAvatar": "https://writesonic-frontend.s3.us-east-1.amazonaws.com/frontend-assets/templates-new/BotsonicNew.png",
-            "companyLogo": "https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black.png",
-            "bubbleIcon": "BiBot",
-            "accentColor": "#705CF6",
-            "subheading": "Our bot answers instantly",
-            "welcomeMessage": "Hey there, how can I help you?",
-            "inputPlaceholder": "Send a message...",
-            "showFloating": true,
-            "createdAt": "2023-11-08T16:15:51.322Z",
-            "updatedAt": "2023-11-08T16:15:51.322Z",
-            "__v": 0
-        });
+          setMyBot(responseData);
+          setBotDetails(responseData)
         } else {
-          setMyBot({
-            "_id": "654bb43769a5df1f26afe709",
-            "userId": "654b1c4a69a5df1f26afe62f",
-            "botName": "nemu",
-            "botType": "csv",
-            "companyName": "Ulai",
-            "botAvatar": "https://writesonic-frontend.s3.us-east-1.amazonaws.com/frontend-assets/templates-new/BotsonicNew.png",
-            "companyLogo": "https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black.png",
-            "bubbleIcon": "BiBot",
-            "accentColor": "#705CF6",
-            "subheading": "Our bot answers instantly",
-            "welcomeMessage": "Hey there, how can I help you?",
-            "inputPlaceholder": "Send a message...",
-            "showFloating": true,
-            "createdAt": "2023-11-08T16:15:51.322Z",
-            "updatedAt": "2023-11-08T16:15:51.322Z",
-            "__v": 0
-        })
           toast.error(responseData.message);
         }
       } catch (error) {

@@ -98,6 +98,7 @@ export const agentConnected = async () => {
   socket.emit("agent-connected", JSON.stringify(data));
 };
 export const createOrConnectRoom = async (identity) => {
+  console.log('working details', appStore.getState().botDetails)
   let roomId = localStorage.getItem("connectionId");
   const data = {
     identity: "USER",
@@ -106,7 +107,7 @@ export const createOrConnectRoom = async (identity) => {
     organization_id: appStore.getState().botDetails.userId,
   };
   if (!data.organization_id) return;
-  if (roomId == undefined || roomId === null || roomId === "null") {
+  if (roomId === undefined || roomId === null || roomId === "null") {
     data.roomId = uuidv4();
     localStorage.setItem("connectionId", data.roomId);
   } else {
@@ -131,7 +132,7 @@ export const joinSession = (roomId) => {
   socket.emit("join-room", data);
 };
 export const sendDataToConnectedUser = (data) => {
-  // console.log("mssg-sent Data", data
+  console.log("mssg-sent Data", data)
   socket.emit("mssg-sent", JSON.stringify(data));
 };
 export const getLiveRooms = async () => {
