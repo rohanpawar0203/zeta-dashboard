@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import "./App.css";
 import Routers from "./Routes";
 import BookmarkProvider from "./_helper/bookmark/BookmarkProvider";
@@ -26,6 +26,13 @@ import CustomizerProvider from "./_helper/customizer/CustomizerProvider";
 import { MenuItemsContextProvider } from "./_helper/MenuItems/MenuItemsProvider";
 
 function App() {
+  useEffect(() => {
+    if (!sessionStorage.getItem("sessionUUID")) {
+      sessionStorage.setItem("sessionUUID", uuidv4().toString());
+    }
+    getSessionId(sessionStorage.getItem("sessionUUID"));
+    connectWithSocketIOServer();
+  },[]);
   return (
     <Fragment>
       <CustomizerProvider>

@@ -7,8 +7,9 @@ import { toast } from 'react-toastify';
 import { BotCreate } from '../../../../../api';
 import { createOrConnectRoom, sendDataToConnectedUser } from '../../../../Live Chats/Client/wss';
 import appStore from '../../../../Live Chats/Client/AppStore';
+import { getSessionId } from '../../../../Bots/sessionSetup';
 const BigBot = ({myBot}) => {
-  const { messages, setMessages, setBotDetails, botDetails, roomId, showTyping } = appStore.getState();
+  const { messages, setMessages, setBotDetails, botDetails, roomId, showTyping, liveConversation } = appStore.getState();
   // const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState("");
   const token = (localStorage.getItem('token'));
@@ -17,11 +18,13 @@ const BigBot = ({myBot}) => {
 
   // const sendMessageToBot = async () => {
   //   const sendData = {
-  //     sessionId: `91${user?.contact}@c.us`, 
+  //     sessionId: `${user?.contact}@c.us`, 
+  //     roomId: `${user?.contact}@c.us`, 
   //     message: userMessage,
-  //     phoneNumber: `91${user?.contact}`,
+  //     phoneNumber: `${user?.contact}`,
   //     organization_id: myBot.userId,
   //     type: myBot.botType,
+  //     botId: myBot._id
   //   };
 
   //   setMessages((prev) => [...prev, { text: userMessage, user: true }]);
@@ -45,6 +48,7 @@ const BigBot = ({myBot}) => {
   //           ...prev,
   //           { text: responseData.response.message, user: false },
   //         ]);
+  //         console.log('messages ', messages);
   //       } 
   //     } else {
   //       toast.error(responseData.response.message || responseData.message);
@@ -58,11 +62,12 @@ const BigBot = ({myBot}) => {
     const sendData = JSON.stringify({
       identity: "USER",
       message: userMessage,
-      roomId: roomId.roomId,
-      organization_id: myBot.userId,
-      type: myBot.botType,
-      time: "",
+      roomId: getSessionId(sessionStorage.getItem("sessionUUID")),
+      organization_id: '6560dd4d0ae6f208b594f9e8',
+      type: "csv",
+      time: ''
     });
+    console.log('sendData ',sendData)
     sendDataToConnectedUser(sendData);
     setMessages(userMessage, true);
 

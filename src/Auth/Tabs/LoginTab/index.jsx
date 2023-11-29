@@ -25,7 +25,8 @@ import SignInWith from "./SignInWith";
 import { cls } from "react-image-crop";
 import { connectWithSocketIOServer } from "../../../Component/Live Chats/Client/wss";
 import appStore from "../../../Component/Live Chats/Client/AppStore";
-
+import { getSessionId } from "../../../Component/Bots/sessionSetup";
+import { v4 as uuidv4 } from "uuid";
 
 const LoginTab = ({ selected }) => {
   const [email, setEmail] = useState("");
@@ -81,7 +82,6 @@ const LoginTab = ({ selected }) => {
       localStorage.setItem("currentUser", JSON.stringify(user));
       appStore.getState().setUserData(user);
       appStore.getState().setToken(token);
-      connectWithSocketIOServer();
       toast.success("User Logged In successfully");
       if(user.userId){
         history(`${process.env.PUBLIC_URL}/live-chat`);
@@ -114,6 +114,7 @@ const LoginTab = ({ selected }) => {
         setErrors(errorsObj);
     }
   };
+  
   return (
     <Fragment>
       <Form className="theme-form login-form">

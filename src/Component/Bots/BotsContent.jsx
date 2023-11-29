@@ -98,27 +98,11 @@ const BotsContent = () => {
         }
       );
       const responseData = await response.json();
+      console.log('bots data', responseData);
       if (response.ok && responseData.length > 0) {
         setMyBots(responseData);
       } else {
-        setMyBots([{
-          "_id": "654bb43769a5df1f26afe709",
-          "userId": "654b1c4a69a5df1f26afe62f",
-          "botName": "nemu",
-          "botType": "csv",
-          "companyName": "Ulai",
-          "botAvatar": "https://writesonic-frontend.s3.us-east-1.amazonaws.com/frontend-assets/templates-new/BotsonicNew.png",
-          "companyLogo": "https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black.png",
-          "bubbleIcon": "BiBot",
-          "accentColor": "#705CF6",
-          "subheading": "Our bot answers instantly",
-          "welcomeMessage": "Hey there, how can I help you?",
-          "inputPlaceholder": "Send a message...",
-          "showFloating": true,
-          "createdAt": "2023-11-08T16:15:51.322Z",
-          "updatedAt": "2023-11-08T16:15:51.322Z",
-          "__v": 0
-      }]);
+        setMyBots([]);
         // setMyBots([]);
         toast.error(responseData.message);
       }
@@ -155,9 +139,7 @@ const BotsContent = () => {
     const fetchBotData = async () => {
       getAllBot();
     };
-    if (user.bots && user.bots.length > 0) {
       fetchBotData();
-    }
   }, []);
 
   return (

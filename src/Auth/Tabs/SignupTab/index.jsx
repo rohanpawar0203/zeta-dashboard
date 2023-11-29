@@ -16,7 +16,7 @@ const SignupTab = ({selected}) => {
         companyName: '',
         contact : '',
         websiteLink : '',
-        planId : '',
+        planId : '6565af1e45da53f753594d09',
         store : '',
         productList : '',
     })  
