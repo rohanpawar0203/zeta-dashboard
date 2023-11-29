@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import "./App.css";
 import Routers from "./Routes";
 import BookmarkProvider from "./_helper/bookmark/BookmarkProvider";
-import {ChatProvider} from "./_helper/chat-app/ChatProvider";
+import { ChatProvider } from "./_helper/chat-app/ChatProvider";
 import ContactProvider from "./_helper/Contact/ContactProvider";
 import CartProvider from "./_helper/ecommerce/cart/CartProvider";
 import FilterProvider from "./_helper/ecommerce/filter/FilterProvider";
@@ -24,6 +24,9 @@ import FAQProvider from "./_helper/Faq/FaqProvider";
 import AnimationThemeProvider from "./_helper/AnimationTheme/AnimationThemeProvider";
 import CustomizerProvider from "./_helper/customizer/CustomizerProvider";
 import { MenuItemsContextProvider } from "./_helper/MenuItems/MenuItemsProvider";
+import { getSessionId } from "./Component/Bots/sessionSetup";
+import { connectWithSocketIOServer } from "./Component/Live Chats/Client/wss";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
   useEffect(() => {
@@ -32,7 +35,7 @@ function App() {
     }
     getSessionId(sessionStorage.getItem("sessionUUID"));
     connectWithSocketIOServer();
-  },[]);
+  }, []);
   return (
     <Fragment>
       <CustomizerProvider>
@@ -58,8 +61,8 @@ function App() {
                                               <ProjectProvider>
                                                 <AnimationThemeProvider>
                                                   <MenuItemsContextProvider>
-                                                  {" "}     
-                                                  <Routers />
+                                                    {" "}
+                                                    <Routers />
                                                   </MenuItemsContextProvider>
                                                 </AnimationThemeProvider>{" "}
                                               </ProjectProvider>

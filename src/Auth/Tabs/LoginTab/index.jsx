@@ -62,6 +62,7 @@ const LoginTab = ({ selected }) => {
   //     }
   // };
   const userLogin = async (e) => {
+    console.log("REACT_APP_API_BASE_URL", process.env.REACT_APP_API_BASE_URL);
     setLoading(true);
     const requestOptions = {
       method: "POST",
@@ -75,21 +76,21 @@ const LoginTab = ({ selected }) => {
       );
       const resBody = await res.json();
       if (res.status.toString() === "200") {
-        setEmail('');
-        setPassword('');
-      const { user, token } = resBody;
-      localStorage.setItem("token", token);
-      localStorage.setItem("currentUser", JSON.stringify(user));
-      appStore.getState().setUserData(user);
-      appStore.getState().setToken(token);
-      toast.success("User Logged In successfully");
-      if(user.userId){
-        history(`${process.env.PUBLIC_URL}/live-chat`);
-      }else{
-        history(`${process.env.PUBLIC_URL}/dashboard`);
-      }
-      }else{
-          toast.error(`${resBody.msg}`);
+        setEmail("");
+        setPassword("");
+        const { user, token } = resBody;
+        localStorage.setItem("token", token);
+        localStorage.setItem("currentUser", JSON.stringify(user));
+        appStore.getState().setUserData(user);
+        appStore.getState().setToken(token);
+        toast.success("User Logged In successfully");
+        if (user.userId) {
+          history(`${process.env.PUBLIC_URL}/live-chat`);
+        } else {
+          history(`${process.env.PUBLIC_URL}/dashboard`);
+        }
+      } else {
+        toast.error(`${resBody.msg}`);
       }
     } catch (err) {
       toast.error(`${err.message}`);
@@ -98,23 +99,24 @@ const LoginTab = ({ selected }) => {
   };
   const formValidate = () => {
     isErrors.current = false;
-    setErrors({})
+    setErrors({});
     let errorsObj = {};
     if (!email) {
       errorsObj = { email: "Email ID is required!" };
-    }
-    else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
-      errorsObj = {email: "Invalid Email ID!" };
+    } else if (
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
+    ) {
+      errorsObj = { email: "Invalid Email ID!" };
     }
     if (!password) {
       errorsObj = { ...errorsObj, password: "Password is required!" };
     }
-    if(Object.values(errorsObj).length > 0){
-        isErrors.current = Object.values(errorsObj).length > 0;
-        setErrors(errorsObj);
+    if (Object.values(errorsObj).length > 0) {
+      isErrors.current = Object.values(errorsObj).length > 0;
+      setErrors(errorsObj);
     }
   };
-  
+
   return (
     <Fragment>
       <Form className="theme-form login-form">
@@ -138,7 +140,11 @@ const LoginTab = ({ selected }) => {
               placeholder="Email Address"
             />
           </InputGroup>
-          {errors.email && <Label className="text-red fw-bolder mt-2 errTxt">{errors?.email}</Label>}
+          {errors.email && (
+            <Label className="text-red fw-bolder mt-2 errTxt">
+              {errors?.email}
+            </Label>
+          )}
         </FormGroup>
         <FormGroup className="mb-4">
           <Label>
@@ -152,19 +158,23 @@ const LoginTab = ({ selected }) => {
               className="form-control"
               type={togglePassword ? "text" : "password"}
               onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                placeholder="Password"
-                required={true}
-                />
+                setPassword(e.target.value);
+              }}
+              placeholder="Password"
+              required={true}
+            />
             <div
               className="show-hide"
               onClick={() => setTogglePassword(!togglePassword)}
-              >
+            >
               <span className={togglePassword ? "" : "show"}></span>
             </div>
           </InputGroup>
-                {errors.password && <Label className="text-red fw-bolder mt-2 errTxt">{errors?.password}</Label>}
+          {errors.password && (
+            <Label className="text-red fw-bolder mt-2 errTxt">
+              {errors?.password}
+            </Label>
+          )}
         </FormGroup>
         <FormGroup>
           {selected === "firebase" ? (
@@ -173,14 +183,12 @@ const LoginTab = ({ selected }) => {
               <Btn
                 attrBtn={{
                   color: "primary",
-                  className: `btn-block mb-3 ${
-                    (loading ) && "btn-disabled"
-                  }`,
+                  className: `btn-block mb-3 ${loading && "btn-disabled"}`,
                   disabled: loading,
                   onClick: (e) => {
                     formValidate();
-                    if(!isErrors.current){
-                        userLogin()
+                    if (!isErrors.current) {
+                      userLogin();
                     }
                   },
                 }}

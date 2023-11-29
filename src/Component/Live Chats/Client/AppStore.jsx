@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import './app-store.css';
+import "./app-store.css";
 const appStore = create((set, get) => ({
   isConnected: false,
-  userData: JSON.parse(localStorage.getItem('currentUser')) || {},
-  token: localStorage.getItem('token') || "",
+  userData: JSON.parse(localStorage.getItem("currentUser")) || {},
+  token: localStorage.getItem("token") || "",
   conversation: [],
   allAgents: [],
   liveConversationNewEntry: [],
@@ -19,7 +19,8 @@ const appStore = create((set, get) => ({
   setNewProductModalId: (status) => set({ newProductModalId: status }),
   liveConversation: [],
   setLiveConversation: (data) => set({ liveConversation: data }),
-  setLiveConversationNewEntry: (data) => set({ liveConversationNewEntry: data }),
+  setLiveConversationNewEntry: (data) =>
+    set({ liveConversationNewEntry: data }),
   setIsConnected: (status) => set({ isConnected: status }),
   setAllAgents: (data) => set({ allAgents: data }),
   setCurrentLocationPathName: (data) => set({ currentLocationPathname: data }),
@@ -36,8 +37,8 @@ const appStore = create((set, get) => ({
     }));
   },
   messageType: (data) => {
-    appStore.getState().setShowTyping(false);
-    if (data.productList.length !== 0) {
+    console.log("messageType", data, typeof data);
+    if (data.productList && data.productList.length !== 0) {
       data.productList.map((ele) => {
         const text = (
           <ul className="list-message">
@@ -67,6 +68,7 @@ const appStore = create((set, get) => ({
         get().setMessages(text, false);
       });
     } else {
+      console.log("Simplet text", data.message);
       get().setMessages(data.message, false);
     }
   },

@@ -26,7 +26,6 @@ export const getSessionId = (parameter) => {
       //   }
     );
 
-    console.log("existingSession", existingSession);
     if (
       existingSession &&
       Date.now() - existingSession.lastUsed <= 30 * 60 * 1000
@@ -34,21 +33,23 @@ export const getSessionId = (parameter) => {
       // If session exists and is valid
 
       existingSession.lastUsed = Date.now();
-      //   console.log(
-      //     "ExistingSession",
-      //     Object.keys(sessions[0]).find((key) => {
-      //       //sessions[key] === existingSession;
-      //       console.log("sessions[key]:", key);
-      //     })
-      //   );
+      // console.log(
+      //   "ExistingSession",
+      //   Object.keys(sessions[0]).find((key) => {
+      //     //sessions[key] === existingSession;
+      //     console.log("sessions[key]:", key);
+      //   })
+      // );
       return Object.keys(sessions[0]).find(
         (key) => sessions[0][key] === existingSession
       );
     }
   } else {
+    // console.log("Existing Sesson False");
+
     // Create a new session linked to the parameter
     const sessionId = generateSessionId();
-    console.log("generatedsessionID", sessionId);
+    // console.log("generatedsessionID", sessionId);
     let localSession = [];
     localSession = [
       {
@@ -59,10 +60,10 @@ export const getSessionId = (parameter) => {
       },
     ];
     sessionStorage.setItem("sessions", JSON.stringify(localSession));
-    console.log(
-      "sessionStr",
-      JSON.stringify(sessionStorage.getItem("sessions"))
-    );
+    // console.log(
+    //   "sessionStr",
+    //   JSON.stringify(sessionStorage.getItem("sessions"))
+    // );
 
     return sessionId;
   }
