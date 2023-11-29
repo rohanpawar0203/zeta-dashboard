@@ -83,7 +83,11 @@ const LoginTab = ({ selected }) => {
       appStore.getState().setToken(token);
       connectWithSocketIOServer();
       toast.success("User Logged In successfully");
-      history(`${process.env.PUBLIC_URL}/dashboard`);
+      if(user.userId){
+        history(`${process.env.PUBLIC_URL}/live-chat`);
+      }else{
+        history(`${process.env.PUBLIC_URL}/dashboard`);
+      }
       }else{
           toast.error(`${resBody.msg}`);
       }
