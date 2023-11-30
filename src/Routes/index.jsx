@@ -11,6 +11,7 @@ import PrivateRoute from './PrivateRoute';
 import Signin from '../Auth/Signin';
 import Signup from '../Auth/Signup';
 import { connectWithSocketIOServer } from '../Component/Live Chats/Client/wss';
+import ErrorPage from './ErrorPage';
 
 configureFakeBackend();
 const Routers = () => {
@@ -33,17 +34,6 @@ const Routers = () => {
             <Suspense fallback={<Loader />}>
               <Routes>
                 <Route path={'/'} element={<PrivateRoute />}>
-                  {currentUser  && token ?
-                    <>
-                      <Route exact
-                        path={`${process.env.PUBLIC_URL}`}
-                        element={<Navigate to={`${process.env.PUBLIC_URL}/dashboard`} />}
-                      />
-                      <Route exact
-                        path={`/`}
-                        element={<Navigate to={`${process.env.PUBLIC_URL}/dashboard`} />}
-                      />
-                    </> : ''}
                   <Route path={`/*`} element={<LayoutRoutes />} />
                 </Route>
                 <Route path={`${process.env.PUBLIC_URL}/callback`} render={() => <Callback />} />
@@ -52,6 +42,7 @@ const Routers = () => {
                 {authRoutes.map(({ path, Component }, i) => (
                   <Route path={path} element={Component} key={i} />
                 ))}
+                <Route path={`*`} element={<ErrorPage />} />
               </Routes>
             </Suspense>
           </>

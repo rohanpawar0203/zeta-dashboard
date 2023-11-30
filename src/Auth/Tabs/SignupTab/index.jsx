@@ -8,6 +8,7 @@ import { EmailAddress, LoginWithJWT, Password, SignUp } from '../../../Constant'
 import { handleResponse } from '../../../Services/Fack.Backend';
 import FormHeader from './FormHeader';
 import SignupWith from './SignupWith';
+import appStore from '../../../Component/Live Chats/Client/AppStore';
 
 const SignupTab = ({selected}) => {
     const [userData, setUserData] = useState({
@@ -16,7 +17,7 @@ const SignupTab = ({selected}) => {
         companyName: '',
         contact : '',
         websiteLink : '',
-        planId : '6565af1e45da53f753594d09',
+        planId : '65682fdf5ea2cc4bd8efad00',
         store : '',
         productList : '',
     })  
@@ -25,6 +26,7 @@ const SignupTab = ({selected}) => {
     const [togglePassword, setTogglePassword] = useState(false);
     const isErrors = useRef(false);
     const history = useNavigate();
+    const {setToken} = appStore();
     const handleFormChange = (e) => {
         const {value, name} = e.target;
         setUserData((pre) => ({
@@ -42,6 +44,14 @@ const SignupTab = ({selected}) => {
         try{
             const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/register`, requestOptions);
             const resBody = await res.json();
+            const {token, user} = resBody;
+            if(token && user){
+                setToken(resBody.token);
+                setUserData(resBody.user);
+                localStorage.setItem('token', resBody.token);
+                localStorage.setItem('currentUser', JSON.stringify(resBody.user));
+                history(`${process.env.PUBLIC_URL}/store`);
+            }
             if(`${res.status}` === '200'){
                 setLoading(false);
                 setUserData((pre) => {
@@ -94,7 +104,7 @@ const SignupTab = ({selected}) => {
                 isErrors.current = Object.values(errorsObj).length > 0;
                 setErrors(errorsObj);
             }
-          }
+        }
   return (
     <Fragment>
             <Form className="theme-form login-form">

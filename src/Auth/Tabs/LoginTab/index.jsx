@@ -37,8 +37,7 @@ const LoginTab = ({ selected }) => {
   const [togglePassword, setTogglePassword] = useState(false);
   const history = useNavigate();
   const inputRef = useRef();
-  const [value, setValue] = useState(localStorage.getItem("profileURL") || man);
-  const [name, setName] = useState(localStorage.getItem("Name"));
+  const { setUserData, setToken } = appStore();
 
   // const loginAuth = async (e) => {
   //     e.preventDefault();
@@ -81,8 +80,8 @@ const LoginTab = ({ selected }) => {
         const { user, token } = resBody;
         localStorage.setItem("token", token);
         localStorage.setItem("currentUser", JSON.stringify(user));
-        appStore.getState().setUserData(user);
-        appStore.getState().setToken(token);
+        setUserData(user);
+        setToken(token);
         toast.success("User Logged In successfully");
         if (user.userId) {
           history(`${process.env.PUBLIC_URL}/live-chat`);

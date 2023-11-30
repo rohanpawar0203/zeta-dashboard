@@ -45,6 +45,7 @@ const StoreContent = () => {
   const token = localStorage.getItem("token");
   const history = useNavigate();
   const {handleForStore, handleForLogout} = GetMenuItemsProps();
+  const {handleFilterForStorePresent} = GetMenuItemsProps();
   
   const handleRegisterTypeChange = (e) =>{
     e.target.checked && setregisterType(e.target.value);
@@ -92,6 +93,7 @@ const StoreContent = () => {
         const response = await res.json();
         if (res.ok) {
           setSubmitLoader(false);
+          handleFilterForStorePresent();
           toast.success("Profile created successfully");
           history(`${process.env.PUBLIC_URL}/bot`)
         } else {

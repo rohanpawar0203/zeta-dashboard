@@ -20,6 +20,7 @@ import appStore from '../../Component/Live Chats/Client/AppStore';
 const HeaderContain = () => {// eslint-disable-next-line
   const [profile, setProfile] = useState('');
   const [name, setName] = useState('');
+  const { setUserData, setToken } = appStore();
   useEffect(() => {
     setProfile(localStorage.getItem('profileURL') || UserImg);
     setName(localStorage.getItem('Name'));
@@ -29,13 +30,9 @@ const HeaderContain = () => {// eslint-disable-next-line
   const history = useNavigate();
   const {handleForLogout} = GetMenuItemsProps()
   const Logout = () => {
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('token');
-    appStore.getState().setUserData({});
-    appStore.getState().setToken('');
-    // handleForLogout();
-    // firebase_app.auth().signOut();
-    // history(`${process.env.PUBLIC_URL}/login`);  
+    localStorage.clear();
+    setUserData({});
+    setToken(''); 
   };
   return (
     <Fragment>

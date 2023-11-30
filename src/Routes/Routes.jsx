@@ -156,20 +156,22 @@ export const routes = [
     // { path: `${process.env.PUBLIC_URL}/project/createlist/`, Component: <CreateList /> },
 
     // { path: `${process.env.PUBLIC_URL}/filemanager`, Component: <FileManager /> },
-    { path: `${process.env.PUBLIC_URL}/dashboard`, Component: <DashBoard /> },
     
+    { path: `${process.env.PUBLIC_URL}/dashboard`, Component: <DashBoard /> },
     { path: `${process.env.PUBLIC_URL}/store`, Component: <Store /> },
     { path: `${process.env.PUBLIC_URL}/tickets`, Component: <Tickets /> },
     { path: `${process.env.PUBLIC_URL}/agents`, Component: <Agents /> },
-    // { path: `${process.env.PUBLIC_URL}/add-agents`, Component: <AddAgents /> },
     { path: `${process.env.PUBLIC_URL}/custom-chat-flow`, Component: <CustomFlow /> },
     { path: `${process.env.PUBLIC_URL}/bot`, Component: <Bot /> },
     { path: `${process.env.PUBLIC_URL}/bots`, Component: <Bots /> },
     { path: `${process.env.PUBLIC_URL}/bot/:boatId`, Component: <BotInfo /> },
+    { path: `${process.env.PUBLIC_URL}/chats-panel`, Component: <ChatsPanel /> },
+    { path: `${process.env.PUBLIC_URL}/live-chat`, Component: <LiveChatPanel /> },
+    { path: `${process.env.PUBLIC_URL}/products`, Component: <Products2 /> },
+    // { path: `${process.env.PUBLIC_URL}/add-agents`, Component: <AddAgents /> },
     // { path: `${process.env.PUBLIC_URL}/kanbanboard`, Component: <KanbanBoard /> },
 
     // { path: `${process.env.PUBLIC_URL}/ecommerce/product`, Component: <Products /> },
-    { path: `${process.env.PUBLIC_URL}/products`, Component: <Products2 /> },
     // { path: `${process.env.PUBLIC_URL}/ecommerce/productpage`, Component: <ProductPage /> },
     // { path: `${process.env.PUBLIC_URL}/ecommerce/productlist`, Component: <ProductList /> },
     // { path: `${process.env.PUBLIC_URL}/ecommerce/paymentdetails`, Component: <PaymentDetails /> },
@@ -185,8 +187,6 @@ export const routes = [
     // { path: `${process.env.PUBLIC_URL}/email/compose`, Component: <Compose /> },
 
     // { path: `${process.env.PUBLIC_URL}/chat/chatapp`, Component: <ChatApp /> },
-    { path: `${process.env.PUBLIC_URL}/chats-panel`, Component: <ChatsPanel /> },
-    { path: `${process.env.PUBLIC_URL}/live-chat`, Component: <LiveChatPanel /> },
     // { path: `${process.env.PUBLIC_URL}/chat/videocall`, Component: <VideoChat /> },
 
     // { path: `${process.env.PUBLIC_URL}/users/userprofile`, Component: <UsersProfile /> },
@@ -240,7 +240,7 @@ export const routes = [
     // { path: `${process.env.PUBLIC_URL}/ui-kits/progress-bar/`, Component: <Progressbars /> },
     // { path: `${process.env.PUBLIC_URL}/ui-kits/modal/`, Component: <Modals /> },
     // { path: `${process.env.PUBLIC_URL}/ui-kits/alert/`, Component: <Alerts /> },
-    { path: `${process.env.PUBLIC_URL}/ui-kits/popover/`, Component: <PopOvers /> },
+    // { path: `${process.env.PUBLIC_URL}/ui-kits/popover/`, Component: <PopOvers /> },
     // { path: `${process.env.PUBLIC_URL}/ui-kits/tooltips/`, Component: <Tooltips /> },
     // { path: `${process.env.PUBLIC_URL}/ui-kits/spinner/`, Component: <Spinners /> },
     // { path: `${process.env.PUBLIC_URL}/ui-kits/dropdown/`, Component: <Dropdowns /> },
