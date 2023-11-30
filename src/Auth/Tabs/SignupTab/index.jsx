@@ -17,7 +17,7 @@ const SignupTab = ({selected}) => {
         companyName: '',
         contact : '',
         websiteLink : '',
-        planId : '65682fdf5ea2cc4bd8efad00',
+        planId : '1234',
         store : '',
         productList : '',
     })  
@@ -45,13 +45,6 @@ const SignupTab = ({selected}) => {
             const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/register`, requestOptions);
             const resBody = await res.json();
             const {token, user} = resBody;
-            if(token && user){
-                setToken(resBody.token);
-                setUserData(resBody.user);
-                localStorage.setItem('token', resBody.token);
-                localStorage.setItem('currentUser', JSON.stringify(resBody.user));
-                history(`${process.env.PUBLIC_URL}/store`);
-            }
             if(`${res.status}` === '200'){
                 setLoading(false);
                 setUserData((pre) => {
@@ -60,8 +53,14 @@ const SignupTab = ({selected}) => {
                     }
                 return pre;
                 })
+                if(token && user){
+                    setToken(resBody.token);
+                    setUserData(resBody.user);
+                    localStorage.setItem('token', resBody.token);
+                    localStorage.setItem('currentUser', JSON.stringify(resBody.user));
+                    history(`${process.env.PUBLIC_URL}/store`);
+                }
                 toast.success('User signedup successfully')
-                history(`${process.env.PUBLIC_URL}/signin`)
             }else{
                 toast.error(resBody?.msg)
             }
