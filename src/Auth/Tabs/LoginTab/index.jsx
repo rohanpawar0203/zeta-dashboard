@@ -37,7 +37,7 @@ const LoginTab = ({ selected }) => {
   const [togglePassword, setTogglePassword] = useState(false);
   const history = useNavigate();
   const inputRef = useRef();
-  const { setUserData, setToken } = appStore();
+  const { setUserData, setToken, userData } = appStore();
 
   // const loginAuth = async (e) => {
   //     e.preventDefault();
@@ -83,11 +83,17 @@ const LoginTab = ({ selected }) => {
         setUserData(user);
         setToken(token);
         toast.success("User Logged In successfully");
+        console.log('userData.userId ', user);
         if (user.userId) {
           history(`${process.env.PUBLIC_URL}/live-chat`);
-        } else {
+        }
+        else if(!user.store && !user.userId){
+          history(`${process.env.PUBLIC_URL}/store`);
+        }
+        else if(user.store && !user.userId){
           history(`${process.env.PUBLIC_URL}/dashboard`);
         }
+        
       } else {
         toast.error(`${resBody.msg}`);
       }

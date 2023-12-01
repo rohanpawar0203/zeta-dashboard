@@ -145,17 +145,17 @@ import LiveChatPanel from '../Pages/Live Chats/ChatApp'
 
 
 export const routes = [
-    // { path: `${process.env.PUBLIC_URL}/dashboard/default/`, Component: <Default /> },
-    // { path: `${process.env.PUBLIC_URL}/dashboard/ecommerce/`, Component: <Ecommerce /> },
-    // { path: `${process.env.PUBLIC_URL}/dashboard/crypto/`, Component: <Crypto /> },
+    { path: `${process.env.PUBLIC_URL}/dashboard/default/`, Component: <Default /> },
+    { path: `${process.env.PUBLIC_URL}/dashboard/ecommerce/`, Component: <Ecommerce /> },
+    { path: `${process.env.PUBLIC_URL}/dashboard/crypto/`, Component: <Crypto /> },
 
-    // { path: `${process.env.PUBLIC_URL}/widgets/general/`, Component: <General /> },
-    // { path: `${process.env.PUBLIC_URL}/widgets/chart/`, Component: <Charts /> },
+    { path: `${process.env.PUBLIC_URL}/widgets/general/`, Component: <General /> },
+    { path: `${process.env.PUBLIC_URL}/widgets/chart/`, Component: <Charts /> },
 
-    // { path: `${process.env.PUBLIC_URL}/project/projectlist/`, Component: <ProjectList /> },
-    // { path: `${process.env.PUBLIC_URL}/project/createlist/`, Component: <CreateList /> },
+    { path: `${process.env.PUBLIC_URL}/project/projectlist/`, Component: <ProjectList /> },
+    { path: `${process.env.PUBLIC_URL}/project/createlist/`, Component: <CreateList /> },
 
-    // { path: `${process.env.PUBLIC_URL}/filemanager`, Component: <FileManager /> },
+    { path: `${process.env.PUBLIC_URL}/filemanager`, Component: <FileManager /> },
     
     { path: `${process.env.PUBLIC_URL}/dashboard`, Component: <DashBoard /> },
     { path: `${process.env.PUBLIC_URL}/store`, Component: <Store /> },
@@ -168,277 +168,277 @@ export const routes = [
     { path: `${process.env.PUBLIC_URL}/chats-panel`, Component: <ChatsPanel /> },
     { path: `${process.env.PUBLIC_URL}/live-chat`, Component: <LiveChatPanel /> },
     { path: `${process.env.PUBLIC_URL}/products`, Component: <Products2 /> },
-    // { path: `${process.env.PUBLIC_URL}/add-agents`, Component: <AddAgents /> },
-    // { path: `${process.env.PUBLIC_URL}/kanbanboard`, Component: <KanbanBoard /> },
+    { path: `${process.env.PUBLIC_URL}/add-agents`, Component: <AddAgents /> },
+    { path: `${process.env.PUBLIC_URL}/kanbanboard`, Component: <KanbanBoard /> },
 
-    // { path: `${process.env.PUBLIC_URL}/ecommerce/product`, Component: <Products /> },
-    // { path: `${process.env.PUBLIC_URL}/ecommerce/productpage`, Component: <ProductPage /> },
-    // { path: `${process.env.PUBLIC_URL}/ecommerce/productlist`, Component: <ProductList /> },
-    // { path: `${process.env.PUBLIC_URL}/ecommerce/paymentdetails`, Component: <PaymentDetails /> },
-    // { path: `${process.env.PUBLIC_URL}/ecommerce/orderhistory`, Component: <OrderHistory /> },
-    // { path: `${process.env.PUBLIC_URL}/ecommerce/invoice`, Component: <Invoice /> },
-    // { path: `${process.env.PUBLIC_URL}/ecommerce/cart`, Component: <ProductCart /> },
-    // { path: `${process.env.PUBLIC_URL}/ecommerce/wishlist`, Component: <WishList /> },
-    // { path: `${process.env.PUBLIC_URL}/ecommerce/checkout`, Component: <CheckOut /> },
-    // { path: `${process.env.PUBLIC_URL}/ecommerce/pricing`, Component: <PricingMembership /> },
+    { path: `${process.env.PUBLIC_URL}/ecommerce/product`, Component: <Products /> },
+    { path: `${process.env.PUBLIC_URL}/ecommerce/productpage`, Component: <ProductPage /> },
+    { path: `${process.env.PUBLIC_URL}/ecommerce/productlist`, Component: <ProductList /> },
+    { path: `${process.env.PUBLIC_URL}/ecommerce/paymentdetails`, Component: <PaymentDetails /> },
+    { path: `${process.env.PUBLIC_URL}/ecommerce/orderhistory`, Component: <OrderHistory /> },
+    { path: `${process.env.PUBLIC_URL}/ecommerce/invoice`, Component: <Invoice /> },
+    { path: `${process.env.PUBLIC_URL}/ecommerce/cart`, Component: <ProductCart /> },
+    { path: `${process.env.PUBLIC_URL}/ecommerce/wishlist`, Component: <WishList /> },
+    { path: `${process.env.PUBLIC_URL}/ecommerce/checkout`, Component: <CheckOut /> },
+    { path: `${process.env.PUBLIC_URL}/ecommerce/pricing`, Component: <PricingMembership /> },
 
-    // { path: `${process.env.PUBLIC_URL}/email/mailbox`, Component: <MailInbox /> },
-    // { path: `${process.env.PUBLIC_URL}/email/readmail`, Component: <ReadMail /> },
-    // { path: `${process.env.PUBLIC_URL}/email/compose`, Component: <Compose /> },
+    { path: `${process.env.PUBLIC_URL}/email/mailbox`, Component: <MailInbox /> },
+    { path: `${process.env.PUBLIC_URL}/email/readmail`, Component: <ReadMail /> },
+    { path: `${process.env.PUBLIC_URL}/email/compose`, Component: <Compose /> },
 
-    // { path: `${process.env.PUBLIC_URL}/chat/chatapp`, Component: <ChatApp /> },
-    // { path: `${process.env.PUBLIC_URL}/chat/videocall`, Component: <VideoChat /> },
+    { path: `${process.env.PUBLIC_URL}/chat/chatapp`, Component: <ChatApp /> },
+    { path: `${process.env.PUBLIC_URL}/chat/videocall`, Component: <VideoChat /> },
 
-    // { path: `${process.env.PUBLIC_URL}/users/userprofile`, Component: <UsersProfile /> },
-    // { path: `${process.env.PUBLIC_URL}/users/useredit`, Component: <UsersEdit /> },
-    // { path: `${process.env.PUBLIC_URL}/users/usercard`, Component: <UsersCardss /> },
+    { path: `${process.env.PUBLIC_URL}/users/userprofile`, Component: <UsersProfile /> },
+    { path: `${process.env.PUBLIC_URL}/users/useredit`, Component: <UsersEdit /> },
+    { path: `${process.env.PUBLIC_URL}/users/usercard`, Component: <UsersCardss /> },
 
-    // { path: `${process.env.PUBLIC_URL}/bookmarks`, Component: <Bookmarks /> },
-// 
-    // { path: `${process.env.PUBLIC_URL}/social-app`, Component: <SocialApp /> },
+    { path: `${process.env.PUBLIC_URL}/bookmarks`, Component: <Bookmarks /> },
 
-    // { path: `${process.env.PUBLIC_URL}/calandar/basic-calandar`, Component: <Calender /> },
-    // { path: `${process.env.PUBLIC_URL}/calandar/draggable-calandar`, Component: <Draggable /> },
+    { path: `${process.env.PUBLIC_URL}/social-app`, Component: <SocialApp /> },
 
-    // { path: `${process.env.PUBLIC_URL}/searchresult`, Component: <SearchResult /> },
+    { path: `${process.env.PUBLIC_URL}/calandar/basic-calandar`, Component: <Calender /> },
+    { path: `${process.env.PUBLIC_URL}/calandar/draggable-calandar`, Component: <Draggable /> },
 
-    // { path: `${process.env.PUBLIC_URL}/forms-control/formValidation`, Component: <FormValidation /> },
-    // { path: `${process.env.PUBLIC_URL}/forms-control/baseInput`, Component: <BaseInput /> },
-    // { path: `${process.env.PUBLIC_URL}/forms-control/inputGroup`, Component: <InputGroups /> },
-    // { path: `${process.env.PUBLIC_URL}/forms-control/megaOptions`, Component: <MegaOptions /> },
-    // { path: `${process.env.PUBLIC_URL}/forms-control/radioCheckbox`, Component: <RadioCheckbox /> },
+    { path: `${process.env.PUBLIC_URL}/searchresult`, Component: <SearchResult /> },
 
-    // { path: `${process.env.PUBLIC_URL}/form-widget/datepicker`, Component: <FormDatapicker /> },
-    // { path: `${process.env.PUBLIC_URL}/form-widget/typeahead`, Component: <FormTypeahead /> },
-    // { path: `${process.env.PUBLIC_URL}/form-widget/datetimepicker`, Component: <FormDateTime /> },
-    // { path: `${process.env.PUBLIC_URL}/form-widget/select2`, Component: <FormSelect2 /> },
-    // { path: `${process.env.PUBLIC_URL}/form-widget/switch`, Component: <FormSwitch /> },
-    // { path: `${process.env.PUBLIC_URL}/form-widget/touchspin`, Component: <FormTouchspin /> },
-    // { path: `${process.env.PUBLIC_URL}/form-widget/rangepicker`, Component: <FormDateRangepicker /> },
-    // { path: `${process.env.PUBLIC_URL}/form-widget/clipboard`, Component: <FromClipboard /> },
+    { path: `${process.env.PUBLIC_URL}/forms-control/formValidation`, Component: <FormValidation /> },
+    { path: `${process.env.PUBLIC_URL}/forms-control/baseInput`, Component: <BaseInput /> },
+    { path: `${process.env.PUBLIC_URL}/forms-control/inputGroup`, Component: <InputGroups /> },
+    { path: `${process.env.PUBLIC_URL}/forms-control/megaOptions`, Component: <MegaOptions /> },
+    { path: `${process.env.PUBLIC_URL}/forms-control/radioCheckbox`, Component: <RadioCheckbox /> },
 
-    // { path: `${process.env.PUBLIC_URL}/form-layout/formDefault`, Component: <FormDefault /> },
-    // { path: `${process.env.PUBLIC_URL}/form-layout/formWizard`, Component: <FormWizard /> },
+    { path: `${process.env.PUBLIC_URL}/form-widget/datepicker`, Component: <FormDatapicker /> },
+    { path: `${process.env.PUBLIC_URL}/form-widget/typeahead`, Component: <FormTypeahead /> },
+    { path: `${process.env.PUBLIC_URL}/form-widget/datetimepicker`, Component: <FormDateTime /> },
+    { path: `${process.env.PUBLIC_URL}/form-widget/select2`, Component: <FormSelect2 /> },
+    { path: `${process.env.PUBLIC_URL}/form-widget/switch`, Component: <FormSwitch /> },
+    { path: `${process.env.PUBLIC_URL}/form-widget/touchspin`, Component: <FormTouchspin /> },
+    { path: `${process.env.PUBLIC_URL}/form-widget/rangepicker`, Component: <FormDateRangepicker /> },
+    { path: `${process.env.PUBLIC_URL}/form-widget/clipboard`, Component: <FromClipboard /> },
 
-    // { path: `${process.env.PUBLIC_URL}/todo`, Component: <Todo /> },
-    // { path: `${process.env.PUBLIC_URL}/todofirebase`, Component: <TodoFirebase /> },
+    { path: `${process.env.PUBLIC_URL}/form-layout/formDefault`, Component: <FormDefault /> },
+    { path: `${process.env.PUBLIC_URL}/form-layout/formWizard`, Component: <FormWizard /> },
 
-    // { path: `${process.env.PUBLIC_URL}/tasks`, Component: <Tasks /> },
+    { path: `${process.env.PUBLIC_URL}/todo`, Component: <Todo /> },
+    { path: `${process.env.PUBLIC_URL}/todofirebase`, Component: <TodoFirebase /> },
 
-    // { path: `${process.env.PUBLIC_URL}/contacts`, Component: <Contact /> },
-    // { path: `${process.env.PUBLIC_URL}/contacts/firebase`, Component: <ContactFirebase /> },
+    { path: `${process.env.PUBLIC_URL}/tasks`, Component: <Tasks /> },
 
-    // { path: `${process.env.PUBLIC_URL}/blog/blogdetail`, Component: <BlogDetail /> },
-    // { path: `${process.env.PUBLIC_URL}/blog/blogsingle`, Component: <BlogSingle /> },
-    // { path: `${process.env.PUBLIC_URL}/blog/blogpost`, Component: <BlogPost /> },
+    { path: `${process.env.PUBLIC_URL}/contacts`, Component: <Contact /> },
+    { path: `${process.env.PUBLIC_URL}/contacts/firebase`, Component: <ContactFirebase /> },
 
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/typography/`, Component: <Typography /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/avatar/`, Component: <Avatars /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/helperclass/`, Component: <HelperClasses /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/grid/`, Component: <Grid /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/tagsandpills/`, Component: <TagAndPills /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/progress-bar/`, Component: <Progressbars /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/modal/`, Component: <Modals /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/alert/`, Component: <Alerts /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/popover/`, Component: <PopOvers /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/tooltips/`, Component: <Tooltips /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/spinner/`, Component: <Spinners /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/dropdown/`, Component: <Dropdowns /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/tab-bootstrap/`, Component: <TabBootstrap /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/tab-line/`, Component: <TabLine /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/accordion/`, Component: <Accordian /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/shadow/`, Component: <Shadow /> },
-    // { path: `${process.env.PUBLIC_URL}/ui-kits/list/`, Component: <List /> },
+    { path: `${process.env.PUBLIC_URL}/blog/blogdetail`, Component: <BlogDetail /> },
+    { path: `${process.env.PUBLIC_URL}/blog/blogsingle`, Component: <BlogSingle /> },
+    { path: `${process.env.PUBLIC_URL}/blog/blogpost`, Component: <BlogPost /> },
 
-    // {
-    //     path: `${process.env.PUBLIC_URL}/learning/learning-list`, Component: <LearningList />
-    // },
-    // { path: `${process.env.PUBLIC_URL}/learning/learning-detail`, Component: <DetailedList /> },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/jobSearch/cardView`, Component: <CardView />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/jobSearch/job-list`, Component: <ListView />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/jobSearch/job-detail`, Component: <JobDetails />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/jobSearch/job-apply`, Component: <ApplyNow />
-    // },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/typography/`, Component: <Typography /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/avatar/`, Component: <Avatars /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/helperclass/`, Component: <HelperClasses /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/grid/`, Component: <Grid /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/tagsandpills/`, Component: <TagAndPills /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/progress-bar/`, Component: <Progressbars /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/modal/`, Component: <Modals /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/alert/`, Component: <Alerts /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/popover/`, Component: <PopOvers /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/tooltips/`, Component: <Tooltips /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/spinner/`, Component: <Spinners /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/dropdown/`, Component: <Dropdowns /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/tab-bootstrap/`, Component: <TabBootstrap /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/tab-line/`, Component: <TabLine /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/accordion/`, Component: <Accordian /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/shadow/`, Component: <Shadow /> },
+    { path: `${process.env.PUBLIC_URL}/ui-kits/list/`, Component: <List /> },
 
-    // {
-    //     path: `${process.env.PUBLIC_URL}/editor/ckEditor`, Component: <CKEditor />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/editor/mdeEditor`, Component: <MDEEditor />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/editor/ace-code-editor`, Component: <ACEEditor />
-    // },
+    {
+        path: `${process.env.PUBLIC_URL}/learning/learning-list`, Component: <LearningList />
+    },
+    { path: `${process.env.PUBLIC_URL}/learning/learning-detail`, Component: <DetailedList /> },
+    {
+        path: `${process.env.PUBLIC_URL}/jobSearch/cardView`, Component: <CardView />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/jobSearch/job-list`, Component: <ListView />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/jobSearch/job-detail`, Component: <JobDetails />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/jobSearch/job-apply`, Component: <ApplyNow />
+    },
 
-    // {
-    //     path: `${process.env.PUBLIC_URL}/knowledgebase`, Component: <KnowledgeBase />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/knowledgebase/knowledge-category`, Component: <KnowledgeCategory />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/knowledgebase/knowledge-details`, Component: <KnowledgeDetails />
-    // },
+    {
+        path: `${process.env.PUBLIC_URL}/editor/ckEditor`, Component: <CKEditor />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/editor/mdeEditor`, Component: <MDEEditor />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/editor/ace-code-editor`, Component: <ACEEditor />
+    },
 
-    // {
-    //     path: `${process.env.PUBLIC_URL}/sample-page`, Component: <SamplePage />
-    // },
+    {
+        path: `${process.env.PUBLIC_URL}/knowledgebase`, Component: <KnowledgeBase />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/knowledgebase/knowledge-category`, Component: <KnowledgeCategory />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/knowledgebase/knowledge-details`, Component: <KnowledgeDetails />
+    },
 
-    // {
-    //     path: `${process.env.PUBLIC_URL}/mapsjs`, Component: <MapJs />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/leafletmap`, Component: <LeafletMap />
-    // },
+    {
+        path: `${process.env.PUBLIC_URL}/sample-page`, Component: <SamplePage />
+    },
 
-    // {
-    //     path: `${process.env.PUBLIC_URL}/support-ticket`, Component: <SupportTickit />
-    // },
+    {
+        path: `${process.env.PUBLIC_URL}/mapsjs`, Component: <MapJs />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/leafletmap`, Component: <LeafletMap />
+    },
 
-    // {
-    //     path: `${process.env.PUBLIC_URL}/faq`, Component: <FAQ />
-    // },
+    {
+        path: `${process.env.PUBLIC_URL}/support-ticket`, Component: <SupportTickit />
+    },
 
-    // {
-    //     path: `${process.env.PUBLIC_URL}/gallery/imageGallery`, Component: <GalleryGrid />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/gallery/imageWithDesc`, Component: <GalleryGridDesc />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/gallery/mesonryGallery`, Component: <MasonryGallery />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/gallery/mesonryDesc`, Component: <MasonryGalleryDesc />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/gallery/imageHover`, Component: <HoverEffects />
-    // },
+    {
+        path: `${process.env.PUBLIC_URL}/faq`, Component: <FAQ />
+    },
 
-    // {
-    //     path: `${process.env.PUBLIC_URL}/tables/basictable`, Component: <BasicTable />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/tables/sizingtable`, Component: <SizingTable />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/tables/stylingtable`, Component: <StylingTable />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/tables/bordertable`, Component: <BorderTable />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/tables/datatable`, Component: <DataTable />
-    // },
+    {
+        path: `${process.env.PUBLIC_URL}/gallery/imageGallery`, Component: <GalleryGrid />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/gallery/imageWithDesc`, Component: <GalleryGridDesc />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/gallery/mesonryGallery`, Component: <MasonryGallery />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/gallery/mesonryDesc`, Component: <MasonryGalleryDesc />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/gallery/imageHover`, Component: <HoverEffects />
+    },
 
-    // {
-    //     path: `${process.env.PUBLIC_URL}/button`, Component: <DefaultStyle />
-    // },
+    {
+        path: `${process.env.PUBLIC_URL}/tables/basictable`, Component: <BasicTable />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/tables/sizingtable`, Component: <SizingTable />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/tables/stylingtable`, Component: <StylingTable />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/tables/bordertable`, Component: <BorderTable />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/tables/datatable`, Component: <DataTable />
+    },
 
-    // {
-    //     path: `${process.env.PUBLIC_URL}/icons/flagicon`, Component: <FlagIcon />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/icons/fontawesome`, Component: <FontAwesome />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/icons/ico`, Component: <IcoIcons />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/icons/thimify`, Component: <ThemifyIcon />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/icons/feather`, Component: <FeatherIcon />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/icons/wheater`, Component: <WhetherIcon />
-    // },
+    {
+        path: `${process.env.PUBLIC_URL}/button`, Component: <DefaultStyle />
+    },
 
-    // {
-    //     path: `${process.env.PUBLIC_URL}/charts/apex`, Component: <ApexChart />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/charts/chartist`, Component: <ChartistChart />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/charts/chartjs`, Component: <ChartJs />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/charts/google`, Component: <GoogleChart />
-    // },
+    {
+        path: `${process.env.PUBLIC_URL}/icons/flagicon`, Component: <FlagIcon />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/icons/fontawesome`, Component: <FontAwesome />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/icons/ico`, Component: <IcoIcons />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/icons/thimify`, Component: <ThemifyIcon />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/icons/feather`, Component: <FeatherIcon />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/icons/wheater`, Component: <WhetherIcon />
+    },
 
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/card/basicCards`, Component: <BasicCard />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/card/creativeCards`, Component: <CreativeCard />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/card/draggingCards`, Component: <DraggingCard />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/card/tabCard`, Component: <TabCard />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/carousel`, Component: <Carousel />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/breadcrumb`, Component: <BreadcrumbsClass />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/imageCropper`, Component: <ImageCroppers />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/scrollable`, Component: <Scrollables />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/bootstrap-notify`, Component: <BootstrapNotify />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/rating`, Component: <RatingClass />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/dropzone`, Component: <DropzoneClass />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/tourComponent`, Component: <Tours />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/ribbons`, Component: <Ribbons />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/rangeSlider`, Component: <RangeSlider />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/pagination`, Component: <Pagination />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/image-upload`, Component: <ImageUpload />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/stickyNotes`, Component: <Sticky />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/timelines/timeline1`, Component: <TimeLines />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/sweetAlert`, Component: <SweetAlerts />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/treeview`, Component: <TreeViews />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/dragNDropComp`, Component: <DragAndDrop />
-    // },
-    // {
-    //     path: `${process.env.PUBLIC_URL}/bonus-ui/step`, Component: <Steps />
-    // },
+    {
+        path: `${process.env.PUBLIC_URL}/charts/apex`, Component: <ApexChart />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/charts/chartist`, Component: <ChartistChart />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/charts/chartjs`, Component: <ChartJs />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/charts/google`, Component: <GoogleChart />
+    },
+
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/card/basicCards`, Component: <BasicCard />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/card/creativeCards`, Component: <CreativeCard />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/card/draggingCards`, Component: <DraggingCard />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/card/tabCard`, Component: <TabCard />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/carousel`, Component: <Carousel />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/breadcrumb`, Component: <BreadcrumbsClass />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/imageCropper`, Component: <ImageCroppers />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/scrollable`, Component: <Scrollables />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/bootstrap-notify`, Component: <BootstrapNotify />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/rating`, Component: <RatingClass />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/dropzone`, Component: <DropzoneClass />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/tourComponent`, Component: <Tours />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/ribbons`, Component: <Ribbons />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/rangeSlider`, Component: <RangeSlider />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/pagination`, Component: <Pagination />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/image-upload`, Component: <ImageUpload />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/stickyNotes`, Component: <Sticky />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/timelines/timeline1`, Component: <TimeLines />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/sweetAlert`, Component: <SweetAlerts />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/treeview`, Component: <TreeViews />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/dragNDropComp`, Component: <DragAndDrop />
+    },
+    {
+        path: `${process.env.PUBLIC_URL}/bonus-ui/step`, Component: <Steps />
+    },
 
 ];

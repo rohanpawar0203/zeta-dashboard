@@ -93,7 +93,7 @@ const AgentsTable = () => {
           </CardHeader>
           <div style={{width: '100%', height: '500px'}}>
           {agents.length > 0 && (
-          <div className="table-responsive">
+          <div  className="h-100 table-responsive">
             <Table>
               <thead>
                 <tr className='table-primary'>

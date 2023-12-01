@@ -12,6 +12,7 @@ import Signin from '../Auth/Signin';
 import Signup from '../Auth/Signup';
 import { connectWithSocketIOServer } from '../Component/Live Chats/Client/wss';
 import ErrorPage from './ErrorPage';
+import Dashboard from '../Pages/Dash-board';
 
 configureFakeBackend();
 const Routers = () => {

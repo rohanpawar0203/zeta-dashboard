@@ -22,7 +22,7 @@ const ChatBot = ({ myBot, setMyBot }) => {
           <div className="d-flex flex-column justify-content-end align-items-end">
             <div className="mb-2">
               {!closeSmallBot && (
-                <SmallBot myBot={myBot} setcloseSmallBot={setcloseSmallBot} />
+                <SmallBot myBot={myBot} setcloseSmallBot={setcloseSmallBot} setbot={setbot}/>
               )}
             </div>
             <div
@@ -34,6 +34,7 @@ const ChatBot = ({ myBot, setMyBot }) => {
                 height: "50px",
                 borderRadius: "50%",
                 background: `${myBot?.accentColor}`,
+                cursor: 'pointer'
               }}
               className="d-flex align-items-center justify-content-center"
             >
@@ -139,6 +140,7 @@ const ChatBot = ({ myBot, setMyBot }) => {
                 height: "50px",
                 borderRadius: "50%",
                 background: myBot?.accentColor,
+                cursor: 'pointer'
               }}
               className="d-flex align-items-center justify-content-center"
             >

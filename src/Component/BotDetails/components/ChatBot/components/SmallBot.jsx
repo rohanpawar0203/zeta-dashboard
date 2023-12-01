@@ -1,7 +1,7 @@
 import React from "react";
 import { RxCross2 } from "react-icons/rx";
 
-const SmallBot = ({ setcloseSmallBot, myBot }) => {
+const SmallBot = ({ setcloseSmallBot, myBot, setbot}) => {
   console.log("bot info ", myBot);
   return (
     <div
@@ -11,8 +11,10 @@ const SmallBot = ({ setcloseSmallBot, myBot }) => {
         boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
         zIndex: "3",
         background: "white",
+        cursor: 'pointer'
       }}
       className="border  p-3"
+      onClick={() => {setbot((pre) => (pre === 'bigBot' ? 'smallBot' : 'bigBot'))}}
     >
       <div className="w-100 d-flex align-items-center justify-content-between mb-3">
         <div className="d-flex align-items-center">

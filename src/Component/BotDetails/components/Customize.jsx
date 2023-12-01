@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import {
   CardBody,
   CardHeader,
@@ -22,22 +22,9 @@ import { BotCreate } from "../../../api";
 import { toast } from "react-toastify";
 
 const Customize = ({ myBot, setMyBot }) => {
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      botName: myBot.botName,
-      companyName: myBot.companyName,
-      subheading: myBot.subheading,
-      welcomeMessage: myBot.welcomeMessage,
-      inputboxPlaceholder: myBot.inputboxPlaceholder,
-    }
-  });
-  getValues();
-   const [botIcons, setbotIcons] = useState(['BiBot', 'BsRobot', 'TbMessageDots', 'BiUser', 'AiOutlineQuestionCircle', 'TfiHeadphoneAlt', 'Ri24HoursLine', 'LuMessagesSquare', 'TfiCommentsSmiley'])
+   const [botIcons, setbotIcons] = useState(['BiBot', 'BsRobot', 'TbMessageDots', 'BiUser', 'AiOutlineQuestionCircle', 'TfiHeadphoneAlt', 'Ri24HoursLine', 'LuMessagesSquare', 'TfiCommentsSmiley']);
+   const botDetilsRef = useRef(myBot);
+  //  const [isBotChaged, setisBotChaged] = useState(false);
    const colorOptions = [
     "#705CF6",
     "#CC7849",
@@ -50,7 +37,8 @@ const Customize = ({ myBot, setMyBot }) => {
     "#E4849B",
   ];
 
-  const updateBotInfo = async () => {
+  const updateBotInfo = async (e) => {
+    e.preventDefault();
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(`${BotCreate}/${myBot?._id}`, {
@@ -72,16 +60,15 @@ const Customize = ({ myBot, setMyBot }) => {
     }
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
-    if (data !== "") {
-      setMyBot((pre) => ({...pre, ...data}));
-      updateBotInfo();
-      
-    } else {
-      // errors.showMessages();
-    }
-  };
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setMyBot((pre) => ({
+      ...pre,
+      [name]: value
+    }));
+  }
+  
   return (
     <Fragment>
       <Container fluid={true}>
@@ -96,7 +83,7 @@ const Customize = ({ myBot, setMyBot }) => {
                   <Form
                     className="needs-validation"
                     noValidate=""
-                    onSubmit={handleSubmit(onSubmit)}
+                    onSubmit={updateBotInfo}
                   >
                     <Row>
                       <Col md="4 mb-3">
@@ -107,12 +94,12 @@ const Customize = ({ myBot, setMyBot }) => {
                             className="form-control"
                             name="botName"
                             type="text"
-                            placeholder={myBot?.botName}
-                            // placeholder="Bot Name"
-                            {...register("botName", { required: true })}
+                            defaultValue={myBot?.botName}
+                            onChange={(e) => {handleChange(e)}}
+                            placeholder="Bot Name"
+                            required={true}
                           />
                         <span>
-                          {errors.botName && "* Bot Name is required"}
                         </span>
                         <div className="valid-feedback">{"Looks good!"}</div>
                       </Col>
@@ -122,12 +109,12 @@ const Customize = ({ myBot, setMyBot }) => {
                           className="form-control"
                           name="companyName"
                           type="text"
-                          placeholder={myBot?.companyName}
-                          // placeholder="Company Name"
-                          {...register("companyName", { required: true })}
+                          defaultValue={myBot?.companyName}
+                          onChange={(e) => {handleChange(e)}}
+                          placeholder="Company Name"
+                          required={true}
                         />
                         <span>
-                          {errors.companyName && "* Company Name is required"}
                         </span>
                         <div className="valid-feedback">{"Looks good!"}</div>
                       </Col>
@@ -153,14 +140,11 @@ const Customize = ({ myBot, setMyBot }) => {
                           className="form-control"
                           name="subheading"
                           type="text"
-                          placeholder={myBot?.subheading}
-                          // placeholder="Subheading"
-                          {...register("subheading", { required: true })}
+                          defaultValue={myBot?.subheading}
+                          placeholder="Subheading"
+                          onChange={(e) => {handleChange(e)}}
+                          required={true}
                         />
-                        <span>
-                          {errors.subheading && "* Subheading is required"}
-                        </span>
-                        <div className="valid-feedback">{"Looks good!"}</div>
                       </Col>
                       <Col md="4 mb-3">
                         <Label htmlFor="validationCustom01">
@@ -170,14 +154,10 @@ const Customize = ({ myBot, setMyBot }) => {
                           className="form-control"
                           name="inputPlaceholder"
                           type="text"
-                          placeholder={myBot?.inputPlaceholder}
-                          // placeholder="Input Box Placeholder"
-                          {...register("inputPlaceholder", { required: true })}
+                          defaultValue={myBot?.inputPlaceholder}
+                          placeholder="Input Box Placeholder"
+                          onChange={(e) => {handleChange(e)}}
                         />
-                        <span>
-                          {errors.inputboxPlaceholder && "* Input Box Placeholder"}
-                        </span>
-                        <div className="valid-feedback">{"Looks good!"}</div>
                       </Col>
                     </Row>
                     <Row>
@@ -189,14 +169,11 @@ const Customize = ({ myBot, setMyBot }) => {
                           className="form-control"
                           name="welcomeMessage"
                           type="text"
-                          placeholder={myBot?.welcomeMessage}
-                          // placeholder="Welcome Message"
-                          {...register("welcomeMessage", { required: true })}
+                          defaultValue={myBot?.welcomeMessage}
+                          placeholder="Welcome Message"
+                          onChange={(e) => {handleChange(e)}}
+                          required={true}
                         />
-                        <span>
-                          {errors.welcomeMessage && "* Welcome Message is required"}
-                        </span>
-                        <div className="valid-feedback">{"Looks good!"}</div>
                       </Col>
                     </Row>
                     <Row>

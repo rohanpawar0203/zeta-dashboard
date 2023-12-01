@@ -35,6 +35,7 @@ import Custom from './components/Custom'
 import Crawler from "./components/Crawler";
 import { useNavigate } from "react-router";
 import { bigCommerceUrl, shopifyStoreUrl, customUrl, crawlerUrl } from "../../api";
+import appStore from "../Live Chats/Client/AppStore";
 
 const StoreContent = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -46,7 +47,7 @@ const StoreContent = () => {
   const history = useNavigate();
   const {handleForStore, handleForLogout} = GetMenuItemsProps();
   const {handleFilterForStorePresent} = GetMenuItemsProps();
-  
+  const {setUserData, userData} = appStore();
   const handleRegisterTypeChange = (e) =>{
     e.target.checked && setregisterType(e.target.value);
   }
@@ -93,6 +94,8 @@ const StoreContent = () => {
         const response = await res.json();
         if (res.ok) {
           setSubmitLoader(false);
+          setUserData({...userData, store: 'created'});
+          localStorage.setItem('currentUser', JSON.stringify({...userData, store: 'created'}));
           handleFilterForStorePresent();
           toast.success("Profile created successfully");
           history(`${process.env.PUBLIC_URL}/bot`)
