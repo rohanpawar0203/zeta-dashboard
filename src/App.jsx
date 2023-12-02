@@ -27,6 +27,9 @@ import { MenuItemsContextProvider } from "./_helper/MenuItems/MenuItemsProvider"
 import { getSessionId } from "./Component/Bots/sessionSetup";
 import { connectWithSocketIOServer } from "./Component/Live Chats/Client/wss";
 import { v4 as uuidv4 } from "uuid";
+import appStore from "./Component/Live Chats/Client/AppStore";
+import { toast } from "react-toastify";
+import { PlanDetails } from "./api";
 
 function App() {
   useEffect(() => {

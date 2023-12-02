@@ -48,4 +48,5 @@ export const AgentLiveChatAPI = `${process.env.REACT_APP_API_AGENT_LIVE_CHAT}/ap
 export const AddQuestionAPI = `${process.env.REACT_APP_API_BASE_URL}/question/add`;
 export const EditQuestionAPI = `${process.env.REACT_APP_API_BASE_URL}/question/edit`;
 export const DeleteQuestionAPI = `${process.env.REACT_APP_API_BASE_URL}/question/delete`;
-
+export const PlanDetails = `${process.env.REACT_APP_API_BASE_URL}/plans`;
+export const User = `${process.env.REACT_APP_API_BASE_URL}/users`;
