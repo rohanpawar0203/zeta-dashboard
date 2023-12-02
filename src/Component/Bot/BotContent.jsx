@@ -50,7 +50,7 @@ const BotContent = () => {
         </div>
         <div className="d-flex flex-column align-items-center mb-3">
           {points.map((ele, id) => (
-            <div className="w-100 d-flex  align-items-center mb-3">
+            <div className="w-100 d-flex  align-items-center mb-3" key={id}>
               <BsCheckCircle
                 style={{ height: "17px", width: "17px" }}
                 className="text-primary m-0"

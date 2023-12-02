@@ -41,7 +41,7 @@ const StoreContent = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [registerType, setregisterType] = useState('shopify');
   const [submitLoader , setSubmitLoader] = useState(false);
-  const [formData, setformData] = useState({});
+  const [formData, setFormData] = useState({});
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const token = localStorage.getItem("token");
   const history = useNavigate();
@@ -53,6 +53,7 @@ const StoreContent = () => {
   }
 
   const onSubmit = async(data) => {
+    // console.log({data});
     try {
       setSubmitLoader(true);
       const body = {};
@@ -93,7 +94,7 @@ const StoreContent = () => {
 
         const response = await res.json();
         if (res.ok) {
-          setSubmitLoader(false);
+          setSubmitLoader(true);
           setUserData({...userData, store: 'created'});
           localStorage.setItem('currentUser', JSON.stringify({...userData, store: 'created'}));
           handleFilterForStorePresent();
@@ -104,13 +105,20 @@ const StoreContent = () => {
           toast.error(response.message);
         } 
       } else if (registerType === "custom") {
-        const formData = new FormData();
-        formData.append("file", formData.file);
-        formData.append("userId", user._id);
+        // const formData = new FormData();
+        // formData.append("file", formData.file);
+        // formData.append("userId", user._id);
+        console.log({formData});
+
+        const formDataToSend = new FormData();
+        formDataToSend.append('file', formData.file);
+        formDataToSend.append('userId', user._id);
+
+        // setFormData({...formData, file:})
 
         const res = await fetch(customUrl, {
           method: "POST",
-          body: formData,
+          body: formDataToSend,
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -118,7 +126,10 @@ const StoreContent = () => {
         const response = await res.json();
         if (res.ok) {
           // handleForStore();
-          setSubmitLoader(false);
+          setSubmitLoader(true);
+          setUserData({...userData, store: 'created'});
+          localStorage.setItem('currentUser', JSON.stringify({...userData, store: 'created'}));
+          handleFilterForStorePresent();
           toast.success("Profile created successfully");
           history(`${process.env.PUBLIC_URL}/bot`)
         } else {
@@ -139,7 +150,10 @@ const StoreContent = () => {
         const response = await res.json();
         if (res.ok) {
           // handleForStore();
-          setSubmitLoader(false);
+          setSubmitLoader(true);
+          setUserData({...userData, store: 'created'});
+          localStorage.setItem('currentUser', JSON.stringify({...userData, store: 'created'}));
+          handleFilterForStorePresent();
           toast.success("Profile created successfully");
           history(`${process.env.PUBLIC_URL}/bot`)
         } else {
@@ -162,7 +176,7 @@ const StoreContent = () => {
                 <Fragment>
       <Form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}>
         {registerType ==='shopify' && (<ShopifyForm errors={errors} register={register}/>)}
-        {registerType ==='custom' && (<Custom formData={formData} setformData={setformData}/>)}
+        {registerType ==='custom' && (<Custom formData={formData} setFormData={setFormData}/>)}
         {registerType ==='crawler' && (<Crawler />)}
         <Row>
         <Col md="8 mb-3">
