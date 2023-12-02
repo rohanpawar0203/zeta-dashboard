@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
-import { Col, Container, Row } from 'reactstrap';
-import EditMyProfile from './EditmyProfile';
-import MyProfileEdit from './MyProfile';
+import React, { Fragment } from "react";
+import { Col, Container, Row } from "reactstrap";
+import EditMyProfile from "./EditmyProfile";
+import MyProfileEdit from "./MyProfile";
 
 const UsersEditContain = () => {
   return (
@@ -9,10 +9,10 @@ const UsersEditContain = () => {
       <Container fluid={true}>
         <div className="edit-profile">
           <Row>
-            <Col xl="4">
+            {/* <Col xl="4">
               <MyProfileEdit />
-            </Col>
-            <Col xl="8">
+            </Col> */}
+            <Col xl="12">
               <EditMyProfile />
             </Col>
           </Row>

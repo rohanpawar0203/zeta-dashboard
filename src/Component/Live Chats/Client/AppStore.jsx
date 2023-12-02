@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import "./app-store.css";
+import { toast } from "react-toastify";
+import { PlanDetails } from "../../../api";
 const appStore = create((set, get) => ({
   isConnected: false,
   userData: JSON.parse(localStorage.getItem("currentUser")) || {},
@@ -8,6 +10,7 @@ const appStore = create((set, get) => ({
   allAgents: [],
   liveConversationNewEntry: [],
   currentLocationPathname: "",
+  plans: [],
   setUserData: (data) => set({ userData: data }),
   setConversation: (data) => set({ conversation: data }),
   setToken: (data) => set({ token: data }),
@@ -31,6 +34,7 @@ const appStore = create((set, get) => ({
   setShowTyping: (data) => set({ showTyping: data }),
   setBotDetails: (data) => set({ botDetails: data }),
   setRoomId: (data) => set({ roomId: data }),
+  setPlans: (data) => set({ plans: data }),
   setMessages: (data, isUser) => {
     set(() => ({
       messages: [...get().messages, { text: data, user: isUser }],
