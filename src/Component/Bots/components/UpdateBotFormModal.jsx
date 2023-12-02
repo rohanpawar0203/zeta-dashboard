@@ -66,7 +66,6 @@ const UpdateBotFormModal
       if (response.ok) {
         getAllBot && getAllBot();
         toggle();
-        history(`${process.env.PUBLIC_URL}/dashboard`)
       } else {
         toast.error(responseData.message);
       }

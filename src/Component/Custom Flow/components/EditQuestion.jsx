@@ -37,9 +37,10 @@ const EditQuestion = () => {
       currentQuestion.images = imgArr;
     })();
   // currentQuestion ? (currentQuestion.images = imgArr) : null;
-  const handleUpdateQuestion = () => {
+  const handleUpdateQuestion = (e) => {
+    e.preventDefault();
     let payload = {};
-    if (currentQuestion.type == "Single Input") {
+    if (currentQuestion.type === "Single Input") {
       payload = {
         ...singleInput,
         choices: [{ ...singleInputChoice }],
@@ -109,7 +110,7 @@ const EditQuestion = () => {
   };
   return (
         <div className="w-100 h-100 custom-scrollbar"> 
-            <Form className="needs-validation" noValidate="" onSubmit={() => {handleUpdateQuestion()}}>
+            <Form className="needs-validation" noValidate="" onSubmit={(e) => {handleUpdateQuestion(e)}}>
             <H5>
             <u>
           {currentQuestion?.type === "Single Input" ||
