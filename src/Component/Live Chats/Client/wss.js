@@ -57,6 +57,7 @@ export const connectWithSocketIOServer = () => {
   });
 
   socket.on("message-recieved", (data) => {
+   console.log("message-recieved", data);
     let newMessage = JSON.parse(data);
     const newArray = appStore.getState().liveConversation.map((el) => {
       if (el.chatSessionId === newMessage.roomId) {

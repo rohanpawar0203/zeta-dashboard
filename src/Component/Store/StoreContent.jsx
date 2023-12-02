@@ -36,6 +36,7 @@ import Crawler from "./components/Crawler";
 import { useNavigate } from "react-router";
 import { bigCommerceUrl, shopifyStoreUrl, customUrl, crawlerUrl } from "../../api";
 import appStore from "../Live Chats/Client/AppStore";
+import { getUserDetails } from "../../Services/UsersServices";
 
 const StoreContent = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -73,8 +74,11 @@ const StoreContent = () => {
         if (res.ok) {
           // handleForStore();
           setSubmitLoader(false);
+          const userId = userData._id;
+          updateUserDetails(userId);  
           toast.success("Profile created successfully");
-          history(`${process.env.PUBLIC_URL}/bot`)} 
+          redirectToBotComponent()
+        } 
           else {
           setSubmitLoader(false);
           toast.error(response.message);
@@ -94,12 +98,12 @@ const StoreContent = () => {
 
         const response = await res.json();
         if (res.ok) {
+          const userId = userData._id;
+          updateUserDetails(userId);
           setSubmitLoader(true);
-          setUserData({...userData, store: 'created'});
-          localStorage.setItem('currentUser', JSON.stringify({...userData, store: 'created'}));
           handleFilterForStorePresent();
           toast.success("Profile created successfully");
-          history(`${process.env.PUBLIC_URL}/bot`)
+          redirectToBotComponent()
         } else {
           setSubmitLoader(false);
           toast.error(response.message);
@@ -126,12 +130,12 @@ const StoreContent = () => {
         const response = await res.json();
         if (res.ok) {
           // handleForStore();
+          const userId = userData._id;
+          updateUserDetails(userId);
           setSubmitLoader(true);
-          setUserData({...userData, store: 'created'});
-          localStorage.setItem('currentUser', JSON.stringify({...userData, store: 'created'}));
           handleFilterForStorePresent();
           toast.success("Profile created successfully");
-          history(`${process.env.PUBLIC_URL}/bot`)
+          redirectToBotComponent()
         } else {
           setSubmitLoader(false);
           toast.error(response.message);
@@ -150,12 +154,15 @@ const StoreContent = () => {
         const response = await res.json();
         if (res.ok) {
           // handleForStore();
-          setSubmitLoader(true);
-          setUserData({...userData, store: 'created'});
-          localStorage.setItem('currentUser', JSON.stringify({...userData, store: 'created'}));
-          handleFilterForStorePresent();
-          toast.success("Profile created successfully");
-          history(`${process.env.PUBLIC_URL}/bot`)
+          console.log('user dtat', userData);
+          const userId = userData._id;
+          updateUserDetails(userId);
+          // setSubmitLoader(true);
+          // setUserData({...userData, store: 'created'});
+          // localStorage.setItem('currentUser', JSON.stringify({...userData, store: 'created'}));
+          // handleFilterForStorePresent();
+          // toast.success("Profile created successfully");
+          redirectToBotComponent()
         } else {
           setSubmitLoader(false);
           toast.error(response.message);
@@ -166,6 +173,22 @@ const StoreContent = () => {
       toast.error(err);
     }
   };
+
+  const redirectToBotComponent = () => {
+    setTimeout(() => {
+      history(`${process.env.PUBLIC_URL}/bot`);
+    }, 3000)
+  }
+
+  const updateUserDetails = async(userId) => {
+    try {
+      let newUserDeatils = await getUserDetails(userId); 
+      setUserData(newUserDeatils);
+      localStorage.setItem('currentUser', JSON.stringify(newUserDeatils))
+    } catch (error) {
+      toast.error(error);
+    }
+  }
   return (
     <Fragment>
       <Fragment>

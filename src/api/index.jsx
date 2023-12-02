@@ -50,3 +50,4 @@ export const EditQuestionAPI = `${process.env.REACT_APP_API_BASE_URL}/question/e
 export const DeleteQuestionAPI = `${process.env.REACT_APP_API_BASE_URL}/question/delete`;
 export const PlanDetails = `${process.env.REACT_APP_API_BASE_URL}/plans`;
 export const User = `${process.env.REACT_APP_API_BASE_URL}/users`;
+export const UsersAPI = `${process.env.REACT_APP_API_BASE_URL}/users`;

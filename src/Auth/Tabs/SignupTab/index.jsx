@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useRef } from "react";
+import React, { useState, Fragment, useRef, useEffect } from "react";
 import {
   Col,
   Form,
@@ -21,6 +21,8 @@ import { handleResponse } from "../../../Services/Fack.Backend";
 import FormHeader from "./FormHeader";
 import SignupWith from "./SignupWith";
 import appStore from "../../../Component/Live Chats/Client/AppStore";
+import axios from "axios";
+import { PlanDetails } from "../../../api";
 
 const SignupTab = ({ selected }) => {
   const [userData, setUserData] = useState({
@@ -33,12 +35,13 @@ const SignupTab = ({ selected }) => {
     store: "",
     productList: "",
   });
+   const [planIds, setPlanIds] = useState([])
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [togglePassword, setTogglePassword] = useState(false);
   const isErrors = useRef(false);
   const history = useNavigate();
-  const { setToken } = appStore();
+  const { setToken, setUserData: setUser} = appStore();
   const handleFormChange = (e) => {
     const { value, name } = e.target;
     setUserData((pre) => ({
@@ -70,7 +73,7 @@ const SignupTab = ({ selected }) => {
         });
         if (token && user) {
           setToken(resBody.token);
-          setUserData(resBody.user);
+          setUser(resBody.user);
           localStorage.setItem("token", resBody.token);
           localStorage.setItem("currentUser", JSON.stringify(resBody.user));
           history(`${process.env.PUBLIC_URL}/store`);
@@ -131,6 +134,19 @@ const SignupTab = ({ selected }) => {
       setErrors(errorsObj);
     }
   };
+
+  const getPlanIds = async() => {
+    try {
+        let result = await axios.get(PlanDetails);
+        result?.data && setPlanIds([...result?.data]);
+    } catch (error) {
+        console.log('planIds fetch error', error);
+    }
+  }
+  useEffect(() => {
+    getPlanIds();
+  }, [])
+  
   return (
     <Fragment>
       <Form className="theme-form login-form">
@@ -306,9 +322,11 @@ const SignupTab = ({ selected }) => {
                   required=""
                 >
                   <option value="">{"Select Plan ID"}</option>
-                  <option value="one">1</option>
-                  <option value="two">2</option>
-                  <option value="three">3</option>
+                  {(planIds.length > 0) ? 
+                   planIds.map((plan, ind) => (
+                    <option value={plan?._id}>{plan?.name}</option>
+                   )) : ''
+                  }
                 </Input>
               </InputGroup>
               {errors.planId && (
