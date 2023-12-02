@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Col, Input, InputGroup, InputGroupText, Row } from "reactstrap";
 import { VscSend } from "react-icons/vsc";
 import ChatHeader from "./ChatHeader";
@@ -20,61 +20,16 @@ const BigBot = ({ myBot }) => {
     roomId,
     showTyping,
     liveConversation,
-  } = appStore.getState();
+  } = appStore();
   // const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState("");
+  const chatContainerRef = useRef();
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const botAvatar =
     "https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75";
 
-  // const sendMessageToBot = async () => {
-  //   const sendData = {
-  //     sessionId: `${user?.contact}@c.us`,
-  //     roomId: `${user?.contact}@c.us`,
-  //     message: userMessage,
-  //     phoneNumber: `${user?.contact}`,
-  //     organization_id: myBot.userId,
-  //     type: myBot.botType,
-  //     botId: myBot._id
-  //   };
-
-  //   setMessages((prev) => [...prev, { text: userMessage, user: true }]);
-
-  //   setUserMessage("");
-
-  //   try {
-  //     const response = await fetch(`${BotCreate}/chat`, {
-  //       method: "POST",
-  //       body: JSON.stringify(sendData),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-
-  //     const responseData = await response.json();
-  //     if (response.ok) {
-  //       if (responseData.response.message) {
-  //         setMessages((prev) => [
-  //           ...prev,
-  //           { text: responseData.response.message, user: false },
-  //         ]);
-  //         console.log('messages ', messages);
-  //       }
-  //     } else {
-  //       toast.error(responseData.response.message || responseData.message);
-  //     }
-  //   } catch (error) {
-  //     toast.error(error);
-  //   }
-  // };
-
   const sendMessageToBot = async () => {
-    // console.log(
-    //   "getSessionId",
-    //   getSessionId(sessionStorage.getItem("sessionUUID"))
-    // );
     const sendData = {
       identity: "USER",
       message: userMessage,
@@ -85,13 +40,17 @@ const BigBot = ({ myBot }) => {
     };
     sendDataToConnectedUser(sendData);
     setMessages(userMessage, true);
-
-    setUserMessage("");
+    setUserMessage('');
   };
 
   useEffect(() => {
     createOrConnectRoom();
   }, [myBot]);
+  
+  useEffect(() => {
+    // Scroll to the bottom whenever messages change
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }, [messages]);
 
   return (
     <Fragment>
@@ -107,11 +66,12 @@ const BigBot = ({ myBot }) => {
       >
         <ChatHeader myBot={myBot} />
         <ScrollBar>
-          <div
+          <div ref={chatContainerRef}
             style={{
               height: "250px",
               padding: "15px",
               border: "1px solid none",
+              overflowY: 'scroll'
             }}
             className="w-100"
           >
@@ -169,12 +129,17 @@ const BigBot = ({ myBot }) => {
             }}
             className="d-flex"
           >
-            <Input
-              onChange={(e) => {
+            <input value={userMessage}
+                style={{ border: "none", borderRadius: "25px" }}
+                className="form-control"
+                type="text"
+                aria-label="Amount (to the nearest dollar)"
+                placeholder="Send Message..."
+                onChange={(e) => {
                 setUserMessage(e.target.value);
-              }}
-              defaultValue={userMessage}
-              onKeyDown={(e) => {
+                console.log(userMessage);
+                }}
+                onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   if (!userMessage) {
                     toast.error("Please enter message to send!");
@@ -183,11 +148,7 @@ const BigBot = ({ myBot }) => {
                   }
                 }
               }}
-              style={{ border: "none", borderRadius: "25px" }}
-              className="form-control"
-              type="text"
-              aria-label="Amount (to the nearest dollar)"
-              placeholder="Send Message..."
+              contentEditable
             />
             <InputGroupText
               onClick={() => {

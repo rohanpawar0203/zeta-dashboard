@@ -67,7 +67,6 @@ const CreateBotForm = ({modal, title, toggle, getAllBot}) => {
         getAllBot && getAllBot();
         setformValues({botName: '', error: ''})
         toggle();
-        history(`${process.env.PUBLIC_URL}/dashboard`)
       } else {
         setformValues({botName: '', error: ''})
         toast.error(responseData.message);

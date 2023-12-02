@@ -20,7 +20,7 @@ const ChatHeader = ({ myBot }) => {
           alt={"ulai bot"}
           height={"60px"}
         />
-        <H5 attrH5={{ className: "mt-3 mb-2" }}>Our bot answers instantly</H5>
+        <H5 attrH5={{ className: "mt-3 mb-2" }}>{myBot.subheading}</H5>
       </div>
     </Fragment>
   );

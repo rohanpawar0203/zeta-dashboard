@@ -49,14 +49,13 @@ const submitHandler = async (values) => {
             },
           }
         );
-        const response = await res.json();
-        console.log(response);
-        if(res['status'] === 200) {
+        console.log(res);
+        if(res['status'] === 200 || res['status'] === "200") {
           fetchAgentsData();
           toggle();
           toast.success('Agent updated successfully');
         } else {
-          toast.error(response.message);
+          toast.error(res.data.message);
         }
     } catch (err) {
       toast.error(err);

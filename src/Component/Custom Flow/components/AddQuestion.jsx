@@ -72,7 +72,7 @@ const AddQuestion = () => {
         };
   
         if (multipleChoice.length <= 1) {
-          toast.error('Something went wrong!')
+          toast.error('Multiple options should be provided!')
           return;
         }
         setMultipleChoice([]);
