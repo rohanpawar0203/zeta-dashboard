@@ -4,7 +4,7 @@ import CountUp from "react-countup";
 import { Card, CardBody, Col, Media, Container, Row } from "reactstrap";
 import { toast } from "react-toastify";
 import { PlusSquare, Upload, card } from "react-feather";
-import { H4, H6, LI, P, UL, Image, H5, H3, H1, Btn } from "../../AbstractElements";
+import { H4, H6, LI, P, UL, Image, H5, H3, H1, Btn, Spinner } from "../../AbstractElements";
 import errorImg from "../../assets/images/search-not-found.png";
 import TurnoverChart from "../Widgets/ChartsWidgets/TurnoverChart";
 import {
@@ -39,10 +39,12 @@ const CustomFlowContent = () => {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);  
   const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false);
   const [editContext, setEditContext] = useState({model: false, contextID: ''});
   const user = JSON.parse(localStorage.getItem("currentUser"));
 
   const getAllContexts = async() => {
+    setLoading(true);
     try {
       const resp = await axios.get(
         `${GetAllContextsAPI}/${user._id}`
@@ -51,6 +53,7 @@ const CustomFlowContent = () => {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -64,7 +67,13 @@ const CustomFlowContent = () => {
         <Row>
         <Col sm="12">
         <Card className="vh-100 mt-2  p-4">
-          {!editContext?.mode && (
+          {loading ? 
+        <div className="loader-box">
+        <Spinner attrSpinner={{ className: 'loader-3' }} /> 
+        </div> 
+        : 
+         <>
+         {!editContext?.mode && (
             <div className="w-100 d-flex justify-content-end align-items-center mb-3 mx-4">
             <Btn  attrBtn={{
                         className: "me-2",
@@ -81,13 +90,19 @@ const CustomFlowContent = () => {
           )}
            {data.length > 0 && !editContext?.mode ? (
             <ContextTable data={data} getAllContexts={getAllContexts} setEditContext={setEditContext}/> 
-           ) : 
+           ) :  !(data.length > 0) && !editContext?.mode ?   
+           <div className="w-100 h-75 d-flex justify-content-center align-items-center">
+            <H6>No Contexts Exist</H6>
+            </div> :
             editContext?.mode ?  (
             <QuestionsContextProvider>
             <ConxtEditElement contextID={editContext?.contextID} setEditContext={setEditContext}/>
             </QuestionsContextProvider> 
            ) : null
            }
+         </>
+         }
+          
           <CreateContextModal modal={modal} NewMessage={'Create Context'}  getAllContexts={getAllContexts}
           toggle={toggle} title='Create Context' setData={setData}/>
         </Card>

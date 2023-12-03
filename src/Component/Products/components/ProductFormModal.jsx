@@ -8,7 +8,7 @@ import { Col, Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupTex
 import { Btn  } from '../../../AbstractElements';
 import { ProductsListAPI } from '../../../api';
 
-const ProductFormModal = ({modal, title, toggle, productID, fetchProductData}) => {
+const ProductFormModal = ({modal, title, toggle, productID, fetchProductData, setLoading}) => {
   const [initialData, setInitialData] = useState({});
   const { register, handleSubmit, formState: { errors } } = useForm({
     values:{
@@ -29,6 +29,7 @@ const ProductFormModal = ({modal, title, toggle, productID, fetchProductData}) =
 
  
   const submitHandler = async (values) => {
+    setLoading(true);
     try {
       if (productID) {
         const body = {
@@ -57,7 +58,7 @@ const ProductFormModal = ({modal, title, toggle, productID, fetchProductData}) =
         const body = {
           ...values,
           userId: user._id,
-          storeId: user.store,
+          storeId: user?.store?.id,
         };
         const res = await fetch(`${ProductsListAPI}`, {
           method: "POST",
@@ -79,6 +80,7 @@ const ProductFormModal = ({modal, title, toggle, productID, fetchProductData}) =
     } catch (err) {
       toast.error(err);
     }
+    setLoading(false);
   };
 
   useEffect(() => {

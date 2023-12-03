@@ -15,7 +15,7 @@ const MultipleChoice = ({multipleChoice, setMultipleChoice}) => {
     };
 
     return (
-    <div className="mt-1 w-100 border border-solid border-black">
+    <div className="mt-1 w-100">
         <div className="d-flex flex-column">
         {choices.length > 0 &&
           choices.map((el, i) => {

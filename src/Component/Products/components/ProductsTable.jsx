@@ -1,4 +1,4 @@
-import { H5 } from '../../../AbstractElements'; 
+import { H5, H6, Spinner } from '../../../AbstractElements'; 
 import { Col, Card, CardHeader, Table,
   DropdownMenu,
   DropdownItem,
@@ -19,6 +19,7 @@ const ProductsTable = () => {
     const history = useNavigate();
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
+    const [loading, setLoading] = useState(false);
     const [updatemodal, setupdateModal] = useState(false);
     const [HoveredProduct, setHoveredProduct] = useState(false);
     const hoverStyle = {
@@ -36,6 +37,7 @@ const ProductsTable = () => {
     const toggleDropDownId = (id) => setDropdownOpenId(id);
 
     const fetchProductData = async () => {
+      setLoading(true);
       try {
         const res = await fetch(
           `${ProductsListAPI}/${user._id}/user`,
@@ -52,9 +54,11 @@ const ProductsTable = () => {
       } catch (error) {
         toast(error);
       }
+      setLoading(false);
     };
 
     const deleteProduct = async (productId) => {
+      setLoading(true);
       try {
         const response = await fetch(
           `${ProductsListAPI}/${productId}`,
@@ -77,6 +81,7 @@ const ProductsTable = () => {
       } catch (error) {
         toast.error(error);
       }
+      setLoading(false);
     };
 
     useEffect(() => {
@@ -85,18 +90,25 @@ const ProductsTable = () => {
   return (
     <Fragment>
       <Col sm="12">
-        <Card>
+        <Card className='mt-2 '>
           <CardHeader className='w-100 d-flex justify-content-between'>
             <div>
             <H5>{'Products'}</H5>
             </div>
             <div>
             <button type="button" class="btn btn-success" onClick={() => {
+              console.log('modal ', modal);
             setselectedProductId('');
             toggle();
           }}>Add New Product</button>
             </div>
           </CardHeader>
+          <div style={{height: '80vh'}}>
+          {loading ? 
+        <div className="loader-box">
+        <Spinner attrSpinner={{ className: 'loader-3' }} /> 
+        </div> : 
+        products.length > 0 ?
           <div className="table-responsive">
             <Table>
               <thead>
@@ -174,7 +186,12 @@ const ProductsTable = () => {
                 }
               </tbody>
             </Table>
-            <ProductFormModal modal={modal} NewMessage={'New Bot'} toggle={toggle} title='Update Product' productID={selectedProductId} fetchProductData={fetchProductData}></ProductFormModal>
+          </div>
+        : 
+        <div className="w-100 h-75 d-flex justify-content-center align-items-center">
+            <H6>No Products Exist</H6>
+            </div>}
+          <ProductFormModal setLoading={setLoading} modal={modal} NewMessage={'New Bot'} toggle={toggle} title='Update Product' productID={selectedProductId} fetchProductData={fetchProductData}></ProductFormModal>
           </div>
         </Card>
       </Col>

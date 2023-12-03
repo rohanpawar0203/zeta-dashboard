@@ -42,6 +42,7 @@ const AddAgentModal = ({modal, toggle, handleGetData}) => {
             })
             .catch((error) => {
               console.log(error);
+              toast.error(error?.response?.data?.error);
             });
         } catch (error) {
           toast.error("Something went wrong");

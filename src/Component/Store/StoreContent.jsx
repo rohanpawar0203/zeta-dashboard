@@ -73,11 +73,13 @@ const StoreContent = () => {
         const response = await res.json();
         if (res.ok) {
           // handleForStore();
+          toast.success("Profile created successfully");
           setSubmitLoader(false);
           const userId = userData._id;
-          updateUserDetails(userId);  
-          toast.success("Profile created successfully");
-          redirectToBotComponent()
+          setTimeout(async () => {
+            await updateUserDetails(userId)
+            redirectToBotComponent()
+           }, 2000)
         } 
           else {
           setSubmitLoader(false);
@@ -98,12 +100,12 @@ const StoreContent = () => {
 
         const response = await res.json();
         if (res.ok) {
-          const userId = userData._id;
-          updateUserDetails(userId);
-          setSubmitLoader(true);
-          handleFilterForStorePresent();
           toast.success("Profile created successfully");
-          redirectToBotComponent()
+          const userId = userData._id;
+          setTimeout(async () => {
+            await updateUserDetails(userId)
+            redirectToBotComponent()
+           }, 2000)
         } else {
           setSubmitLoader(false);
           toast.error(response.message);
@@ -130,12 +132,12 @@ const StoreContent = () => {
         const response = await res.json();
         if (res.ok) {
           // handleForStore();
-          const userId = userData._id;
-          updateUserDetails(userId);
-          setSubmitLoader(true);
-          handleFilterForStorePresent();
           toast.success("Profile created successfully");
-          redirectToBotComponent()
+          const userId = userData._id;
+          setTimeout(async () => {
+            await updateUserDetails(userId)
+            redirectToBotComponent()
+           }, 2000)
         } else {
           setSubmitLoader(false);
           toast.error(response.message);
@@ -154,15 +156,13 @@ const StoreContent = () => {
         const response = await res.json();
         if (res.ok) {
           // handleForStore();
-          console.log('user dtat', userData);
+          toast.success("Profile created successfully");
+          setSubmitLoader(true);
           const userId = userData._id;
-          updateUserDetails(userId);
-          // setSubmitLoader(true);
-          // setUserData({...userData, store: 'created'});
-          // localStorage.setItem('currentUser', JSON.stringify({...userData, store: 'created'}));
-          // handleFilterForStorePresent();
-          // toast.success("Profile created successfully");
-          redirectToBotComponent()
+          setTimeout(async () => {
+           await updateUserDetails(userId)
+           redirectToBotComponent()
+          }, 2000)
         } else {
           setSubmitLoader(false);
           toast.error(response.message);
@@ -177,7 +177,7 @@ const StoreContent = () => {
   const redirectToBotComponent = () => {
     setTimeout(() => {
       history(`${process.env.PUBLIC_URL}/bot`);
-    }, 3000)
+    }, 4000)
   }
 
   const updateUserDetails = async(userId) => {

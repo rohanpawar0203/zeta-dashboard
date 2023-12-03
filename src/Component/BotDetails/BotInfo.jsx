@@ -4,7 +4,7 @@ import CountUp from "react-countup";
 import { Card, CardBody, Col, Media, Container, Row, CardHeader, Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import { toast } from "react-toastify";
 import { PlusSquare, Upload, card } from "react-feather";
-import { H4, H6, LI, P, UL, Image, H5, H3, H1 } from "../../AbstractElements";
+import { H4, H6, LI, P, UL, Image, H5, H3, H1, Spinner } from "../../AbstractElements";
 import errorImg from "../../assets/images/search-not-found.png";
 import TurnoverChart from "../Widgets/ChartsWidgets/TurnoverChart";
 import {
@@ -40,9 +40,11 @@ const BotInfoContent = ({boatId}) => {
   console.log('got here boat id ', boatId);
   const [myBot, setMyBot] = useState({});
   const [pillTab, setpillTab] = useState('1');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchBotData = async () => {
+      setLoading(true);
       try {
         const token = localStorage.getItem("token");
         const response = await fetch(
@@ -67,6 +69,7 @@ const BotInfoContent = ({boatId}) => {
       } catch (error) {
         toast.error(error);
       }
+      setLoading(false);
     };
     fetchBotData();
   }, []);
@@ -74,15 +77,16 @@ const BotInfoContent = ({boatId}) => {
 
     return (
     <Fragment>
-      <Container fluid={true} className="mt-2">
+      <Container fluid={true} >
         <Row>   
       <Col sm="12" xl="6 xl-100 box-col-12">
-      <Card>
+      <Card className="mt-2">
+        <div style={{height: '90vh'}}>
         <CardBody>
           <Nav className="nav-pills">
             <div className="w-100  d-flex justify-content-center align-items-center">
             <div style={{background: 'whitesmoke'}} className="d-flex border border-lightgray p-1 rounded">
-            <NavItem>
+            <NavItem style={{cusror: 'pointer'}}>
               <NavLink  className={pillTab === '1' ? 'active cursor-pointer' : 'cursor-pointer'} onClick={() => setpillTab('1')}>{"Settings"}</NavLink>
             </NavItem>
             <NavItem >
@@ -93,16 +97,27 @@ const BotInfoContent = ({boatId}) => {
             </div>
             </div>
           </Nav>
-          <TabContent activeTab={pillTab} className="position-relative">
-            <TabPane className="fade show h-100" tabId="1">
-            <Customize myBot={myBot} setMyBot={setMyBot}/>
-            </TabPane>
+          
+            {
+              loading ? 
+              <div className="loader-box">
+              <Spinner attrSpinner={{ className: 'loader-3' }} />
+              </div> :
+              <>
+              <TabContent activeTab={pillTab} className="position-relative">
+              <TabPane className="fade show h-100" tabId="1">
+              <Customize myBot={myBot} setMyBot={setMyBot} setLoading={setLoading}/>
+              </TabPane>
               <TabPane tabId="2" className="vh-75">
-            <Share myBot={myBot}/>
-            </TabPane>
-          </TabContent>
-          <ChatBot myBot={myBot} setMyBot={setMyBot}/>
+              <Share myBot={myBot}/>
+               </TabPane>
+               </TabContent>
+               <ChatBot myBot={myBot} setMyBot={setMyBot}/>
+              </>
+            }
+            
         </CardBody>
+        </div>
       </Card>
     </Col>
         </Row>

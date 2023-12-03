@@ -7,7 +7,7 @@ import { Col, Card, CardHeader, Table,
     Dropdown,
     DropdownToggle, } from 'reactstrap';
 import { useNavigate } from 'react-router';
-import { H4, H5 } from '../../../AbstractElements';
+import { H4, H5, H6, Spinner } from '../../../AbstractElements';
 import AutomaiteBackend from './automaiteBackend';
 import UpdateAgentFormModal from './UpdateAgentFormModal';
 import { HiOutlineDotsVertical } from "react-icons/hi";
@@ -30,6 +30,7 @@ const AgentsTable = () => {
     const [agentID, setagentID] = useState('')
     const [updatemodal, setupdateModal] = useState(false);
     const [HoveredAgent, setHoveredAgent] = useState(false);
+    const [loading, setLoading] = useState(false);
     const hoverStyle = {
       background: "whitesmoke",
       cursor: "pointer",
@@ -42,6 +43,7 @@ const AgentsTable = () => {
     const toggleDropDownId = (id) => setDropdownOpenId(id);
 
     const handleGetData = async () => {
+      setLoading(true);
         try {
           const resp = await AutomaiteBackend.get(`/agent/${user._id}`, {
             headers: {
@@ -52,9 +54,11 @@ const AgentsTable = () => {
         } catch (error) {
           console.log("error", error);
         }
+        setLoading(false);
       };
 
     const handleDelete = async (el) => {
+      setLoading(true);
         try {
           const resp = await axios.delete(
             `${AgentAPI}/${agentID}`,
@@ -73,6 +77,7 @@ const AgentsTable = () => {
           toast.error("Something went wrong");
           console.log("error", error);
         }
+        setLoading(false);
       };
 
     useEffect(() => {
@@ -81,7 +86,7 @@ const AgentsTable = () => {
   return (
     <Fragment>
         <Col sm="12">
-        <Card>
+        <Card className='mt-2'>
           <CardHeader className="w-100 d-flex justify-content-between">
             <H5>{'All Agents'}</H5>
             <div>
@@ -91,8 +96,15 @@ const AgentsTable = () => {
         <AddAgentModal modal={agentAddModal} toggle={toggleagentAddModal} handleGetData={handleGetData}/>
       </div>
           </CardHeader>
-          <div style={{width: '100%', height: '500px'}}>
-          {agents.length > 0 && (
+          
+          <div style={{width: '100%', height: '80vh'}}>
+            {
+              loading ? 
+              <div className="loader-box">
+              <Spinner attrSpinner={{ className: 'loader-3' }} /> 
+              </div> : 
+              <>
+              {agents.length > 0 ? (
           <div  className="h-100 table-responsive">
             <Table>
               <thead>
@@ -175,8 +187,15 @@ const AgentsTable = () => {
             agentID={agentID}></UpdateAgentFormModal>
             <AgentDeleteModal title={'Delete Agent'} modal={deleteModal} toggle={toggleDeleteModal} event={() => {handleDelete(agentID)}}/>
           </div>
-          )
+          ) : 
+          <div className="h-100 w-100 d-flex flex-column justify-content-center align-items-center gap-2">
+            <H6 className='fw-bolder'>{'No Agents Exist'}</H6>
+          </div>
           }
+              </>
+            }
+
+          
           </div>
         </Card>
       </Col>

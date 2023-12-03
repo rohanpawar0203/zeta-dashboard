@@ -5,7 +5,9 @@ import AgentsContain from '../../Component/Agents';
 const Agents = () => {
   return (
     <Fragment>
+      <div className='mt-2'>
       <AgentsContain />
+      </div>
     </Fragment>
   );
 };

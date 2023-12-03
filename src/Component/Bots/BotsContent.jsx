@@ -26,6 +26,7 @@ import {
   H3,
   H1,
   Btn,
+  Spinner,
 } from "../../AbstractElements";
 import errorImg from "../../assets/images/search-not-found.png";
 import TurnoverChart from "../Widgets/ChartsWidgets/TurnoverChart";
@@ -76,6 +77,7 @@ const BotsContent = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const token = localStorage.getItem("token");
   const [isHovered, setisHovered] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dropDownRef = useRef();
   const hoverStyle = {
     background: "whitesmoke",
@@ -86,6 +88,7 @@ const BotsContent = () => {
   const toggleDropDownBot = (id) => setDropdownBotOpen(id);
 
   const getAllBot = async () => {
+    setLoading(true);
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_BASE_URL}/bot/${user._id}/user`,
@@ -109,9 +112,11 @@ const BotsContent = () => {
     } catch (error) {
       toast.error(error);
     }
+    setLoading(false);
   };
 
   const deleteBot = async (botId) => {
+    setLoading(true);
     try {
       const response = await fetch(
         `${BotCreate}/${botId}`,
@@ -133,6 +138,7 @@ const BotsContent = () => {
     } catch (error) {
       toast.error(error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -145,6 +151,13 @@ const BotsContent = () => {
   return (
     <Fragment>
       <div style={{ height: "73vh", background: "white", padding: "15px", borderRadius: '12px' }}>
+        {
+        loading ? 
+        <div className="loader-box">
+        <Spinner attrSpinner={{ className: 'loader-3' }} /> 
+        </div>
+        :
+        <>
         {myBots.length === 0 && (
           <div className="mw-100 h-100  d-flex flex-column justify-content-center align-items-center">
            <H6 className='mb-2 fw-bolder text-gray'>Create your first bot</H6>
@@ -230,6 +243,9 @@ const BotsContent = () => {
             ))}
           </>
         )}
+        </>
+        }
+        
       </div>
     </Fragment>
   );

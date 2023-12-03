@@ -12,7 +12,7 @@ import {
   Input,
   Media,
 } from "reactstrap";
-import { Btn, H4 } from "../../../AbstractElements";
+import { Btn, H4, Spinner } from "../../../AbstractElements";
 import {
   EditProfile,
   Company,
@@ -38,6 +38,7 @@ const EditMyProfile = () => {
   const [plans, setPlans] = useState([]);
   const [loadingPlans, setLoadingPlans] = useState(true);
   const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -62,6 +63,7 @@ const EditMyProfile = () => {
   };
 
   const onEditSubmit = async (data) => {
+    setLoading(true);
     try {
       const response = await fetch(`${User}/${userDetails._id}`, {
         method: "PATCH",
@@ -94,6 +96,7 @@ const EditMyProfile = () => {
     } catch (error) {
       toast.error(error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -139,8 +142,14 @@ const EditMyProfile = () => {
             </a>
           </div>
         </CardHeader>
+        <div style={{height: '50vh'}}>
         <CardBody>
-          <Row>
+        {
+            loading ? 
+            <div className="loader-box">
+            <Spinner attrSpinner={{ className: 'loader-3' }} /> 
+            </div> :
+            <Row>
             <Col md="6">
               <FormGroup className="mb-3">
                 <Label className="form-label" id="companyName">
@@ -221,10 +230,17 @@ const EditMyProfile = () => {
                   // value={userDetails.contact}
                   // defaultValue={userDetails.contact}
                   disabled
-                  {...register("contact", { required: true })}
+                  {...register("contact", { 
+                    required: true ,
+                    pattern: {
+                      value: /^(0|91)?[6-9][0-9]{9}$/,
+                      message: 'Invalid email address',
+                    }
+                  }
+                  )}
                 />
                 <span style={{ color: "red" }}>
-                  {errors.contact && "City is required"}{" "}
+                  {errors.contact && "contact is required"}{" "}
                 </span>
               </FormGroup>
             </Col>
@@ -234,10 +250,16 @@ const EditMyProfile = () => {
                 <input
                   className="form-control"
                   name="websiteLink"
-                  type="text"
+                  type="url"
                   placeholder="Website"
                   // defaultValue={userDetails.websiteLink}
-                  {...register("websiteLink", { required: true })}
+                  {...register("websiteLink", { 
+                    required: true ,
+                    pattern: {
+                      value: /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/g,
+                      message: 'Invalid email address',
+                    }
+                  })}
                 />
                 <span style={{ color: "red" }}>
                   {errors.websiteLink && "WebsiteLink is required"}{" "}
@@ -270,7 +292,10 @@ const EditMyProfile = () => {
               </Col>
             )}
           </Row>
+          }
+          
         </CardBody>
+        </div>
         <CardFooter className="text-end">
           <Btn attrBtn={{ color: "primary", type: "submit" }}>
             {UpdateProfile}

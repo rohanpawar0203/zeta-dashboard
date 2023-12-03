@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { Form, FormGroup, Input, Label } from 'reactstrap';
+import { Form, FormGroup, Input, InputGroup, InputGroupText, Label } from 'reactstrap';
 import CommonModal from '../../../_core/Ui-kits/Modals/common/modal';
 import { NewBot, BotCreationQstn} from '../../../Constant';
 import { toast } from "react-toastify";
@@ -10,6 +10,7 @@ import axios from 'axios';
 
 const UpdateAgentFormModal = ({modal, title, toggle, agentUpdatePayload, fetchAgentsData, setagentUpdatePayload, agentID}) => {
   const [formValues, setformValues] = useState({botName: '', error: ''});
+  const [togglePassword, setTogglePassword] = useState(false);
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const token = localStorage.getItem("token");
   const history = useNavigate();
@@ -23,6 +24,7 @@ const UpdateAgentFormModal = ({modal, title, toggle, agentUpdatePayload, fetchAg
   });
   
   const onSubmit = data => {
+    console.log('data ', data);
     if (data !== '') {
       submitHandler(data);
     } else {
@@ -63,7 +65,7 @@ const submitHandler = async (values) => {
   };
 
   return (
-    <CommonModal isOpen={modal} title={NewBot} toggler={toggle} event={handleSubmit(onSubmit)}>
+    <CommonModal isOpen={modal} title={'Edit Agent'} toggler={toggle} event={handleSubmit(onSubmit)}>
       <Form className="needs-validation" noValidate="">
           <FormGroup >
             <Label>{'Agent Name'}</Label>
@@ -79,10 +81,26 @@ const submitHandler = async (values) => {
           </FormGroup>
           <FormGroup>
             <Label>{'New Password'}</Label>
-            <input className="form-control" defaultValue={agentUpdatePayload?.password} name="password" type="password" placeholder="Password" {...register('password', { required: true })} />
+            <InputGroup>
+                <input 
+                  className="form-control"
+                  defaultValue={agentUpdatePayload?.password}
+                  name="password"
+                  type={togglePassword ? "text" : "password"}
+                  placeholder="Password"
+                  {...register('password', { required: true })}
+                />
+                <div
+                  className="show-hide h-100"
+                  onClick={() => setTogglePassword(!togglePassword)}
+                >
+                  <span className={togglePassword ? "" : "show"}></span>
+                </div>
+              </InputGroup>
             <span className='text-danger fw-bolder'>{errors.password && '* Password is required'}</span>
             <div className="valid-feedback">{'Looks good!'}</div>
           </FormGroup>
+          
       </Form>
     </CommonModal>
   )
