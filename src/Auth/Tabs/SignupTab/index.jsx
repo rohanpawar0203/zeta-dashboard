@@ -213,7 +213,7 @@ const SignupTab = ({ selected }) => {
                   className="show-hide"
                   onClick={() => setTogglePassword(!togglePassword)}
                 >
-                  <span className={togglePassword ? "" : "show"}></span>
+                  <span className={togglePassword ? "Hide" : "show"}></span>
                 </div>
               </InputGroup>
               {errors.password && (

@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Btn, H5 } from '../../../AbstractElements'
-import { Form, FormGroup, Input, Label } from 'reactstrap';
+import { Form, FormGroup, Input, InputGroup, Label } from 'reactstrap';
 import CommonModal from '../../../_core/Ui-kits/Modals/common/modal';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { AgentAPI } from '../../../api';
 const AddAgentModal = ({modal, toggle, handleGetData}) => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm({});
+    const [togglePassword, setTogglePassword] = useState(false);
     const user = JSON.parse(localStorage.getItem("currentUser"));
     const token = localStorage.getItem("token");
 
@@ -68,7 +69,21 @@ const AddAgentModal = ({modal, toggle, handleGetData}) => {
           </FormGroup>
           <FormGroup>
             <Label>{'Password *'}</Label>
-            <input className="form-control" name="password" type="password" placeholder="Password" {...register('password', { required: true })} />
+            <InputGroup>
+                <input 
+                  className="form-control"
+                  name="password"
+                  type={togglePassword ? "text" : "password"}
+                  placeholder="Password"
+                  {...register('password', { required: true })}
+                />
+                <div
+                  className="show-hide h-100"
+                  onClick={() => setTogglePassword(!togglePassword)}
+                >
+                  <span className={togglePassword ? "Hide" : "show"}></span>
+                </div>
+              </InputGroup>
             <span className='text-danger fw-bolder'>{errors.password && '* Password is required'}</span>
             <div className="valid-feedback">{'Looks good!'}</div>
           </FormGroup>

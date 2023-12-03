@@ -94,7 +94,7 @@ const submitHandler = async (values) => {
                   className="show-hide h-100"
                   onClick={() => setTogglePassword(!togglePassword)}
                 >
-                  <span className={togglePassword ? "" : "show"}></span>
+                  <span className={togglePassword ? "Hide" : "show"}></span>
                 </div>
               </InputGroup>
             <span className='text-danger fw-bolder'>{errors.password && '* Password is required'}</span>
