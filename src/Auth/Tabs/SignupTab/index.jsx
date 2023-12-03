@@ -7,6 +7,7 @@ import {
   InputGroup,
   InputGroupText,
   Label,
+  Row,
 } from "reactstrap";
 import { Btn, H5, UL } from "../../../AbstractElements";
 import { toast } from "react-toastify";
@@ -151,8 +152,8 @@ const SignupTab = ({ selected }) => {
     <Fragment>
       <Form className="theme-form login-form">
         <FormHeader selected={selected} />
-        <div className="w-100 d-flex justify-content-between gap-3">
-          <div className="w-50 d-flex flex-column gap-3">
+            <Row>
+            <Col sm="6" md="6">
             <FormGroup className="m-0 first-form-group">
               <Label className="p-0 mb-1 mt-2">First Name</Label>
               <InputGroup>
@@ -243,9 +244,8 @@ const SignupTab = ({ selected }) => {
                 </Label>
               )}
             </FormGroup>
-          </div>
-
-          <div className="w-50 d-flex flex-column gap-3">
+            </Col>
+            <Col sm="6" md="6">
             <FormGroup className="m-0 first-form-group">
               <Label className="p-0 mb-1 mt-2">Last Name</Label>
               <InputGroup>
@@ -335,8 +335,10 @@ const SignupTab = ({ selected }) => {
                 </Label>
               )}
             </FormGroup>
-          </div>
-        </div>
+            </Col>
+            </Row>
+           
+           
         <div class="w-100 mt-4 d-flex justify-content-center align-items-center">
           <button
             onClick={(e) => {

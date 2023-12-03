@@ -1,14 +1,36 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Card, Col } from "reactstrap";
+import { Card, CardBody, Col, Container, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import { H4, H6, LI, UL, Image } from "../../../AbstractElements";
 import Img from "../../../assets/images/user-profile/bg-profile.jpg";
+import axios from "axios";
+import { PlanDetails } from "../../../api";
 
 const ProfileHeader = () => {
+  const [planIds, setPlanIds] = useState([])
+  const [plan, setPlan] = useState('');
   const userDetails = JSON.parse(localStorage.getItem("currentUser"));
+
+  const getPlanIds = async() => {
+    try {
+        let result = await axios.get(PlanDetails);
+        result?.data && setPlanIds([...result?.data]);
+        if(result?.data){
+          let planFiltered = planIds.find((planItem) => (planItem?._id === userDetails.planId));
+          setPlan(planFiltered?.name);
+        }
+    } catch (error) {
+        console.log('planIds fetch error', error);
+    }
+  }
+  useEffect(() => {
+    getPlanIds();
+  }, [])
   return (
     <Fragment>
-      <Col sm="12">
+      <Container fluid={true}>
+      <Row>
+      <Col sm="6">
         <Card
           className="profile-header bg-image"
           style={{
@@ -57,59 +79,67 @@ const ProfileHeader = () => {
                   <H6>{userDetails.email}</H6>
                 </a>
               </div>
-              {/* <div className="social-media">
-                <UL
-                  attrUL={{
-                    className: "simple-list user-list-social flex-row",
-                  }}
-                >
-                  <LI>
-                    <a href="https://www.facebook.com/">
-                      <i className="fa fa-facebook"></i>
-                    </a>
-                  </LI>
-                  <LI>
-                    <a href="https://www.google.com/">
-                      <i className="fa fa-google-plus"></i>
-                    </a>
-                  </LI>
-                  <LI>
-                    <a href="https://twitter.com/">
-                      <i className="fa fa-twitter"></i>
-                    </a>
-                  </LI>
-                  <LI>
-                    <a href="https://www.instagram.com/">
-                      <i className="fa fa-instagram"></i>
-                    </a>
-                  </LI>
-                  <LI>
-                    <a href="https://dashboard.rss.com/auth/sign-in/">
-                      <i className="fa fa-rss"></i>
-                    </a>
-                  </LI>
-                </UL>
-              </div> */}
-              <div className="follow">
-                <UL attrUL={{ className: "simple-list follow-list flex-row" }}>
-                  <LI>
-                    <div className="follow-num counter">325</div>
-                    <span>Follower</span>
-                  </LI>
-                  <LI>
-                    <div className="follow-num counter">450</div>
-                    <span>Following</span>
-                  </LI>
-                  <LI>
-                    <div className="follow-num counter">500</div>
-                    <span>Likes</span>
-                  </LI>
-                </UL>
-              </div>
+              <div>
+             
+            </div>
             </div>
           </div>
         </Card>
+        </Col>
+        <Col sm="6">
+        <Card >
+          <Fragment>
+      <CardBody>
+        <Form className="theme-form">
+          <FormGroup className="row">
+            <Label className="col-sm-3 col-form-label" htmlFor="inputEmail3">{'First Name'}</Label>
+            <Col sm="9">
+              <Input className="form-control" type="text" value={userDetails?.firstName} disabled/>
+            </Col>
+          </FormGroup>
+          <FormGroup className="row">
+            <Label className="col-sm-3 col-form-label" htmlFor="inputPassword3">{'Last Name'}</Label>
+            <Col sm="9">
+              <Input className="form-control" type="text" value={userDetails?.lastName} disabled/>
+            </Col>
+          </FormGroup>
+          <FormGroup className="row">
+            <Label className="col-sm-3 col-form-label" htmlFor="inputPassword3">{'Company name'}</Label>
+            <Col sm="9">
+              <Input className="form-control" type="text" value={userDetails?.companyName} disabled/>
+            </Col>
+          </FormGroup>
+          <FormGroup className="row">
+            <Label className="col-sm-3 col-form-label" htmlFor="inputPassword3">{'Email ID'}</Label>
+            <Col sm="9">
+              <Input className="form-control" type="text" value={userDetails?.email}  disabled/>
+            </Col>
+          </FormGroup>
+          <FormGroup className="row">
+            <Label className="col-sm-3 col-form-label" htmlFor="inputPassword3">{'Contact'}</Label>
+            <Col sm="9">
+              <Input className="form-control" type="text" value={userDetails?.contact}  disabled/>
+            </Col>
+          </FormGroup>
+          <FormGroup className="row">
+            <Label className="col-sm-3 col-form-label" htmlFor="inputPassword3">{'Plan'}</Label>
+            <Col sm="9">
+              <Input className="form-control" type="text" value={plan}  disabled/>
+            </Col>
+          </FormGroup>
+          <FormGroup className="row">
+            <Label className="col-sm-3 col-form-label">{'Website'}</Label>
+            <Col sm="9">
+              <Input className="form-control" type="url" value={userDetails?.websiteLink} disabled/>
+            </Col>
+          </FormGroup>
+        </Form>
+      </CardBody>
+    </Fragment>
+        </Card>
       </Col>
+      </Row>
+      </Container>
     </Fragment>
   );
 };

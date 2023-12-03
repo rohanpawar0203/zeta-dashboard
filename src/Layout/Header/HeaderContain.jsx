@@ -20,7 +20,7 @@ import appStore from '../../Component/Live Chats/Client/AppStore';
 const HeaderContain = () => {// eslint-disable-next-line
   const [profile, setProfile] = useState('');
   const [name, setName] = useState('');
-  const { setUserData, setToken } = appStore();
+  const { setUserData, setToken, userData} = appStore();
   useEffect(() => {
     setProfile(localStorage.getItem('profileURL') || UserImg);
     setName(localStorage.getItem('Name'));
@@ -38,13 +38,13 @@ const HeaderContain = () => {// eslint-disable-next-line
     <Fragment>
       <div className="nav-right col-10 col-sm-6 pull-right right-header p-0 dash-76">
         <UL attrUL={{ className: `simple-list flex-row nav-menus` }}>
-          <LI attrLI={{ className: 'onhover-dropdown' }}><H6 attrH6={{ className: 'txt-dark mb-0 mt-1' }}>EN</H6>
+          {/* <LI attrLI={{ className: 'onhover-dropdown' }}><H6 attrH6={{ className: 'txt-dark mb-0 mt-1' }}>EN</H6>
             <Language />
-          </LI>
-          <MoonLight />
+          </LI> */}
+          {/* <MoonLight />
           <ItemCart />
           <Bookmark />
-          <Notification />
+          <Notification /> */}
           <MaxMiniSize />
           <LI attrLI={{ className: 'profile-nav onhover-dropdown pe-0 pt-0 me-0' }} >
             <Media className="profile-media">
@@ -57,10 +57,8 @@ const HeaderContain = () => {// eslint-disable-next-line
               </Media>
             </Media>
             <UL attrUL={{ className: `simple-list profile-dropdown onhover-show-div` }}>
-              <LI><Link to={`${process.env.PUBLIC_URL}/users/userprofile`}><i><User /></i><span>{Account} </span></Link></LI>
-              <LI><Link to={`${process.env.PUBLIC_URL}/email/mailbox`}><i><Mail /></i><span>{Inbox}</span></Link></LI>
-              <LI><Link to={`${process.env.PUBLIC_URL}/kanbanboard`}><i><FileText /></i><span>{Taskboard}</span></Link></LI>
-              <LI><Link to={`${process.env.PUBLIC_URL}/users/useredit`}><i><Settings /></i><span>Settings</span></Link></LI>
+              {(!userData?.userId || userData?.userId === undefined) && <LI><Link to={`${process.env.PUBLIC_URL}/users/userprofile`}><i><User /></i><span>{Account} </span></Link></LI>}
+              
               <LI attrLI={{ onClick: Logout }}>
                 <Link to={`${process.env.PUBLIC_URL}/login`}>
                   <LogIn /><span>{LogOut}</span>

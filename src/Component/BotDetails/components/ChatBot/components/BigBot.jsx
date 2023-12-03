@@ -20,6 +20,7 @@ const BigBot = ({ myBot }) => {
     roomId,
     showTyping,
     liveConversation,
+    typing
   } = appStore();
   // const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState("");
@@ -110,6 +111,7 @@ const BigBot = ({ myBot }) => {
                 </p>
               </div>
             ))}
+            {typing && 'typing'}
           </div>
         </ScrollBar>
 
