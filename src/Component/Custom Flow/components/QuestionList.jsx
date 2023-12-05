@@ -5,7 +5,7 @@ import { GetQuestionsContextValues } from "../contexts/QuestionsContext";
 import { GetContextAPI } from "../../../api";
 import { Badges, H4, H5, LI, UL } from "../../../AbstractElements";
 const QuestionList = ({contextID}) => {
-    const user = JSON.parse(localStorage.getItem('currentUser'));
+    const user = JSON.parse(sessionStorage.getItem('currentUser'));
   const { quiz, setQuiz, setCurrentQuestion} = GetQuestionsContextValues();
   console.log(quiz?.allQuestions);
   return (

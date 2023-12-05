@@ -8,8 +8,8 @@ import { BotCreate } from '../../../api';
 
 const CreateBotForm = ({modal, title, toggle}) => {
   const [formValues, setformValues] = useState({botName: '', error: ''});
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = localStorage.getItem("token");
+  const user = JSON.parse(sessionStorage.getItem("currentUser"));
+  const token = sessionStorage.getItem("token");
   const history = useNavigate();
   const customBot = {
     userId: user._id,

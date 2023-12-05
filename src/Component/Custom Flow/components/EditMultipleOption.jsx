@@ -102,7 +102,7 @@ const EditMultipleOption = ({
         {multipleChoice?.map((el) => (
           <div
             key={el._id}
-            style={{width: '100%', border: '1px solid black' }}
+            style={{width: '100%' }}
             className="d-flex flex-column pb-2 mb-2 align-items-start mt-4"
           >
             <div className="d-flex" >

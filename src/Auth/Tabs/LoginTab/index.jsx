@@ -78,8 +78,8 @@ const LoginTab = ({ selected }) => {
         setEmail("");
         setPassword("");
         const { user, token } = resBody;
-        localStorage.setItem("token", token);
-        localStorage.setItem("currentUser", JSON.stringify(user));
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("currentUser", JSON.stringify(user));
         setUserData(user);
         setToken(token);
         toast.success("User Logged In successfully");

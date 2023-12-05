@@ -34,10 +34,10 @@ import appStore from "../../Live Chats/Client/AppStore";
 import { toast } from "react-toastify";
 
 const EditMyProfile = () => {
-  const userDetails = JSON.parse(localStorage.getItem("currentUser"));
+  const userDetails = JSON.parse(sessionStorage.getItem("currentUser"));
   const [plans, setPlans] = useState([]);
   const [loadingPlans, setLoadingPlans] = useState(true);
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   const [loading, setLoading] = useState(false);
   const {
     register,
@@ -85,7 +85,7 @@ const EditMyProfile = () => {
       if (response.ok) {
         console.log(response.ok);
         console.log("onEditSubmitResponse", responseData);
-        localStorage.setItem(
+        sessionStorage.setItem(
           "currentUser",
           JSON.stringify(responseData.updateUser)
         );
@@ -246,7 +246,7 @@ const EditMyProfile = () => {
             </Col>
             <Col sm="6" md="6">
               <FormGroup>
-                <Label className="form-label">Website</Label>
+                <Label className="form-label">Domain</Label>
                 <input
                   className="form-control"
                   name="websiteLink"
@@ -260,6 +260,7 @@ const EditMyProfile = () => {
                       message: 'Invalid email address',
                     }
                   })}
+                  disabled 
                 />
                 <span style={{ color: "red" }}>
                   {errors.websiteLink && "WebsiteLink is required"}{" "}

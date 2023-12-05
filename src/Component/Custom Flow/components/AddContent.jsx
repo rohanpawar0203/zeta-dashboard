@@ -20,7 +20,7 @@ const initialContentState = {
     cta_2_text: "",
   };
 const AddContent = () => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
   const [isthanyouPage, setTankyouPage] = useState("");
   const [totalCta, setTotalCta] = useState("1");
   const { currentQuestion, quiz, setQuiz, setCurrentQuestion } = GetQuestionsContextValues();

@@ -46,7 +46,7 @@ const BotInfoContent = ({boatId}) => {
     const fetchBotData = async () => {
       setLoading(true);
       try {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         const response = await fetch(
           `${BotCreate}/${boatId}`,
           {

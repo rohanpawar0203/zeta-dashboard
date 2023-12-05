@@ -10,7 +10,7 @@ import axios from 'axios';
 
 const CreateContextModal = ({modal, title, toggle, setData, getAllContexts}) => {
   const [formValues, setformValues] = useState({botName: '', error: ''});
-  const user = JSON.parse(localStorage.getItem("currentUser"));
+  const user = JSON.parse(sessionStorage.getItem("currentUser"));
   const token = localStorage.getItem("token");
   const history = useNavigate();
    

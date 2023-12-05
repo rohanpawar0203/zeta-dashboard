@@ -39,8 +39,8 @@ import AutomaiteBackend from "../Agents/components/automaiteBackend";
 
 const BotContent = () => {
   const { register, handleSubmit, formState: { errors } } = useForm({});
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = localStorage.getItem("token");
+  const user = JSON.parse(sessionStorage.getItem("currentUser"));
+  const token = sessionStorage.getItem("token");
   const history = useNavigate();
 
   const onSubmit = data => {

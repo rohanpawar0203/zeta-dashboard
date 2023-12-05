@@ -6,7 +6,7 @@ import  UserProfile  from '../../../assets/images/user/userProfile.png';
 
 const ChatMessage = () => {
   const { allMemberss, chatss, selectedUserr, currentUserr, fetchChatMemberAsyn, fetchChatAsyn, } = useContext(ChatAppContext);
-  const user = JSON.parse(localStorage.getItem('currentUser'));
+  const user = JSON.parse(sessionStorage.getItem('currentUser'));
   const botImgSrc = 'https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75';
 
   const selectedChat = selectedUserr?.chat ? selectedUserr?.chat : [];

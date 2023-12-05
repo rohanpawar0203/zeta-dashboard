@@ -15,8 +15,8 @@ const ProductFormModal = ({modal, title, toggle, productID, fetchProductData, se
       ...initialData
     }
   });
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = localStorage.getItem("token");
+  const user = JSON.parse(sessionStorage.getItem("currentUser"));
+  const token = sessionStorage.getItem("token");
   const history = useNavigate();
 
   const onSubmit = data => {

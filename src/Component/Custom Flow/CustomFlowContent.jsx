@@ -41,7 +41,7 @@ const CustomFlowContent = () => {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false);
   const [editContext, setEditContext] = useState({model: false, contextID: ''});
-  const user = JSON.parse(localStorage.getItem("currentUser"));
+  const user = JSON.parse(sessionStorage.getItem("currentUser"));
 
   const getAllContexts = async() => {
     setLoading(true);
@@ -74,9 +74,10 @@ const CustomFlowContent = () => {
         : 
          <>
          {!editContext?.mode && (
-            <div className="w-100 d-flex justify-content-end align-items-center mb-3 mx-4">
+            <div className="w-100 d-flex justify-content-between align-items-center mb-3 mx-4">
+            <H4>{'Contexts'}</H4>
             <Btn  attrBtn={{
-                        className: "me-2",
+                        className: "me-4",
                         color: 'success',
                         outline:  false,
                         onClick: () => {

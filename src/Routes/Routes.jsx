@@ -146,12 +146,12 @@ import  ErrorPage  from '../Routes/ErrorPage';
 
 
 export const routes = [
+    { path: `${process.env.PUBLIC_URL}`, Component: <DashBoard /> },
     { path: `${process.env.PUBLIC_URL}/dashboard`, Component: <DashBoard /> },
     { path: `${process.env.PUBLIC_URL}/store`, Component: <Store /> },
     { path: `${process.env.PUBLIC_URL}/tickets`, Component: <Tickets /> },
     { path: `${process.env.PUBLIC_URL}/agents`, Component: <Agents /> },
     { path: `${process.env.PUBLIC_URL}/custom-chat-flow`, Component: <CustomFlow /> },
-    { path: `${process.env.PUBLIC_URL}/bot`, Component: <Bot /> },
     { path: `${process.env.PUBLIC_URL}/bots`, Component: <Bots /> },
     { path: `${process.env.PUBLIC_URL}/bot/:boatId`, Component: <BotInfo /> },
     { path: `${process.env.PUBLIC_URL}/chats-panel`, Component: <ChatsPanel /> },
@@ -160,5 +160,4 @@ export const routes = [
     { path: `${process.env.PUBLIC_URL}/add-agents`, Component: <AddAgents /> },
     { path: `${process.env.PUBLIC_URL}/users/userprofile`, Component: <UsersProfile /> },
     { path: `${process.env.PUBLIC_URL}/users/useredit`, Component: <UsersEdit /> },
-    {path: '*', Component : <ErrorPage />}
 ];

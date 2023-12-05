@@ -4,8 +4,8 @@ import { toast } from "react-toastify";
 import { PlanDetails } from "../../../api";
 const appStore = create((set, get) => ({
   isConnected: false,
-  userData: JSON.parse(localStorage.getItem("currentUser")) || {},
-  token: localStorage.getItem("token") || "",
+  userData: JSON.parse(sessionStorage.getItem("currentUser")) || {},
+  token: sessionStorage.getItem("token") || "",
   conversation: [],
   allAgents: [],
   liveConversationNewEntry: [],

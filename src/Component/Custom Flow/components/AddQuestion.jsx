@@ -28,7 +28,7 @@ const AddQuestion = () => {
       skuId: "",
     });
     const [multipleChoice, setMultipleChoice] = useState([]);
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const types = {
       "Single Input": (
         <SingleInput

@@ -35,13 +35,16 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from "react-router";
 import { AgentAPI, TicketsAPI } from "../../api";
 import AutomaiteBackend from "../Agents/components/automaiteBackend";
+import TicketsList from "./TicketsList";
 
 
 
 const CreateTicketContent = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm({});
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = localStorage.getItem("token");
+  const [tickets, seTickets] = useState([])
+  const [mode, setMode] = useState('');
+  const user = JSON.parse(sessionStorage.getItem("currentUser"));
+  const token = sessionStorage.getItem("token");
   const history = useNavigate();
   const [loading, setLoading] = useState(false);
   const intialPayload = {
@@ -108,58 +111,92 @@ const CreateTicketContent = () => {
     setLoading(false);
   };
 
+  const fetchTicketsData = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `${TicketsAPI}/${user._id}/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await res.json();
+      console.log('res ', res);
+      seTickets(data);
+    } catch (error) {
+      toast(error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchTicketsData();
+  }, [])
+  
+
   return (
     <Fragment>
       <Container fluid={true} className="mt-2 d-flex justify-content-center">
-        <Col sm='8'>
-      <Card style={{height: '80vh', width: '100%', margin: '0 auto'}} className="mt-2">
-      <CardHeader className='pb-0'>
-          <H5>{'Create Ticket'}</H5>
-        </CardHeader>
-        {
-          loading ? 
-          <div className="loader-box">
-          <Spinner attrSpinner={{ className: 'loader-3' }} /> 
-          </div> :
-          <CardBody>
-          <Row>
-            <Form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}>
-            <FormGroup >
-              <Label>{'Email address *'}</Label>
-              <input className="form-control" name="email" type="email" placeholder="Email Address" {...register('email', { required: true })} />
-              <span className='text-danger fw-bolder'>{errors.email && '* Email Address is required'}</span>
-              <div className="valid-feedback">{'Looks good!'}</div>
-            </FormGroup>
-            <FormGroup>
-              <Label>{'Subject *'}</Label>
-              <input className="form-control" name="subject" type="text" placeholder="Subject" {...register('subject', { required: true })} />
-              <span className='text-danger fw-bolder'>{errors.subject && '* Subject is required'}</span>
-              <div className="valid-feedback">{'Looks good!'}</div>
-            </FormGroup>
-            <FormGroup>
-              <Label>{'Query Details *'}</Label>
-              <Textarea className="form-control" name="query" type="text" placeholder="Query" {...register('query', { required: true })} />
-              <span className='text-danger fw-bolder'>{errors.query && '* Query Details is required'}</span>
-              <div className="valid-feedback">{'Looks good!'}</div>
-            </FormGroup>
-            <FormGroup>
-              <Label>{'Attach Screenshot if any'}</Label>
-              <input className="form-control" name="screenShot" placeholder="Screenshot" 
-              type="file"
-              accept="image/*"
-              onChange={(e) => generateImageUrl(e.target.files[0])}/>
-              <div className="valid-feedback">{'Looks good!'}</div>
-            </FormGroup>
-            <Btn attrBtn={{ color: 'primary' }}>{'Create Ticket'}</Btn>
-        </Form>
-          </Row>
-          </CardBody>
+        { mode === 'create' ?
+        <Col>
+        <Card style={{height: '80vh', width: '100%', margin: '0 auto'}} className="mt-2">
+        <CardHeader className='w-100 pb-0'>
+            <H5>{'Create Ticket'}</H5>
+          </CardHeader>
+          {
+            loading ? 
+            <div className="loader-box">
+            <Spinner attrSpinner={{ className: 'loader-3' }} /> 
+            </div> :
+            <CardBody>
+            <Row>
+              <Form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}>
+              <FormGroup >
+                <Label>{'Email address *'}</Label>
+                <input className="form-control" name="email" type="email" placeholder="Email Address" {...register('email', { required: true })} />
+                <span className='text-danger fw-bolder'>{errors.email && '* Email Address is required'}</span>
+                <div className="valid-feedback">{'Looks good!'}</div>
+              </FormGroup>
+              <FormGroup>
+                <Label>{'Subject *'}</Label>
+                <input className="form-control" name="subject" type="text" placeholder="Subject" {...register('subject', { required: true })} />
+                <span className='text-danger fw-bolder'>{errors.subject && '* Subject is required'}</span>
+                <div className="valid-feedback">{'Looks good!'}</div>
+              </FormGroup>
+              <FormGroup>
+                <Label>{'Query Details *'}</Label>
+                <Textarea className="form-control" name="query" type="text" placeholder="Query" {...register('query', { required: true })} />
+                <span className='text-danger fw-bolder'>{errors.query && '* Query Details is required'}</span>
+                <div className="valid-feedback">{'Looks good!'}</div>
+              </FormGroup>
+              <FormGroup>
+                <Label>{'Attach Screenshot if any'}</Label>
+                <input className="form-control" name="screenShot" placeholder="Screenshot" 
+                type="file"
+                accept="image/*"
+                onChange={(e) => generateImageUrl(e.target.files[0])}/>
+                <div className="valid-feedback">{'Looks good!'}</div>
+              </FormGroup>
+              <Btn attrBtn={{ color: 'primary' }}>{'Create Ticket'}</Btn>
+          </Form>
+            </Row>
+            </CardBody>
+          }
+        
+        </Card>
+        </Col> :
+        <TicketsList setMode={setMode}/>
         }
+        
       
-      </Card>
-      </Col>
       </Container>
     </Fragment>
   );
 };
 export default CreateTicketContent;
+
+

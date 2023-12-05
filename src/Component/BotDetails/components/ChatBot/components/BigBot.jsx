@@ -5,6 +5,8 @@ import ChatHeader from "./ChatHeader";
 import ScrollBar from "react-perfect-scrollbar";
 import { toast } from "react-toastify";
 import { BotCreate } from "../../../../../api";
+import Lottie from 'react-lottie';
+import animationData from '../../../../../assets/json/lotties/typing.json';
 import {
   createOrConnectRoom,
   sendDataToConnectedUser,
@@ -20,15 +22,23 @@ const BigBot = ({ myBot }) => {
     roomId,
     showTyping,
     liveConversation,
-    typing
   } = appStore();
   // const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState("");
   const chatContainerRef = useRef();
-  const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("currentUser"));
+  const token = sessionStorage.getItem("token");
+  const user = JSON.parse(sessionStorage.getItem("currentUser"));
   const botAvatar =
     "https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75";
+
+    const defaultOptions = {
+      loop: true,
+      autoplay: true,
+      animationData: animationData,
+      rendererSettings: {
+        preserveAspectRatio: "xMidYMid slice"
+      }
+    };
 
   const sendMessageToBot = async () => {
     const sendData = {
@@ -93,7 +103,7 @@ const BigBot = ({ myBot }) => {
             {messages.map((ele, ind) => (
               <div
                 key={ind}
-                className={`d-flex jusify-content-end align-items-center mb-1 ${
+                className={`d-flex jusify-content-end align-items-center mb-2 ${
                   ele?.user ? "flex-row-reverse" : "flex-row"
                 }`}
               >
@@ -111,7 +121,12 @@ const BigBot = ({ myBot }) => {
                 </p>
               </div>
             ))}
-            {typing && 'typing'}
+            
+            {showTyping && <div className="w-100 d-flex justify-content-start">
+            <div>
+            <Lottie options={defaultOptions} height={75} width={75}/>
+            </div>
+            </div>}
           </div>
         </ScrollBar>
 

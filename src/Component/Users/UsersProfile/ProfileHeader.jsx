@@ -9,16 +9,12 @@ import { PlanDetails } from "../../../api";
 const ProfileHeader = () => {
   const [planIds, setPlanIds] = useState([])
   const [plan, setPlan] = useState('');
-  const userDetails = JSON.parse(localStorage.getItem("currentUser"));
+  const userDetails = JSON.parse(sessionStorage.getItem("currentUser"));
 
   const getPlanIds = async() => {
     try {
         let result = await axios.get(PlanDetails);
         result?.data && setPlanIds([...result?.data]);
-        if(result?.data){
-          let planFiltered = planIds.find((planItem) => (planItem?._id === userDetails.planId));
-          setPlan(planFiltered?.name);
-        }
     } catch (error) {
         console.log('planIds fetch error', error);
     }
@@ -26,6 +22,15 @@ const ProfileHeader = () => {
   useEffect(() => {
     getPlanIds();
   }, [])
+
+  useEffect(() => {
+    if(planIds.length){
+      let planFiltered = planIds.find((planItem) => (planItem?._id === userDetails.planId));
+      setPlan(planFiltered?.name);
+      console.log('plan  ', plan);
+    }
+  }, [planIds])
+  
   return (
     <Fragment>
       <Container fluid={true}>
@@ -128,7 +133,7 @@ const ProfileHeader = () => {
             </Col>
           </FormGroup>
           <FormGroup className="row">
-            <Label className="col-sm-3 col-form-label">{'Website'}</Label>
+            <Label className="col-sm-3 col-form-label">{'Domain'}</Label>
             <Col sm="9">
               <Input className="form-control" type="url" value={userDetails?.websiteLink} disabled/>
             </Col>

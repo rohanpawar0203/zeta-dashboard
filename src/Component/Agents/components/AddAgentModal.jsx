@@ -9,8 +9,8 @@ import { AgentAPI } from '../../../api';
 const AddAgentModal = ({modal, toggle, handleGetData}) => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm({});
     const [togglePassword, setTogglePassword] = useState(false);
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-    const token = localStorage.getItem("token");
+    const user = JSON.parse(sessionStorage.getItem("currentUser"));
+    const token = sessionStorage.getItem("token");
 
     const onSubmit = data => {
         if (data !== '') {

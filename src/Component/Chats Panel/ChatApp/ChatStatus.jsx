@@ -11,7 +11,7 @@ import appStore from '../../Live Chats/Client/AppStore';
 
 const ChatStatus = ({}) => {
   const { selectedUserr, memberss, currentUserr, chatss, changeChat, createNewChatAsyn, setCurrentLocationPathName } = useContext(ChatAppContext);
-  const userData = JSON.parse(localStorage.getItem('currentUser'));
+  const userData = JSON.parse(sessionStorage.getItem('currentUser'));
   const { liveConversation, isConnected,  } = appStore();
   const changeChatClick = (e, selectedUserId) => {
     // const currentUserId = currentUserr.id;

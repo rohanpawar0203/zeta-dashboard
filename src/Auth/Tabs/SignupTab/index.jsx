@@ -75,8 +75,8 @@ const SignupTab = ({ selected }) => {
         if (token && user) {
           setToken(resBody.token);
           setUser(resBody.user);
-          localStorage.setItem("token", resBody.token);
-          localStorage.setItem("currentUser", JSON.stringify(resBody.user));
+          sessionStorage.setItem("token", resBody.token);
+          sessionStorage.setItem("currentUser", JSON.stringify(resBody.user));
           history(`${process.env.PUBLIC_URL}/store`);
         }
         toast.success("User signedup successfully");

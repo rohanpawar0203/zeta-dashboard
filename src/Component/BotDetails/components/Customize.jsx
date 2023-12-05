@@ -41,7 +41,7 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await fetch(`${BotCreate}/${myBot?._id}`, {
         method: "PATCH",
         body: JSON.stringify(myBot),

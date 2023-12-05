@@ -7,7 +7,7 @@ import { joinSession, sendDataToConnectedUser }  from '../Client/wss';
 import appStore from '../Client/AppStore';
 
 const ChatMessage = ({viewConversation,showKeyboard}) => {
-  const user = JSON.parse(localStorage.getItem('currentUser'));
+  const user = JSON.parse(sessionStorage.getItem('currentUser'));
   const botImgSrc = 'https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75';
 
   function formatDateTime(timestamp) {

@@ -12,8 +12,8 @@ const { v4: uuidv4 } = require("uuid");
 
 // import { setLiveConversation } from "../components/dashboard/liveChat/liveChat";
 const SERVER = process.env.REACT_APP_API_SERVER;
-const user = JSON.parse(localStorage.getItem("currentUser"));
-const token = localStorage.getItem("token");
+const user = JSON.parse(sessionStorage.getItem("currentUser"));
+const token = sessionStorage.getItem("token");
 // const SERVER = "http://localhost:8081";
 
 var socket = null;
@@ -57,6 +57,7 @@ export const connectWithSocketIOServer = () => {
   });
 
   socket.on("message-recieved", (data) => {
+    appStore.getState().setShowTyping(false);
    console.log("message-recieved", data);
     let newMessage = JSON.parse(data);
     const newArray = appStore.getState().liveConversation.map((el) => {
@@ -116,7 +117,7 @@ export const createOrConnectRoom = async (identity) => {
   if (!data.organization_id) return;
   if (roomId === undefined || roomId === null || roomId === "null") {
     data.roomId = uuidv4();
-    localStorage.setItem("connectionId", data.roomId);
+    sessionStorage.setItem("connectionId", data.roomId);
   } else {
     const resp = await getRoomExists(roomId);
     if (!resp.roomExists) {
@@ -139,6 +140,7 @@ export const joinSession = (roomId) => {
   socket.emit("join-room", data);
 };
 export const sendDataToConnectedUser = (data) => {
+  appStore.getState().setShowTyping(true);
   socket.emit("mssg-sent", JSON.stringify(data));
 };
 export const getLiveRooms = async () => {

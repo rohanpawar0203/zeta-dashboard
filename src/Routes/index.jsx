@@ -12,14 +12,14 @@ import Signin from '../Auth/Signin';
 import Signup from '../Auth/Signup';
 import { connectWithSocketIOServer } from '../Component/Live Chats/Client/wss';
 import ErrorPage from './ErrorPage';
-import Dashboard from '../Pages/Dash-board';
+import DashBoard from '../Pages/Dash-board';
+import appStore from '../Component/Live Chats/Client/AppStore';
 
 configureFakeBackend();
 const Routers = () => {
+  const {userData} = appStore();
   const [currentUser, setCurrentUser] = useState(localStorage.getItem('currentUser') || null);
   const [token, settoken] = useState((localStorage.getItem('token')) || null)
-  const [authenticated, setAuthenticated] = useState(false);
-  const jwt_token = localStorage.getItem('token');
   useEffect(() => {
     console.log(token, currentUser);
     if(token && currentUser){
@@ -35,6 +35,7 @@ const Routers = () => {
             <Suspense fallback={<Loader />}>
               <Routes>
                 <Route path={'/'} element={<PrivateRoute />}>
+                  {/* <Route path={`/`} element={<DashBoard />} /> */}
                   <Route path={`/*`} element={<LayoutRoutes />} />
                 </Route>
                 <Route path={`${process.env.PUBLIC_URL}/callback`} render={() => <Callback />} />

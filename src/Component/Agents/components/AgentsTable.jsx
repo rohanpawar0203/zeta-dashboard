@@ -18,8 +18,8 @@ import AddAgentModal from './AddAgentModal';
 
 const AgentsTable = () => {
     const [agents, setAgents] = useState([]);
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-    const token = localStorage.getItem("token");
+    const user = JSON.parse(sessionStorage.getItem("currentUser"));
+    const token = sessionStorage.getItem("token");
     const history = useNavigate();
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);

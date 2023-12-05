@@ -43,8 +43,8 @@ const StoreContent = () => {
   const [registerType, setregisterType] = useState('shopify');
   const [submitLoader , setSubmitLoader] = useState(false);
   const [formData, setFormData] = useState({});
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = localStorage.getItem("token");
+  const user = JSON.parse(sessionStorage.getItem("currentUser"));
+  const token = sessionStorage.getItem("token");
   const history = useNavigate();
   const {handleForStore, handleForLogout} = GetMenuItemsProps();
   const {handleFilterForStorePresent} = GetMenuItemsProps();
@@ -176,7 +176,7 @@ const StoreContent = () => {
 
   const redirectToBotComponent = () => {
     setTimeout(() => {
-      history(`${process.env.PUBLIC_URL}/bot`);
+      history(`${process.env.PUBLIC_URL}/bots`);
     }, 4000)
   }
 
@@ -184,7 +184,7 @@ const StoreContent = () => {
     try {
       let newUserDeatils = await getUserDetails(userId); 
       setUserData(newUserDeatils);
-      localStorage.setItem('currentUser', JSON.stringify(newUserDeatils))
+      sessionStorage.setItem('currentUser', JSON.stringify(newUserDeatils))
     } catch (error) {
       toast.error(error);
     }

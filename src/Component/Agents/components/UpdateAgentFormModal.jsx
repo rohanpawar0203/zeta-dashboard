@@ -11,8 +11,8 @@ import axios from 'axios';
 const UpdateAgentFormModal = ({modal, title, toggle, agentUpdatePayload, fetchAgentsData, setagentUpdatePayload, agentID}) => {
   const [formValues, setformValues] = useState({botName: '', error: ''});
   const [togglePassword, setTogglePassword] = useState(false);
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = localStorage.getItem("token");
+  const user = JSON.parse(sessionStorage.getItem("currentUser"));
+  const token = sessionStorage.getItem("token");
   const history = useNavigate();
    
 

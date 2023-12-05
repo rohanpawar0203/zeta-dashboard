@@ -74,8 +74,8 @@ const BotsContent = () => {
 
   const [renameBotId, setRenameBotId] = useState();
   const [myBots, setMyBots] = useState([]);
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = localStorage.getItem("token");
+  const user = JSON.parse(sessionStorage.getItem("currentUser"));
+  const token = sessionStorage.getItem("token");
   const [isHovered, setisHovered] = useState(false);
   const [loading, setLoading] = useState(false);
   const dropDownRef = useRef();

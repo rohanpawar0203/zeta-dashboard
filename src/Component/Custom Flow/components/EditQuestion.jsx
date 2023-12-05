@@ -20,7 +20,7 @@ const validateMultipleOptionChoices = (data) => {
     return true;
   };
 const EditQuestion = () => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
   const { currentQuestion, quiz, setQuiz, setCurrentQuestion } = GetQuestionsContextValues();
   const [multipleChoice, setMultipleChoice] = useState([]);
   const [singleInputChoice, setSingleInputChoice] = useState();
