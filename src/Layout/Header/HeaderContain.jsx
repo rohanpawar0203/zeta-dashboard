@@ -30,7 +30,8 @@ const HeaderContain = () => {// eslint-disable-next-line
   const history = useNavigate();
   const {handleForLogout} = GetMenuItemsProps()
   const Logout = () => {
-    localStorage.clear();
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('currentUser');
     setUserData({});
     setToken(''); 
   };
