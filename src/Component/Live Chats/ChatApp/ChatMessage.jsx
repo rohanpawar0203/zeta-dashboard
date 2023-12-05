@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useRef, useState } from 'react';
 import { Image, LI, UL } from '../../../AbstractElements';
 import start_conversion from '../../../assets/images/start-conversion.jpg';
 import  UserProfile  from '../../../assets/images/user/userProfile.png';
@@ -7,6 +7,7 @@ import { joinSession, sendDataToConnectedUser }  from '../Client/wss';
 import appStore from '../Client/AppStore';
 
 const ChatMessage = ({viewConversation,showKeyboard}) => {
+  const chatContainerRef = useRef();
   const user = JSON.parse(sessionStorage.getItem('currentUser'));
   const botImgSrc = 'https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75';
 
@@ -37,16 +38,20 @@ const ChatMessage = ({viewConversation,showKeyboard}) => {
     }
   }, []);
   
+  useEffect(() => {
+    // Scroll to the bottom whenever messages change
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }, [viewConversation]);
   return (
     <Fragment>
       {viewConversation?.chat ?
-        <div  className="chat-history chat-msg-box custom-scrollbar">
+        <div ref={chatContainerRef}  className="chat-history chat-msg-box custom-scrollbar">
           {viewConversation?.chat && viewConversation?.chat?.length > 0 ? (
             viewConversation?.chat?.map((item, index) => {
               return (
                 <UL attrUL={{ className: 'simple-list' }} key={index}>
                   <LI attrLI={{ className: 'clearfix' }}>
-                    <div style={{backgroundColor:`${item?.from !== 'AGENT' ? '#18FFFF' : '#64FFDA' }`, color: 'black'}} className={`message my-message  ${item?.from === "USER"
+                    <div style={{backgroundColor:`${item?.from !== 'AGENT' ? '#EEEEEE' : '#64FFDA' }`, color: 'black'}} className={`message my-message  ${item?.from === "USER"
                       ? '' : 'pull-right other-message'}`}>
                       <Image attrImage={{
                         src: `${item?.from !== 'AGENT' ? UserProfile : botImgSrc }`,

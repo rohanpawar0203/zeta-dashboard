@@ -7,14 +7,10 @@ import SocialAuth from './SocialAuth';
 const SignInWith = () => {
     return (
         <Fragment>
-            {/* <div className='login-social-title'><H5>Sign in with</H5> </div>
-            <FormGroup>
-                <UL attrUL={{ className: 'simple-list login-social flex-row' }}>
-                    <SocialAuth />
-                </UL>
-            </FormGroup> */}
-            <P>Don't have account ?
-                <Link className='ms-2' to={`${process.env.PUBLIC_URL}/signup`}>Create Account</Link>
+            <P attrPara={{className:'d-flex gap-1 align-items-center'}}>Don't have account ?
+                <Link className='ms-2' to={`${process.env.PUBLIC_URL}/signup`}>
+                    <ul>Create New One</ul>
+                </Link>
             </P>
         </Fragment>
     );

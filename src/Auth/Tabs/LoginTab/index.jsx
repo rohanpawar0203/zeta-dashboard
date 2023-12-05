@@ -8,6 +8,7 @@ import {
   Label,
 } from "reactstrap";
 import { Btn, H5, UL, Alerts } from "../../../AbstractElements";
+import { Card, CardBody, Col, Media, Container, Row, CardHeader, Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import {
   EmailAddress,
   LoginWithJWT,
@@ -27,194 +28,45 @@ import { connectWithSocketIOServer } from "../../../Component/Live Chats/Client/
 import appStore from "../../../Component/Live Chats/Client/AppStore";
 import { getSessionId } from "../../../Component/Bots/sessionSetup";
 import { v4 as uuidv4 } from "uuid";
+import OrgLogin from "./OrgLogin";
+import AgentLogin from "./AgentLogin";
 
 const LoginTab = ({ selected }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
-  const isErrors = useRef(false);
-  const [togglePassword, setTogglePassword] = useState(false);
-  const history = useNavigate();
-  const inputRef = useRef();
-  const { setUserData, setToken, userData } = appStore();
-
-  // const loginAuth = async (e) => {
-  //     e.preventDefault();
-  //     setLoading(true);
-  //     setValue(man);
-  //     setName('Emay Walter');
-  //     setEmail('test@gmail.com');
-  //     setPassword('test123');
-  //     try {
-  //         await firebase_app.auth().signInWithEmailAndPassword(email, password).then(function () {
-  //             setValue(man);
-  //             setName('Emay Walter');
-  //             setTimeout(() => {
-  //                 history(`${process.env.PUBLIC_URL}/dashboard/default`);
-  //             }, 200);
-  //         });
-  //     } catch (error) {
-  //         setTimeout(() => {
-  //             toast.error('Oppss.. The password is invalid or the user does not have a password.');
-  //         }, 200);
-  //     }
-  // };
-  const userLogin = async (e) => {
-    console.log("REACT_APP_API_BASE_URL", process.env.REACT_APP_API_BASE_URL);
-    setLoading(true);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    };
-    try {
-      const res = await fetch(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/login`,
-        requestOptions
-      );
-      const resBody = await res.json();
-      if (res.status.toString() === "200") {
-        setEmail("");
-        setPassword("");
-        const { user, token } = resBody;
-        sessionStorage.setItem("token", token);
-        sessionStorage.setItem("currentUser", JSON.stringify(user));
-        setUserData(user);
-        setToken(token);
-        toast.success("User Logged In successfully");
-        console.log('userData.userId ', user);
-        if (user.userId) {
-          history(`${process.env.PUBLIC_URL}/live-chat`);
-        }
-        else if(!user.store && !user.userId){
-          history(`${process.env.PUBLIC_URL}/store`);
-        }
-        else if(user.store && !user.userId){
-          history(`${process.env.PUBLIC_URL}/dashboard`);
-        }
-        
-      } else {
-        toast.error(`${resBody.msg}`);
-      }
-    } catch (err) {
-      toast.error(`${err.message}`);
-    }
-    setLoading(false);
-  };
-  const formValidate = () => {
-    isErrors.current = false;
-    setErrors({});
-    let errorsObj = {};
-    if (!email) {
-      errorsObj = { email: "Email ID is required!" };
-    } else if (
-      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
-    ) {
-      errorsObj = { email: "Invalid Email ID!" };
-    }
-    if (!password) {
-      errorsObj = { ...errorsObj, password: "Password is required!" };
-    }
-    if (Object.values(errorsObj).length > 0) {
-      isErrors.current = Object.values(errorsObj).length > 0;
-      setErrors(errorsObj);
-    }
-  };
+  const [pillTab, setpillTab] = useState('1');
 
   return (
     <Fragment>
-      <Form className="theme-form login-form">
         <FormHeader selected={selected} />
-        <FormGroup>
-          <Label>
-            {EmailAddress} <Label className="text-red fw-bolder">*</Label>
-          </Label>
-          <InputGroup>
-            <InputGroupText>
-              <i className="icon-email"></i>
-            </InputGroupText>
-            <Input
-              ref={inputRef}
-              className="form-control"
-              type="email"
-              required={true}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              placeholder="Email Address"
-            />
-          </InputGroup>
-          {errors.email && (
-            <Label className="text-red fw-bolder mt-2 errTxt">
-              {errors?.email}
-            </Label>
-          )}
-        </FormGroup>
-        <FormGroup className="mb-4">
-          <Label>
-            {Password} <Label className="text-danger fw-bolder">*</Label>
-          </Label>
-          <InputGroup>
-            <InputGroupText>
-              <i className="icon-lock"></i>
-            </InputGroupText>
-            <Input
-              className="form-control"
-              type={togglePassword ? "text" : "password"}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              placeholder="Password"
-              required={true}
-            />
-            <div
-              className="show-hide"
-              onClick={() => setTogglePassword(!togglePassword)}
-            >
-              <span className={togglePassword ? "Hide" : "show"}></span>
+         <div className='mb-4'>
+         <Nav className="nav-pills">
+            <div className="w-100  d-flex justify-content-center align-items-center">
+            <div style={{background: 'whitesmoke'}} className="d-flex border border-lightgray p-1 rounded">
+            <NavItem style={{cusror: 'pointer'}}>
+              <span style={{cursor: 'pointer'}}>
+              <NavLink  className={pillTab === '1' ? 'active cursor-pointer' : 'cursor-pointer'} onClick={() => setpillTab('1')}>{"Organization"}</NavLink>
+              </span>
+            </NavItem>
+            <NavItem >
+            <span style={{cursor: 'pointer'}}>
+              <NavLink  className={pillTab === '2' ? 'active cursor-pointer' : 'cursor-pointer'} onClick={() => setpillTab('2')}>{'Agent'}</NavLink>
+              </span>
+            </NavItem>
+            <NavItem>
+            </NavItem>
             </div>
-          </InputGroup>
-          {errors.password && (
-            <Label className="text-red fw-bolder mt-2 errTxt">
-              {errors?.password}
-            </Label>
-          )}
-        </FormGroup>
-        <FormGroup>
-          {selected === "firebase" ? (
-            <>
-              {/* {btnDisable ? <Label className={`text-danger fw-bolder hidenTxt ${btnDisable && 'appearedTxt'}`}>Please enter all mandatory credentials in the form</Label> :  */}
-              <Btn
-                attrBtn={{
-                  color: "primary",
-                  className: `btn-block mb-3 ${loading && "btn-disabled"}`,
-                  disabled: loading,
-                  onClick: (e) => {
-                    formValidate();
-                    if (!isErrors.current) {
-                      userLogin();
-                    }
-                  },
-                }}
-              >
-                {loading ? "LOADING..." : SignIn}
-              </Btn>
-            </>
-          ) : (
-            <Btn
-              attrBtn={{
-                color: "primary",
-                className: "btn-block mb-3",
-                disabled: loading ? loading : loading,
-              }}
-            >
-              {loading ? "LOADING..." : LoginWithJWT}
-            </Btn>
-          )}
-        </FormGroup>
-        <SignInWith />
-      </Form>
+            </div>
+          </Nav>
+         </div>
+          <TabContent activeTab={pillTab} className="position-relative">
+              <TabPane className="fade show h-100" tabId="1">
+              <OrgLogin/>
+              <SignInWith />
+              </TabPane>
+              <TabPane tabId="2" className="vh-75">
+              <AgentLogin/>
+              <SignInWith />
+               </TabPane>
+               </TabContent>
     </Fragment>
   );
 };

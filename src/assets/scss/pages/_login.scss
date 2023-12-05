@@ -8,7 +8,7 @@
 .login-card {
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: center;
   margin: 0 auto;
   background-color: rgba($primary-color, 0.1) ;
@@ -32,8 +32,9 @@
     }
   }
   .login-main1 {
-    width: 450px;
-    padding: 40px;
+    width: 575px;
+    padding: 20px 40px;
+    height: 600px;
     border-radius: 10px;
     box-shadow: 0 0 37px rgba(8, 21, 66, 0.05);
     margin: 0 auto;
@@ -88,7 +89,6 @@
     &.login-tab1 {
       position: relative;
       // border-top-left-radius: 0;
-      height: 100%;
       .nav-tabs {
         border-bottom: none;
         position: absolute;

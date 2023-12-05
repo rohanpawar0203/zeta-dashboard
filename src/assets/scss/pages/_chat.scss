@@ -94,10 +94,10 @@
         height: 560px;
         margin-bottom: 90px;
         .chat-user-img {
-          margin-top: -35px;
+          margin-top: -24px;
         }
         .message-data {
-          margin-bottom: 10px;
+          margin-bottom: 3px;
         }
         .message-data-time {
           letter-spacing: 1px;
@@ -107,12 +107,12 @@
         }
         .message {
           color: $light-text;
-          padding: 20px;
+          padding: 5px 10px;
           line-height: 1.9;
           letter-spacing: 1px;
           font-size: 14px;
           margin-bottom: 30px;
-          width: 50%;
+          width: 40%;
           position: relative;
         }
         .my-message {
