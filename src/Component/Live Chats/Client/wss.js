@@ -27,38 +27,38 @@ export const connectWithSocketIOServer = () => {
     appStore.getState().setIsConnected(true);
     agentConnected();
     getLiveRooms();
-    console.log("Bot Connected with Server");
+    // console.log("Bot Connected with Server");
   });
   socket.on("room-id", (data) => {
     const { roomId } = data;
-    console.log(roomId);
+    // console.log(roomId);
   });
 
   socket.on("room-update", (data) => {
     const { connectedUsers } = data;
-    console.log(connectedUsers);
+    // console.log(connectedUsers);
   });
 
   socket.on("conn-prepare", (data) => {
     const { connUserSocketId } = data;
-    console.log("conn-prepare", connUserSocketId);
+    // console.log("conn-prepare", connUserSocketId);
   });
   socket.on("conn-signal", (data) => {
-    console.log("conn-signal", data);
+    // console.log("conn-signal", data);
   });
 
   socket.on("conn-init", (data) => {
     const { connUserSocketId } = data;
-    console.log("conn-init", connUserSocketId);
+    // console.log("conn-init", connUserSocketId);
   });
 
   socket.on("user-disconnected", (data) => {
-    console.log("Data disconnect", data);
+    // console.log("Data disconnect", data);
   });
 
   socket.on("message-recieved", (data) => {
     appStore.getState().setShowTyping(false);
-   console.log("message-recieved", data);
+  //  console.log("message-recieved", data);
     let newMessage = JSON.parse(data);
     const newArray = appStore.getState().liveConversation.map((el) => {
       if (el.chatSessionId === newMessage.roomId) {
@@ -78,10 +78,10 @@ export const connectWithSocketIOServer = () => {
 
   socket.on("disconnect", function () {
     appStore.getState().setIsConnected(false);
-    console.log("client socketio disconnect!");
+    // console.log("client socketio disconnect!");
   });
   socket.on("room-close", function (data) {
-    console.log("roomClose", data);
+    // console.log("roomClose", data);
   });
   socket.on("user-wants-to-chat-agent", function (data) {
     // let roomId = JSON.parse(data);
@@ -105,9 +105,9 @@ export const agentConnected = async () => {
   socket.emit("agent-connected", JSON.stringify(data));
 };
 export const createOrConnectRoom = async (identity) => {
-  console.log("working details", appStore.getState().botDetails);
+  // console.log("working details", appStore.getState().botDetails);
   let roomId = getSessionId(sessionStorage.getItem("sessionUUID"));
-  console.log("RoomID", roomId);
+  // console.log("RoomID", roomId);
   const data = {
     identity: "USER",
     defaultConnection: socket.id,
@@ -128,7 +128,7 @@ export const createOrConnectRoom = async (identity) => {
     return;
   }
   appStore.getState().setRoomId(data);
-  console.log("createOrConnectRoom", data);
+  // console.log("createOrConnectRoom", data);
   socket.emit("create-new-room", data);
 };
 
@@ -166,7 +166,7 @@ const setLiveConversations = async () => {
   const liveConversationNewEntry = appStore.getState().liveConversationNewEntry;
   const conversation = appStore.getState().conversation;
   const userData = appStore.getState().userData;
-  console.log(userData);
+  // console.log(userData);
   const token = appStore.getState().token;
   const orgId = userData.userId ? userData.userId : userData._id;
   if (liveConversationNewEntry.length !== 0) {

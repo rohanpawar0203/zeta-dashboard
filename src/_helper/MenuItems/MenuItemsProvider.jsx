@@ -38,7 +38,6 @@ export const MenuItemsContextProvider = ({ children }) => {
     }
     
     useEffect(() => {
-        console.log('currentUser', userData);
       if(userData?.userId){
         handleFilterForAgent();
       }

@@ -27,7 +27,7 @@ const ProfileHeader = () => {
     if(planIds.length){
       let planFiltered = planIds.find((planItem) => (planItem?._id === userDetails.planId));
       setPlan(planFiltered?.name);
-      console.log('plan  ', plan);
+      // console.log('plan  ', plan);
     }
   }, [planIds])
   

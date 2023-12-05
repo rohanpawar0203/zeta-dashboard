@@ -11,7 +11,6 @@ import appStore from '../Client/AppStore';
 
 const Chatting = ({viewConversation,showKeyboard, setViewConversation}) => {
   const { liveUser } = useContext(ChatAppContext);
-  console.log('in chatting ', viewConversation);
   return (
     <Fragment>
       <Row className="chat-box">

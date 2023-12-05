@@ -37,7 +37,6 @@ import appStore from "../Live Chats/Client/AppStore";
 
 const BotInfoContent = ({boatId}) => {
   const {setBotDetails} = appStore.getState();
-  console.log('got here boat id ', boatId);
   const [myBot, setMyBot] = useState({});
   const [pillTab, setpillTab] = useState('1');
   const [loading, setLoading] = useState(false);
@@ -59,7 +58,6 @@ const BotInfoContent = ({boatId}) => {
         );
 
         const responseData = await response.json();
-        console.log('resond ', responseData);
         if (response.ok) {
           setMyBot(responseData);
           setBotDetails(responseData)

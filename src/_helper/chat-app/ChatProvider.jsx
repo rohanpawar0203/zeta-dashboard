@@ -61,7 +61,6 @@ export const ChatProvider = (props) => {
         }
       );
       setMembers(resp.data);
-      console.log('memberss ', resp.data);
     } catch (error) {
       console.log('error', error);
     }

@@ -101,7 +101,6 @@ const BotsContent = () => {
         }
       );
       const responseData = await response.json();
-      console.log('bots data', responseData);
       if (response.ok && responseData.length > 0) {
         setMyBots(responseData);
       } else {

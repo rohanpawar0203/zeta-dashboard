@@ -63,7 +63,6 @@ const CreateBotForm = ({modal, title, toggle}) => {
       });
       const responseData = await response.json();
       if (response.ok) {
-        console.log(response.ok);
         toggle();
         history(`${process.env.PUBLIC_URL}/dashboard`)
       } else {

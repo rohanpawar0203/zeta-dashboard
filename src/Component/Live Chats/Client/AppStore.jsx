@@ -41,7 +41,6 @@ const appStore = create((set, get) => ({
     }));
   },
   messageType: (data) => {
-    console.log("messageType", data, typeof data);
     if (data.productList && data.productList.length !== 0) {
       data.productList.map((ele) => {
         const text = (
@@ -72,7 +71,6 @@ const appStore = create((set, get) => ({
         get().setMessages(text, false);
       });
     } else {
-      console.log("Simplet text", data.message);
       get().setMessages(data.message, false);
     }
   },

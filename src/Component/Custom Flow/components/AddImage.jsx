@@ -4,7 +4,6 @@ import { Form, FormGroup, Input, Label } from 'reactstrap';
 
 const AddImage = ({ id, handleMultipleOptionChoice, imageType, status }) => {
   const generateImageUrl = async (img) => {
-    console.log(img.size);
     if (img.size > 200000) {
       toast({
         description: "Image is larger than 200kb",

@@ -48,7 +48,6 @@ const ChatStatus = ({}) => {
                       onClick: (e) => {
                         activeChat = item._id;
                         changeChatClick(e, item._id)
-                        console.log(activeChat, item._id);
                       }
                     }} key={i}>
                       <Media className='d-flex align-items-center'>

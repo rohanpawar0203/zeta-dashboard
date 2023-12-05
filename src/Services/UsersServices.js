@@ -4,7 +4,7 @@ import { UsersAPI } from "../api"
 
 export const getUserDetails = async(id) => {
     const token = sessionStorage.getItem('token');
-    console.log('user id got ', id);
+    // console.log('user id got ', id);
     
     return new Promise(async(resolve, reject) => {
         try {

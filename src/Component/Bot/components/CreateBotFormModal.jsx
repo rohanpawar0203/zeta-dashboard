@@ -63,7 +63,6 @@ const CreateBotForm = ({modal, title, toggle}) => {
       });
       const responseData = await response.json();
       if (response.ok) {
-        console.log(response.ok);
         toast.success(responseData?.message);
         toggle();
         setTimeout(() =>{history(`${process.env.PUBLIC_URL}/bots`)}, 2000);

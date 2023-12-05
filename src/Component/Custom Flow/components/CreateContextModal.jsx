@@ -36,7 +36,6 @@ const submitHandler = async (payload) => {
     },
   })
   .then((res) => {
-    console.log(res.data.data);
     setData(res.data.data);
     reset();
     getAllContexts();

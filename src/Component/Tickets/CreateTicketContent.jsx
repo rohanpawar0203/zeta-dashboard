@@ -65,7 +65,7 @@ const CreateTicketContent = () => {
   };
 
   const generateImageUrl = async (img) => {
-    console.log(img.size);
+    // console.log(img.size);
     if (img.size > 200000) {
       toast({
         description: "Image is larger than 200kb",
@@ -99,10 +99,14 @@ const CreateTicketContent = () => {
         },
         data: data,
       };
-      await axios.request(config);
-      reset();
-      setPayload(intialPayload)
-      toast.success("Ticket Created successfully");
+      let response = await axios.request(config);
+      // console.log('response ', response);
+      if(response.status === 200 || response.status === '200'){
+        setMode('');
+        reset();
+        setPayload(intialPayload)
+        toast.success("Ticket Created successfully");
+      } 
     } catch (error) {
       toast.error("Something went wrong");
       toast.error(`${error.response.data.error}`);
@@ -125,7 +129,7 @@ const CreateTicketContent = () => {
         }
       );
       const data = await res.json();
-      console.log('res ', res);
+      // console.log('res ', res);
       seTickets(data);
     } catch (error) {
       toast(error);
@@ -142,7 +146,7 @@ const CreateTicketContent = () => {
     <Fragment>
       <Container fluid={true} className="mt-2 d-flex justify-content-center">
         { mode === 'create' ?
-        <Col>
+        <Col sm='6'>
         <Card style={{height: '80vh', width: '100%', margin: '0 auto'}} className="mt-2">
         <CardHeader className='w-100 pb-0'>
             <H5>{'Create Ticket'}</H5>
@@ -181,7 +185,10 @@ const CreateTicketContent = () => {
                 onChange={(e) => generateImageUrl(e.target.files[0])}/>
                 <div className="valid-feedback">{'Looks good!'}</div>
               </FormGroup>
-              <Btn attrBtn={{ color: 'primary' }}>{'Create Ticket'}</Btn>
+              <div className='d-flex gap-4 align-items-center justify-content-start'>
+              <Btn attrBtn={{ color: 'primary', type: 'submit'}}>{'Create Ticket'}</Btn>
+              <Btn attrBtn={{ color: 'danger', onClick: () => {setMode('')}}}>{'Cancel'}</Btn>
+              </div>
           </Form>
             </Row>
             </CardBody>
@@ -190,9 +197,7 @@ const CreateTicketContent = () => {
         </Card>
         </Col> :
         <TicketsList setMode={setMode}/>
-        }
-        
-      
+      }
       </Container>
     </Fragment>
   );

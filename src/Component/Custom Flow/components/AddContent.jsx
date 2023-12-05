@@ -49,7 +49,6 @@ const AddContent = () => {
         },
       })
       .then((res) => {
-        console.log(res);
         toast.success("Question added successfully",);
         setContentChoice({ nextQuestion: "" });
         setNewContent(initialContentState);

@@ -33,7 +33,6 @@ const ContextsTable = ({data, getAllContexts, setEditContext}) => {
               },
             }
           );
-          console.log('resp status ',  resp['status']);
           if(resp['status'] === 200){
             getAllContexts();
             toggleDeleteModal();

@@ -16,14 +16,14 @@ const ChatAppContain = () => {
       <Container fluid={true}>
         <Row>
           <Col className="call-chat-sidebar">
-            <Card className='h-75'>
+            <Card className='h-100'>
               <CardBody className="chat-body">
                 <ChatStatus />
               </CardBody>
             </Card>
           </Col>
           <Col className="call-chat-body">
-            <Card className='h-75'>
+            <Card className='h-100'>
               <CardBody className="p-0">
                 <Chatting />
               </CardBody>

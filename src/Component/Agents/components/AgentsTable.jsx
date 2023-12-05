@@ -68,7 +68,6 @@ const AgentsTable = () => {
               },
             }
           );
-          console.log("resp", resp.data);
           toggleDeleteModal();
           toast.success("User deleted Successfully!");
           handleGetData();

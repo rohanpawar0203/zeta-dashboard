@@ -7,7 +7,6 @@ import { Badges, H4, H5, LI, UL } from "../../../AbstractElements";
 const QuestionList = ({contextID}) => {
     const user = JSON.parse(sessionStorage.getItem('currentUser'));
   const { quiz, setQuiz, setCurrentQuestion} = GetQuestionsContextValues();
-  console.log(quiz?.allQuestions);
   return (
     <UL>
         {

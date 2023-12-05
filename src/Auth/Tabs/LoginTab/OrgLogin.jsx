@@ -40,12 +40,11 @@ const OrgLogin = ({ selected }) => {
   const { setUserData, setToken, userData } = appStore();
 
   const userLogin = async (e) => {
-    console.log("REACT_APP_API_BASE_URL", process.env.REACT_APP_API_BASE_URL);
     setLoading(true);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, type: 'ORGANIZATION'}),
+      body: JSON.stringify({ email, password, type: 'organization'}),
     };
     try {
       const res = await fetch(
@@ -57,13 +56,11 @@ const OrgLogin = ({ selected }) => {
         setEmail("");
         setPassword("");
         const { user, token } = resBody;
-        console.log('resBody ', resBody);
         sessionStorage.setItem("token", token);
         sessionStorage.setItem("currentUser", JSON.stringify(user));
         setUserData(user);
         setToken(token);
         toast.success("User Logged In successfully");
-        console.log('userData.userId ', user);
         if (user.userId) {
           history(`${process.env.PUBLIC_URL}/live-chat`);
         }

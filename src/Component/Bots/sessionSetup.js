@@ -8,7 +8,6 @@ export const getSessionId = (parameter) => {
   // Check if a session exists for the parameter
   console.log("Parameter", parameter);
   const sessions = JSON.parse(sessionStorage.getItem("sessions")) || null;
-  console.log("getSessionIdSessions", sessions);
   if (sessions !== null) {
     const existingSession = Object.values(sessions[0]).find(
       (

@@ -18,7 +18,6 @@ const ChatAppContain = () => {
       const resp = await getRoomExists(el.chatSessionId);
       if (resp.roomExists) {
         setViewConversation(el);
-        console.log("viewConversation ", viewConversation);
       } else {
         setError(true);
       }
@@ -49,14 +48,14 @@ const ChatAppContain = () => {
       <Container fluid={true}>
         <Row>
           <Col className="call-chat-sidebar">
-            <Card className='h-75'>
+            <Card className='h-100'>
               <CardBody className="chat-body">
                 <ChatStatus checkValid={checkValid} viewConversation={viewConversation} setViewConversation={setViewConversation}/>
               </CardBody>
             </Card>
           </Col>
           <Col className="call-chat-body">
-            <Card className='h-75'>
+            <Card className='h-100'>
               <CardBody className="p-0">
                 <Chatting viewConversation={viewConversation}
                  showKeyboard={true}

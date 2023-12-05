@@ -58,7 +58,7 @@ const EditMyProfile = () => {
 
   const handlePlanChange = (e) => {
     const selectedValue = e.target.value;
-    console.log("Selected value", selectedValue);
+    // console.log("Selected value", selectedValue);
     setValue("planId", selectedValue);
   };
 
@@ -83,8 +83,8 @@ const EditMyProfile = () => {
       });
       const responseData = await response.json();
       if (response.ok) {
-        console.log(response.ok);
-        console.log("onEditSubmitResponse", responseData);
+        // console.log(response.ok);
+        // console.log("onEditSubmitResponse", responseData);
         sessionStorage.setItem(
           "currentUser",
           JSON.stringify(responseData.updateUser)
@@ -110,7 +110,7 @@ const EditMyProfile = () => {
         });
         const responseData = await response.json();
         if (response.ok) {
-          console.log("resp", responseData);
+          // console.log("resp", responseData);
           setPlans(responseData);
         } else {
           toast.error(responseData.message);
@@ -126,7 +126,7 @@ const EditMyProfile = () => {
     getPlans();
   }, []);
 
-  console.log("Plans", plans);
+  // console.log("Plans", plans);
 
   return (
     <Fragment>

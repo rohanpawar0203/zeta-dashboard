@@ -11,7 +11,6 @@ const ChatStatus = ({checkValid}) => {
   const { liveUser, setliveUser} = useContext(ChatAppContext);
   const { liveConversation  } = appStore();
 ;
-console.log('liveConversation ', liveConversation);
 
 function calculateTimePassed(timestamp) {
   const currentTime = new Date().getTime();
@@ -27,7 +26,6 @@ function calculateTimePassed(timestamp) {
   if (hours > 0) return (timePassedString += `${hours % 24}h`);
   if (minutes > 0) return (timePassedString += `${minutes % 60}m`);
   if (seconds > 0) return (timePassedString += `${seconds % 60}s`);
-  console.log('timePassedString ', timePassedString);
   return timePassedString;
 }
   

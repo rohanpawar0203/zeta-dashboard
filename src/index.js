@@ -11,7 +11,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import './i18n';
 // import dotenv from 'dotenv';
 
-console.log("ENV", process.env.REACT_APP_API_BASE_URL)
 // dotenv.config();
 ReactDOM.render(
   // <React.StrictMode>

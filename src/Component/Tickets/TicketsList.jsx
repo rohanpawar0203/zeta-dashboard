@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { AgentAPI, TicketsAPI } from "../../api";
+import axios from 'axios';
 
 
 const TicketsList = ({setMode}) => {
@@ -38,17 +39,17 @@ const TicketsList = ({setMode}) => {
     const fetchTicketsData = async () => {
       setLoading(true);
       try {
-        const res = await fetch(
-          `${TicketsAPI}/${user._id}`,
+        const res = await axios.get(
+          `${TicketsAPI}/${user._id}/organization`,
           {
-            method: "GET",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        const data = await res.json();
+        const data = await res.data;
+        // console.log('tickets ', data);
         setProducts(data);
       } catch (error) {
         toast(error);
@@ -97,7 +98,7 @@ const TicketsList = ({setMode}) => {
             <div>
             <button type="button" class="btn btn-success" onClick={() => {
               setMode('create')
-          }}>Crete Ticket</button>
+          }}>Create Ticket</button>
             </div>
           </CardHeader>
           <div style={{height: '80vh'}}>
@@ -106,31 +107,32 @@ const TicketsList = ({setMode}) => {
         <div className="loader-box">
         <Spinner attrSpinner={{ className: 'loader-3' }} /> 
         </div> : 
-          <div className="table-responsive">
+          <div className="h-100 table-responsive">
             <Table>
               <thead>
                 <tr className='table-primary'>
-                  <th scope="col">{'Product ID'}</th>
-                  <th scope="col">{'Product Name'}</th>
-                  <th scope="col">{'Product SKU'}</th>
-                  <th scope="col">{'Product Type'}</th>
-                  <th scope="col">{'Price'}</th>
-                  <th scope="col">{' '}</th>
+                  <th scope="col">{'Email ID'}</th>
+                  <th scope="col">{'Query'}</th>
+                  <th scope="col">{'Subject'}</th>
+                  <th scope="col">{'Created At'}</th>
+                  <th scope="col">{'Created By'}</th>
                 </tr>
               </thead>
               <tbody>
-                {
-                    <tr>
-                      <th scope="row">{'productId'}</th>
-                      <td>{'productName'}</td>
-                      <td>{'productSku'}</td>
-                      <td>{'productType'}</td>
-                      <td>{'price'}</td>
-                    </tr>
+                { products.length > 0 && 
+                products.map((ele, ind) => (
+                  <tr>
+                  <td>{ele?.email}</td>
+                  <td>{ele?.query}</td>
+                  <td>{ele?.subject}</td>
+                  <td>{(new Date(ele?.createdAt)).toLocaleString()}</td>
+                  <td>{ele?.userId}</td>
+                </tr>
+                ))
                 }
               </tbody>
               </Table> 
-            </div>
+            </div> 
              }
             </div>
        </Card>

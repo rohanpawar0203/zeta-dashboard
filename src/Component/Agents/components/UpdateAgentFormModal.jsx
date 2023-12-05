@@ -24,7 +24,6 @@ const UpdateAgentFormModal = ({modal, title, toggle, agentUpdatePayload, fetchAg
   });
   
   const onSubmit = data => {
-    console.log('data ', data);
     if (data !== '') {
       submitHandler(data);
     } else {
@@ -39,7 +38,6 @@ const submitHandler = async (values) => {
           ...values,
         };
         if (body.password === "") delete body.password;
-        console.log('body ', body);
         const res = await axios.patch(
           `${AgentAPI}/${agentID}`,
           {
@@ -51,7 +49,6 @@ const submitHandler = async (values) => {
             },
           }
         );
-        console.log(res);
         if(res['status'] === 200 || res['status'] === "200") {
           fetchAgentsData();
           toggle();

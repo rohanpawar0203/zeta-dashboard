@@ -2,7 +2,6 @@ import React from "react";
 import { RxCross2 } from "react-icons/rx";
 
 const SmallBot = ({ setcloseSmallBot, myBot, setbot}) => {
-  console.log("bot info ", myBot);
   return (
     <div
       style={{

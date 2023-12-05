@@ -92,7 +92,6 @@ const SignupTab = ({ selected }) => {
   const formValidate = () => {
     isErrors.current = false;
     setErrors({});
-    console.log('user data ', userData);
     let errorsObj = {};
     if (!userData?.email) {
       errorsObj = { email: "Email ID is required!" };

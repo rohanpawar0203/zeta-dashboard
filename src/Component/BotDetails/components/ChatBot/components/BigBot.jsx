@@ -154,7 +154,6 @@ const BigBot = ({ myBot }) => {
                 placeholder="Send Message..."
                 onChange={(e) => {
                 setUserMessage(e.target.value);
-                console.log(userMessage);
                 }}
                 onKeyDown={(e) => {
                 if (e.key === "Enter") {
