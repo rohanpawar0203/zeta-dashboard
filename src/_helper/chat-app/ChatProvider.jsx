@@ -51,6 +51,7 @@ export const ChatProvider = (props) => {
 
   const getChatMembersData = async () => {
     try {
+      console.log('userData ', userData);
       const orgId = userData?.userId ? userData?.userId : userData?._id;
       const resp = await axios.get(
         `${GetConversationsAPI}/${orgId}`,

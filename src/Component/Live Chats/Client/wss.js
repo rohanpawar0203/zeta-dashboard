@@ -17,6 +17,7 @@ const token = sessionStorage.getItem("token");
 // const SERVER = "http://localhost:8081";
 
 var socket = null;
+const{setLiveConversation, liveConversation} = appStore.getState();
 
 export const connectWithSocketIOServer = () => {
   socket = io(SERVER, {
@@ -56,10 +57,11 @@ export const connectWithSocketIOServer = () => {
     // console.log("Data disconnect", data);
   });
 
-  socket.on("message-recieved", (data) => {
+  socket.on("message-recieved", (data) => { 
     appStore.getState().setShowTyping(false);
-  //  console.log("message-recieved", data);
+   console.log("message-recieved", data);
     let newMessage = JSON.parse(data);
+    console.log('liveConversation ', liveConversation);
     const newArray = appStore.getState().liveConversation.map((el) => {
       if (el.chatSessionId === newMessage.roomId) {
         el.chat = [
@@ -69,11 +71,13 @@ export const connectWithSocketIOServer = () => {
       }
       return el;
     });
+
     if (newMessage.identity === "BOT" || newMessage.identity === "AGENT") {
       appStore.getState().messageType(newMessage);
     }
+    console.log("message-recieved newArray", newArray);
     appStore.getState().setLiveConversation(newArray);
-    // console.log("newMessage", appStore.getState().liveConversation);
+    console.log("get liveConversation", liveConversation);
   });
 
   socket.on("disconnect", function () {
@@ -166,7 +170,7 @@ const setLiveConversations = async () => {
   const liveConversationNewEntry = appStore.getState().liveConversationNewEntry;
   const conversation = appStore.getState().conversation;
   const userData = appStore.getState().userData;
-  // console.log(userData);
+  console.log('userData at setLivecon ', userData);
   const token = appStore.getState().token;
   const orgId = userData.userId ? userData.userId : userData._id;
   if (liveConversationNewEntry.length !== 0) {
@@ -177,6 +181,8 @@ const setLiveConversations = async () => {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log('liveConversationNewEntry  ', liveConversationNewEntry);
+        console.log('liveConversationNewEntry resp.data   ', resp.data);
         const filterArray = resp.data.filter((el) => {
           let flag = false;
           liveConversationNewEntry.forEach((element) => {
@@ -188,7 +194,9 @@ const setLiveConversations = async () => {
             return el;
           }
         });
+        console.log('filterArray first', filterArray)
         appStore.getState().setLiveConversation(filterArray);
+        console.log('setLiveConversations 1', appStore.getState().liveConversation);
         appStore.getState().setConversation(resp.data);
       } catch (error) {
         console.log("Error", error);
@@ -206,6 +214,7 @@ const setLiveConversations = async () => {
         }
       });
       appStore.getState().setLiveConversation(filterArray);
+      console.log('setLiveConversations 2', appStore.getState().liveConversation);
     }
   }
 };
