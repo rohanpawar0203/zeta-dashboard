@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import Context from './index';
 import { ChatApi, ChatMemberApi, GetConversationsAPI } from '../../api';
+import AppStore from '../../Component/Live Chats/Client/AppStore';
 
 export const ChatProvider = (props) => {
   const [allMemberss, setAllMembers] = useState([]);
@@ -11,7 +12,7 @@ export const ChatProvider = (props) => {
   const [selectedUserr, setSelectedUser] = useState();
   const [liveUser, setliveUser] = useState();
   const [sidebarToggle, setSidebarToggle] = useState(false);
-  const userData = JSON.parse(sessionStorage.getItem('currentUser'));
+  const userData = AppStore();
   const token = sessionStorage.getItem('token');
   const [appStore, setappStore] = useState({
   isConnected: false,
@@ -57,7 +58,7 @@ export const ChatProvider = (props) => {
         `${GetConversationsAPI}/${orgId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, 
           },
         }
       );
