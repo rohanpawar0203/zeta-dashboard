@@ -5,7 +5,7 @@ import start_conversion from '../../../assets/images/start-conversion.jpg';
 import  UserProfile  from '../../../assets/images/user/userProfile.png';
 
 const ChatMessage = () => {
-  const chatContainerRef = useRef();
+  // const chatContainerRef = useRef();
   const { allMemberss, chatss, selectedUserr, currentUserr, fetchChatMemberAsyn, fetchChatAsyn, } = useContext(ChatAppContext);
   const user = JSON.parse(sessionStorage.getItem('currentUser'));
   const botImgSrc = 'https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75';
@@ -17,14 +17,10 @@ const ChatMessage = () => {
   const dynamicImage = (image) => {
     return images(`./${image}`);
   };
-  useEffect(() => {
-    // Scroll to the bottom whenever messages change
-    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-  }, [selectedChat]);
   return (
     <Fragment>
       {allMemberss && chatss && selectedUserr ?
-        <div ref={chatContainerRef} className="chat-history chat-msg-box custom-scrollbar">
+        <div className="chat-history chat-msg-box custom-scrollbar">
           {selectedChat && selectedChat.length > 0 ? (
             selectedChat.map((item, index) => {
               return (

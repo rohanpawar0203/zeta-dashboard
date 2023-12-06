@@ -842,6 +842,7 @@ img.for-dark.media{
         .sidebar-main {
           text-align: left;
           position: relative;
+          height: auto;
           .left-arrow,
           .right-arrow {
             position: absolute;
@@ -1198,9 +1199,11 @@ img.for-dark.media{
           height: 100vh;
           .logo-wrapper,
           .logo-icon-wrapper {
-            padding: 20px 30px;
+            padding: 20px 75px;
+            background-color: gray;
             img {
               height: 35px;
+              object-fit: cover;
             }
             a {
               display: inline-block;
@@ -1282,7 +1285,7 @@ img.for-dark.media{
               height: calc(100vh - 350px);
             }
             .sidebar-links {
-              height: calc(100vh - 350px);
+              height: 100vh;
               left: -300px;
               z-index: 99;
               transition: color 1s ease;

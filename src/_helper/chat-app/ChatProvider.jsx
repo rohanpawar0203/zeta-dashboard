@@ -15,7 +15,7 @@ export const ChatProvider = (props) => {
   const token = sessionStorage.getItem('token');
   const [appStore, setappStore] = useState({
   isConnected: false,
-  userData: "",
+  userData: JSON.parse(sessionStorage.getItem('currentUser')) || {},
   token: "",
   conversation: [],
   allAgents: [],
@@ -51,7 +51,7 @@ export const ChatProvider = (props) => {
 
   const getChatMembersData = async () => {
     try {
-      const orgId = userData.userId ? userData.userId : userData._id;
+      const orgId = userData?.userId ? userData?.userId : userData?._id;
       const resp = await axios.get(
         `${GetConversationsAPI}/${orgId}`,
         {
@@ -60,6 +60,7 @@ export const ChatProvider = (props) => {
           },
         }
       );
+      console.log('chats // ', resp.data);
       setMembers(resp.data);
     } catch (error) {
       console.log('error', error);

@@ -3,7 +3,7 @@ import { Row } from 'reactstrap';
 import { Image } from '../../AbstractElements';
 import HeaderContain from './HeaderContain';
 import SearchBar from './SearchBar';
-import imgg from '../../assets/images/logo/logo.png';
+import ulaiLogo from '../../assets/images/dashboard/ulai-logo-01-dark-small.png';
 import CheckContext from '../../_helper/customizer/index';
 import { ToggleIconss } from '../../Data/svgIcons';
 
@@ -32,7 +32,8 @@ const Header = () => {
       <Row className="header-wrapper m-0">
         <div className="header-logo-wrapper col-auto p-0" id="out_side_click">
           <div className="logo-wrapper" >
-            <a href="#javascript"><Image attrImage={{ className: 'img-fluid', src: `${imgg}`, alt: '' }} /></a></div>
+            {/* <a href="#javascript"><Image attrImage={{ className: 'img-fluid', src: `${ulaiLogo}`, alt: '' }} /></a> */}
+            </div>
           <div className="toggle-sidebar" onClick={() => openCloseSidebar()} id="sidebar-toggle">
             <i className="status_toggle sidebar-toggle d-flex" >
               <ToggleIconss />
