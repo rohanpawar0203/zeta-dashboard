@@ -3,6 +3,7 @@ import ChatAppContext from '../../../_helper/chat-app/index';
 import { Image, LI, UL } from '../../../AbstractElements';
 import start_conversion from '../../../assets/images/start-conversion.jpg';
 import  UserProfile  from '../../../assets/images/user/userProfile.png';
+import moment from 'moment-timezone';
 
 const ChatMessage = () => {
   // const chatContainerRef = useRef();
@@ -17,6 +18,9 @@ const ChatMessage = () => {
   const dynamicImage = (image) => {
     return images(`./${image}`);
   };
+  const getLocaleTime = (utcTimestamp) => {
+    return moment.utc(utcTimestamp).tz("Asia/Kolkata").format("DD-MM-YYYY h:mm a");
+    }
   return (
     <Fragment>
       {allMemberss && chatss && selectedUserr ?
@@ -35,7 +39,7 @@ const ChatMessage = () => {
                       }} />
                       < div className="message-data text-end">
                         <span className="message-data-time">
-                        {`${item?.from}`}   {(new Date(item?.time)).toLocaleString()}
+                        {`${item?.from}`}   {getLocaleTime(item?.time)}
                         </span>
                       </div>
                       {`${item?.message}`}

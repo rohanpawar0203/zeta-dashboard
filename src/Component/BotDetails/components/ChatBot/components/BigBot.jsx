@@ -6,7 +6,7 @@ import ScrollBar from "react-perfect-scrollbar";
 import { toast } from "react-toastify";
 import { BotCreate } from "../../../../../api";
 import Lottie from 'react-lottie';
-import animationData from '../../../../../assets/json/lotties/typing.json';
+import animationData from '../../../../../assets/json/lotties/Animation - 1701895887722.json';
 import {
   createOrConnectRoom,
   sendDataToConnectedUser,
@@ -124,7 +124,7 @@ const BigBot = ({ myBot }) => {
             
             {showTyping && <div className="w-100 d-flex justify-content-start">
             <div>
-            <Lottie options={defaultOptions} height={75} width={75}/>
+            <Lottie options={defaultOptions} height={100} width={100}/>
             </div>
             </div>}
           </div>

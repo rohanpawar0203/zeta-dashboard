@@ -2,12 +2,14 @@ import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { Image, LI, UL } from '../../../AbstractElements';
 import start_conversion from '../../../assets/images/start-conversion.jpg';
 import  UserProfile  from '../../../assets/images/user/userProfile.png';
+import customerService from '../../../assets/images/dashboard/icons8-customer-support-100.png'
 import { toast } from 'react-toastify';
 import { joinSession, sendDataToConnectedUser }  from '../Client/wss';
 import appStore from '../Client/AppStore';
 
 const ChatMessage = ({viewConversation,showKeyboard}) => {
-  // const chatContainerRef = useRef();
+  const chatContainerRef = useRef(null);
+  const {liveConversation} = appStore();
   const user = JSON.parse(sessionStorage.getItem('currentUser'));
   const botImgSrc = 'https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75';
 
@@ -38,29 +40,28 @@ const ChatMessage = ({viewConversation,showKeyboard}) => {
     }
   }, []);
   
-  // useEffect(() => {
-  //   // Scroll to the bottom whenever messages change
-  //   chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-  // }, [viewConversation]);
+  useEffect(() => {
+    // Scroll to the bottom whenever messages change
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }, [viewConversation, liveConversation]);
   return (
     <Fragment>
-      {viewConversation?.chat ?
-        <div className="chat-history chat-msg-box custom-scrollbar">
-          {viewConversation?.chat && viewConversation?.chat?.length > 0 ? (
+        <div ref={chatContainerRef} style={{overflowY: 'auto'}} className="chat-history chat-msg-box custom-scrollbar">
+          {viewConversation?.chat && viewConversation?.chat?.length > 0 && (
             viewConversation?.chat?.map((item, index) => {
               return (
                 <UL attrUL={{ className: 'simple-list' }} key={index}>
-                  <LI attrLI={{ className: 'clearfix' }}>
-                    <div style={{backgroundColor:`${item?.from !== 'AGENT' ? '#EEEEEE' : '#64FFDA' }`, color: 'black'}} className={`message my-message  ${item?.from === "USER"
+                  <LI attrLI={{ className: 'clearfix' }}> 
+                    <div style={{backgroundColor:`${item?.from === 'BOT' ? '#64FFDA' : item?.from === 'USER' ? '#EEEEEE' : 'whitesmoke' }`, color: 'black'}} className={`message my-message  ${item?.from === "USER"
                       ? '' : 'pull-right other-message'}`}>
                       <Image attrImage={{
-                        src: `${item?.from !== 'AGENT' ? UserProfile : botImgSrc }`,
+                        src: `${item?.from === 'BOT' ? botImgSrc : item?.from === 'AGENT' ? customerService :  UserProfile  }`,
                          className: `rounded-circle ${item?.from === "USER"
                           ? 'float-start ' : 'float-end '}chat-user-img img-30`, alt: ''
                       }} />
                       < div className="message-data text-end">
                         <span className="message-data-time">
-                        {`+${item?.from === "USER" ? item?.from : viewConversation?.phoneNumber}`}   {formatDateTime(item.time).time}
+                        {`${item?.from === "USER" ? viewConversation?.phoneNumber : item?.from  }`}   {formatDateTime(item.time).time}
                         </span>
                       </div>
                       {`${item?.message}`}
@@ -69,18 +70,9 @@ const ChatMessage = ({viewConversation,showKeyboard}) => {
                 </UL>
               );
             })
-          ) : (
-            <Image attrImage={{
-              className: 'img-fluid',
-              src: `${start_conversion}`,
-              alt: 'start conversion '
-            }} />
           )}
-
         </div>
-        : (<div className="loading"></div>)
-      }
     </Fragment >
-  );
+  )
 };
 export default ChatMessage;

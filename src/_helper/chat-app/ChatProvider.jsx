@@ -63,7 +63,7 @@ export const ChatProvider = (props) => {
         }
       );
       console.log('chats // ', resp.data);
-      setMembers(resp.data);
+      setMembers(resp.data.reverse());
     } catch (error) {
       console.log('error', error);
     }

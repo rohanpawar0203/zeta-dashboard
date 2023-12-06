@@ -48,14 +48,14 @@ const ChatAppContain = () => {
       <Container fluid={true}>
         <Row>
           <Col className="call-chat-sidebar">
-            <Card className='h-100'>
+            <Card style={{height: '95%'}}>
               <CardBody className="chat-body">
                 <ChatStatus checkValid={checkValid} viewConversation={viewConversation} setViewConversation={setViewConversation}/>
               </CardBody>
             </Card>
           </Col>
           <Col className="call-chat-body">
-            <Card className='h-100'>
+            <Card style={{height: '95%'}}>
               <CardBody className="p-0">
                 <Chatting viewConversation={viewConversation}
                  showKeyboard={true}

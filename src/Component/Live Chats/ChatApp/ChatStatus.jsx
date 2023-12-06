@@ -9,7 +9,7 @@ import appStore from '../Client/AppStore';
 
 const ChatStatus = ({checkValid}) => {
   const { liveUser, setliveUser} = useContext(ChatAppContext);
-  const { liveConversation  } = appStore();
+  const { liveConversation, setLiveConversation  } = appStore();
 ;
 
 function calculateTimePassed(timestamp) {

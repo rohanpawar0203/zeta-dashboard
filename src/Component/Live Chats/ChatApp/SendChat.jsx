@@ -50,8 +50,8 @@ const SendChat = ({viewConversation,showKeyboard, setViewConversation}) => {
       }
       return el;
     });
-    setMsg("");
     setLiveConversation(newArray);
+    setMsg("");
     // setLoading(false);
   };
   return (
@@ -69,10 +69,10 @@ const SendChat = ({viewConversation,showKeyboard, setViewConversation}) => {
               type="text"
               className="form-control input-txt-bx"
               placeholder="Type a message......"
-              defaultValue={msg}
+              value={msg}
               onKeyPress={(e) => handleMessagePress(e)}
               onChange={(e) => handleMessageChange(e.target.value)} />
-            <Btn attrBtn={{ color: 'primary', onClick: () => sendMsg(), disabled: !msg || msg === '' }}>
+            <Btn attrBtn={{ color: 'primary', className: 'h-100 ms-2' ,  onClick: () => sendMsg(), disabled: !msg || msg === '' }}>
               {Send}
             </Btn>
           </InputGroup>

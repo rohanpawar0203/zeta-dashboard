@@ -1,12 +1,16 @@
 import React, { Fragment, useContext } from 'react';
 import { Media } from 'reactstrap';
 import ChatAppContext from '../../../_helper/chat-app/index';
-import { Image, LI, UL } from '../../../AbstractElements';
+import { Btn, Image, LI, UL } from '../../../AbstractElements';
 import UserProfile from '../../../assets/images/user/userProfile.png'
+import appStore from '../Client/AppStore';
+import { envConversationToServer } from '../Client/wss';
 
 
 const ChatHeader = () => {
   const { liveUser } = useContext(ChatAppContext);
+  const {userData} = appStore();
+
   return (
     <Fragment>
       {liveUser && (
@@ -16,6 +20,7 @@ const ChatHeader = () => {
             className: 'rounded-circle', src: `${UserProfile}`, alt: ''
           }} />
         <Media body>
+          <div className="w-100 d-flex justify-content-between">
           <div className="about">
             <div className="name f-4">
               {liveUser ? liveUser.phoneNumber : ''}
@@ -25,6 +30,8 @@ const ChatHeader = () => {
             </div>
             {/* <div className="status digits">{selectedUserr ? (new Date(selectedUserr.updatedAt)).toLocaleString() : '5 May, 5:30 PM'}
             </div> */}
+          </div>
+          <Btn attrBtn={{className: 'btn-danger', onclick: () => {envConversationToServer(userData.userId ? userData.userId : userData._id)}}}>{'End Conversation'}</Btn>
           </div>
         </Media>
       </Media>
