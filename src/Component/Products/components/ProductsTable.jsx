@@ -109,7 +109,7 @@ const ProductsTable = () => {
         <Spinner attrSpinner={{ className: 'loader-3' }} /> 
         </div> : 
         products.length > 0 ?
-          <div className="table-responsive">
+          <div className="h-100 table-responsive">
             <Table>
               <thead>
                 <tr className='table-primary'>

@@ -135,11 +135,19 @@ const AgentLogin = ({ selected }) => {
             <InputGroupText>
               <i className="icon-lock"></i>
             </InputGroupText>
-            <Input
+            <input
               className="form-control"
               type={togglePassword ? "text" : "password"}
               onChange={(e) => {
                 setPassword(e.target.value);
+              }}
+              onKeyPress={(e) => {
+                if(e.key === 'Enter'){
+                  formValidate();
+                  if (!isErrors.current) {
+                    userLogin();
+                  }
+                }
               }}
               placeholder="Enter Password"
               required={true}
@@ -167,7 +175,7 @@ const AgentLogin = ({ selected }) => {
                     formValidate();
                     if (!isErrors.current) {
                       userLogin();
-                    }
+                    } 
                   },
                 }}
               >

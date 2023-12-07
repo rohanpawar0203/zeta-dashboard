@@ -59,9 +59,7 @@ export const connectWithSocketIOServer = () => {
 
   socket.on("message-recieved", (data) => { 
     appStore.getState().setShowTyping(false);
-   console.log("message-recieved", data);
     let newMessage = JSON.parse(data);
-    console.log('liveConversation ', liveConversation);
     const newArray = appStore.getState().liveConversation.map((el) => {
       if (el.chatSessionId === newMessage.roomId) {
         el.chat = [
@@ -75,9 +73,7 @@ export const connectWithSocketIOServer = () => {
     if (newMessage.identity === "BOT" || newMessage.identity === "AGENT") {
       appStore.getState().messageType(newMessage);
     }
-    console.log("message-recieved newArray", newArray);
     appStore.getState().setLiveConversation(newArray.reverse());
-    console.log("get liveConversation", liveConversation);
   });
 
   socket.on("disconnect", function () {
@@ -89,7 +85,6 @@ export const connectWithSocketIOServer = () => {
   });
   socket.on("user-wants-to-chat-agent", function (data) {
     // let roomId = JSON.parse(data);
-    console.log('user want to talk with agent');
     toast.success("New Live Chat for Agent !");
     getLiveRooms();
   });
@@ -165,9 +160,15 @@ export const envConversationToServer = async (roomId) => {
   const response = await axios.post(`${serverApi}/endConversation`, {
     roomId: roomId,
   });
+  if(response.status === '200' || response.status === 200){
+    getLiveRooms();
+    appStore.getState().setViewConversation({});
+    toast.success('Conversation got closed')
+  }
 };
 
 const setLiveConversations = async () => {
+  appStore.getState().setConversation([]);
   const liveConversationNewEntry = appStore.getState().liveConversationNewEntry;
   const conversation = appStore.getState().conversation;
   const userData = appStore.getState().userData;
@@ -181,8 +182,6 @@ const setLiveConversations = async () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('liveConversationNewEntry  ', liveConversationNewEntry);
-        console.log('liveConversationNewEntry resp.data   ', resp.data);
         const filterArray = resp.data.filter((el) => {
           let flag = false;
           liveConversationNewEntry.forEach((element) => {
@@ -194,27 +193,27 @@ const setLiveConversations = async () => {
             return el;
           }
         });
-        console.log('filterArray first', filterArray)
         appStore.getState().setLiveConversation(filterArray.reverse());
-        console.log('setLiveConversations 1', appStore.getState().liveConversation);
         appStore.getState().setConversation(resp.data);
       } catch (error) {
         console.log("Error", error);
       }
-    } else {
-      const filterArray = conversation.filter((el) => {
-        let flag = false;
-        liveConversationNewEntry.forEach((element) => {
-          if (element.roomId === el.chatSessionId) {
-            flag = true;
-          }
-        });
-        if (flag) {
-          return el;
-        }
-      });
-      appStore.getState().setLiveConversation(filterArray.reverse());
-      console.log('setLiveConversations 2', appStore.getState().liveConversation);
-    }
+    }   // comment reason: for fetching latest live conversation
+  //    else {
+  //     console.log('conversation length > 0', conversation);
+  //     const filterArray = conversation.filter((el) => {
+  //       let flag = false;
+  //       liveConversationNewEntry.forEach((element) => {
+  //         if (element.roomId === el.chatSessionId) {
+  //           flag = true;
+  //         }
+  //       });
+  //       if (flag) {
+  //         return el;
+  //       }
+  //     });
+  //     appStore.getState().setLiveConversation(filterArray.reverse());
+  //     console.log('setLiveConversations 2', appStore.getState().liveConversation);
+  //   }
   }
 };

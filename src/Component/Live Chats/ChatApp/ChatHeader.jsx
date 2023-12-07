@@ -7,8 +7,8 @@ import appStore from '../Client/AppStore';
 import { envConversationToServer } from '../Client/wss';
 
 
-const ChatHeader = () => {
-  const { liveUser } = useContext(ChatAppContext);
+const ChatHeader = ({viewConversation}) => {
+  const { liveUser, setliveUser} = useContext(ChatAppContext);
   const {userData} = appStore();
 
   return (
@@ -31,7 +31,11 @@ const ChatHeader = () => {
             {/* <div className="status digits">{selectedUserr ? (new Date(selectedUserr.updatedAt)).toLocaleString() : '5 May, 5:30 PM'}
             </div> */}
           </div>
-          <Btn attrBtn={{className: 'btn-danger', onclick: () => {envConversationToServer(userData.userId ? userData.userId : userData._id)}}}>{'End Conversation'}</Btn>
+          <Btn attrBtn={{className: 'btn-danger', onClick: () => {
+            envConversationToServer(viewConversation?.chatSessionId);
+            setTimeout(()=> {setliveUser(null)}, 1000)
+            }}}
+            >{'End Conversation'}</Btn>
           </div>
         </Media>
       </Media>

@@ -17,7 +17,7 @@ const Chatting = ({viewConversation,showKeyboard, setViewConversation}) => {
         <Col className="chat-right-aside">
           <div className="chat">
             {liveUser ? <>
-              <ChatHeader />
+              <ChatHeader viewConversation={viewConversation}/>
             <ChatMessage viewConversation={viewConversation}
               showKeyboard={showKeyboard}
               setViewConversation={setViewConversation}/>

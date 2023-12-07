@@ -317,6 +317,14 @@ const SignupTab = ({ selected }) => {
                   className="form-control"
                   type="select"
                   onChange={(e) => handleFormChange(e)}
+                  onKeyDown={(e) => {
+                    if(e.key === 'Enter'){
+                      formValidate();
+                    if (!isErrors.current) {
+                      userSignup();
+                    }
+                    }
+                  }}
                   placeholder="Plan ID"
                   required=""
                 >

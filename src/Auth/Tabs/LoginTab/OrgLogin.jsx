@@ -141,6 +141,14 @@ const OrgLogin = ({ selected }) => {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
+              onKeyPress={(e) => {
+                if(e.key === 'Enter'){
+                  formValidate();
+                  if (!isErrors.current) {
+                    userLogin();
+                  }
+                }
+              }}
               placeholder="Enter Password"
               required={true}
             />

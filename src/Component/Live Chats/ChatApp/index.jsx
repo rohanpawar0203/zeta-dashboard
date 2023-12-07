@@ -9,8 +9,7 @@ import appStore from '../Client/AppStore';
 
 
 const ChatAppContain = () => {
-  const { liveConversation, isConnected, setCurrentLocationPathName } = appStore();
-  const [viewConversation, setViewConversation] = useState("");
+  const { liveConversation, isConnected, setCurrentLocationPathName, viewConversation, setViewConversation} = appStore();
   const [error, setError] = useState(false);
 
   const checkValid = async (el) => {
@@ -18,6 +17,7 @@ const ChatAppContain = () => {
       const resp = await getRoomExists(el.chatSessionId);
       if (resp.roomExists) {
         setViewConversation(el);
+        console.log('viewConversation ', el);
       } else {
         setError(true);
       }
@@ -41,7 +41,7 @@ const ChatAppContain = () => {
   }, []);
 
   useEffect(() => {
-    setViewConversation("");
+    setViewConversation({});
   }, [isConnected]);
   return (
     <Fragment>

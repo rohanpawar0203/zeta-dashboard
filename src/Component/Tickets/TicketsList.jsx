@@ -106,7 +106,8 @@ const TicketsList = ({setMode}) => {
           loading ? 
         <div className="loader-box">
         <Spinner attrSpinner={{ className: 'loader-3' }} /> 
-        </div> : 
+        </div> :  
+        products.length > 0 ?
           <div className="h-100 table-responsive">
             <Table>
               <thead>
@@ -133,6 +134,10 @@ const TicketsList = ({setMode}) => {
               </tbody>
               </Table> 
             </div> 
+            :
+            <div className="h-75 w-100 d-flex flex-column justify-content-center align-items-center gap-2">
+            <H6 className='fw-bolder'>{'No Tickets Exist'}</H6>
+           </div>
              }
             </div>
        </Card>
