@@ -24,6 +24,7 @@ import SignupWith from "./SignupWith";
 import appStore from "../../../Component/Live Chats/Client/AppStore";
 import axios from "axios";
 import { PlanDetails } from "../../../api";
+const pattern = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}([\/?].*)?$/;
 
 const SignupTab = ({ selected }) => {
   const [userData, setUserData] = useState({
@@ -122,11 +123,7 @@ const SignupTab = ({ selected }) => {
     }
     if (!userData?.websiteLink) {
       errorsObj = { ...errorsObj, websiteLink: "Company Website is required!" };
-    } else if (
-      !/^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/g.test(
-        userData?.websiteLink
-      )
-    ) {
+    } else if (!pattern.test(userData?.websiteLink)) {
       errorsObj = { ...errorsObj, websiteLink: "Invalid website link!" };
     }
     if (Object.values(errorsObj).length > 0) {
