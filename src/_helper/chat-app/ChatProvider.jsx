@@ -12,7 +12,7 @@ export const ChatProvider = (props) => {
   const [selectedUserr, setSelectedUser] = useState();
   const [liveUser, setliveUser] = useState();
   const [sidebarToggle, setSidebarToggle] = useState(false);
-  const userData = AppStore();
+  const {userData} = AppStore();
   const token = sessionStorage.getItem('token');
   const [appStore, setappStore] = useState({
   isConnected: false,

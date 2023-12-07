@@ -57,15 +57,16 @@ export const connectWithSocketIOServer = () => {
     // console.log("Data disconnect", data);
   });
 
-  socket.on("message-recieved", (data) => { 
+  socket.on("message-recieved", (data) => {
+    console.log('message-recieved', data);
     appStore.getState().setShowTyping(false);
     let newMessage = JSON.parse(data);
     const newArray = appStore.getState().liveConversation.map((el) => {
-      if (el.chatSessionId === newMessage.roomId) {
+      if (el.chatSessionId === newMessage.roomId && newMessage?.identity === 'USER') {
         el.chat = [
           ...el.chat,
-          { time: newMessage.time, message: newMessage.message, from: "USER" },
-        ];
+          { time: newMessage.time, message: newMessage.message, from: newMessage?.identity },
+        ];  
       }
       return el;
     });
@@ -85,6 +86,7 @@ export const connectWithSocketIOServer = () => {
   });
   socket.on("user-wants-to-chat-agent", function (data) {
     // let roomId = JSON.parse(data);
+    console.log('user want to chat with agent');
     toast.success("New Live Chat for Agent !");
     getLiveRooms();
   });
@@ -199,21 +201,21 @@ const setLiveConversations = async () => {
         console.log("Error", error);
       }
     }   // comment reason: for fetching latest live conversation
-  //    else {
-  //     console.log('conversation length > 0', conversation);
-  //     const filterArray = conversation.filter((el) => {
-  //       let flag = false;
-  //       liveConversationNewEntry.forEach((element) => {
-  //         if (element.roomId === el.chatSessionId) {
-  //           flag = true;
-  //         }
-  //       });
-  //       if (flag) {
-  //         return el;
-  //       }
-  //     });
-  //     appStore.getState().setLiveConversation(filterArray.reverse());
-  //     console.log('setLiveConversations 2', appStore.getState().liveConversation);
-  //   }
+    //  else {
+    //   console.log('conversation length > 0', conversation);
+    //   const filterArray = conversation.filter((el) => {
+    //     let flag = false;
+    //     liveConversationNewEntry.forEach((element) => {
+    //       if (element.roomId === el.chatSessionId) {
+    //         flag = true;
+    //       }
+    //     });
+    //     if (flag) {
+    //       return el;
+    //     }
+    //   });
+    //   appStore.getState().setLiveConversation(filterArray.reverse());
+    //   console.log('setLiveConversations 2', appStore.getState().liveConversation);
+    // }
   }
 };
