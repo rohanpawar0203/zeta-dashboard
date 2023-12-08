@@ -4,6 +4,8 @@ import { Image, LI, UL } from '../../../AbstractElements';
 import start_conversion from '../../../assets/images/start-conversion.jpg';
 import  UserProfile  from '../../../assets/images/user/userProfile.png';
 import moment from 'moment-timezone';
+import customerService from '../../../assets/images/dashboard/icons8-customer-support-100.png'
+
 
 const ChatMessage = () => {
   // const chatContainerRef = useRef();
@@ -30,16 +32,16 @@ const ChatMessage = () => {
               return (
                 <UL attrUL={{ className: 'simple-list' }} key={index}>
                   <LI attrLI={{ className: 'clearfix' }}>
-                    <div style={{backgroundColor:`${item?.from !== 'BOT' ? '#EEEEEE' : '#64FFDA' }`, color: 'black'}} className={`message my-message  ${item?.from !== "BOT"
+                  <div style={{backgroundColor:`${item?.from === 'BOT' ? '#64FFDA' : item?.from === 'USER' ? '#FAFAFA' : '#E0F7FA' }`, color: 'black'}} className={`message my-message  ${item?.from === "USER"
                       ? '' : 'pull-right other-message'}`}>
-                      <Image attrImage={{
-                        src: `${item?.from !== 'BOT' ? UserProfile : botImgSrc }`,
-                        className: `rounded-circle ${item?.from !== "BOT"
+                     <Image attrImage={{
+                        src: `${item?.from === 'BOT' ? botImgSrc : item?.from === 'AGENT' ? customerService :  UserProfile  }`,
+                         className: `rounded-circle ${item?.from === "USER"
                           ? 'float-start ' : 'float-end '}chat-user-img img-30`, alt: ''
                       }} />
                       < div className="message-data text-end">
                         <span className="message-data-time">
-                        {`${item?.from}`}   {getLocaleTime(item?.time)}
+                        {`${item?.from  }`}   {getLocaleTime(item.time)}
                         </span>
                       </div>
                       {`${item?.message}`}

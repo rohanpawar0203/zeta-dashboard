@@ -62,7 +62,7 @@ export const connectWithSocketIOServer = () => {
     appStore.getState().setShowTyping(false);
     let newMessage = JSON.parse(data);
     const newArray = appStore.getState().liveConversation.map((el) => {
-      if (el.chatSessionId === newMessage.roomId && newMessage?.identity === 'USER') {
+      if (el.chatSessionId === newMessage.roomId) {
         el.chat = [
           ...el.chat,
           { time: newMessage.time, message: newMessage.message, from: newMessage?.identity },
