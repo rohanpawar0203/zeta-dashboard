@@ -32,10 +32,6 @@ function calculateTimePassed(timestamp) {
 var activeChat = 0;
 if (liveUser != null) activeChat = liveUser._id;
 
-useEffect(() => {
-  console.log('liveConversation ', liveConversation)
-}, [liveConversation])
-
   return (
     <Fragment>
       <div className="chat-box">

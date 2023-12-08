@@ -35,7 +35,7 @@ const ChatMessage = ({viewConversation,showKeyboard}) => {
   useEffect(() => {
     if (showKeyboard === true) {
       toast.success("Live chat connected!");
-      console.log("Live chat connected!")
+      // console.log("Live chat connected!")
       joinSession(viewConversation.roomId);
     }
   }, []);

@@ -58,7 +58,7 @@ export const connectWithSocketIOServer = () => {
   });
 
   socket.on("message-recieved", (data) => {
-    console.log('message-recieved', data);
+    // console.log('message-recieved', data);
     appStore.getState().setShowTyping(false);
     let newMessage = JSON.parse(data);
     const newArray = appStore.getState().liveConversation.map((el) => {
@@ -86,7 +86,7 @@ export const connectWithSocketIOServer = () => {
   });
   socket.on("user-wants-to-chat-agent", function (data) {
     // let roomId = JSON.parse(data);
-    console.log('user want to chat with agent');
+    // console.log('user want to chat with agent');
     toast.success("New Live Chat for Agent !");
     getLiveRooms();
   });

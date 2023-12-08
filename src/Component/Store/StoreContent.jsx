@@ -79,7 +79,7 @@ const StoreContent = () => {
           setTimeout(async () => {
             await updateUserDetails(userId)
             redirectToBotComponent()
-           }, 2000)
+           }, 1000)
         } 
           else {
           setSubmitLoader(false);
@@ -105,7 +105,7 @@ const StoreContent = () => {
           setTimeout(async () => {
             await updateUserDetails(userId)
             redirectToBotComponent()
-           }, 2000)
+           }, 1000)
         } else {
           setSubmitLoader(false);
           toast.error(response.message);
@@ -140,7 +140,7 @@ const StoreContent = () => {
           setTimeout(async () => {
             await updateUserDetails(userId)
             redirectToBotComponent()
-           }, 2000)
+           }, 1000)
         } else {
           setSubmitLoader(false);
           toast.error(response.message);
@@ -165,7 +165,7 @@ const StoreContent = () => {
           setTimeout(async () => {
            await updateUserDetails(userId)
            redirectToBotComponent()
-          }, 2000)
+          }, 1000)
         } else {
           setSubmitLoader(false);
           toast.error(response.message);
@@ -180,7 +180,7 @@ const StoreContent = () => {
   const redirectToBotComponent = () => {
     setTimeout(() => {
       history(`${process.env.PUBLIC_URL}/bots`);
-    }, 4000)
+    }, 1000)
   }
 
   const updateUserDetails = async(userId) => {
