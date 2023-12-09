@@ -9,7 +9,7 @@
   min-height: 100vh;
   display: flex;
   align-items: start;
-  justify-content: center;
+  // justify-content: center;
   margin: 0 auto;
   background-color: rgba($primary-color, 0.1) ;
   background-position: center;
@@ -32,8 +32,8 @@
     }
   }
   .login-main1 {
-    width: 575px;
-    padding: 20px 40px;
+    width: 35vw;
+    padding: 20px;
     height: 600px;
     border-radius: 10px;
     box-shadow: 0 0 37px rgba(8, 21, 66, 0.05);
@@ -189,12 +189,13 @@
     }
   }
 }
+
 .login-card1{
   margin: 0 auto;
   padding: 30px 12px;
   .login-form{
-    padding: 30px;
-    width: 450px;
+    // padding: 30px;
+    // width: 450px;
     background-color: $white;
     justify-content: center;
     margin-left: auto;
@@ -381,6 +382,16 @@
     }
   }
 }
+@media (max-width: 1000px) {
+  .login-card .login-main1{
+    width: 50vw;
+    padding: 30px;
+  }
+  .login-form {
+    width: 100%;
+    padding: 5px;
+  }
+}
 @media (max-width: 575px) {
   .login-form {
     .form-group {
@@ -403,11 +414,16 @@
       }
     }
   }
+  .login-card .login-main1{
+    width: 90vw;
+    padding: 15px;
+  }
   .login-form {
     width: 100%;
-    padding: 20px;
+    padding: 5px;
   }
 }
+
 /**==========================
     58. Authentication CSS Ends
 ==========================**/

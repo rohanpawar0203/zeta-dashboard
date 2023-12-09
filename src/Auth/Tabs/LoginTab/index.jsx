@@ -7,7 +7,7 @@ import {
   InputGroupText,
   Label,
 } from "reactstrap";
-import { Btn, H5, UL, Alerts } from "../../../AbstractElements";
+import { Btn, H5, UL, Alerts, P } from "../../../AbstractElements";
 import { Card, CardBody, Col, Media, Container, Row, CardHeader, Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import {
   EmailAddress,
@@ -58,17 +58,24 @@ const LoginTab = ({ selected }) => {
           </Nav>
          </div>
           <TabContent activeTab={pillTab} className="position-relative">
-              <TabPane className="fade show h-100" tabId="1">
+              <TabPane className="fade show vh-50" tabId="1">
               <OrgLogin/>
               <SignInWith />
               </TabPane>
-              <TabPane tabId="2" className="vh-75">
+              <TabPane tabId="2" className="vh-50">
               <AgentLogin/>
               <SignInWith />
                </TabPane>
+                <CopyRight />
                </TabContent>
     </Fragment>
   );
 };
+
+export const CopyRight = () => {
+  return (
+    <P attrPara={{ className: 'mb-0'}}>Copyright 2023 © Ulai.in  </P>
+  )
+}
 
 export default LoginTab;

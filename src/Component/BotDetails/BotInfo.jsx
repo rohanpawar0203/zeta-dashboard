@@ -79,7 +79,7 @@ const BotInfoContent = ({boatId}) => {
         <Row>   
       <Col sm="12" xl="6 xl-100 box-col-12">
       <Card className="mt-2">
-        <div style={{height: '90vh'}}>
+        <div>
         <CardBody>
           <Nav className="nav-pills">
             <div className="w-100  d-flex justify-content-center align-items-center">

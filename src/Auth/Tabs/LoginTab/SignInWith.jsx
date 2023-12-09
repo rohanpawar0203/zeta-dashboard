@@ -12,13 +12,6 @@ const SignInWith = () => {
                     <ul>Create New One</ul>
                 </Link>
             </P>
-            {/* <Row>    */}
-             <div className='w-100 h-100 d-flex align-items-end'>
-             <Col md='12' className="footer-copyright text-center positi">
-              <P attrPara={{ className: 'mb-0' }}>Copyright 2023 © Ulai.in  </P>
-            </Col>
-             </div>
-          {/* </Row>     */}
         </Fragment>
     );
 };
