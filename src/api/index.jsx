@@ -51,3 +51,4 @@ export const DeleteQuestionAPI = `${process.env.REACT_APP_API_BASE_URL}/question
 export const PlanDetails = `${process.env.REACT_APP_API_BASE_URL}/plans/`;
 export const User = `${process.env.REACT_APP_API_BASE_URL}/users`;
 export const UsersAPI = `${process.env.REACT_APP_API_BASE_URL}/users`;
+export const FAQFilesAPI = `${process.env.REACT_APP_API_FILE_SERVER}/uploadClientProductCsvs`;

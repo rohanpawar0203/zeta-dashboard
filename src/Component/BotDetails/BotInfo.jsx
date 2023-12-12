@@ -34,6 +34,7 @@ import Customize from "./components/Customize";
 import Share from "./components/Share";
 import ChatBot from "./components/ChatBot";
 import appStore from "../Live Chats/Client/AppStore";
+import Knowledge from "./components/Knowledge";
 
 const BotInfoContent = ({boatId}) => {
   const {setBotDetails} = appStore.getState();
@@ -84,13 +85,14 @@ const BotInfoContent = ({boatId}) => {
           <Nav className="nav-pills">
             <div className="w-100  d-flex justify-content-center align-items-center">
             <div style={{background: 'whitesmoke'}} className="d-flex border border-lightgray p-1 rounded">
-            <NavItem style={{cusror: 'pointer'}}>
+            <NavItem style={{cursor: 'pointer'}}>
               <NavLink  className={pillTab === '1' ? 'active cursor-pointer' : 'cursor-pointer'} onClick={() => setpillTab('1')}>{"Settings"}</NavLink>
             </NavItem>
-            <NavItem >
+            <NavItem style={{cursor: 'pointer'}}>
               <NavLink  className={pillTab === '2' ? 'active cursor-pointer' : 'cursor-pointer'} onClick={() => setpillTab('2')}>{'Share'}</NavLink>
             </NavItem>
-            <NavItem>
+            <NavItem style={{cursor: 'pointer'}}>
+              <NavLink  className={pillTab === '3' ? 'active cursor-pointer' : 'cursor-pointer'} onClick={() => setpillTab('3')}>{'Knowledge'}</NavLink>
             </NavItem>
             </div>
             </div>
@@ -108,6 +110,9 @@ const BotInfoContent = ({boatId}) => {
               </TabPane>
               <TabPane tabId="2" className="vh-75">
               <Share myBot={myBot}/>
+               </TabPane>
+              <TabPane tabId="3" className="vh-75">
+              <Knowledge/>
                </TabPane>
                </TabContent>
                <ChatBot myBot={myBot} setMyBot={setMyBot}/>
