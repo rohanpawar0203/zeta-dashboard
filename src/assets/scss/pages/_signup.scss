@@ -8,6 +8,10 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  font-size: 13px;
+  line-height: 1.7;
+  letter-spacing: 0.7px;
+  font-weight: 500 !important;
 }
 .signup-card {
     min-height: 100vh;
@@ -72,11 +76,11 @@
             color: $light-text;
           }
         }
-        p {
-          margin-bottom: 25px;
-          font-size: 14px;
-          color: $dark-gray;
-        }
+        // p {
+        //   margin-bottom: 25px;
+        //   font-size: 14px;
+        //   color: $dark-gray;
+        // }
         .login-btn {
           margin-bottom: 10px;
           position: relative;
