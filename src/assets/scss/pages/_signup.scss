@@ -2,6 +2,13 @@
     58. Authentication CSS Start
 ==========================**/
 // login page //
+.copyright-signup{
+  position: absolute;
+  bottom: -10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .signup-card {
     min-height: 100vh;
     display: flex;
@@ -31,7 +38,7 @@
     .signup-main1 {
       width: 75vw;
       height: auto;
-      padding: 40px 40px;
+      padding: 50px 40px;
       border-radius: 10px;
       box-shadow: 0 0 37px rgba(8, 21, 66, 0.05);
       margin: 0 auto;

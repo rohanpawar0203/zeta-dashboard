@@ -5,6 +5,13 @@
 .btn-disabled:hover{
   cursor: not-allowed;
 }
+.copyright-login{
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .login-card {
   min-height: 100vh;
   display: flex;

@@ -9,7 +9,7 @@ import {
   Label,
   Row,
 } from "reactstrap";
-import { Btn, H5, UL } from "../../../AbstractElements";
+import { Btn, H5, P, UL } from "../../../AbstractElements";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import {
@@ -343,7 +343,7 @@ const SignupTab = ({ selected }) => {
             </Row>
            
            
-        <div class="w-100 mt-4 d-flex justify-content-center align-items-center">
+        <div class="w-100 my-4 d-flex justify-content-center align-items-center">
           <button
             onClick={(e) => {
               formValidate();
@@ -360,9 +360,16 @@ const SignupTab = ({ selected }) => {
 
         {/* <FormPassword /> */}
         <SignupWith />
+        <Copyright />
       </Form>
     </Fragment>
   );
 };
+
+const Copyright = () => {
+  return (
+    <P attrPara={{ className: 'my-3 copyright-signup'}}>Copyright 2023 © Ulai.in  </P>
+  )
+}
 
 export default SignupTab;

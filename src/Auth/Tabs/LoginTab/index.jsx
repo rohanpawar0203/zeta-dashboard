@@ -72,9 +72,9 @@ const LoginTab = ({ selected }) => {
   );
 };
 
-export const CopyRight = () => {
+const CopyRight = () => {
   return (
-    <P attrPara={{ className: 'mb-0'}}>Copyright 2023 © Ulai.in  </P>
+    <P attrPara={{ className: 'my-3 copyright-login'}}>Copyright 2023 © Ulai.in  </P>
   )
 }
 
