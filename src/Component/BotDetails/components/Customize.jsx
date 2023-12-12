@@ -14,6 +14,7 @@ import {
   Form,
 } from "reactstrap";
 import { Btn, H5, Image, Spinner } from "../../../AbstractElements";
+import { FaRegEdit } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import BotIcons from "./BotIcons";
 import IconColors from "./IconColors";
@@ -25,6 +26,7 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
    const [botIcons, setbotIcons] = useState(['BiBot', 'BsRobot', 'TbMessageDots', 'BiUser', 'AiOutlineQuestionCircle', 'TfiHeadphoneAlt', 'Ri24HoursLine', 'LuMessagesSquare', 'TfiCommentsSmiley']);
    const botDetilsRef = useRef(myBot);
   //  const [isBotChaged, setisBotChaged] = useState(false);
+  const [companyLogoMode, setCompanyLogoMode] = useState('');
    const colorOptions = [
     "#705CF6",
     "#CC7849",
@@ -163,7 +165,7 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
                     </Col>
                   </Row>
                   <Row>
-                  <Col md="8 mb-3">
+                  <Col md="4 mb-3">
                       <Label htmlFor="validationCustom01">
                         {"Welcome Message"}
                       </Label>
@@ -176,6 +178,37 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
                         onChange={(e) => {handleChange(e)}}
                         required={true}
                       />
+                    </Col>
+                  <Col md="4 mb-3">
+                      {myBot?.companyLogo && !companyLogoMode ? 
+                       <span>
+                        <Label htmlFor="validationCustom01">
+                        {"Company Logo"}
+                      </Label>
+                      <div className="avatar d-flex align-items-center gap-3"><Image attrImage={{ body: true, className: 'img-40 rounded-circle', src: myBot?.companyLogo, alt: '#' }} />
+                      <div className="status status-30"></div>
+                      <FaRegEdit style={{width: '20px', height: '20px', cursor: 'pointer'}} onClick={() => {setCompanyLogoMode('edit')}}/>
+                      </div>
+                       </span>
+                       : 
+                       <span>
+                        <Label htmlFor="validationCustom01">
+                        {"Company Logo"}
+                      </Label>
+                       <input 
+                        className="form-control"
+                        name="companyLogo"
+                        type="file"
+                        accept="image/png, image/jpeg"
+                        placeholder="Company Logo"
+                        onChange={(e) => {
+                          console.log('file ', e.target.files);
+                        }}
+                        required={true}
+                      />
+                       </span>
+                      }
+                      
                     </Col>
                   </Row>
                   <Row>

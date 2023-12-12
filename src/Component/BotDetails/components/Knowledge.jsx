@@ -68,7 +68,9 @@ useEffect(() => {
                   < AddCSVForm setMode={setMode} mode={mode} loading={loading} setLoading={setLoading} faqList={faqList} setFaqList={setFaqList}/> :
                   (faqList && faqList.length > 0) ? 
                   <CSVFileInfoList faqList={faqList} setFaqList={setFaqList} setLoading={setLoading}/> :
-                  ''
+                  <div className="w-100 h-50vh d-flex justify-content-center align-items-center">
+                  <H6 className='my-2 mx-0'>No Files Uploaded</H6>
+                  </div>
                   }
                  </div>
                 </Fragment>
