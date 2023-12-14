@@ -15,6 +15,7 @@ export const getUserDetails = async(id) => {
                   },
             });
             if(result?.data){
+                sessionStorage.setItem('currentUser', JSON.stringify(result?.data));
                 resolve(result?.data);
             }
         } catch (error) {

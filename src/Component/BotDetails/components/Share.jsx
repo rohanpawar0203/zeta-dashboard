@@ -35,14 +35,14 @@ const [selectedTab, setselectedTab] = useState('Embed the bot')
               <CardBody className="p-0 m-0 pt-2">
                 <Col sm='12' md='8'>
                 <Fragment>
-                 <div style={{background: 'whitesmoke', borderRadius:'8px', boxSizing: 'border-box'}} className="d-flex justify-content-evenly align-items-center p-2">
+                 <div style={{background: 'whitesmoke', borderRadius:'8px', boxSizing: 'border-box'}} className="d-flex flex-wrap justify-content-evenly align-items-center p-2">
                  {shareTabs.map((ele, i) => (
                   <div onClick={() => {
                     if(ele === 'Embed the bot' 
                      || ele === 'Integrations'){
                       setselectedTab(ele)
                     }
-                  }} key={i} className="d-flex justify-content-center align-items-center p-2 fw-bolder" style={{fontSize: '16px', boxSizing: 'border-box', width: '150px', ...(selectedTab === ele && {background: 'white', color: 'blue',  borderRadius:'6px', padding: '1rem 2rem'})}}>
+                  }} key={i} className="d-flex justify-content-center align-items-center p-2 fw-bolder" style={{fontSize: '16px', cursor: 'pointer' , boxSizing: 'border-box', width: '150px', ...(selectedTab === ele && {background: 'white', color: 'blue',  borderRadius:'6px', padding: '1rem 2rem'})}}>
                     {ele}
                   </div>
                  ))}

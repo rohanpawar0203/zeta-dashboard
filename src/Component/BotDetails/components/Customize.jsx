@@ -15,18 +15,26 @@ import {
 } from "reactstrap";
 import { Btn, H5, Image, Spinner } from "../../../AbstractElements";
 import { FaRegEdit } from "react-icons/fa";
+import { MdCancel } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import BotIcons from "./BotIcons";
 import IconColors from "./IconColors";
 import { CreateNewProject } from "../../../Constant";
-import { BotCreate } from "../../../api";
+import { BotCreate, FAQFilesAPI, FileServerAPI, UploadCompanyLogoAPI } from "../../../api";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { getUserDetails } from "../../../Services/UsersServices";
+
+const userData = JSON.parse(sessionStorage.getItem('currentUser'));
+const token = sessionStorage.getItem('token');
 
 const Customize = ({ myBot, setMyBot, setLoading }) => {
    const [botIcons, setbotIcons] = useState(['BiBot', 'BsRobot', 'TbMessageDots', 'BiUser', 'AiOutlineQuestionCircle', 'TfiHeadphoneAlt', 'Ri24HoursLine', 'LuMessagesSquare', 'TfiCommentsSmiley']);
    const botDetilsRef = useRef(myBot);
+   const [companyLogoFie, setcompanyLogoFie] = useState('');
+   const [companyLogoURL, setcompanyLogoURL] = useState(myBot?.companyLogo)
   //  const [isBotChaged, setisBotChaged] = useState(false);
-  const [companyLogoMode, setCompanyLogoMode] = useState('');
+  const [companyLogoMode, setCompanyLogoMode] = useState('logo');
    const colorOptions = [
     "#705CF6",
     "#CC7849",
@@ -39,8 +47,7 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
     "#E4849B",
   ];
 
-  const updateBotInfo = async (e) => {
-    e.preventDefault();
+  const updateBotInfo = async () => {
     setLoading(true);
     try {
       const token = sessionStorage.getItem("token");
@@ -72,6 +79,50 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
       [name]: value
     }));
   }
+
+  const uploadCompanyLogo = async () => {
+    try {
+     const formData = new FormData();
+     formData.append('companyName', userData?.companyName.replaceAll(" ","-"));
+     formData.append('', companyLogoFie);
+      const res = await axios.post( `${UploadCompanyLogoAPI}`, formData, {
+      headers: {
+    'Content-Type': 'multipart/form-data',
+    },
+    })
+    const responseUrl = await res?.data?.filenames[0];
+     if(responseUrl){
+      setcompanyLogoURL(responseUrl);
+      getUserDetails(userData?._id);
+      return responseUrl;
+     }
+    } catch (error) {
+      toast.error('File Upload Failed');
+      console.log('csv upload error ', error);
+     }
+  };
+
+  const handleBotEdit = async(e) => {
+    e.preventDefault();
+  try {
+    if(companyLogoFie){
+      const logoUrl = await uploadCompanyLogo();
+      console.log('logoUrl ', logoUrl);
+      if(logoUrl){
+        let urlString = FileServerAPI+logoUrl;
+        myBot.companyLogo = urlString;
+      }
+    }
+    updateBotInfo();
+  } catch (error) {
+    console.log('Error at bot update ', error);
+  }
+  }
+
+  useEffect(() => {
+    console.log('myBot?.companyLogo ', myBot?.companyLogo);
+  }, [])
+  
   
   return (
     <Fragment>
@@ -87,7 +138,7 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
                 <Form
                   className="needs-validation"
                   noValidate=""
-                  onSubmit={updateBotInfo}
+                  onSubmit={handleBotEdit}
                 >
                   <Row>
                     <Col md="4 mb-3">
@@ -180,12 +231,12 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
                       />
                     </Col>
                   <Col md="4 mb-3">
-                      {myBot?.companyLogo && !companyLogoMode ? 
+                      {myBot?.companyLogo && companyLogoMode==='logo' ? 
                        <span>
                         <Label htmlFor="validationCustom01">
                         {"Company Logo"}
                       </Label>
-                      <div className="avatar d-flex align-items-center gap-3"><Image attrImage={{ body: true, className: 'img-40 rounded-circle', src: myBot?.companyLogo, alt: '#' }} />
+                      <div className="avatar d-flex align-items-center gap-3"><Image attrImage={{ body: true, className: 'img-50 rounded-circle border border-2 border-info', src: companyLogoURL, alt: '#' }} />
                       <div className="status status-30"></div>
                       <FaRegEdit style={{width: '20px', height: '20px', cursor: 'pointer'}} onClick={() => {setCompanyLogoMode('edit')}}/>
                       </div>
@@ -195,17 +246,32 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
                         <Label htmlFor="validationCustom01">
                         {"Company Logo"}
                       </Label>
-                       <input 
+                        <div className="d-flex align-items-center gap-2">
+                        <input 
                         className="form-control"
                         name="companyLogo"
                         type="file"
                         accept="image/png, image/jpeg"
                         placeholder="Company Logo"
                         onChange={(e) => {
-                          console.log('file ', e.target.files);
+                          console.log('file info ', e.target.files[0]);
+                         if(e.target.files && e.target.files[0]){
+                          var reader = new FileReader();
+                          reader.onload = function(evnt){
+                            setcompanyLogoURL(evnt.target.result);
+                            setCompanyLogoMode('logo')
+                          }
+                         reader.readAsDataURL(e.target.files[0]);
+                         }
+                          setcompanyLogoFie(e.target.files[0])
                         }}
                         required={true}
                       />
+                       <MdCancel style={{width: '20px', height: '20px', cursor: 'pointer'}} onClick={() => {
+                        setcompanyLogoURL(myBot?.companyLogo);
+                        setCompanyLogoMode('logo')
+                       }}/>
+                        </div>
                        </span>
                       }
                       
