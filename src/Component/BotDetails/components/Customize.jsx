@@ -83,9 +83,9 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
   const uploadCompanyLogo = async () => {
     try {
      const formData = new FormData();
-     formData.append('companyName', userData?.companyName?.replaceAll(" ", "_"));
-     formData.append('', {...companyLogoFile, name: companyLogoFile?.name?.replaceAll(" ", "_")});
-     console.log('companyLogoFile ', companyLogoFile);
+     formData.append('companyName', userData?.companyName?.replaceAll(" ", "-"));
+     const modifiedFileName = companyLogoFile.name.replaceAll(" ", "-");
+     formData.append('companyLogo', companyLogoFile, modifiedFileName);
       const res = await axios.post( `${UploadCompanyLogoAPI}`, formData, {
       headers: {
     'Content-Type': 'multipart/form-data',
@@ -109,9 +109,9 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
   try {
     if(companyLogoFile){
       const logoUrl = await uploadCompanyLogo();
-      console.log('logoUrl ', logoUrl);
       if(logoUrl){
-        let urlString = FileServerAPI+logoUrl;
+        let urlString = FileServerAPI+'/'+logoUrl;
+        console.log('urlString ', urlString);
         myBot.companyLogo = urlString;
       }
     }
@@ -265,7 +265,7 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
                           }
                          reader.readAsDataURL(e.target.files[0]);
                          }
-                          setcompanyLogoFile(e.target.files[0])
+                          setcompanyLogoFile(e.target.files[0]);
                         }}
                         required={true}
                       />
