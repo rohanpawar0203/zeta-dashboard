@@ -93,7 +93,6 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
     })
     const responseUrl = await res?.data?.filenames[0];
      if(responseUrl){
-      console.log('responseUrl ', responseUrl);
       setcompanyLogoURL(responseUrl);
       getUserDetails(userData?._id);
       return responseUrl;
@@ -111,7 +110,6 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
       const logoUrl = await uploadCompanyLogo();
       if(logoUrl){
         let urlString = FileServerAPI+'/'+logoUrl;
-        console.log('urlString ', urlString);
         myBot.companyLogo = urlString;
       }
     }
@@ -122,7 +120,7 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
   }
 
   useEffect(() => {
-    console.log('myBot?.companyLogo ', myBot?.companyLogo);
+    // console.log('myBot?.companyLogo ', myBot);
   }, [])
   
   
@@ -238,7 +236,7 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
                         <Label htmlFor="validationCustom01">
                         {"Company Logo"}
                       </Label>
-                      <div className="avatar d-flex align-items-center gap-3"><Image attrImage={{ body: true, className: 'img-100  border border-2 border-info', src: companyLogoURL, alt: '#' }} />
+                      <div className="avatar d-flex align-items-center gap-3"><Image attrImage={{ body: true, className: 'img-100  border border-2 border-info', src: companyLogoURL, alt: '#', style: {objectFit: 'cover'}}} />
                       <div className="status status-30"></div>
                       <FaRegEdit style={{width: '20px', height: '20px', cursor: 'pointer'}} onClick={() => {setCompanyLogoMode('edit')}}/>
                       </div>
@@ -256,7 +254,6 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
                         accept="image/png, image/jpeg"
                         placeholder="Company Logo"
                         onChange={(e) => {
-                          console.log('file info ', e.target.files[0]);
                          if(e.target.files && e.target.files[0]){
                           var reader = new FileReader();
                           reader.onload = function(evnt){
