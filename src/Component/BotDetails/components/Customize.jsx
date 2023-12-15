@@ -28,7 +28,7 @@ import { getUserDetails } from "../../../Services/UsersServices";
 const userData = JSON.parse(sessionStorage.getItem('currentUser'));
 const token = sessionStorage.getItem('token');
 
-const Customize = ({ myBot, setMyBot, setLoading }) => {
+const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
    const [botIcons, setbotIcons] = useState(['BiBot', 'BsRobot', 'TbMessageDots', 'BiUser', 'AiOutlineQuestionCircle', 'TfiHeadphoneAlt', 'Ri24HoursLine', 'LuMessagesSquare', 'TfiCommentsSmiley']);
    const botDetilsRef = useRef(myBot);
    const [companyLogoFile, setcompanyLogoFile] = useState('');
@@ -60,7 +60,9 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
         },
       });
       const responseData = await response.json();
+      console.log('responseData , ', responseData);
       if (response.ok) {
+        fetchBotData(myBot?._id);
         toast.success(responseData.message);
       } else {
         toast.error(responseData.message);
@@ -236,7 +238,7 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
                         <Label htmlFor="validationCustom01">
                         {"Company Logo"}
                       </Label>
-                      <div className="avatar d-flex align-items-center gap-3"><Image attrImage={{ body: true, className: 'img-100  border border-2 border-info', src: companyLogoURL, alt: '#', style: {objectFit: 'cover'}}} />
+                      <div className="avatar d-flex align-items-center gap-3"><Image attrImage={{ body: true, className: 'img-100  border border-2 border-info', src: companyLogoURL, alt: '#', style: {objectFit: 'cover', borderRadius: '6px'}}} />
                       <div className="status status-30"></div>
                       <FaRegEdit style={{width: '20px', height: '20px', cursor: 'pointer'}} onClick={() => {setCompanyLogoMode('edit')}}/>
                       </div>

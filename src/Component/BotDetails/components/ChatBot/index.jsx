@@ -22,7 +22,7 @@ const ChatBot = ({ myBot, setMyBot }) => {
           <div className="d-flex flex-column justify-content-end align-items-end">
             <div className="mb-2">
               {!closeSmallBot && (
-                <SmallBot myBot={myBot} setcloseSmallBot={setcloseSmallBot} setbot={setbot}/>
+                <SmallBot myBot={myBot} setcloseSmallBot={setcloseSmallBot} setbot={setbot} closeSmallBot={closeSmallBot}/>
               )}
             </div>
             <div

@@ -35,16 +35,7 @@ const [shareTabs, setshareTabs] = useState(['Embed the bot', 'Embed Iframe', 'Ge
 const [selectedTab, setselectedTab] = useState('Embed the bot');
 const [loading, setLoading] = useState(false);
 const [mode, setMode] = useState('')
-const [faqList, setFaqList] = useState([]);
-
-useEffect(() => {
-  if(userData?.faqListURL){
-    setFaqList([...userData?.faqListURL.map((ele) => ({
-      ...ele, id: uuid()
-    }))]);
-    console.log('faqList ', faqList);
-  }
-}, [])
+const [faqList, setFaqList] = useState([...userData?.faqListURL]);
 
   return (
     <Fragment>
@@ -68,7 +59,7 @@ useEffect(() => {
                   < AddCSVForm setMode={setMode} mode={mode} loading={loading} setLoading={setLoading} faqList={faqList} setFaqList={setFaqList}/> :
                   (faqList && faqList.length > 0) ? 
                   <CSVFileInfoList faqList={faqList} setFaqList={setFaqList} setLoading={setLoading}/> :
-                  <div className="w-100 h-50vh d-flex justify-content-center align-items-center">
+                  <div className="w-100 h-100 d-flex justify-content-center align-items-center">
                   <H6 className='my-2 mx-0'>No Files Uploaded</H6>
                   </div>
                   }
@@ -101,6 +92,8 @@ const AddCSVForm = ({setMode, mode, setLoading, loading, faqList, setFaqList}) =
      const formData = new FormData();
      formData.append('companyName', userData?.companyName);
      formData.append('', csvFile);
+     console.log('userData ', userData);
+     console.log('formData ', formData);
      uploadCSVFile(formData);
     } else {
       errors.showMessages();
@@ -154,7 +147,7 @@ const AddCSVForm = ({setMode, mode, setLoading, loading, faqList, setFaqList}) =
         },
         body: JSON.stringify({
           ...userData,
-          faqListURL : [...faqList, {fileName: fileName, fileURL: responseUrl}]
+          faqListURL : [...faqList, {fileName: fileName, fileURL: responseUrl, id: uuid()}]
         })
       });
       const responseData = await response.json();
@@ -220,10 +213,10 @@ return (
 const CSVFileInfoList = ({faqList, setFaqList, setLoading}) => {
 
   const handleCSVFileDelete = (id) => {
+    console.log('delete id', id);
     let filteredList = faqList?.filter((item) => (item.id !== id));
-    if(filteredList.length){
-      updateUser(filteredList);
-    }
+    console.log('filteredList', filteredList);
+    updateUser(filteredList);
   }
 
   const updateUser = async (filteredList) => {
@@ -243,9 +236,7 @@ const CSVFileInfoList = ({faqList, setFaqList, setLoading}) => {
       const responseData = await response.json();
       if (response.ok) {
         sessionStorage.setItem("currentUser", JSON.stringify(responseData.updateUser));
-        setFaqList([...responseData?.updateUser?.faqListURL.map((ele) => ({
-          ...ele, id: uuid()
-        }))]);
+        setFaqList([...responseData?.updateUser?.faqListURL]);
         toast.success('File removed successfully');
       } else {
         toast.error(responseData.message);

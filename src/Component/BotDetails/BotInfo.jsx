@@ -42,35 +42,36 @@ const BotInfoContent = ({boatId}) => {
   const [pillTab, setpillTab] = useState('1');
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchBotData = async () => {
-      setLoading(true);
-      try {
-        const token = sessionStorage.getItem("token");
-        const response = await fetch(
-          `${BotCreate}/${boatId}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        const responseData = await response.json();
-        if (response.ok) {
-          setMyBot(responseData);
-          setBotDetails(responseData)
-        } else {
-          toast.error(responseData.message);
+  const fetchBotData = async (boatId) => {
+    setLoading(true);
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await fetch(
+        `${BotCreate}/${boatId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
-      } catch (error) {
-        toast.error(error);
+      );
+
+      const responseData = await response.json();
+      if (response.ok) {
+        setMyBot(responseData);
+        setBotDetails(responseData)
+      } else {
+        toast.error(responseData.message);
       }
-      setLoading(false);
-    };
-    fetchBotData();
+    } catch (error) {
+      toast.error(error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchBotData(boatId);
   }, []);
 
 
@@ -106,7 +107,7 @@ const BotInfoContent = ({boatId}) => {
               <>
               <TabContent activeTab={pillTab} className="position-relative">
               <TabPane className="fade show h-100" tabId="1">
-              <Customize myBot={myBot} setMyBot={setMyBot} setLoading={setLoading}/>
+              <Customize myBot={myBot} setMyBot={setMyBot} setLoading={setLoading} fetchBotData={fetchBotData}/>
               </TabPane>
               <TabPane tabId="2" className="vh-75">
               <Share myBot={myBot}/>

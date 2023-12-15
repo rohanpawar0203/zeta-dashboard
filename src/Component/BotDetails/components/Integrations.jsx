@@ -4,7 +4,6 @@ import FacebookLogin, {
 } from "@greatsumini/react-facebook-login";
 
 const Integrations = () => {
-  let globalObj = window;
   return (
     <div className="d-flex flex-column align-items-left">
     <div className='mb-2'>
@@ -12,7 +11,7 @@ const Integrations = () => {
         <p className="mb-2">Seamlessly integrate and supercharge your Bot</p>
     </div>
     <div className='mb-2'>
-        <h3 className="mt-4 mb-1"> Integrate Whatsapp Business Api</h3>
+         <h3 className="mt-4 mb-1"> Integrate Whatsapp Business Api</h3>
         <p className="mb-2">
         Integrating the WhatsApp Business API can be highly
                     beneficial for businesses, depending on their specific needs
@@ -57,7 +56,7 @@ const Integrations = () => {
                         onProfileSuccess={(response) => {
                           console.log("Get Profile Success!", response);
                         }}
-                      />
+                      /> 
                       {/* <button className='btn btn-primary' onClick={()=> {window?.launchWhatsAppSignup()}}>Facebook Login</button> */}
     </div>
 </div>

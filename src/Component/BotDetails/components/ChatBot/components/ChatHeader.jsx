@@ -13,12 +13,13 @@ const ChatHeader = ({ myBot }) => {
         }}
         className="w-100 d-flex flex-column align-items-center  text-white p-2"
       >
-        <H4 attrH4={{ className: "my-3 fw-bolder" }}>Ulai</H4>
+        <H4 attrH4={{ className: "my-3 fw-bolder" }}>{myBot?.companyName}</H4>
         <img
-          src="https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75"
+          src={myBot?.companyLogo ? myBot?.companyLogo : "https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75" }
           width={"60px"}
           alt={"ulai bot"}
           height={"60px"}
+          style={{borderRadius: '4px', border: '1px solid white'}}
         />
         <H5 attrH5={{ className: "mt-3 mb-2" }}>{myBot.subheading}</H5>
       </div>

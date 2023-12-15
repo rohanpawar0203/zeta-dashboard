@@ -56,6 +56,7 @@ const BigBot = ({ myBot }) => {
 
   useEffect(() => {
     createOrConnectRoom();
+    console.log('myBot ', myBot);
   }, [myBot]);
   
   useEffect(() => {
