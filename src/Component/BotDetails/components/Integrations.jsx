@@ -4,6 +4,7 @@ import FacebookLogin, {
 } from "@greatsumini/react-facebook-login";
 
 const Integrations = () => {
+  let globalObj = window;
   return (
     <div className="d-flex flex-column align-items-left">
     <div className='mb-2'>
@@ -19,12 +20,10 @@ const Integrations = () => {
         </p>
                         <FacebookLogin
                         appId="863075105199057"
-                        autoLoad={false}
+                        autoLoad={true}
                         cssClass="my-facebook-button-class"
                         icon="fa-facebook"
                         fields="name,email,picture"
-                        version="v17.0"
-                        xfbml={true}
                         style={{
                           backgroundColor: "#4267b2",
                           color: "#fff",
@@ -35,6 +34,11 @@ const Integrations = () => {
                           marginTop: "10px ",
                         }}
                         // Make sure this prop is supported
+                        initParams={{
+                          version: 'v18.0',
+                          xfbml: true,
+                          cookie: true,
+                        }}
                         loginOptions={{
                           config_id: "709854517281965",
                           response_type: "code",
@@ -54,6 +58,7 @@ const Integrations = () => {
                           console.log("Get Profile Success!", response);
                         }}
                       />
+                      {/* <button className='btn btn-primary' onClick={()=> {window?.launchWhatsAppSignup()}}>Facebook Login</button> */}
     </div>
 </div>
   )

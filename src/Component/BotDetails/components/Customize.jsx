@@ -31,7 +31,7 @@ const token = sessionStorage.getItem('token');
 const Customize = ({ myBot, setMyBot, setLoading }) => {
    const [botIcons, setbotIcons] = useState(['BiBot', 'BsRobot', 'TbMessageDots', 'BiUser', 'AiOutlineQuestionCircle', 'TfiHeadphoneAlt', 'Ri24HoursLine', 'LuMessagesSquare', 'TfiCommentsSmiley']);
    const botDetilsRef = useRef(myBot);
-   const [companyLogoFie, setcompanyLogoFie] = useState('');
+   const [companyLogoFile, setcompanyLogoFile] = useState('');
    const [companyLogoURL, setcompanyLogoURL] = useState(myBot?.companyLogo)
   //  const [isBotChaged, setisBotChaged] = useState(false);
   const [companyLogoMode, setCompanyLogoMode] = useState('logo');
@@ -83,8 +83,9 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
   const uploadCompanyLogo = async () => {
     try {
      const formData = new FormData();
-     formData.append('companyName', userData?.companyName.replaceAll(" ","-"));
-     formData.append('', companyLogoFie);
+     formData.append('companyName', userData?.companyName?.replaceAll(" ", "_"));
+     formData.append('', {...companyLogoFile, name: companyLogoFile?.name?.replaceAll(" ", "_")});
+     console.log('companyLogoFile ', companyLogoFile);
       const res = await axios.post( `${UploadCompanyLogoAPI}`, formData, {
       headers: {
     'Content-Type': 'multipart/form-data',
@@ -92,6 +93,7 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
     })
     const responseUrl = await res?.data?.filenames[0];
      if(responseUrl){
+      console.log('responseUrl ', responseUrl);
       setcompanyLogoURL(responseUrl);
       getUserDetails(userData?._id);
       return responseUrl;
@@ -105,7 +107,7 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
   const handleBotEdit = async(e) => {
     e.preventDefault();
   try {
-    if(companyLogoFie){
+    if(companyLogoFile){
       const logoUrl = await uploadCompanyLogo();
       console.log('logoUrl ', logoUrl);
       if(logoUrl){
@@ -236,7 +238,7 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
                         <Label htmlFor="validationCustom01">
                         {"Company Logo"}
                       </Label>
-                      <div className="avatar d-flex align-items-center gap-3"><Image attrImage={{ body: true, className: 'img-50 rounded-circle border border-2 border-info', src: companyLogoURL, alt: '#' }} />
+                      <div className="avatar d-flex align-items-center gap-3"><Image attrImage={{ body: true, className: 'img-100  border border-2 border-info', src: companyLogoURL, alt: '#' }} />
                       <div className="status status-30"></div>
                       <FaRegEdit style={{width: '20px', height: '20px', cursor: 'pointer'}} onClick={() => {setCompanyLogoMode('edit')}}/>
                       </div>
@@ -263,7 +265,7 @@ const Customize = ({ myBot, setMyBot, setLoading }) => {
                           }
                          reader.readAsDataURL(e.target.files[0]);
                          }
-                          setcompanyLogoFie(e.target.files[0])
+                          setcompanyLogoFile(e.target.files[0])
                         }}
                         required={true}
                       />
