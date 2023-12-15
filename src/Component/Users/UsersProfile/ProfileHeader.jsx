@@ -35,7 +35,7 @@ const ProfileHeader = () => {
     <Fragment>
       <Container fluid={true}>
       <Row>
-      <Col sm="6">
+      <Col>
         <Card
           className="profile-header bg-image"
           style={{
@@ -91,7 +91,7 @@ const ProfileHeader = () => {
           </div>
         </Card>
         </Col>
-        <Col sm="6">
+        {/* <Col sm="6">
         <Card >
           <Fragment>
       <CardBody>
@@ -142,7 +142,7 @@ const ProfileHeader = () => {
       </CardBody>
     </Fragment>
         </Card>
-      </Col>
+      </Col> */}
       </Row>
       </Container>
     </Fragment>
