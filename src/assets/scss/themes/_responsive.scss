@@ -2154,6 +2154,8 @@
               display: inline-block;
               top: 50%;
               right: 10%;
+              cursor: pointer;
+              color: white;
               position: absolute;
               transform: translate(-50%, -50%);
               font-size: 20px;
@@ -6822,6 +6824,8 @@
   .sidebar-wrapper {
     .back-btn {
       display: none;
+      cursor: pointer;
+      color: white;
     }
   }
 }

@@ -17,7 +17,7 @@ const SidebarIcon = () => {
         <Image attrImage={{ className: 'img-fluid for-light', src: `${ulaiLogo}`, alt: '' }} />
         <Image attrImage={{ className: 'img-fluid for-dark', src: `${ulaiLogo}`, alt: '' }} />
       </a>
-      <div className='back-btn' onClick={() => openCloseSidebar()}><i className='fa fa-angle-left'></i></div>
+      <div className='back-btn' onClick={() => openCloseSidebar()}><i className='fa fa-angle-left' style={{cursor: 'pointer', color: 'white'}}></i></div>
     </div>
   );
 };

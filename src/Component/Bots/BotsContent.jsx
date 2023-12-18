@@ -192,7 +192,13 @@ const BotsContent = () => {
                   <H5 attrH5={{ className: "my-0 ms-2" }}>{myBot.botName}</H5>
                 </div>
                 <div className="d-flex justify-content-between align-items-center p-3">
-                  <button onClick={() => {history(`${process.env.PUBLIC_URL}/bot/${myBot._id}`)}} type="button" className="btn btn-primary me-2 btn-sm">
+                  <button onClick={() => {
+                    if(myBot._id){
+                      history(`${process.env.PUBLIC_URL}/bot/${myBot._id}`);
+                    }else{
+                      getAllBot();
+                    }
+                    }} type="button" className="btn btn-primary me-2 btn-sm">
                     View Bot
                   </button>
                   <Dropdown isOpen={myBot._id === dropdownBotOpen} toggle={() => {toggleDropDownBot((pre) => {
