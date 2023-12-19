@@ -63,7 +63,7 @@ const CreateBotForm = ({modal, title, toggle, getAllBot}) => {
       });
       const responseData = await response.json();
       if (response.ok) {
-        console.log(response.ok);
+        // console.log(response.ok);
         getAllBot && getAllBot();
         setformValues({botName: '', error: ''})
         toast.success(responseData?.message);

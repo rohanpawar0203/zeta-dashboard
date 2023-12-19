@@ -10,7 +10,6 @@ const EditContent = ({
   setContentChoice,
 }) => {
   const { currentQuestion, quiz } = GetQuestionsContextValues;
-  console.log(currentQuestion);
   useEffect(() => {
     setContentChoice({
       ...currentQuestion.choices[0],

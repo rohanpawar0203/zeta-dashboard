@@ -28,14 +28,7 @@ const ChatStatus = ({}) => {
   };
   var activeChat = 0;
   if (selectedUserr != null) activeChat = selectedUserr._id;
-
- 
   
-  useEffect(() => {
-    console.log('memberss ', memberss);
-  }, [memberss]);
-  
-
   return (
     <Fragment>
       <div className="chat-box">

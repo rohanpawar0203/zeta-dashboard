@@ -104,7 +104,6 @@ const ProductFormModal = ({modal, title, toggle, productID, fetchProductData, se
           }
         );
         const response = await res.json();
-        console.log(response);
         setInitialData({
           productId: response?.productId || "",
           productName: response?.productName || "",
@@ -125,8 +124,6 @@ const ProductFormModal = ({modal, title, toggle, productID, fetchProductData, se
         price:  "",
     });
       fetchDetails();
-      console.log('product ', productID);
-      console.log('initialData ', initialData);
     } else {
       setInitialData({
           productId:  "",

@@ -17,7 +17,6 @@ const ChatAppContain = () => {
       const resp = await getRoomExists(el.chatSessionId);
       if (resp.roomExists) {
         setViewConversation(el);
-        console.log('viewConversation ', el);
       } else {
         setError(true);
       }

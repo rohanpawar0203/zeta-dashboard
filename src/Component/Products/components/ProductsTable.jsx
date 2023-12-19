@@ -97,7 +97,6 @@ const ProductsTable = () => {
             </div>
             <div>
             <button type="button" class="btn btn-success" onClick={() => {
-              console.log('modal ', modal);
             setselectedProductId('');
             toggle();
           }}>Add New Product</button>
@@ -169,7 +168,6 @@ const ProductsTable = () => {
                     </DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem onClick={() => {
-                        console.log(item?._id);
                         setselectedProductId(item?._id)
                         toggle();
                       }}>

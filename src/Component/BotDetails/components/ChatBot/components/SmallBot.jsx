@@ -27,7 +27,6 @@ const SmallBot = ({ setcloseSmallBot, myBot, setbot, closeSmallBot}) => {
         </div>
         <div style={{zIndex:'2',  cursor: 'pointer'}}
           onClick={() => {
-            console.log('small');
             setcloseSmallBot(true);
             return;
           }}

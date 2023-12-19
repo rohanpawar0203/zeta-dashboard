@@ -99,8 +99,6 @@ const AddCSVForm = ({setMode, mode, setLoading, loading, faqList, setFaqList}) =
      const formData = new FormData();
      formData.append('companyName', userData?.companyName);
      formData.append('', csvFile);
-     console.log('userData ', userData);
-     console.log('formData ', formData);
      uploadCSVFile(formData);
     } else {
       errors.showMessages();
@@ -142,8 +140,6 @@ const AddCSVForm = ({setMode, mode, setLoading, loading, faqList, setFaqList}) =
   };
 
   const updateUser = async (responseUrl, fileName) => {
-    console.log('responseUrl', responseUrl);
-    console.log('fileName', fileName);
     setLoading(true);
     try {
       const response = await fetch(`${User}/${userData._id}`, {
@@ -161,7 +157,6 @@ const AddCSVForm = ({setMode, mode, setLoading, loading, faqList, setFaqList}) =
       if (response.ok) {
         
         // console.log(response.ok);
-        console.log("updateUser", responseData?.updateUser);
         sessionStorage.setItem("currentUser", JSON.stringify(responseData.updateUser));
         setFaqList([...responseData?.updateUser?.faqListURL.map((ele) => ({
           ...ele, id: uuid()
@@ -220,9 +215,7 @@ return (
 const CSVFileInfoList = ({faqList, setFaqList, setLoading}) => {
 
   const handleCSVFileDelete = (id) => {
-    console.log('delete id', id);
     let filteredList = faqList?.filter((item) => (item.id !== id));
-    console.log('filteredList', filteredList);
     updateUser(filteredList);
   }
 
