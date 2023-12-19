@@ -24,6 +24,8 @@ import SignupWith from "./SignupWith";
 import appStore from "../../../Component/Live Chats/Client/AppStore";
 import axios from "axios";
 import { PlanDetails } from "../../../api";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBuilding, faAddressBook } from '@fortawesome/free-solid-svg-icons';
 const pattern = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}([\/?].*)?$/;
 
 const SignupTab = ({ selected }) => {
@@ -175,7 +177,8 @@ const SignupTab = ({ selected }) => {
               <Label className="p-0 mb-1 mt-2">Company Name</Label>
               <InputGroup>
                 <InputGroupText>
-                  <i className="icon-email"></i>
+                  {/* <i class="icon-home"></i> */}
+                  <FontAwesomeIcon className="common-icons"  icon={faBuilding} />
                 </InputGroupText>
                 <Input
                   name="companyName"
@@ -223,7 +226,7 @@ const SignupTab = ({ selected }) => {
               <Label className="p-0 mb-1 mt-2">Website Link</Label>
               <InputGroup>
                 <InputGroupText>
-                  <i className="icon-email"></i>
+                  <i className="icon-link"></i>
                 </InputGroupText>
                 <Input
                   name="websiteLink"
@@ -286,7 +289,7 @@ const SignupTab = ({ selected }) => {
               <Label className="p-0 mb-1 mt-2">Contact</Label>
               <InputGroup>
                 <InputGroupText>
-                  <i className="icon-email"></i>
+                <FontAwesomeIcon className="common-icons"  icon={faAddressBook} />
                 </InputGroupText>
                 <Input
                   name="contact"

@@ -45,7 +45,7 @@ const BigBot = ({ myBot }) => {
       identity: "USER",
       message: userMessage,
       roomId: getSessionId(sessionStorage.getItem("sessionUUID")),
-      organization_id: "6560dd4d0ae6f208b594f9e8",
+      organization_id: user?.store?.id,   // 
       type: "csv",
       time: "",
     };

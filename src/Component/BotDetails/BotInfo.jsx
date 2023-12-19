@@ -98,10 +98,9 @@ const BotInfoContent = ({boatId}) => {
             </div>
             </div>
           </Nav>
-          
-            {
+          <div style={{ height: '75vh'}}>            {
               loading ? 
-              <div className="loader-box">
+              <div className="vh-75 loader-box">
               <Spinner attrSpinner={{ className: 'loader-3' }} />
               </div> :
               <>
@@ -119,6 +118,7 @@ const BotInfoContent = ({boatId}) => {
                <ChatBot myBot={myBot} setMyBot={setMyBot}/>
               </>
             }
+            </div>
             
         </CardBody>
         </div>

@@ -35,7 +35,14 @@ const [shareTabs, setshareTabs] = useState(['Embed the bot', 'Embed Iframe', 'Ge
 const [selectedTab, setselectedTab] = useState('Embed the bot');
 const [loading, setLoading] = useState(false);
 const [mode, setMode] = useState('')
-const [faqList, setFaqList] = useState([...userData?.faqListURL]);
+const [faqList, setFaqList] = useState([]);
+
+useEffect(() => {
+  if(userData?.faqListURL){
+    setFaqList([...userData?.faqListURL]);
+  }
+}, []);
+
 
   return (
     <Fragment>

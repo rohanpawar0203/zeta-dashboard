@@ -195,8 +195,6 @@ const BotsContent = () => {
                   <button onClick={() => {
                     if(myBot._id){
                       history(`${process.env.PUBLIC_URL}/bot/${myBot._id}`);
-                    }else{
-                      getAllBot();
                     }
                     }} type="button" className="btn btn-primary me-2 btn-sm">
                     View Bot
