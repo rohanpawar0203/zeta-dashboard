@@ -12,6 +12,7 @@ const WidgetContent = () => {
 	useEffect(() => {
 		console.log('template ', template);
 		$("#example").empty();
+		$("#example").attr("class", "");
 		template && $('#example').czmChatSupport({...template});
 	}, [template])
 	
@@ -49,14 +50,14 @@ const WidgetContent = () => {
 						</div>
 					</div>
 					<div className="col-lg-3 col-md-6 col-sm-6">
-						<a href="index-whatsapp-multiple-accounts-3.html" target="_blank" className="example">
+						<div onClick={() => {setTemplate(templateController.sendTemplateType('whatsApp', 'multi_accounts_3'))}} className="example">
 							<div className="text">
 								<div className="title">Multiple Accounts 3</div>
 							</div>
 							<div className="image">
 								<img src="/assets/img/popup/whatsapp/multiple-accounts-3.png" alt="Whatsapp Multiple Accounts 3" />
 							</div>
-						</a>
+						</div>
 					</div>
 					<div className="col-lg-3 col-md-6 col-sm-6">
 						<a href="index-whatsapp-multiple-accounts-4.html" target="_blank" className="example">
