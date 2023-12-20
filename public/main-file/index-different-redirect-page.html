@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Redirect to Page</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+		<link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700&display=swap" rel="stylesheet">
+		<link href="assets/img/favicon.png" rel="shortcut icon" type="image/png">
+		<link href="assets/css/prism.css" rel="stylesheet">
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+		<link href="assets/css/demo.css" rel="stylesheet">
+		
+		<!-- *** [START] REQUIRED CSS FILES *** -->
+		<link href="plugin/components/font-awesome/css/fontawesome.min.css" rel="stylesheet">
+		<link href="plugin/czm-chat-support.css" rel="stylesheet">
+		<!-- *** [END] REQUIRED CSS FILES *** -->
+		
+	</head>
+	<body>
+		
+		<!-- *** [START] REQUIRED DIV *** -->
+		<div id="example"></div>
+		<!-- *** [END] REQUIRED DIV *** -->
+		
+		<!-- *** [START] REQUIRED JS FILES *** -->
+		<script src="plugin/components/jquery/jquery-1.9.0.min.js"></script>
+		<script src="plugin/components/moment/moment.min.js"></script>
+		<script src="plugin/components/moment/moment-timezone-with-data.min.js"></script>
+		<script src="plugin/czm-chat-support.min.js"></script>
+		<script>
+			$('#example').czmChatSupport({
+
+				/* Button Settings */
+				button: {
+					position: "right", /* left, right or false. "position:false" does not pin to the left or right */
+					style: 3, /* Button style. Number between 1 and 7 */
+					src: '<i class="fas fa-question-circle"></i>', /* Image, Icon or SVG */
+					backgroundColor: "#a07bf7", /* Html color code */
+					effect: 2, /* Button effect. Number between 1 and 7 */
+					notificationNumber: "?", /* Custom text or false. To remove, (notificationNumber:false) */
+					speechBubble: "Do you want some help?", /* To remove, (speechBubble:false) */
+					pulseEffect: false, /* To remove, (pulseEffect:false) */
+					text: { /* For Button style larger than 1 */
+						title: "Frequently Asked Questions", /* Writing is required */
+						description: false, /* To remove, (description:false) */
+						online: false, /* To remove, (online:false) */
+						offline: false /* To remove, (offline:false) */
+					}
+				},
+
+				/* Popup Settings */
+				popup: {
+					automaticOpen: false, /* true or false (Open popup automatically when the page is loaded) */
+					outsideClickClosePopup: true, /* true or false (Clicking anywhere on the page will close the popup) */
+					effect: 4, /* Popup opening effect. Number between 1 and 15 */
+					header: {
+						backgroundColor: "#a07bf7", /* Html color code */
+						title: "If you have a trouble", /* Writing is required */
+						description: "Click one of our pages below" /* To remove, (description:false) */
+					},
+
+					/* Representative Settings */
+					persons: [
+
+					/* Copy for more representatives [::Start Copy::] */
+					{
+						avatar: {
+							src: '<i class="fas fa-question-circle"></i>', /* Image, Icon or SVG */
+							backgroundColor: "#a07bf7", /* Html color code */
+							onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+						},
+						text: {
+							title: "I'm having an error on the purchase page!", /* Writing is required */
+							description: false, /* To remove, (description:false) */
+							online: false, /* To remove, (online:false) */
+							offline: false /* To remove, (offline:false) */
+						},
+						link: {
+							desktop: "http://www.website.com/redirect-page", /* Writing is required */
+							mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+						},
+						onlineDay: {
+							/* Change the day you are offline like this. (sunday:false) */
+							sunday: "00:00-23:59",
+							monday: "00:00-23:59",
+							tuesday: "00:00-23:59",
+							wednesday: "00:00-23:59",
+							thursday: "00:00-23:59",
+							friday: "00:00-23:59",
+							saturday: "00:00-23:59"
+						}
+					},
+					/* [::End Copy::] */
+						
+					/* Copy for more representatives [::Start Copy::] */
+					{
+						avatar: {
+							src: '<i class="fas fa-question-circle"></i>', /* Image, Icon or SVG */
+							backgroundColor: "#a07bf7", /* Html color code */
+							onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+						},
+						text: {
+							title: "The product I added to the shopping cart is not visible!", /* Writing is required */
+							description: false, /* To remove, (description:false) */
+							online: false, /* To remove, (online:false) */
+							offline: false /* To remove, (offline:false) */
+						},
+						link: {
+							desktop: "http://www.website.com/redirect-page", /* Writing is required */
+							mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+						},
+						onlineDay: {
+							/* Change the day you are offline like this. (sunday:false) */
+							sunday: "00:00-23:59",
+							monday: "00:00-23:59",
+							tuesday: "00:00-23:59",
+							wednesday: "00:00-23:59",
+							thursday: "00:00-23:59",
+							friday: "00:00-23:59",
+							saturday: "00:00-23:59"
+						}
+					},
+					/* [::End Copy::] */
+						
+					/* Copy for more representatives [::Start Copy::] */
+					{
+						avatar: {
+							src: '<i class="fas fa-question-circle"></i>', /* Image, Icon or SVG */
+							backgroundColor: "#a07bf7", /* Html color code */
+							onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+						},
+						text: {
+							title: "Where is my cargo? Why is it still not shipped?", /* Writing is required */
+							description: false, /* To remove, (description:false) */
+							online: false, /* To remove, (online:false) */
+							offline: false /* To remove, (offline:false) */
+						},
+						link: {
+							desktop: "http://www.website.com/redirect-page", /* Writing is required */
+							mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+						},
+						onlineDay: {
+							/* Change the day you are offline like this. (sunday:false) */
+							sunday: "00:00-23:59",
+							monday: "00:00-23:59",
+							tuesday: "00:00-23:59",
+							wednesday: "00:00-23:59",
+							thursday: "00:00-23:59",
+							friday: "00:00-23:59",
+							saturday: "00:00-23:59"
+						}
+					},
+					/* [::End Copy::] */
+
+					]
+				},
+
+				/* Other Settings */
+				sound: true, /* true (default sound), false or custom sound. Custom sound example, (sound:'assets/sound/notification.mp3') */
+				changeBrowserTitle: "New Message!", /* Custom text or false. To remove, (changeBrowserTitle:false) */
+				cookie: false, /* It does not show the speech bubble, notification number, and pulse effect again for the specified time. For example, do not show for 1 hour, (cookie:1) or to remove, (cookie:false) */
+			});
+		</script>
+		<!-- *** [END] REQUIRED JS FILES *** -->
+		
+		<section class="examples different-examples text-center mb-5">
+			<div class="container">
+				<h2>Redirect to Page</h2>
+			</div>
+		</section>
+		<div class="container mb-5">
+			<div class="row justify-content-center">
+				<div class="col-md-11">
+					<pre><code class="language-html">&lt;html&gt;
+&lt;head&gt;
+
+	&lt;!-- *** [START] REQUIRED CSS FILES *** --&gt;</code>
+	<code class="highlight language-html">&lt;link href="plugin/components/font-awesome/css/fontawesome.min.css" rel="stylesheet"&gt;
+&lt;link href="plugin/czm-chat-support.css" rel="stylesheet"&gt;</code><code class="language-html">
+	&lt;!-- *** [END] REQUIRED CSS FILES *** --&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+	&lt;!-- *** [START] REQUIRED DIV *** --&gt;</code>
+	<code class="highlight language-html">&lt;div id="example"&gt;&lt;/div&gt;</code><code class="language-html">
+	&lt;!-- *** [END] REQUIRED DIV *** --&gt;
+
+	&lt;!-- *** [START] REQUIRED JS FILES *** --&gt;</code>
+	<code class="highlight language-html">&lt;script src="plugin/components/jquery/jquery-1.9.0.min.js"&gt;&lt;/script&gt;
+&lt;script src="plugin/components/moment/moment.min.js"&gt;&lt;/script&gt;
+&lt;script src="plugin/components/moment/moment-timezone-with-data.min.js"&gt;&lt;/script&gt;
+&lt;script src="plugin/czm-chat-support.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+
+$('#example').czmChatSupport({
+
+	/* Button Settings */
+	button: {
+		position: "right", /* left, right or false. "position:false" does not pin to the left or right */
+		style: 3, /* Button style. Number between 1 and 7 */
+		src: '&lt;i class="fas fa-question-circle"&gt;&lt;/i&gt;', /* Image, Icon or SVG */
+		backgroundColor: "#a07bf7", /* Html color code */
+		effect: 2, /* Button effect. Number between 1 and 7 */
+		notificationNumber: "?", /* Custom text or false. To remove, (notificationNumber:false) */
+		speechBubble: "Do you want some help?", /* To remove, (speechBubble:false) */
+		pulseEffect: false, /* To remove, (pulseEffect:false) */
+		text: { /* For Button style larger than 1 */
+			title: "Frequently Asked Questions", /* Writing is required */
+			description: false, /* To remove, (description:false) */
+			online: false, /* To remove, (online:false) */
+			offline: false /* To remove, (offline:false) */
+		}
+	},
+
+	/* Popup Settings */
+	popup: {
+		automaticOpen: false, /* true or false (Open popup automatically when the page is loaded) */
+		outsideClickClosePopup: true, /* true or false (Clicking anywhere on the page will close the popup) */
+		effect: 4, /* Popup opening effect. Number between 1 and 15 */
+		header: {
+			backgroundColor: "#a07bf7", /* Html color code */
+			title: "If you have a trouble", /* Writing is required */
+			description: "Click one of our pages below" /* To remove, (description:false) */
+		},
+
+		/* Representative Settings */
+		persons: [
+
+		/* Copy for more representatives [::Start Copy::] */
+		{
+			avatar: {
+				src: '&lt;i class="fas fa-question-circle"&gt;&lt;/i&gt;', /* Image, Icon or SVG */
+				backgroundColor: "#a07bf7", /* Html color code */
+				onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+			},
+			text: {
+				title: "I'm having an error on the purchase page!", /* Writing is required */
+				description: false, /* To remove, (description:false) */
+				online: false, /* To remove, (online:false) */
+				offline: false /* To remove, (offline:false) */
+			},
+			link: {
+				desktop: "http://www.website.com/redirect-page", /* Writing is required */
+				mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+			},
+			onlineDay: {
+				/* Change the day you are offline like this. (sunday:false) */
+				sunday: "00:00-23:59",
+				monday: "00:00-23:59",
+				tuesday: "00:00-23:59",
+				wednesday: "00:00-23:59",
+				thursday: "00:00-23:59",
+				friday: "00:00-23:59",
+				saturday: "00:00-23:59"
+			}
+		},
+		/* [::End Copy::] */
+
+		/* Copy for more representatives [::Start Copy::] */
+		{
+			avatar: {
+				src: '&lt;i class="fas fa-question-circle"&gt;&lt;/i&gt;', /* Image, Icon or SVG */
+				backgroundColor: "#a07bf7", /* Html color code */
+				onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+			},
+			text: {
+				title: "The product I added to the shopping cart is not visible!", /* Writing is required */
+				description: false, /* To remove, (description:false) */
+				online: false, /* To remove, (online:false) */
+				offline: false /* To remove, (offline:false) */
+			},
+			link: {
+				desktop: "http://www.website.com/redirect-page", /* Writing is required */
+				mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+			},
+			onlineDay: {
+				/* Change the day you are offline like this. (sunday:false) */
+				sunday: "00:00-23:59",
+				monday: "00:00-23:59",
+				tuesday: "00:00-23:59",
+				wednesday: "00:00-23:59",
+				thursday: "00:00-23:59",
+				friday: "00:00-23:59",
+				saturday: "00:00-23:59"
+			}
+		},
+		/* [::End Copy::] */
+
+		/* Copy for more representatives [::Start Copy::] */
+		{
+			avatar: {
+				src: '&lt;i class="fas fa-question-circle"&gt;&lt;/i&gt;', /* Image, Icon or SVG */
+				backgroundColor: "#a07bf7", /* Html color code */
+				onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+			},
+			text: {
+				title: "Where is my cargo? Why is it still not shipped?", /* Writing is required */
+				description: false, /* To remove, (description:false) */
+				online: false, /* To remove, (online:false) */
+				offline: false /* To remove, (offline:false) */
+			},
+			link: {
+				desktop: "http://www.website.com/redirect-page", /* Writing is required */
+				mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+			},
+			onlineDay: {
+				/* Change the day you are offline like this. (sunday:false) */
+				sunday: "00:00-23:59",
+				monday: "00:00-23:59",
+				tuesday: "00:00-23:59",
+				wednesday: "00:00-23:59",
+				thursday: "00:00-23:59",
+				friday: "00:00-23:59",
+				saturday: "00:00-23:59"
+			}
+		},
+		/* [::End Copy::] */
+
+		]
+	},
+
+	/* Other Settings */
+	sound: true, /* true (default sound), false or custom sound. Custom sound example, (sound:'assets/sound/notification.mp3') */
+	changeBrowserTitle: "New Message!", /* Custom text or false. To remove, (changeBrowserTitle:false) */
+	cookie: false, /* It does not show the speech bubble, notification number, and pulse effect again for the specified time. For example, do not show for 1 hour, (cookie:1) or to remove, (cookie:false) */
+});
+
+&lt;/script&gt;</code><code class="language-html">
+	&lt;!-- *** [END] REQUIRED JS FILES *** --&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+				</div>
+			</div>
+		</div>
+		<script src="assets/js/prism.js"></script>
+		<script src="assets/js/bootstrap.min.js"></script>
+		
+	</body>
+</html>

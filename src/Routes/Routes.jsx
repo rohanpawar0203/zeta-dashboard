@@ -142,6 +142,7 @@ import Tickets from '../Pages/Tickets'
 import CustomFlow from '../Pages/Custom Flow'
 import ChatsPanel from '../Pages/Chats Panel/ChatApp'
 import LiveChatPanel from '../Pages/Live Chats/ChatApp'
+import Widget from '../Pages/Widget/index'
 import  ErrorPage  from '../Routes/ErrorPage';
 
 
@@ -160,4 +161,5 @@ export const routes = [
     { path: `${process.env.PUBLIC_URL}/add-agents`, Component: <AddAgents /> },
     { path: `${process.env.PUBLIC_URL}/users/userprofile`, Component: <UsersProfile /> },
     { path: `${process.env.PUBLIC_URL}/users/useredit`, Component: <UsersEdit /> },
+    { path: `${process.env.PUBLIC_URL}/widget`, Component: <Widget /> },
 ];

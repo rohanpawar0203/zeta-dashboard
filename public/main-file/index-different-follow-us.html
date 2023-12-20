@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Follow Us</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+		<link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700&display=swap" rel="stylesheet">
+		<link href="assets/img/favicon.png" rel="shortcut icon" type="image/png">
+		<link href="assets/css/prism.css" rel="stylesheet">
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+		<link href="assets/css/demo.css" rel="stylesheet">
+		
+		<!-- *** [START] REQUIRED CSS FILES *** -->
+		<link href="plugin/components/font-awesome/css/fontawesome.min.css" rel="stylesheet">
+		<link href="plugin/czm-chat-support.css" rel="stylesheet">
+		<!-- *** [END] REQUIRED CSS FILES *** -->
+		
+	</head>
+	<body>
+		
+		<!-- *** [START] REQUIRED DIV *** -->
+		<div id="example"></div>
+		<!-- *** [END] REQUIRED DIV *** -->
+		
+		<!-- *** [START] REQUIRED JS FILES *** -->
+		<script src="plugin/components/jquery/jquery-1.9.0.min.js"></script>
+		<script src="plugin/components/moment/moment.min.js"></script>
+		<script src="plugin/components/moment/moment-timezone-with-data.min.js"></script>
+		<script src="plugin/czm-chat-support.min.js"></script>
+		<script>
+			$('#example').czmChatSupport({
+
+				/* Button Settings */
+				button: {
+					position: "right", /* left, right or false. "position:false" does not pin to the left or right */
+					style: 5, /* Button style. Number between 1 and 7 */
+					src: '<i class="fas fa-share-alt"></i>', /* Image, Icon or SVG */
+					backgroundColor: "#8f3dca", /* Html color code */
+					effect: 5, /* Button effect. Number between 1 and 7 */
+					notificationNumber: false, /* Custom text or false. To remove, (notificationNumber:false) */
+					speechBubble: false, /* To remove, (speechBubble:false) */
+					pulseEffect: false, /* To remove, (pulseEffect:false) */
+					text: { /* For Button style larger than 1 */
+						title: "Follow Us", /* Writing is required */
+						description: "Our social media accounts", /* To remove, (description:false) */
+						online: false, /* To remove, (online:false) */
+						offline: false /* To remove, (offline:false) */
+					}
+				},
+
+				/* Popup Settings */
+				popup: {
+					automaticOpen: false, /* true or false (Open popup automatically when the page is loaded) */
+					outsideClickClosePopup: true, /* true or false (Clicking anywhere on the page will close the popup) */
+					effect: 7, /* Popup opening effect. Number between 1 and 15 */
+					header: {
+						backgroundColor: "#8f3dca", /* Html color code */
+						title: "Our social media accounts", /* Writing is required */
+						description: "Follow us on social media" /* To remove, (description:false) */
+					},
+
+					/* Representative Settings */
+					persons: [
+
+					/* Copy for more representatives [::Start Copy::] */
+					{
+						avatar: {
+							src: '<i class="fab fa-facebook-f"></i>', /* Image, Icon or SVG */
+							backgroundColor: "#1877f2", /* Html color code */
+							onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+						},
+						text: {
+							title: "Facebook", /* Writing is required */
+							description: "@facebook_address", /* To remove, (description:false) */
+							online: false, /* To remove, (online:false) */
+							offline: false /* To remove, (offline:false) */
+						},
+						link: {
+							desktop: "https://www.facebook.com/", /* Writing is required */
+							mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+						},
+						onlineDay: {
+							/* Change the day you are offline like this. (sunday:false) */
+							sunday: "00:00-23:59",
+							monday: "00:00-23:59",
+							tuesday: "00:00-23:59",
+							wednesday: "00:00-23:59",
+							thursday: "00:00-23:59",
+							friday: "00:00-23:59",
+							saturday: "00:00-23:59"
+						}
+					},
+					/* [::End Copy::] */
+
+					/* Copy for more representatives [::Start Copy::] */
+					{
+						avatar: {
+							src: '<i class="fab fa-twitter"></i>', /* Font, Image or SVG */
+							backgroundColor: "#1da1f2", /* Html color code */
+							onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+						},
+						text: {
+							title: "Twitter", /* Writing is required */
+							description: "@twitter_address", /* Custom text or false. To remove, (description:false) */
+							online: false, /* Custom text or false. To remove, (online:false) */
+							offline: false /* Custom text or false. To remove, (offline:false) */
+						},
+						link: {
+							desktop: "https://twitter.com/", /* Writing is required */
+							mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+						},
+						onlineDay: {
+							/* Change the day you are offline like this. (sunday:false) */
+							sunday: "00:00-23:59",
+							monday: "00:00-23:59",
+							tuesday: "00:00-23:59",
+							wednesday: "00:00-23:59",
+							thursday: "00:00-23:59",
+							friday: "00:00-23:59",
+							saturday: "00:00-23:59"
+						}
+					},
+					/* [::End Copy::] */
+
+					/* Copy for more representatives [::Start Copy::] */
+					{
+						avatar: {
+							src: '<i class="fab fa-instagram"></i>', /* Font, Image or SVG */
+							backgroundColor: "#da4169", /* Html color code */
+							onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+						},
+						text: {
+							title: "Instagram", /* Writing is required */
+							description: "@instagram_address", /* Custom text or false. To remove, (description:false) */
+							online: false, /* Custom text or false. To remove, (online:false) */
+							offline: false /* Custom text or false. To remove, (offline:false) */
+						},
+						link: {
+							desktop: "https://www.instagram.com/", /* Writing is required */
+							mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+						},
+						onlineDay: {
+							/* Change the day you are offline like this. (sunday:false) */
+							sunday: "00:00-23:59",
+							monday: "00:00-23:59",
+							tuesday: "00:00-23:59",
+							wednesday: "00:00-23:59",
+							thursday: "00:00-23:59",
+							friday: "00:00-23:59",
+							saturday: "00:00-23:59"
+						}
+					},
+					/* [::End Copy::] */
+
+					/* Copy for more representatives [::Start Copy::] */
+					{
+						avatar: {
+							src: '<i class="fab fa-youtube"></i>', /* Font, Image or SVG */
+							backgroundColor: "#FF0000", /* Html color code */
+							onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+						},
+						text: {
+							title: "YouTube", /* Writing is required */
+							description: "@youtube_address", /* Custom text or false. To remove, (description:false) */
+							online: false, /* Custom text or false. To remove, (online:false) */
+							offline: false /* Custom text or false. To remove, (offline:false) */
+						},
+						link: {
+							desktop: "https://youtube.com/", /* Writing is required */
+							mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+						},
+						onlineDay: {
+							/* Change the day you are offline like this. (sunday:false) */
+							sunday: "00:00-23:59",
+							monday: "00:00-23:59",
+							tuesday: "00:00-23:59",
+							wednesday: "00:00-23:59",
+							thursday: "00:00-23:59",
+							friday: "00:00-23:59",
+							saturday: "00:00-23:59"
+						}
+					},
+					/* [::End Copy::] */
+
+					/* Copy for more representatives [::Start Copy::] */
+					{
+						avatar: {
+							src: '<i class="fab fa-tumblr"></i>', /* Font, Image or SVG */
+							backgroundColor: "#35465c", /* Html color code */
+							onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+						},
+						text: {
+							title: "Tumblr", /* Writing is required */
+							description: "@tumblr_address", /* Custom text or false. To remove, (description:false) */
+							online: false, /* Custom text or false. To remove, (online:false) */
+							offline: false /* Custom text or false. To remove, (offline:false) */
+						},
+						link: {
+							desktop: "https://www.tumblr.com/", /* Writing is required */
+							mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+						},
+						onlineDay: {
+							/* Change the day you are offline like this. (sunday:false) */
+							sunday: "00:00-23:59",
+							monday: "00:00-23:59",
+							tuesday: "00:00-23:59",
+							wednesday: "00:00-23:59",
+							thursday: "00:00-23:59",
+							friday: "00:00-23:59",
+							saturday: "00:00-23:59"
+						}
+					},
+					/* [::End Copy::] */
+
+					/* Copy for more representatives [::Start Copy::] */
+					{
+						avatar: {
+							src: '<i class="fab fa-snapchat-ghost"></i>', /* Font, Image or SVG */
+							backgroundColor: "#ffc800", /* Html color code */
+							onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+						},
+						text: {
+							title: "Snapchat", /* Writing is required */
+							description: "@snapchat_address", /* Custom text or false. To remove, (description:false) */
+							online: false, /* Custom text or false. To remove, (online:false) */
+							offline: false /* Custom text or false. To remove, (offline:false) */
+						},
+						link: {
+							desktop: "https://www.snapchat.com/", /* Writing is required */
+							mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+						},
+						onlineDay: {
+							/* Change the day you are offline like this. (sunday:false) */
+							sunday: "00:00-23:59",
+							monday: "00:00-23:59",
+							tuesday: "00:00-23:59",
+							wednesday: "00:00-23:59",
+							thursday: "00:00-23:59",
+							friday: "00:00-23:59",
+							saturday: "00:00-23:59"
+						}
+					},
+					/* [::End Copy::] */
+
+					/* Copy for more representatives [::Start Copy::] */
+					{
+						avatar: {
+							src: '<i class="fab fa-pinterest-p"></i>', /* Font, Image or SVG */
+							backgroundColor: "#CB2028", /* Html color code */
+							onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+						},
+						text: {
+							title: "Pinterest", /* Writing is required */
+							description: "@pinterest_address", /* Custom text or false. To remove, (description:false) */
+							online: false, /* Custom text or false. To remove, (online:false) */
+							offline: false /* Custom text or false. To remove, (offline:false) */
+						},
+						link: {
+							desktop: "https://www.pinterest.com/", /* Writing is required */
+							mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+						},
+						onlineDay: {
+							/* Change the day you are offline like this. (sunday:false) */
+							sunday: "00:00-23:59",
+							monday: "00:00-23:59",
+							tuesday: "00:00-23:59",
+							wednesday: "00:00-23:59",
+							thursday: "00:00-23:59",
+							friday: "00:00-23:59",
+							saturday: "00:00-23:59"
+						}
+					},
+					/* [::End Copy::] */
+
+					/* Copy for more representatives [::Start Copy::] */
+					{
+						avatar: {
+							src: '<i class="fab fa-linkedin-in"></i>', /* Font, Image or SVG */
+							backgroundColor: "#0a66c2", /* Html color code */
+							onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+						},
+						text: {
+							title: "LinkedIn", /* Writing is required */
+							description: "@linkedin_address", /* Custom text or false. To remove, (description:false) */
+							online: false, /* Custom text or false. To remove, (online:false) */
+							offline: false /* Custom text or false. To remove, (offline:false) */
+						},
+						link: {
+							desktop: "https://www.linkedin.com/", /* Writing is required */
+							mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+						},
+						onlineDay: {
+							/* Change the day you are offline like this. (sunday:false) */
+							sunday: "00:00-23:59",
+							monday: "00:00-23:59",
+							tuesday: "00:00-23:59",
+							wednesday: "00:00-23:59",
+							thursday: "00:00-23:59",
+							friday: "00:00-23:59",
+							saturday: "00:00-23:59"
+						}
+					},
+					/* [::End Copy::] */
+
+					/* Copy for more representatives [::Start Copy::] */
+					{
+						avatar: {
+							src: '<i class="fab fa-tiktok"></i>', /* Font, Image or SVG */
+							backgroundColor: "#010101", /* Html color code */
+							onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+						},
+						text: {
+							title: "Tiktok", /* Writing is required */
+							description: "@tiktok_address", /* Custom text or false. To remove, (description:false) */
+							online: false, /* Custom text or false. To remove, (online:false) */
+							offline: false /* Custom text or false. To remove, (offline:false) */
+						},
+						link: {
+							desktop: "https://www.tiktok.com/", /* Writing is required */
+							mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+						},
+						onlineDay: {
+							/* Change the day you are offline like this. (sunday:false) */
+							sunday: "00:00-23:59",
+							monday: "00:00-23:59",
+							tuesday: "00:00-23:59",
+							wednesday: "00:00-23:59",
+							thursday: "00:00-23:59",
+							friday: "00:00-23:59",
+							saturday: "00:00-23:59"
+						}
+					},
+					/* [::End Copy::] */
+
+					/* Copy for more representatives [::Start Copy::] */
+					{
+						avatar: {
+							src: '<i class="fab fa-foursquare"></i>', /* Font, Image or SVG */
+							backgroundColor: "#FA4779", /* Html color code */
+							onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+						},
+						text: {
+							title: "Foursquare", /* Writing is required */
+							description: "@foursquare_address", /* Custom text or false. To remove, (description:false) */
+							online: false, /* Custom text or false. To remove, (online:false) */
+							offline: false /* Custom text or false. To remove, (offline:false) */
+						},
+						link: {
+							desktop: "https://foursquare.com/", /* Writing is required */
+							mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+						},
+						onlineDay: {
+							/* Change the day you are offline like this. (sunday:false) */
+							sunday: "00:00-23:59",
+							monday: "00:00-23:59",
+							tuesday: "00:00-23:59",
+							wednesday: "00:00-23:59",
+							thursday: "00:00-23:59",
+							friday: "00:00-23:59",
+							saturday: "00:00-23:59"
+						}
+					},
+					/* [::End Copy::] */
+
+					]
+				},
+
+				/* Other Settings */
+				sound: true, /* true (default sound), false or custom sound. Custom sound example, (sound:'assets/sound/notification.mp3') */
+				changeBrowserTitle: "New Message!", /* Custom text or false. To remove, (changeBrowserTitle:false) */
+				cookie: false, /* It does not show the speech bubble, notification number, and pulse effect again for the specified time. For example, do not show for 1 hour, (cookie:1) or to remove, (cookie:false) */
+			});
+		</script>
+		<!-- *** [END] REQUIRED JS FILES *** -->
+		
+		<section class="examples different-examples text-center mb-5">
+			<div class="container">
+				<h2>Follow Us</h2>
+			</div>
+		</section>
+		<div class="container mb-5">
+			<div class="row justify-content-center">
+				<div class="col-md-11">
+					<pre><code class="language-html">&lt;html&gt;
+&lt;head&gt;
+
+	&lt;!-- *** [START] REQUIRED CSS FILES *** --&gt;</code>
+	<code class="highlight language-html">&lt;link href="plugin/components/font-awesome/css/fontawesome.min.css" rel="stylesheet"&gt;
+&lt;link href="plugin/czm-chat-support.css" rel="stylesheet"&gt;</code><code class="language-html">
+	&lt;!-- *** [END] REQUIRED CSS FILES *** --&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+	&lt;!-- *** [START] REQUIRED DIV *** --&gt;</code>
+	<code class="highlight language-html">&lt;div id="example"&gt;&lt;/div&gt;</code><code class="language-html">
+	&lt;!-- *** [END] REQUIRED DIV *** --&gt;
+
+	&lt;!-- *** [START] REQUIRED JS FILES *** --&gt;</code>
+	<code class="highlight language-html">&lt;script src="plugin/components/jquery/jquery-1.9.0.min.js"&gt;&lt;/script&gt;
+&lt;script src="plugin/components/moment/moment.min.js"&gt;&lt;/script&gt;
+&lt;script src="plugin/components/moment/moment-timezone-with-data.min.js"&gt;&lt;/script&gt;
+&lt;script src="plugin/czm-chat-support.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+
+$('#example').czmChatSupport({
+
+	/* Button Settings */
+	button: {
+		position: "right", /* left, right or false. "position:false" does not pin to the left or right */
+		style: 5, /* Button style. Number between 1 and 7 */
+		src: '&lt;i class="fas fa-share-alt"&gt;&lt;/i&gt;', /* Image, Icon or SVG */
+		backgroundColor: "#8f3dca", /* Html color code */
+		effect: 5, /* Button effect. Number between 1 and 7 */
+		notificationNumber: false, /* Custom text or false. To remove, (notificationNumber:false) */
+		speechBubble: false, /* To remove, (speechBubble:false) */
+		pulseEffect: false, /* To remove, (pulseEffect:false) */
+		text: { /* For Button style larger than 1 */
+			title: "Follow Us", /* Writing is required */
+			description: "Our social media accounts", /* To remove, (description:false) */
+			online: false, /* To remove, (online:false) */
+			offline: false /* To remove, (offline:false) */
+		}
+	},
+
+	/* Popup Settings */
+	popup: {
+		automaticOpen: false, /* true or false (Open popup automatically when the page is loaded) */
+		outsideClickClosePopup: true, /* true or false (Clicking anywhere on the page will close the popup) */
+		effect: 7, /* Popup opening effect. Number between 1 and 15 */
+		header: {
+			backgroundColor: "#8f3dca", /* Html color code */
+			title: "Our social media accounts", /* Writing is required */
+			description: "Follow us on social media" /* To remove, (description:false) */
+		},
+
+		/* Representative Settings */
+		persons: [
+
+		/* Copy for more representatives [::Start Copy::] */
+		{
+			avatar: {
+				src: '&lt;i class="fab fa-facebook-f"&gt;&lt;/i&gt;', /* Image, Icon or SVG */
+				backgroundColor: "#1877f2", /* Html color code */
+				onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+			},
+			text: {
+				title: "Facebook", /* Writing is required */
+				description: "@facebook_address", /* To remove, (description:false) */
+				online: false, /* To remove, (online:false) */
+				offline: false /* To remove, (offline:false) */
+			},
+			link: {
+				desktop: "https://www.facebook.com/", /* Writing is required */
+				mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+			},
+			onlineDay: {
+				/* Change the day you are offline like this. (sunday:false) */
+				sunday: "00:00-23:59",
+				monday: "00:00-23:59",
+				tuesday: "00:00-23:59",
+				wednesday: "00:00-23:59",
+				thursday: "00:00-23:59",
+				friday: "00:00-23:59",
+				saturday: "00:00-23:59"
+			}
+		},
+		/* [::End Copy::] */
+
+		/* Copy for more representatives [::Start Copy::] */
+		{
+			avatar: {
+				src: '&lt;i class="fab fa-twitter"&gt;&lt;/i&gt;', /* Font, Image or SVG */
+				backgroundColor: "#1da1f2", /* Html color code */
+				onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+			},
+			text: {
+				title: "Twitter", /* Writing is required */
+				description: "@twitter_address", /* Custom text or false. To remove, (description:false) */
+				online: false, /* Custom text or false. To remove, (online:false) */
+				offline: false /* Custom text or false. To remove, (offline:false) */
+			},
+			link: {
+				desktop: "https://twitter.com/", /* Writing is required */
+				mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+			},
+			onlineDay: {
+				/* Change the day you are offline like this. (sunday:false) */
+				sunday: "00:00-23:59",
+				monday: "00:00-23:59",
+				tuesday: "00:00-23:59",
+				wednesday: "00:00-23:59",
+				thursday: "00:00-23:59",
+				friday: "00:00-23:59",
+				saturday: "00:00-23:59"
+			}
+		},
+		/* [::End Copy::] */
+
+		/* Copy for more representatives [::Start Copy::] */
+		{
+			avatar: {
+				src: '&lt;i class="fab fa-instagram"&gt;&lt;/i&gt;', /* Font, Image or SVG */
+				backgroundColor: "#da4169", /* Html color code */
+				onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+			},
+			text: {
+				title: "Instagram", /* Writing is required */
+				description: "@instagram_address", /* Custom text or false. To remove, (description:false) */
+				online: false, /* Custom text or false. To remove, (online:false) */
+				offline: false /* Custom text or false. To remove, (offline:false) */
+			},
+			link: {
+				desktop: "https://www.instagram.com/", /* Writing is required */
+				mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+			},
+			onlineDay: {
+				/* Change the day you are offline like this. (sunday:false) */
+				sunday: "00:00-23:59",
+				monday: "00:00-23:59",
+				tuesday: "00:00-23:59",
+				wednesday: "00:00-23:59",
+				thursday: "00:00-23:59",
+				friday: "00:00-23:59",
+				saturday: "00:00-23:59"
+			}
+		},
+		/* [::End Copy::] */
+
+		/* Copy for more representatives [::Start Copy::] */
+		{
+			avatar: {
+				src: '&lt;i class="fab fa-youtube"&gt;&lt;/i&gt;', /* Font, Image or SVG */
+				backgroundColor: "#FF0000", /* Html color code */
+				onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+			},
+			text: {
+				title: "YouTube", /* Writing is required */
+				description: "@youtube_address", /* Custom text or false. To remove, (description:false) */
+				online: false, /* Custom text or false. To remove, (online:false) */
+				offline: false /* Custom text or false. To remove, (offline:false) */
+			},
+			link: {
+				desktop: "https://youtube.com/", /* Writing is required */
+				mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+			},
+			onlineDay: {
+				/* Change the day you are offline like this. (sunday:false) */
+				sunday: "00:00-23:59",
+				monday: "00:00-23:59",
+				tuesday: "00:00-23:59",
+				wednesday: "00:00-23:59",
+				thursday: "00:00-23:59",
+				friday: "00:00-23:59",
+				saturday: "00:00-23:59"
+			}
+		},
+		/* [::End Copy::] */
+
+		/* Copy for more representatives [::Start Copy::] */
+		{
+			avatar: {
+				src: '&lt;i class="fab fa-tumblr"&gt;&lt;/i&gt;', /* Font, Image or SVG */
+				backgroundColor: "#35465c", /* Html color code */
+				onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+			},
+			text: {
+				title: "Tumblr", /* Writing is required */
+				description: "@tumblr_address", /* Custom text or false. To remove, (description:false) */
+				online: false, /* Custom text or false. To remove, (online:false) */
+				offline: false /* Custom text or false. To remove, (offline:false) */
+			},
+			link: {
+				desktop: "https://www.tumblr.com/", /* Writing is required */
+				mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+			},
+			onlineDay: {
+				/* Change the day you are offline like this. (sunday:false) */
+				sunday: "00:00-23:59",
+				monday: "00:00-23:59",
+				tuesday: "00:00-23:59",
+				wednesday: "00:00-23:59",
+				thursday: "00:00-23:59",
+				friday: "00:00-23:59",
+				saturday: "00:00-23:59"
+			}
+		},
+		/* [::End Copy::] */
+
+		/* Copy for more representatives [::Start Copy::] */
+		{
+			avatar: {
+				src: '&lt;i class="fab fa-snapchat-ghost"&gt;&lt;/i&gt;', /* Font, Image or SVG */
+				backgroundColor: "#ffc800", /* Html color code */
+				onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+			},
+			text: {
+				title: "Snapchat", /* Writing is required */
+				description: "@snapchat_address", /* Custom text or false. To remove, (description:false) */
+				online: false, /* Custom text or false. To remove, (online:false) */
+				offline: false /* Custom text or false. To remove, (offline:false) */
+			},
+			link: {
+				desktop: "https://www.snapchat.com/", /* Writing is required */
+				mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+			},
+			onlineDay: {
+				/* Change the day you are offline like this. (sunday:false) */
+				sunday: "00:00-23:59",
+				monday: "00:00-23:59",
+				tuesday: "00:00-23:59",
+				wednesday: "00:00-23:59",
+				thursday: "00:00-23:59",
+				friday: "00:00-23:59",
+				saturday: "00:00-23:59"
+			}
+		},
+		/* [::End Copy::] */
+
+		/* Copy for more representatives [::Start Copy::] */
+		{
+			avatar: {
+				src: '&lt;i class="fab fa-pinterest-p"&gt;&lt;/i&gt;', /* Font, Image or SVG */
+				backgroundColor: "#CB2028", /* Html color code */
+				onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+			},
+			text: {
+				title: "Pinterest", /* Writing is required */
+				description: "@pinterest_address", /* Custom text or false. To remove, (description:false) */
+				online: false, /* Custom text or false. To remove, (online:false) */
+				offline: false /* Custom text or false. To remove, (offline:false) */
+			},
+			link: {
+				desktop: "https://www.pinterest.com/", /* Writing is required */
+				mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+			},
+			onlineDay: {
+				/* Change the day you are offline like this. (sunday:false) */
+				sunday: "00:00-23:59",
+				monday: "00:00-23:59",
+				tuesday: "00:00-23:59",
+				wednesday: "00:00-23:59",
+				thursday: "00:00-23:59",
+				friday: "00:00-23:59",
+				saturday: "00:00-23:59"
+			}
+		},
+		/* [::End Copy::] */
+
+		/* Copy for more representatives [::Start Copy::] */
+		{
+			avatar: {
+				src: '&lt;i class="fab fa-linkedin-in"&gt;&lt;/i&gt;', /* Font, Image or SVG */
+				backgroundColor: "#0a66c2", /* Html color code */
+				onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+			},
+			text: {
+				title: "LinkedIn", /* Writing is required */
+				description: "@linkedin_address", /* Custom text or false. To remove, (description:false) */
+				online: false, /* Custom text or false. To remove, (online:false) */
+				offline: false /* Custom text or false. To remove, (offline:false) */
+			},
+			link: {
+				desktop: "https://www.linkedin.com/", /* Writing is required */
+				mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+			},
+			onlineDay: {
+				/* Change the day you are offline like this. (sunday:false) */
+				sunday: "00:00-23:59",
+				monday: "00:00-23:59",
+				tuesday: "00:00-23:59",
+				wednesday: "00:00-23:59",
+				thursday: "00:00-23:59",
+				friday: "00:00-23:59",
+				saturday: "00:00-23:59"
+			}
+		},
+		/* [::End Copy::] */
+
+		/* Copy for more representatives [::Start Copy::] */
+		{
+			avatar: {
+				src: '&lt;i class="fab fa-tiktok"&gt;&lt;/i&gt;', /* Font, Image or SVG */
+				backgroundColor: "#010101", /* Html color code */
+				onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+			},
+			text: {
+				title: "Tiktok", /* Writing is required */
+				description: "@tiktok_address", /* Custom text or false. To remove, (description:false) */
+				online: false, /* Custom text or false. To remove, (online:false) */
+				offline: false /* Custom text or false. To remove, (offline:false) */
+			},
+			link: {
+				desktop: "https://www.tiktok.com/", /* Writing is required */
+				mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+			},
+			onlineDay: {
+				/* Change the day you are offline like this. (sunday:false) */
+				sunday: "00:00-23:59",
+				monday: "00:00-23:59",
+				tuesday: "00:00-23:59",
+				wednesday: "00:00-23:59",
+				thursday: "00:00-23:59",
+				friday: "00:00-23:59",
+				saturday: "00:00-23:59"
+			}
+		},
+		/* [::End Copy::] */
+
+		/* Copy for more representatives [::Start Copy::] */
+		{
+			avatar: {
+				src: '&lt;i class="fab fa-foursquare"&gt;&lt;/i&gt;', /* Font, Image or SVG */
+				backgroundColor: "#FA4779", /* Html color code */
+				onlineCircle: false /* Avatar online circle. To remove, (onlineCircle:false) */
+			},
+			text: {
+				title: "Foursquare", /* Writing is required */
+				description: "@foursquare_address", /* Custom text or false. To remove, (description:false) */
+				online: false, /* Custom text or false. To remove, (online:false) */
+				offline: false /* Custom text or false. To remove, (offline:false) */
+			},
+			link: {
+				desktop: "https://foursquare.com/", /* Writing is required */
+				mobile: false /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+			},
+			onlineDay: {
+				/* Change the day you are offline like this. (sunday:false) */
+				sunday: "00:00-23:59",
+				monday: "00:00-23:59",
+				tuesday: "00:00-23:59",
+				wednesday: "00:00-23:59",
+				thursday: "00:00-23:59",
+				friday: "00:00-23:59",
+				saturday: "00:00-23:59"
+			}
+		},
+		/* [::End Copy::] */
+
+		]
+	},
+
+	/* Other Settings */
+	sound: true, /* true (default sound), false or custom sound. Custom sound example, (sound:'assets/sound/notification.mp3') */
+	changeBrowserTitle: "New Message!", /* Custom text or false. To remove, (changeBrowserTitle:false) */
+	cookie: false, /* It does not show the speech bubble, notification number, and pulse effect again for the specified time. For example, do not show for 1 hour, (cookie:1) or to remove, (cookie:false) */
+});
+
+&lt;/script&gt;</code><code class="language-html">
+	&lt;!-- *** [END] REQUIRED JS FILES *** --&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+				</div>
+			</div>
+		</div>
+		<script src="assets/js/prism.js"></script>
+		<script src="assets/js/bootstrap.min.js"></script>
+		
+	</body>
+</html>
