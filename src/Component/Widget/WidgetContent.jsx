@@ -3,11 +3,14 @@ import { Card, CardBody, Col, Media, Container, Row, CardHeader } from "reactstr
 import './styles/style.css'
 import {templateController} from './TemplateController/templateController'
 import {def_template} from './Templates/WhatsApp/default'
+import { FaRegEdit } from "react-icons/fa";
+import WidgetEditComponent from "../WidgetEdit/WidgetContent";
 
 const WidgetContent = () => {
 	const $ = window.jQuery;
 	const widgetRef = useRef();
 	const [template, setTemplate] = useState({...def_template});
+	const [mode, setMode] = useState('')
     
 	useEffect(() => {
 		console.log('template ', template);
@@ -20,10 +23,11 @@ const WidgetContent = () => {
   return (
     <Fragment>
       <Container fluid={true} className="mt-2 d-flex justify-content-center">
-        <Card style={{width: '100%', margin: '0 auto'}} className="mt-2">
-            <CardBody>
-            
-            <section className="examples whatsapp-examples" id="whatsapp-examples">
+            {
+				(mode === 'edit') ? 
+				<WidgetEditComponent  template={template} setTemplate={setTemplate} setMode={setMode}/>
+				:
+                <section className="examples whatsapp-examples" id="whatsapp-examples">
 			<div className="container container-xl">
 				<div className="row justify-content-center">
 					<div className="col-12">
@@ -181,13 +185,16 @@ const WidgetContent = () => {
 					</div>
 				</div>
 			</div>
-		</section>
-
-		<div id={"example"}></div>
-            
-            </CardBody>
-        
-        </Card>
+		        </section>
+			}
+         
+        {mode !== 'edit' ? <div className="editIcon" onClick={() => {setMode('edit')}}>
+		<FaRegEdit style={{width: '18px', height: '18px', cursor:'pointer'}}/>
+		</div> : 
+		''
+		}
+		<div id={"example"}>
+		</div>
       </Container>
     </Fragment>
   );

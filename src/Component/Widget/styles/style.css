@@ -101,6 +101,26 @@ footer a {
 	color: #596473;
 	margin-bottom: 30px;
 }
+.editIcon{
+	position: fixed;
+    bottom: 35px;
+	right: 105px;
+	z-index: 998;
+	width: 45px;
+    height: 45px;
+	border-radius: 50%;
+	background-color: white;
+	display: flex;
+	align-items: center;
+    justify-content: center;
+	color: teal;
+	font-weight: 700;
+}
+.editIcon:hover{
+	background-color: green;
+	color: white;
+	cursor: pointer;
+}
 .banner p {
 	font-size: 16px;
 	color: #768498;
