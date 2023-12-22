@@ -11,13 +11,17 @@ const WidgetContent = () => {
 	const widgetRef = useRef();
 	const [template, setTemplate] = useState({...def_template});
 	const [mode, setMode] = useState('')
+	const templateChangerRef = useRef('')
     
 	useEffect(() => {
 		console.log('template ', template);
-		$("#example").empty();
-		$("#example").attr("class", "");
-		template && $('#example').czmChatSupport({...template});
-	}, [template])
+			$("#example").empty();
+			$("#example").attr("class", "");
+			template && $('#example').czmChatSupport({...template});
+
+		}, [template])
+
+	
 	
 
   return (

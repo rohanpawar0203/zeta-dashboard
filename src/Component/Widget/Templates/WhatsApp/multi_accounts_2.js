@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 export const multi_accounts_2 = {
 
 	/* Button Settings */
@@ -30,7 +32,89 @@ export const multi_accounts_2 = {
 		},
 
 		/* Representative Settings */
-		persons: []
+		persons: [
+			{   id: uuidv4(),
+				avatar: {
+					src: '<img src="assets/img/person/1.jpg" alt="">', /* Image, Icon or SVG */
+					backgroundColor: "#ffffff", /* Html color code */
+					onlineCircle: true /* Avatar online circle. To remove, (onlineCircle:false) */
+				},
+				text: {
+					title: "Lorna Hensley", /* Writing is required */
+					description: "Sales Support", /* To remove, (description:false) */
+					online: "I'm Online", /* To remove, (online:false) */
+					offline: "I will be back soon" /* To remove, (offline:false) */
+				},
+				link: {
+					desktop: "https://web.whatsapp.com/send?phone=905377323226&text=Hi", /* Writing is required */
+					mobile: "https://wa.me/905377323226/?text=Hi" /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+				},
+				onlineDay: {
+					/* Change the day you are offline like this. (sunday:false) */
+					sunday: "00:00-23:59",
+					monday: "00:00-23:59",
+					tuesday: "00:00-23:59",
+					wednesday: "00:00-23:59",
+					thursday: "00:00-23:59",
+					friday: "00:00-23:59",
+					saturday: "00:00-23:59"
+				}
+			},
+	       {   id: uuidv4(),
+				avatar: {
+					src: '<img src="assets/img/person/2.jpg" alt="">', /* Font, Image or SVG */
+					backgroundColor: "#ffffff", /* Html color code */
+					onlineCircle: true /* Avatar online circle. To remove, (onlineCircle:false) */
+				},
+				text: {
+					title: "Mattie Simmonds", /* Writing is required */
+					description: "Customer Support", /* Custom text or false. To remove, (description:false) */
+					online: "I'm Online", /* Custom text or false. To remove, (online:false) */
+					offline: "I will be back soon" /* Custom text or false. To remove, (offline:false) */
+				},
+				link: {
+					desktop: "https://web.whatsapp.com/send?phone=905377323226&text=Hi", /* Writing is required */
+					mobile: "https://wa.me/905377323226/?text=Hi" /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+				},
+				onlineDay: {
+					/* Change the day you are offline like this. (sunday:false) */
+					sunday: "00:00-23:59",
+					monday: "00:00-23:59",
+					tuesday: "00:00-23:59",
+					wednesday: "00:00-23:59",
+					thursday: "00:00-23:59",
+					friday: "00:00-23:59",
+					saturday: "00:00-23:59"
+				}
+			},
+	        {  id: uuidv4(),
+				avatar: {
+					src: '<img src="assets/img/person/3.jpg" alt="">', /* Font, Image or SVG */
+					backgroundColor: "#ffffff", /* Html color code */
+					onlineCircle: true /* Avatar online circle. To remove, (onlineCircle:false) */
+				},
+				text: {
+					title: "Kole Cleg", /* Writing is required */
+					description: "Techincal Support", /* Custom text or false. To remove, (description:false) */
+					online: "I'm Online", /* Custom text or false. To remove, (online:false) */
+					offline: "I will be back soon" /* Custom text or false. To remove, (offline:false) */
+				},
+				link: {
+					desktop: "https://web.whatsapp.com/send?phone=905377323226&text=Hi", /* Writing is required */
+					mobile: "https://wa.me/905377323226/?text=Hi" /* If it is hidden desktop link will be valid. To remove, (mobile:false) */
+				},
+				onlineDay: {
+					/* Change the day you are offline like this. (sunday:false) */
+					sunday: false,
+					monday: false,
+					tuesday: false,
+					wednesday: false,
+					thursday: false,
+					friday: false,
+					saturday: false
+				}
+			},
+		]
 	},
 
 	/* Other Settings */
