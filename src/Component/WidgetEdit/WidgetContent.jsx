@@ -17,6 +17,10 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
 import { MdOutlineRemoveCircleOutline } from "react-icons/md";
 import EditRepresentative from "./EditRepresentativeModal";
+import axios from "axios";
+
+const userData = JSON.parse(sessionStorage.getItem('currentUser'));
+const token = sessionStorage.getItem('token');
 
 const Avatar = {
   id: uuidv4(),
@@ -56,6 +60,22 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
     avatarID: "",
   });
 
+  const addWidgetTemplate = async() => {
+    try {
+      const payload = {
+        "settings": {
+            "abc": "xyz"
+        },
+        "customer_id": userData?._id,
+        "type": "whatsApp",
+        "template_id": "demo"
+    }
+      const res = await axios.post(`localhost:8080/bot-customization`, payload);
+    } catch (error) {
+      
+    }
+  }
+
   return (
     <Fragment>
       <Container fluid={true} className="mt-2 d-flex justify-content-center">
@@ -83,7 +103,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
                         ...pre,
-                        button: { ...pre?.button, position: e.target.value },
+                        type: {...pre?.type, button: { ...pre?.type?.button, position: e.target.value }},
                       }));
                     }}
                     required={true}
@@ -105,7 +125,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
                         ...pre,
-                        button: { ...pre?.button, style: e.target.value },
+                        type: {...pre?.type, button: { ...pre?.type?.button, style: e.target.value }}
                       }));
                     }}
                     placeholder="Button style"
@@ -132,10 +152,11 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                         e.preventDefault();
                         setTemplate((pre) => ({
                           ...pre,
-                          button: {
-                            ...pre?.button,
+                          type: {...pre?.type,  
+                            button: {
+                            ...pre?.type?.button,
                             backgroundColor: e.target.value,
-                          },
+                          },}
                         }));
                       }}
                       placeholder="buttonBackgroundColor"
@@ -185,7 +206,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
                         ...pre,
-                        button: { ...pre?.button, effect: e.target.value },
+                        type: {...pre?.type, button: { ...pre?.type?.button, effect: e.target.value }}
                       }));
                     }}
                     placeholder="Button Effect"
@@ -213,10 +234,11 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
                         ...pre,
+                       type: {...pre?.type,  
                         button: {
-                          ...pre?.button,
-                          speechBubble: e.target.value,
-                        },
+                        ...pre?.type?.button,
+                        speechBubble: e.target.value,
+                      }}
                       }));
                     }}
                     required={true}
@@ -236,10 +258,11 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
                         ...pre,
-                        button: {
-                          ...pre?.button,
+                        type: {...pre?.type, 
+                          button: {
+                          ...pre?.type?.button,
                           pulseEffect: e.target.value === "true" ? true : false,
-                        },
+                        }}
                       }));
                     }}
                     placeholder="Button Pulse effect"
@@ -268,10 +291,11 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
                         ...pre,
-                        button: {
-                          ...pre?.button,
-                          text: { ...pre?.button?.text, title: e.target.value },
-                        },
+                        type: {...pre?.type,
+                           button: {
+                          ...pre?.type?.button,
+                          text: { ...pre?.type?.button?.text, title: e.target.value },
+                        }}
                       }));
                     }}
                     required={true}
@@ -293,13 +317,15 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
                         ...pre,
-                        button: {
-                          ...pre?.button,
-                          text: {
-                            ...pre?.button?.text,
-                            description: e.target.value,
+                        type: {...pre?.type, 
+                          button: {
+                            ...pre?.type?.button,
+                            text: {
+                              ...pre?.type?.button?.text,
+                              description: e.target.value,
+                            },
                           },
-                        },
+                        }
                       }));
                     }}
                     required={true}
@@ -319,11 +345,13 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
                         ...pre,
-                        popup: {
-                          ...pre?.popup,
-                          automaticOpen:
-                            e.target.value === "true" ? true : false,
-                        },
+                        type: {...pre?.type, 
+                          popup: {
+                            ...pre?.type?.popup,
+                            automaticOpen:
+                              e.target.value === "true" ? true : false,
+                          },
+                        }
                       }));
                     }}
                     placeholder="Popup automatic open"
@@ -350,7 +378,9 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
                         ...pre,
-                        popup: { ...pre?.popup, effect: e.target.value },
+                        type: {...pre?.type, 
+                          popup: { ...pre?.type?.popup, effect: e.target.value },
+                        }
                       }));
                     }}
                     placeholder="Button style"
@@ -377,12 +407,14 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                         e.preventDefault();
                         setTemplate((pre) => ({
                           ...pre,
-                          popup: {
-                            ...pre?.popup,
-                            header: {
-                              ...pre?.popup?.header,
-                              backgroundColor: e.target.value,
-                            },
+                          type : {...pre?.type, 
+                            popup: {
+                              ...pre?.type?.popup,
+                              header: {
+                                ...pre?.type?.popup?.header,
+                                backgroundColor: e.target.value,
+                              },
+                          }
                           },
                         }));
                       }}
@@ -434,13 +466,15 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
                         ...pre,
-                        popup: {
-                          ...pre?.popup,
-                          header: {
-                            ...pre?.popup?.header,
-                            description: e.target.value,
+                        type: {...pre?.type,
+                          popup: {
+                            ...pre?.type?.popup,
+                            header: {
+                              ...pre?.type?.popup?.header,
+                              description: e.target.value,
+                            },
                           },
-                        },
+                        }
                       }));
                     }}
                     required={true}
@@ -462,13 +496,15 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
                         ...pre,
-                        popup: {
-                          ...pre?.popup,
-                          header: {
-                            ...pre?.popup?.header,
-                            title: e.target.value,
+                        type: {...pre?.type,  
+                          popup: {
+                            ...pre?.type?.popup,
+                            header: {
+                              ...pre?.type?.popup?.header,
+                              title: e.target.value,
+                            },
                           },
-                        },
+                        }
                       }));
                     }}
                     required={true}
@@ -493,13 +529,15 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                             if (template?.popup?.persons?.length < 3) {
                               setTemplate((pre) => ({
                                 ...pre,
-                                popup: {
-                                  ...pre.pop,
-                                  persons: [
-                                    ...pre?.popup?.persons,
-                                    { id: uuidv4(), ...Avatar },
-                                  ],
-                                },
+                                type: {...pre?.type,
+                                  popup: {
+                                    ...pre?.type?.pop,
+                                    persons: [
+                                      ...pre?.type?.popup?.persons,
+                                      { id: uuidv4(), ...Avatar },
+                                    ],
+                                  },
+                                }
                               }));
                             }
                           }}
@@ -542,14 +580,16 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                               clickEvent={() => {
                                 setTemplate((pre) => ({
                                   ...pre,
-                                  popup: {
-                                    ...pre.pop,
-                                    persons: [
-                                      ...pre?.popup?.persons.filter(
-                                        (item, ind) => item.id !== ele?.id
-                                      ),
-                                    ],
-                                  },
+                                  type: {...pre?.type, 
+                                    popup: {
+                                      ...pre?.type?.pop,
+                                      persons: [
+                                        ...pre?.type?.popup?.persons.filter(
+                                          (item, ind) => item.id !== ele?.id
+                                        ),
+                                      ],
+                                    },
+                                  }
                                 }));
                               }}
                             />

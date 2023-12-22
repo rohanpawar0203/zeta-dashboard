@@ -9,7 +9,7 @@ import WidgetEditComponent from "../WidgetEdit/WidgetContent";
 const WidgetContent = () => {
 	const $ = window.jQuery;
 	const widgetRef = useRef();
-	const [template, setTemplate] = useState({...def_template});
+	const [template, setTemplate] = useState({type: {...def_template}, template_id: ''});
 	const [mode, setMode] = useState('')
 	const templateChangerRef = useRef('')
     
@@ -17,9 +17,10 @@ const WidgetContent = () => {
 		console.log('template ', template);
 			$("#example").empty();
 			$("#example").attr("class", "");
-			template && $('#example').czmChatSupport({...template});
-
-		}, [template])
+			if(template.type){
+				$('#example').czmChatSupport({...template?.type});
+			 }
+		}, [template.type])
 
 	
 	
@@ -29,7 +30,7 @@ const WidgetContent = () => {
       <Container fluid={true} className="mt-2 d-flex justify-content-center">
             {
 				(mode === 'edit') ? 
-				<WidgetEditComponent  template={template} setTemplate={setTemplate} setMode={setMode}/>
+				<WidgetEditComponent  template={template?.type} setTemplate={setTemplate} setMode={setMode}/>
 				:
                 <section className="examples whatsapp-examples" id="whatsapp-examples">
 			<div className="container container-xl">
@@ -38,7 +39,7 @@ const WidgetContent = () => {
 						<h1>Whatsapp</h1>
 					</div>
 					<div className="col-lg-3 col-md-6 col-sm-6">
-						<div onClick={() => {setTemplate(templateController.sendTemplateType('whatsApp', 'multi_accounts_1'))}}  className="example">
+						<div onClick={() => {setTemplate((pre) => ({template_id: 'multi_accounts_1', type: templateController.sendTemplateType('whatsApp', 'multi_accounts_1')}))}}  className="example">
 							<div className="text">
 								<div className="title">Multiple Accounts 1</div>
 							</div>
@@ -48,7 +49,7 @@ const WidgetContent = () => {
 						</div>
 					</div>
 					<div className="col-lg-3 col-md-6 col-sm-6">
-						<div className="example" onClick={() => {setTemplate(templateController.sendTemplateType('whatsApp', 'multi_accounts_2'))}}>
+						<div className="example" onClick={() => {setTemplate((pre) => ({template_id: 'multi_accounts_2'	, type: templateController.sendTemplateType('whatsApp', 'multi_accounts_2')}))}}>
 							<div className="text">
 								<div className="title">Multiple Accounts 2</div>
 							</div>
@@ -58,7 +59,7 @@ const WidgetContent = () => {
 						</div>
 					</div>
 					<div className="col-lg-3 col-md-6 col-sm-6">
-						<div onClick={() => {setTemplate(templateController.sendTemplateType('whatsApp', 'multi_accounts_3'))}} className="example">
+						<div onClick={() => {setTemplate((pre) => ({template_id: 'multi_accounts_3', type: templateController.sendTemplateType('whatsApp', 'multi_accounts_3')}))}} className="example">
 							<div className="text">
 								<div className="title">Multiple Accounts 3</div>
 							</div>

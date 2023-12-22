@@ -20,7 +20,7 @@ const EditRepresentative = ({template, setTemplate, avatarID, setrepEditMode}) =
     const handleTemplateChange = (e, value, key, property) => {
         e.preventDefault();
         setTemplate((pre) => {
-            let personsArr = pre?.popup?.persons;
+            let personsArr = pre?.type?.popup?.persons;
            let result =  personsArr.map((ele, ind) => {
                 let item;
                 if(ele?.id === avatarID){
@@ -30,8 +30,7 @@ const EditRepresentative = ({template, setTemplate, avatarID, setrepEditMode}) =
                 }
                 return item;
             })
-            console.log('result  ', {...pre, popup: {...pre?.popup, persons: [...result]}});
-            return {...pre, popup: {...pre?.popup, persons: [...result]}}
+            return {...pre, type: {...pre?.type, popup: {...pre?.type?.popup, persons: [...result]}}}
         })
     }
 
