@@ -62,7 +62,7 @@ const Avatar = {
   },
 };
 
-const WidgetEditComponent = ({ template, setTemplate, setMode, templateID }) => {
+const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWidgetTemplate }) => {
   const templateRef = useRef({ ...template });
   const [repEditMode, setrepEditMode] = useState({
     status: false,
@@ -87,17 +87,13 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID }) => 
         },
         body: JSON.stringify(payload),
       })
+      getWidgetTemplate();
       toast.success(`Successfully saved widget template data`);
     } catch (error) {
       console.log('widget customization error ', error);
       toast.error(error?.message)
     }
   }
-
-  useEffect(() => {
-    console.log('length ', template?.popup?.persons);
-    console.log('status ', repEditMode.status);
-  }, [template])
   
 
   return (
@@ -419,7 +415,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID }) => 
                     <select
                       className="form-control"
                       name="popupHeaderBackgroundColor"
-                      defaultValue={colorsArr?.find((ele) => (ele?.code === template?.button?.backgroundColor))?.color}
+                      defaultValue={colorsArr?.find((ele) => (ele?.code === template?.popup?.header?.backgroundColor))?.color}
                       onChange={(e) => {
                         e.preventDefault();
                         setTemplate((pre) => ({
@@ -448,7 +444,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID }) => 
                             backgroundColor: ele?.code,
                             color: 'white'
                           }}
-                          value={ele}
+                          value={ele?.code}
                         >{ele?.color}</option>
                       ))}
                     </select>
@@ -631,7 +627,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID }) => 
                   },
                 }}
               >
-                {"Cancel"}
+                {"Back"}
               </Btn>
             </Form>
 

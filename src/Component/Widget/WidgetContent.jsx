@@ -5,7 +5,10 @@ import {templateController} from './TemplateController/templateController'
 import {def_template} from './Templates/WhatsApp/default'
 import { FaRegEdit } from "react-icons/fa";
 import WidgetEditComponent from "../WidgetEdit/WidgetContent";
+import { toast } from "react-toastify";
 
+const userData = JSON.parse(sessionStorage.getItem('currentUser'));
+const token = sessionStorage.getItem('token');
 const WidgetContent = () => {
 	const $ = window.jQuery;
 	const widgetRef = useRef();
@@ -14,7 +17,6 @@ const WidgetContent = () => {
 	const templateChangerRef = useRef('')
     
 	useEffect(() => {
-		console.log('template ', template);
 			$("#example").empty();
 			$("#example").attr("class", "");
 			if(template.type){
@@ -22,7 +24,37 @@ const WidgetContent = () => {
 			 }
 		}, [template.type])
 
+	const getWidgetTemplate = async() => {
+		try {
+			const payload = {
+			  "customer_id": userData?._id,
+			  "type": "whatsApp",
+		  }
+			const res = await fetch(`http://localhost:8080/bot-customization/template`, {
+			  method: "POST",
+			  headers: {
+				"Content-Type": "application/json", 
+				// Add other headers if needed
+			  },
+			  body: JSON.stringify(payload),
+			})
+			let result = await res.json();
+
+		  if(res.ok){
+			if(result?.data){
+				widgetRef.current = JSON.parse(result?.data?.settings);
+				setTemplate({type: {...widgetRef.current}, template_id: ''})
+			}
+		  }
+		  } catch (error) {
+			console.log('widget customization error ', error);
+			toast.error(error?.message)
+		  }
+	}
 	
+	useEffect(() => {
+	getWidgetTemplate();
+	}, [])
 	
 
   return (
@@ -30,7 +62,7 @@ const WidgetContent = () => {
       <Container fluid={true} className="mt-2 d-flex justify-content-center">
             {
 				(mode === 'edit') ? 
-				<WidgetEditComponent  template={template?.type} templateID={template?.template_id} setTemplate={setTemplate} setMode={setMode}/>
+				<WidgetEditComponent  template={template?.type} templateID={template?.template_id} setTemplate={setTemplate} setMode={setMode} getWidgetTemplate={getWidgetTemplate}/>
 				:
                 <section className="examples whatsapp-examples" id="whatsapp-examples">
 			<div className="container container-xl">
@@ -38,6 +70,18 @@ const WidgetContent = () => {
 					<div className="col-12">
 						<h1>Whatsapp</h1>
 					</div>
+					{widgetRef.current && (
+					<div className="col-lg-3 col-md-6 col-sm-6">
+					<div onClick={() => {setTemplate((pre) => ({template_id: 'current', type: widgetRef.current}))}}  className="example">
+						<div className="text">
+							<div className="title">Current Template</div>
+						</div>
+						<div className="image">
+							<img src="/assets/img/popup/whatsapp/multiple-accounts-1.png" alt="Current template type" />
+						</div>
+					</div>
+				</div>
+					)}
 					<div className="col-lg-3 col-md-6 col-sm-6">
 						<div onClick={() => {setTemplate((pre) => ({template_id: 'multi_accounts_1', type: templateController.sendTemplateType('whatsApp', 'multi_accounts_1')}))}}  className="example">
 							<div className="text">
@@ -68,132 +112,12 @@ const WidgetContent = () => {
 							</div>
 						</div>
 					</div>
-					<div className="col-lg-3 col-md-6 col-sm-6">
-						<a href="index-whatsapp-multiple-accounts-4.html" target="_blank" className="example">
-							<div className="text">
-								<div className="title">Multiple Accounts 4</div>
-							</div>
-							<div className="image">
-								<img src="/assets/img/popup/whatsapp/multiple-accounts-4.png" alt="Whatsapp Multiple Accounts 4" />
-							</div>
-						</a>
-					</div>
-					<div className="col-lg-3 col-md-6 col-sm-6">
-						<a href="index-whatsapp-single-account-1.html" target="_blank" className="example">
-							<div className="text">
-								<div className="title">Single Account 1</div>
-							</div>
-							<div className="image image-padding-1">
-								<img src="/assets/img/popup/whatsapp/single-account-1.png" alt="Whatsapp Single Account 1" />
-							</div>
-						</a>
-					</div>
-					<div className="col-lg-3 col-md-6 col-sm-6">
-						<a href="index-whatsapp-single-account-2.html" target="_blank" className="example">
-							<div className="text">
-								<div className="title">Single Account 2</div>
-							</div>
-							<div className="image image-padding-1">
-								<img src="/assets/img/popup/whatsapp/single-account-2.png" alt="Whatsapp Single Account 2" />
-							</div>
-						</a>
-					</div>
-					<div className="col-lg-3 col-md-6 col-sm-6">
-						<a href="index-whatsapp-single-account-3.html" target="_blank" className="example">
-							<div className="text">
-								<div className="title">Single Account 3</div>
-							</div>
-							<div className="image image-padding-1">
-								<img src="/assets/img/popup/whatsapp/single-account-3.png" alt="Whatsapp Single Account 3" />
-							</div>
-						</a>
-					</div>
-					<div className="col-lg-3 col-md-6 col-sm-6">
-						<a href="index-whatsapp-single-account-4.html" target="_blank" className="example">
-							<div className="text">
-								<div className="title">Single Account 4</div>
-							</div>
-							<div className="image image-padding-1">
-								<img src="/assets/img/popup/whatsapp/single-account-4.png" alt="Whatsapp Single Account 4" />
-							</div>
-						</a>
-					</div>
-					<div className="col-lg-3 col-md-6 col-sm-6">
-						<a href="index-whatsapp-button-only-1.html" target="_blank" className="example">
-							<div className="text">
-								<div className="title">Button Only 1</div>
-							</div>
-							<div className="image image-padding-2">
-								<img src="/assets/img/popup/whatsapp/button-only-1.png" alt="Whatsapp Button Only 1" />
-							</div>
-						</a>
-					</div>
-					<div className="col-lg-3 col-md-6 col-sm-6">
-						<a href="index-whatsapp-button-only-2.html" target="_blank" className="example">
-							<div className="text">
-								<div className="title">Button Only 2</div>
-							</div>
-							<div className="image image-padding-2">
-								<img src="/assets/img/popup/whatsapp/button-only-2.png" alt="Whatsapp Button Only 2" />
-							</div>
-						</a>
-					</div>
-					<div className="col-lg-3 col-md-6 col-sm-6">
-						<a href="index-whatsapp-button-only-3.html" target="_blank" className="example">
-							<div className="text">
-								<div className="title">Button Only 3</div>
-							</div>
-							<div className="image image-padding-2">
-								<img src="/assets/img/popup/whatsapp/button-only-3.png" alt="Whatsapp Button Only 3" />
-							</div>
-						</a>
-					</div>
-					<div className="col-lg-3 col-md-6 col-sm-6">
-						<a href="index-whatsapp-button-only-4.html" target="_blank" className="example">
-							<div className="text">
-								<div className="title">Button Only 4</div>
-							</div>
-							<div className="image image-padding-2">
-								<img src="/assets/img/popup/whatsapp/button-only-4.png" alt="Whatsapp Button Only 4" />
-							</div>
-						</a>
-					</div>
-					<div className="col-lg-3 col-md-6 col-sm-6">
-						<a href="index-whatsapp-button-only-5.html" target="_blank" className="example">
-							<div className="text">
-								<div className="title">Button Only 5</div>
-							</div>
-							<div className="image image-padding-2">
-								<img src="/assets/img/popup/whatsapp/button-only-5.png" alt="Whatsapp Button Only 5" />
-							</div>
-						</a>
-					</div>
-					<div className="col-lg-3 col-md-6 col-sm-6">
-						<a href="index-whatsapp-button-only-6.html" target="_blank" className="example">
-							<div className="text">
-								<div className="title">Button Only 6</div>
-							</div>
-							<div className="image image-padding-2">
-								<img src="/assets/img/popup/whatsapp/button-only-6.png" alt="Whatsapp Button Only 6" />
-							</div>
-						</a>
-					</div>
-					<div className="col-lg-3 col-md-6 col-sm-6">
-						<a href="index-whatsapp-button-only-7.html" target="_blank" className="example">
-							<div className="text">
-								<div className="title">Button Only 7</div>
-							</div>
-							<div className="image image-padding-2">
-								<img src="../../../public/main-file/plugin/assets/img/popup/whatsapp/button-only-7.png" alt="Whatsapp Button Only 7" />
-							</div>
-						</a>
-					</div>
 				</div>
 			</div>
 		        </section>
 			}
          
-        {mode !== 'edit' ? <div className="editIcon" onClick={() => {setMode('edit')}}>
+        {mode !== 'edit' ? <div className={(template?.template_id === "multi_accounts_3") ? ('editIcon editIcon-second') : 'editIcon'} onClick={() => {setMode('edit')}}>
 		<FaRegEdit style={{width: '18px', height: '18px', cursor:'pointer'}}/>
 		</div> : 
 		''

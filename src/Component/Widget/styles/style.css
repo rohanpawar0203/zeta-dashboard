@@ -109,16 +109,19 @@ footer a {
 	width: 45px;
     height: 45px;
 	border-radius: 50%;
-	background-color: white;
+	background-color: lightgreen;
 	display: flex;
 	align-items: center;
     justify-content: center;
-	color: teal;
+	color: white;
 	font-weight: 700;
 }
+.editIcon-second{
+	right: 250px;
+}
 .editIcon:hover{
-	background-color: green;
-	color: white;
+	background-color: white;
+	color: black;
 	cursor: pointer;
 }
 .banner p {
