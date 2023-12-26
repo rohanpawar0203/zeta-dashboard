@@ -69,16 +69,24 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID }) => 
     avatarID: "",
   });
 
-  const addWidgetTemplate = async() => {
+  const addWidgetTemplate = async(e) => {
+    e.preventDefault();
     try {
       const payload = {
         "settings": template,
         "customer_id": userData?._id,
         "type": "whatsApp",
-        "template_id": templateID
+        "template_id": templateID,
+        "status": "active"
     }
-      const res = await axios.post(`localhost:8080/bot-customization`, payload);
-      console.log('widget result ', res);
+      const res = await fetch(`http://localhost:8080/bot-customization`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", 
+          // Add other headers if needed
+        },
+        body: JSON.stringify(payload),
+      })
       toast.success(`Successfully saved widget template data`);
     } catch (error) {
       console.log('widget customization error ', error);
@@ -103,7 +111,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID }) => 
             <Form
               className="needs-validation"
               noValidate=""
-              onSubmit={() => {addWidgetTemplate()}}
+              onSubmit={(e) => {addWidgetTemplate(e)}}
             >
               <Row>
                 <Col md="4 mb-3">

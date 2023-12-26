@@ -37,6 +37,7 @@ import { useNavigate } from "react-router";
 import { bigCommerceUrl, shopifyStoreUrl, customUrl, crawlerUrl } from "../../api";
 import appStore from "../Live Chats/Client/AppStore";
 import { getUserDetails } from "../../Services/UsersServices";
+import BigCommerceForm from "./components/BigCommerceForm";
 
 const StoreContent = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -201,6 +202,7 @@ const StoreContent = () => {
               <CardBody>
                 <Fragment>
       <Form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}>
+        {registerType ==='bigCommerce' && (<BigCommerceForm errors={errors} register={register}/>)}
         {registerType ==='shopify' && (<ShopifyForm errors={errors} register={register}/>)}
         {registerType ==='custom' && (<Custom formData={formData} setFormData={setFormData}/>)}
         {registerType ==='crawler' && (<Crawler />)}
@@ -208,6 +210,10 @@ const StoreContent = () => {
         <Col md="8 mb-3">
         <H4>Registration Type</H4>
             <div className="m-checkbox-inline mb-0 custom-radio-ml">
+            <div className="radio radio-primary">
+                <Input id="radioinline3" type="radio" onChange={(e) => {handleRegisterTypeChange(e)}}  name="bigCommerce" value="bigCommerce" checked={registerType==='bigCommerce'}/>
+                <Label className="mb-0" for="radioinline3">{Option}<span className="digits">Big Commerce</span></Label>
+              </div>
               <div className="radio radio-primary">
                 <Input id="radioinline1" type="radio" onChange={(e) => {handleRegisterTypeChange(e)}}  name="shopify" value="shopify"  checked={registerType==='shopify'}/>
                 <Label className="mb-0" for="radioinline1">{Option}<span className="digits">Shopify</span></Label>
@@ -220,6 +226,7 @@ const StoreContent = () => {
                 <Input id="radioinline3" type="radio" onChange={(e) => {handleRegisterTypeChange(e)}}  name="crawler" value="crawler" checked={registerType==='crawler'}/>
                 <Label className="mb-0" for="radioinline3">{Option}<span className="digits">Crawler</span></Label>
               </div>
+              
             </div>
           </Col>
         </Row>
