@@ -30,7 +30,7 @@ const WidgetContent = () => {
       <Container fluid={true} className="mt-2 d-flex justify-content-center">
             {
 				(mode === 'edit') ? 
-				<WidgetEditComponent  template={template?.type} setTemplate={setTemplate} setMode={setMode}/>
+				<WidgetEditComponent  template={template?.type} templateID={template?.template_id} setTemplate={setTemplate} setMode={setMode}/>
 				:
                 <section className="examples whatsapp-examples" id="whatsapp-examples">
 			<div className="container container-xl">

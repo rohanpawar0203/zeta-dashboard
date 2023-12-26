@@ -3,7 +3,7 @@ import { Btn, H5, Image } from '../../AbstractElements';
 import { Col, Container, Form, FormGroup, Input, InputGroup, Label, Row } from 'reactstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { MdCancel } from 'react-icons/md';
+import { MdCancel, MdDone  } from 'react-icons/md';
 import { FaRegEdit } from 'react-icons/fa';
 import { getUserDetails } from '../../Services/UsersServices';
 import { FileServerAPI, UploadCompanyLogoAPI } from '../../api';
@@ -13,6 +13,7 @@ const token = sessionStorage.getItem('token');
 
 const EditRepresentative = ({template, setTemplate, avatarID, setrepEditMode}) => {
      const [companyLogoFile, setcompanyLogoFile] = useState('');
+     const templateRef = useRef(template);
      const [avtProfile, setAvtProfile] = useState({...template?.popup?.persons?.find((ele) => (ele.id === avatarID))})
      const [companyLogoURL, setcompanyLogoURL] = useState('')
      const companayLogoRef = useRef('')
@@ -51,7 +52,7 @@ const EditRepresentative = ({template, setTemplate, avatarID, setrepEditMode}) =
           getUserDetails(userData?._id);
           let imgElement = document.createElement('img');
           let urlString = FileServerAPI+'/'+ responseUrl;
-          imgElement.src = `${urlString}`;
+          imgElement.src = urlString;
           imgElement.alt = '';
           let evnt = new Event('click');
           handleTemplateChange(evnt, imgElement?.outerHTML, 'avatar', 'src');
@@ -283,21 +284,28 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                     </Col>
                   </Row>
 
-                  <Btn
-                    attrBtn={{
-                      color: "primary",
-                      onClick: () => {
-                        if(!companyLogoFile){
-                            toast.error('Please Upload Profile Picture!');
-                        }else{
-                            uploadCompanyLogo();
-                            setrepEditMode({ status: false, avatarID: null });
-                        }
-                      },
-                    }}
-                  >
-                    {"Ok"}
-                  </Btn>
+                <div className="d-flex gap-2">
+                  <MdDone style={{width: '20px', height: '20px', cursor: 'pointer', color: 'green'}} onClick={() => {
+                   if(!companyLogoFile){
+                    toast.error('Please upload profile image!');
+                   }else{
+                    uploadCompanyLogo();
+                    setrepEditMode({
+                      status: false,
+                      avatarID: null,
+                    });
+                   }
+                   setCompanyLogoMode('logo')
+                  }}/>
+                <MdCancel style={{width: '20px', height: '20px', cursor: 'pointer', color: 'red'}} onClick={() => {
+                       setTemplate((pre) => ({...pre, type: {...pre?.type, popup: {...pre?.type?.popup, persons: [...templateRef?.current?.popup?.persons] } }}));
+                       setrepEditMode({
+                        status: false,
+                        avatarID: null,
+                      });
+                       }}/>
+                </div>
+                  
 
     </Form>
     </Fragment>

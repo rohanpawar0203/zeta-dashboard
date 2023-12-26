@@ -18,9 +18,18 @@ import { CiEdit } from "react-icons/ci";
 import { MdOutlineRemoveCircleOutline } from "react-icons/md";
 import EditRepresentative from "./EditRepresentativeModal";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const userData = JSON.parse(sessionStorage.getItem('currentUser'));
 const token = sessionStorage.getItem('token');
+const colorsArr = [
+  {code: "#CD5C5C", color: 'IndianRed'},
+  {code: "#000000", color: 'Black'},
+  {code: "#808000", color: 'Olive'},
+  {code: "#008000", color: 'Green'},
+  {code: "#0000FF", color: 'Blue'},
+  {code: "#800080", color: 'Purple'},
+]
 
 const Avatar = {
   id: uuidv4(),
@@ -53,7 +62,7 @@ const Avatar = {
   },
 };
 
-const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
+const WidgetEditComponent = ({ template, setTemplate, setMode, templateID }) => {
   const templateRef = useRef({ ...template });
   const [repEditMode, setrepEditMode] = useState({
     status: false,
@@ -63,18 +72,25 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
   const addWidgetTemplate = async() => {
     try {
       const payload = {
-        "settings": {
-            "abc": "xyz"
-        },
+        "settings": template,
         "customer_id": userData?._id,
         "type": "whatsApp",
-        "template_id": "demo"
+        "template_id": templateID
     }
       const res = await axios.post(`localhost:8080/bot-customization`, payload);
+      console.log('widget result ', res);
+      toast.success(`Successfully saved widget template data`);
     } catch (error) {
-      
+      console.log('widget customization error ', error);
+      toast.error(error?.message)
     }
   }
+
+  useEffect(() => {
+    console.log('length ', template?.popup?.persons);
+    console.log('status ', repEditMode.status);
+  }, [template])
+  
 
   return (
     <Fragment>
@@ -87,7 +103,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
             <Form
               className="needs-validation"
               noValidate=""
-              onSubmit={() => {}}
+              onSubmit={() => {addWidgetTemplate()}}
             >
               <Row>
                 <Col md="4 mb-3">
@@ -147,7 +163,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                     <select
                       className="form-control"
                       name="buttonBackgroundColor"
-                      value={`Select background Color`}
+                      defaultValue={colorsArr?.find((ele) => (ele?.code === template?.button?.backgroundColor))?.color}
                       onChange={(e) => {
                         e.preventDefault();
                         setTemplate((pre) => ({
@@ -155,7 +171,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                           type: {...pre?.type,  
                             button: {
                             ...pre?.type?.button,
-                            backgroundColor: e.target.value,
+                            backgroundColor: e?.target?.value,
                           },}
                         }));
                       }}
@@ -168,24 +184,17 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                       >
                         Select background Color
                       </option>
-                      {[
-                        "#7B241C",
-                        "#4A235A",
-                        "#0B5345",
-                        "#145A32",
-                        "#7B7D7D",
-                        "#F1C40F",
-                        "#424949",
-                      ].map((ele, ind) => (
+                      {colorsArr?.map((ele, ind) => (
                         <option
                           style={{
                             width: "15px",
                             height: "15px",
                             borderRadius: "50%",
-                            backgroundColor: ele,
+                            backgroundColor: ele?.code,
+                            color: 'white',
                           }}
-                          value={ele}
-                        ></option>
+                          value={ele?.code}
+                        >{ele?.color}</option>
                       ))}
                     </select>
                     <ColorDiv bgColor={template?.button?.backgroundColor} />
@@ -402,12 +411,12 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                     <select
                       className="form-control"
                       name="popupHeaderBackgroundColor"
-                      value={`Select background Color`}
+                      defaultValue={colorsArr?.find((ele) => (ele?.code === template?.button?.backgroundColor))?.color}
                       onChange={(e) => {
                         e.preventDefault();
                         setTemplate((pre) => ({
                           ...pre,
-                          type : {...pre?.type, 
+                          type : {...pre?.type,
                             popup: {
                               ...pre?.type?.popup,
                               header: {
@@ -422,24 +431,17 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                       required={true}
                     >
                       <option value={""}>Select background Color</option>
-                      {[
-                        "#7B241C",
-                        "#4A235A",
-                        "#0B5345",
-                        "#145A32",
-                        "#7B7D7D",
-                        "#F1C40F",
-                        "#424949",
-                      ].map((ele, ind) => (
+                      {colorsArr.map((ele, ind) => (
                         <option
                           style={{
                             width: "15px",
                             height: "15px",
                             borderRadius: "50%",
-                            backgroundColor: ele,
+                            backgroundColor: ele?.code,
+                            color: 'white'
                           }}
                           value={ele}
-                        ></option>
+                        >{ele?.color}</option>
                       ))}
                     </select>
                     <ColorDiv
@@ -616,7 +618,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode }) => {
                 attrBtn={{
                   color: "danger",
                   onClick: () => {
-                    setTemplate({ ...templateRef.current });
+                    setTemplate((pre) => ({...pre, type: {...templateRef?.current?.type}}));
                     setMode("");
                   },
                 }}
