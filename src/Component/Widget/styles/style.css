@@ -109,15 +109,16 @@ footer a {
 	width: 45px;
     height: 45px;
 	border-radius: 50%;
-	background-color: lightgreen;
+	background-color: white;
 	display: flex;
 	align-items: center;
     justify-content: center;
-	color: white;
+	color: teal;
 	font-weight: 700;
 }
 .editIcon-second{
 	right: 250px;
+	bottom: 32px;
 }
 .editIcon:hover{
 	background-color: white;

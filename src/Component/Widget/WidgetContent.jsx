@@ -9,6 +9,16 @@ import { toast } from "react-toastify";
 
 const userData = JSON.parse(sessionStorage.getItem('currentUser'));
 const token = sessionStorage.getItem('token');
+
+const whatsAppImgs = [
+	require('../../../src/assets/images/whatsapp/multiple-accounts-1.png'),
+	require('../../../src/assets/images/whatsapp/multiple-accounts-2.png'),
+	require('../../../src/assets/images/whatsapp/multiple-accounts-3.png'),
+	require('../../../src/assets/images/whatsapp/multiple-accounts-4.png'),
+	
+	// Add more image paths as needed
+  ]
+
 const WidgetContent = () => {
 	const $ = window.jQuery;
 	const widgetRef = useRef();
@@ -77,7 +87,7 @@ const WidgetContent = () => {
 							<div className="title">Current Template</div>
 						</div>
 						<div className="image">
-							<img src="/assets/img/popup/whatsapp/multiple-accounts-1.png" alt="Current template type" />
+							<img src={whatsAppImgs[0]} alt="Current template type" />
 						</div>
 					</div>
 				</div>
@@ -88,7 +98,7 @@ const WidgetContent = () => {
 								<div className="title">Multiple Accounts 1</div>
 							</div>
 							<div className="image">
-								<img src="/assets/img/popup/whatsapp/multiple-accounts-1.png" alt="Whatsapp Multiple Accounts 1" />
+								<img src={whatsAppImgs[0]} alt="Whatsapp Multiple Accounts 1" />
 							</div>
 						</div>
 					</div>
@@ -98,7 +108,7 @@ const WidgetContent = () => {
 								<div className="title">Multiple Accounts 2</div>
 							</div>
 							<div className="image">
-								<img src="/assets/img/popup/whatsapp/multiple-accounts-2.png" alt="Whatsapp Multiple Accounts 2" />
+								<img src={whatsAppImgs[1]} alt="Whatsapp Multiple Accounts 2" />
 							</div>
 						</div>
 					</div>
@@ -108,7 +118,7 @@ const WidgetContent = () => {
 								<div className="title">Multiple Accounts 3</div>
 							</div>
 							<div className="image">
-								<img src="/assets/img/popup/whatsapp/multiple-accounts-3.png" alt="Whatsapp Multiple Accounts 3" />
+								<img src={whatsAppImgs[2]} alt="Whatsapp Multiple Accounts 3" />
 							</div>
 						</div>
 					</div>
