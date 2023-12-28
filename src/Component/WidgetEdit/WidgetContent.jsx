@@ -11,7 +11,7 @@ import {
   Label,
 } from "reactstrap";
 import "../Widget/styles/style.css";
-import { Btn, H5 } from "../../AbstractElements";
+import { Btn, H5, H6 } from "../../AbstractElements";
 import { v4 as uuidv4 } from "uuid";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
@@ -109,16 +109,17 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
               noValidate=""
               onSubmit={(e) => {addWidgetTemplate(e)}}
             >
+              <H6>{"Button"}</H6>
               <Row>
                 <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
-                    {"Button Position"}
+                    {"Position"}
                   </Label>
                   <select
                     className="form-control"
                     name="position"
                     defaultValue={template?.button?.position}
-                    placeholder="Button Position"
+                    placeholder="Position"
                     onChange={(e) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
@@ -136,7 +137,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
                 <Col md="4 mb-3">
-                  <Label htmlFor="validationCustom01">{"Button style"}</Label>
+                  <Label htmlFor="validationCustom01">{"Style"}</Label>
                   <select
                     className="form-control"
                     name="style"
@@ -148,7 +149,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                         type: {...pre?.type, button: { ...pre?.type?.button, style: e.target.value }}
                       }));
                     }}
-                    placeholder="Button style"
+                    placeholder="Style"
                     required={true}
                   >
                     <option value={""}>Select Style</option>
@@ -161,7 +162,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                 </Col>
                 <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
-                    {"Button background Color"}
+                    {"Background Color"}
                   </Label>
                   <div className="d-flex gap-2 align-items-center">
                     <select
@@ -179,7 +180,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                           },}
                         }));
                       }}
-                      placeholder="buttonBackgroundColor"
+                      placeholder="Background Color"
                       required={true}
                     >
                       <option
@@ -210,7 +211,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
 
               <Row>
                 <Col md="4 mb-3">
-                  <Label htmlFor="validationCustom01">{"Button effect"}</Label>
+                  <Label htmlFor="validationCustom01">{"Effect"}</Label>
                   <select
                     className="form-control"
                     name="buttonEffect"
@@ -222,7 +223,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                         type: {...pre?.type, button: { ...pre?.type?.button, effect: e.target.value }}
                       }));
                     }}
-                    placeholder="Button Effect"
+                    placeholder="Effect"
                     required={true}
                   >
                     <option value={""}>Select Effect</option>
@@ -235,14 +236,14 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                 </Col>
                 <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
-                    {"Button Speech Bubble"}
+                    {"Speech Bubble"}
                   </Label>
                   <input
                     className="form-control"
                     name="speechBubble"
                     type="text"
                     defaultValue={template?.button?.speechBubble}
-                    placeholder="Button Speech Bubble"
+                    placeholder="Speech Bubble"
                     onChange={(e) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
@@ -261,7 +262,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                 </Col>
                 <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
-                    {"Button Pulse effect"}
+                    {"Pulse effect"}
                   </Label>
                   <select
                     className="form-control"
@@ -278,7 +279,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                         }}
                       }));
                     }}
-                    placeholder="Button Pulse effect"
+                    placeholder="Pulse effect"
                     required={true}
                   >
                     <option value={""}>Select Pulse Effect</option>
@@ -293,13 +294,13 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
 
               <Row>
                 <Col md="4 mb-3">
-                  <Label htmlFor="validationCustom01">{"Button Title"}</Label>
+                  <Label htmlFor="validationCustom01">{"Title"}</Label>
                   <input
                     className="form-control"
                     name="buttonTitle"
                     type="text"
                     defaultValue={template?.button?.text?.title}
-                    placeholder="Button Title"
+                    placeholder="Title"
                     onChange={(e) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
@@ -318,14 +319,14 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                 </Col>
                 <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
-                    {"Button description"}
+                    {"description"}
                   </Label>
                   <input
                     className="form-control"
                     name="buttonDescription"
                     type="text"
                     defaultValue={template?.button?.text?.description}
-                    placeholder="Button description"
+                    placeholder="description"
                     onChange={(e) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
@@ -346,128 +347,24 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
-                <Col md="4 mb-3">
-                  <Label htmlFor="validationCustom01">
-                    {"Popup automatic open"}
-                  </Label>
-                  <select
-                    className="form-control"
-                    name="automaticOpen"
-                    defaultValue={template?.popup?.automaticOpen}
-                    onChange={(e) => {
-                      e.preventDefault();
-                      setTemplate((pre) => ({
-                        ...pre,
-                        type: {...pre?.type, 
-                          popup: {
-                            ...pre?.type?.popup,
-                            automaticOpen:
-                              e.target.value === "true" ? true : false,
-                          },
-                        }
-                      }));
-                    }}
-                    placeholder="Popup automatic open"
-                    required={true}
-                  >
-                    <option value={""}>Select auto open</option>
-                    {[true, false].map((ele, ind) => (
-                      <option value={ele}>{ele ? "Yes" : "No"}</option>
-                    ))}
-                  </select>
-                  <span></span>
-                  <div className="valid-feedback">{"Looks good!"}</div>
-                </Col>
+                
               </Row>
 
               <Row>
-                <Col md="4 mb-3">
-                  <Label htmlFor="validationCustom01">{"Popup Effect"}</Label>
-                  <select
-                    className="form-control"
-                    name="popupEffect"
-                    defaultValue={template?.button?.style}
-                    onChange={(e) => {
-                      e.preventDefault();
-                      setTemplate((pre) => ({
-                        ...pre,
-                        type: {...pre?.type, 
-                          popup: { ...pre?.type?.popup, effect: e.target.value },
-                        }
-                      }));
-                    }}
-                    placeholder="Button style"
-                    required={true}
-                  >
-                    <option value={""}>Select Popup Effect</option>
-                    {new Array(15).fill("1").map((ele, ind) => (
-                      <option value={ind + 1}>Effect {`${ind + 1}`}</option>
-                    ))}
-                  </select>
-                  <span></span>
-                  <div className="valid-feedback">{"Looks good!"}</div>
-                </Col>
-                <Col md="4 mb-3">
-                  <Label htmlFor="validationCustom01">
-                    {"Popup header background Color"}
-                  </Label>
-                  <div className="d-flex gap-2 align-items-center">
-                    <select
-                      className="form-control"
-                      name="popupHeaderBackgroundColor"
-                      defaultValue={colorsArr?.find((ele) => (ele?.code === template?.popup?.header?.backgroundColor))?.color}
-                      onChange={(e) => {
-                        e.preventDefault();
-                        setTemplate((pre) => ({
-                          ...pre,
-                          type : {...pre?.type,
-                            popup: {
-                              ...pre?.type?.popup,
-                              header: {
-                                ...pre?.type?.popup?.header,
-                                backgroundColor: e.target.value,
-                              },
-                          }
-                          },
-                        }));
-                      }}
-                      placeholder="Popup header background Color"
-                      required={true}
-                    >
-                      <option value={""}>Select background Color</option>
-                      {colorsArr.map((ele, ind) => (
-                        <option
-                          style={{
-                            width: "15px",
-                            height: "15px",
-                            borderRadius: "50%",
-                            backgroundColor: ele?.code,
-                            color: 'white'
-                          }}
-                          value={ele?.code}
-                        >{ele?.color}</option>
-                      ))}
-                    </select>
-                    <ColorDiv
-                      bgColor={template?.popup?.header?.backgroundColor}
-                    />
-                  </div>
-                  <span></span>
-                  <div className="valid-feedback">{"Looks good!"}</div>
-                </Col>
+                <H6>Popup</H6>
               </Row>
 
               <Row>
                 <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
-                    {"Popup Header description"}
+                    {"Header description"}
                   </Label>
                   <input
                     className="form-control"
                     name="popupHeaderDescription"
                     type="text"
                     defaultValue={template?.popup?.header?.description}
-                    placeholder="Popup Header description"
+                    placeholder="Header description"
                     onChange={(e) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
@@ -490,14 +387,14 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                 </Col>
                 <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
-                    {"Popup Header Title"}
+                    {"Header Title"}
                   </Label>
                   <input
                     className="form-control"
                     name="popupHeaderTitle"
                     type="text"
                     defaultValue={template?.popup?.header?.title}
-                    placeholder="Popup Header Title"
+                    placeholder="Header Title"
                     onChange={(e) => {
                       e.preventDefault();
                       setTemplate((pre) => ({

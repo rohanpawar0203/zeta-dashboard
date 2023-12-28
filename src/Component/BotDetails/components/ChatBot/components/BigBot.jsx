@@ -44,8 +44,10 @@ const BigBot = ({ myBot }) => {
     const sendData = {
       identity: "USER",
       message: userMessage,
+      domain: user?.websiteLink,
+      company_name: user?.companyName,
       roomId: getSessionId(sessionStorage.getItem("sessionUUID")),
-      organization_id: user?.store?.id,   // 
+      organization_id: user?._id,   // 
       type: "csv",
       time: "",
     };

@@ -113,7 +113,7 @@ footer a {
 	display: flex;
 	align-items: center;
     justify-content: center;
-	color: teal;
+	color: black;
 	font-weight: 700;
 }
 .editIcon-second{
@@ -122,7 +122,7 @@ footer a {
 }
 .editIcon:hover{
 	background-color: white;
-	color: black;
+	color: green;
 	cursor: pointer;
 }
 .banner p {

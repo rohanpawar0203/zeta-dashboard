@@ -20,7 +20,7 @@ import appStore from '../../Component/Live Chats/Client/AppStore';
 const HeaderContain = () => {// eslint-disable-next-line
   const [profile, setProfile] = useState('');
   const [name, setName] = useState('');
-  const { setUserData, setToken, userData, setConversation} = appStore();
+  const { setUserData, setToken, userData, setConversation, setMessages} = appStore();
   useEffect(() => {
     setProfile(localStorage.getItem('profileURL') || UserImg);
     setName(localStorage.getItem('Name'));
@@ -31,10 +31,11 @@ const HeaderContain = () => {// eslint-disable-next-line
   const {handleForLogout} = GetMenuItemsProps()
   const Logout = () => {
     setConversation([]);
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('currentUser');
+    setMessages([]);
+    sessionStorage.clear();
     setUserData({});
     setToken(''); 
+    setTimeout(() =>{history(`${process.env.PUBLIC_URL}/login`)},  1000); 
   };
   return (
     <Fragment>
