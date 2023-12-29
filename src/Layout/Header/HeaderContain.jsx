@@ -32,9 +32,9 @@ const HeaderContain = () => {// eslint-disable-next-line
   const Logout = () => {
     setConversation([]);
     setMessages([]);
-    sessionStorage.clear();
     setUserData({});
     setToken(''); 
+    sessionStorage.clear();
     setTimeout(() =>{history(`${process.env.PUBLIC_URL}/login`)},  1000); 
   };
   return (

@@ -32,7 +32,10 @@ import { toast } from "react-toastify";
 import { PlanDetails } from "./api";
 
 function App() {
+  const {userData} = appStore();
+
   useEffect(() => {
+      console.log('userData changes ', userData);
     if (!sessionStorage.getItem("sessionUUID")) {
       sessionStorage.setItem("sessionUUID", uuidv4().toString());
     }
