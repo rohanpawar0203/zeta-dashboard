@@ -32,7 +32,7 @@ import { toast } from "react-toastify";
 import { PlanDetails } from "./api";
 
 function App() {
-  const {userData} = appStore();
+  const {userData, token} = appStore();
 
   useEffect(() => {
       console.log('userData changes ', userData);
@@ -41,7 +41,7 @@ function App() {
     }
     getSessionId(sessionStorage.getItem("sessionUUID"));
     connectWithSocketIOServer();
-  }, []);
+  }, [token]);
   return (
     <Fragment>
       <CustomizerProvider>

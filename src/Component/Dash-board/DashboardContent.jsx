@@ -4,7 +4,7 @@ import CountUp from "react-countup";
 import { Card, CardBody, Col, Media, Container, Row } from "reactstrap";
 import { toast } from "react-toastify";
 import { PlusSquare, Upload, card } from "react-feather";
-import { H4, H6, LI, P, UL, Image, H5 } from "../../AbstractElements";
+import { H4, H6, LI, P, UL, Image, H5, H3 } from "../../AbstractElements";
 import errorImg from "../../assets/images/search-not-found.png";
 import TurnoverChart from "../Widgets/ChartsWidgets/TurnoverChart";
 import {
@@ -29,12 +29,48 @@ import {
   TruckSvg1,
 } from "../Widgets/SvgIcons";
 import { connectWithSocketIOServer } from "../Live Chats/Client/wss";
+import { WhatsAppAnalyticsAPI } from "../../api";
 
+const userData = JSON.parse(sessionStorage.getItem('currentUser'));
 const DashboardContent = () => {
+  const [whatsAppAnalytics, setwhatsAppAnalytics] = useState({})
+
+
+  const getWhatsAppAnalytics = async() => {
+    try {
+      const current_date = new Date();
+      const currentDate = new Date().toGMTString();
+      const start_date = new Date(`${current_date.getFullYear()}-${current_date.getMonth()+1}-01`).toGMTString();
+      const payLoad = {
+        "dateFrom": start_date,
+        "dateAt": currentDate,
+        "phoneNumber": `${userData?.contact}`
+      }
+      console.log('getWhatsAppAnalytics payLoad  ', payLoad);
+      const res = await axios.post(WhatsAppAnalyticsAPI, payLoad);
+      const result =  await res?.data[0];
+      const whatsappDeliveredCount = result?.whatsappDeliveredCount[0]['deliveredCount'];
+      const whatsappReadCount = result?.whatsappReadCount[0]['readCount'];
+      const whatsappSentCount = result?.whatsappSentCount[0]['sentCount'];
+      console.log('getWhatsAppAnalytics payLoad  ', result);
+   if(result){
+    setwhatsAppAnalytics({
+       whatsappDeliveredCount,
+       whatsappReadCount,
+       whatsappSentCount,
+    });
+   }
+  } catch (error) {
+      console.log('getWhatsAppAnalytics error got ', error);
+    }
+  }
 
   useEffect(() => {
     connectWithSocketIOServer();
+    getWhatsAppAnalytics();
   }, [])
+
+
   
   return (
     <Fragment>
@@ -42,19 +78,22 @@ const DashboardContent = () => {
         <Container fluid={true} className="general-widget">
           <Row className="d-flex justify-content-evenly">
             <Fragment>
+            <H3 attrH6={{ className: "font-roboto" }}>
+                          Whats App
+                        </H3>
               <Col sm="6" xl="3" lg="10">
                 <Card className="o-hidden">
                   <CardBody>
                     <Media className="static-widget">
                       <Media body>
                         <H4 attrH6={{ className: "font-roboto" }}>
-                          Queries-resolved
+                         Total Messages Delivered
                         </H4>
                         <H5 attrH4={{ className: "mb-0 counter" }}>
-                          <CountUp end={100} />
+                          <CountUp end={whatsAppAnalytics?.whatsappDeliveredCount} />
                         </H5>
                       </Media>
-                      <DollerSvg />
+                      <MessageSvg />
                     </Media>
                     <div className="progress-widget">
                       <div className="progress sm-progress-bar progress-animate">
@@ -79,10 +118,10 @@ const DashboardContent = () => {
                     <Media className="static-widget">
                       <Media body>
                         <H4 attrH6={{ className: "font-roboto" }}>
-                          Messages received
+                        Total Messages Read
                         </H4>
                         <H5 attrH4={{ className: "mb-0 counter" }}>
-                          <CountUp end={100} />
+                          <CountUp end={whatsAppAnalytics?.whatsappReadCount} />
                         </H5>
                       </Media>
                       <MessageSvg />
@@ -110,10 +149,10 @@ const DashboardContent = () => {
                     <Media className="static-widget">
                       <Media body>
                         <H4 attrH6={{ className: "font-roboto" }}>
-                          Bot Messages sent{" "}
+                        Total Messages Sent
                         </H4>
                         <H5 attrH4={{ className: "mb-0 counter" }}>
-                          <CountUp end={100} />
+                          <CountUp end={whatsAppAnalytics?.whatsappSentCount} />
                         </H5>
                       </Media>
                       <MessageSvg />
@@ -137,11 +176,11 @@ const DashboardContent = () => {
               </Col>
             </Fragment>
           </Row>
-          <Row>
+          {/* <Row>
             <TurnoverChart chartName="Total Queries-resolved"/>
             <TurnoverChart chartName="Total Messages received"/>
             <TurnoverChart chartName="Total Messages sent by Bot"/>
-          </Row>
+          </Row> */}
         </Container>
       </Fragment>
     </Fragment>
