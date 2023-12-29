@@ -46,20 +46,16 @@ const DashboardContent = () => {
         "dateAt": currentDate,
         "phoneNumber": `${userData?.contact}`
       }
-      console.log('getWhatsAppAnalytics payLoad  ', payLoad);
       const res = await axios.post(WhatsAppAnalyticsAPI, payLoad);
       const result =  await res?.data[0];
-      const whatsappDeliveredCount = result?.whatsappDeliveredCount[0]['deliveredCount'];
-      const whatsappReadCount = result?.whatsappReadCount[0]['readCount'];
-      const whatsappSentCount = result?.whatsappSentCount[0]['sentCount'];
-      console.log('getWhatsAppAnalytics payLoad  ', result);
-   if(result){
+    const whatsappDeliveredCount = result?.whatsappDeliveredCount[0]?.deliveredCount ? result?.whatsappDeliveredCount[0]?.deliveredCount : 'NA';
+    const whatsappReadCount = result?.whatsappReadCount[0]?.readCount ? result?.whatsappReadCount[0]?.readCount : 'NA';
+    const whatsappSentCount = result?.whatsappSentCount[0]?.sentCount ? result?.whatsappSentCount[0]?.sentCount : 'NA';
     setwhatsAppAnalytics({
        whatsappDeliveredCount,
        whatsappReadCount,
        whatsappSentCount,
     });
-   }
   } catch (error) {
       console.log('getWhatsAppAnalytics error got ', error);
     }
@@ -87,7 +83,7 @@ const DashboardContent = () => {
                     <Media className="static-widget">
                       <Media body>
                         <H4 attrH6={{ className: "font-roboto" }}>
-                         Total Messages Delivered
+                          Messages Delivered
                         </H4>
                         <H5 attrH4={{ className: "mb-0 counter" }}>
                           <CountUp end={whatsAppAnalytics?.whatsappDeliveredCount} />
@@ -118,7 +114,7 @@ const DashboardContent = () => {
                     <Media className="static-widget">
                       <Media body>
                         <H4 attrH6={{ className: "font-roboto" }}>
-                        Total Messages Read
+                         Messages Read
                         </H4>
                         <H5 attrH4={{ className: "mb-0 counter" }}>
                           <CountUp end={whatsAppAnalytics?.whatsappReadCount} />
@@ -149,7 +145,7 @@ const DashboardContent = () => {
                     <Media className="static-widget">
                       <Media body>
                         <H4 attrH6={{ className: "font-roboto" }}>
-                        Total Messages Sent
+                         Messages Sent
                         </H4>
                         <H5 attrH4={{ className: "mb-0 counter" }}>
                           <CountUp end={whatsAppAnalytics?.whatsappSentCount} />

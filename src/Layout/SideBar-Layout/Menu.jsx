@@ -61,10 +61,10 @@ export const MENUITEMS = [
             { path: `${process.env.PUBLIC_URL}/tickets`, bookmark: true, icon: FilemanagerSvg, title: 'Tickets', type: 'link' }
         ]
     },
-    {
-        menutitle: 'Widget',
-        Items: [
-            { path: `${process.env.PUBLIC_URL}/widget`, bookmark: true, icon: FilemanagerSvg, title: 'Widget', type: 'link' }
-        ]
-    }
+    // {
+    //     menutitle: 'Widget',
+    //     Items: [
+    //         { path: `${process.env.PUBLIC_URL}/widget`, bookmark: true, icon: FilemanagerSvg, title: 'Widget', type: 'link' }
+    //     ]
+    // }
 ];

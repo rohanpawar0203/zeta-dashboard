@@ -6,7 +6,6 @@ const generateSessionId = () => {
 
 export const getSessionId = (parameter) => {
   // Check if a session exists for the parameter
-  console.log("Parameter", parameter);
   const sessions = JSON.parse(sessionStorage.getItem("sessions")) || null;
   if (sessions !== null) {
     const existingSession = Object.values(sessions[0]).find(

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { FileText, LogIn, Mail, Settings, User } from 'react-feather';
 import { Media } from 'reactstrap';
 import { Link, useNavigate } from 'react-router-dom';
@@ -16,11 +16,13 @@ import { firebase_app } from '../../Config/Config';
 import Bookmark from './Bookmark/index';
 import { Account, Inbox, LogOut, Taskboard } from '../../Constant';
 import appStore from '../../Component/Live Chats/Client/AppStore';
+import ChatAppContext from '../../_helper/chat-app';
 
 const HeaderContain = () => {// eslint-disable-next-line
   const [profile, setProfile] = useState('');
   const [name, setName] = useState('');
-  const { setUserData, setToken, userData, setConversation, setMessages} = appStore();
+  const {setMembers, memberss} = useContext(ChatAppContext);
+  const { setUserData, setToken, userData, setConversation,messages, setShowTyping, clearMessages,  liveConversation, setLiveConversation} = appStore();
   useEffect(() => {
     setProfile(localStorage.getItem('profileURL') || UserImg);
     setName(localStorage.getItem('Name'));
@@ -31,11 +33,15 @@ const HeaderContain = () => {// eslint-disable-next-line
   const {handleForLogout} = GetMenuItemsProps()
   const Logout = () => {
     setConversation([]);
-    setMessages([]);
+    setLiveConversation([]);
+    setMembers([]);
+    clearMessages();
     setUserData({});
+    setShowTyping(false);
     setToken(''); 
     sessionStorage.clear();
     setTimeout(() =>{history(`${process.env.PUBLIC_URL}/login`)},  1000); 
+
   };
   return (
     <Fragment>

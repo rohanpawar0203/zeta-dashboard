@@ -35,13 +35,12 @@ function App() {
   const {userData, token} = appStore();
 
   useEffect(() => {
-      console.log('userData changes ', userData);
     if (!sessionStorage.getItem("sessionUUID")) {
       sessionStorage.setItem("sessionUUID", uuidv4().toString());
     }
     getSessionId(sessionStorage.getItem("sessionUUID"));
     connectWithSocketIOServer();
-  }, [token]);
+  }, []);
   return (
     <Fragment>
       <CustomizerProvider>

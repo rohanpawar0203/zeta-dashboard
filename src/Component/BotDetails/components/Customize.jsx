@@ -60,7 +60,6 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
         },
       });
       const responseData = await response.json();
-      console.log('responseData , ', responseData);
       if (response.ok) {
         fetchBotData(myBot?._id);
         toast.success(responseData.message);
