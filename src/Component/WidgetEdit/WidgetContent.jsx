@@ -109,7 +109,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
               noValidate=""
               onSubmit={(e) => {addWidgetTemplate(e)}}
             >
-              <H6>{"Button"}</H6>
+              <H6 attrH6={{className: 'd-inline-block border border-light p-2 bg-light text-white rounded'}}>{"Button"}</H6>
               <Row>
                 <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
@@ -351,7 +351,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
               </Row>
 
               <Row>
-                <H6>Popup</H6>
+                <H6 attrH6={{className: 'd-inline-block border border-light p-2 bg-light text-white rounded'}}>Popup</H6>
               </Row>
 
               <Row>
