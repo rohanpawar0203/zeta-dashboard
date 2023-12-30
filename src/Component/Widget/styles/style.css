@@ -159,6 +159,17 @@ footer a {
 .examples {
     border-bottom: 5px solid #fff;
 }
+.examples .current-template{
+	background-color: rgb(16, 195, 121);
+}
+.examples .current-template .text .title{
+	color: white;
+}
+.btn-styles{
+	width: 100px;
+    height: 50px;
+    object-fit: contain;
+}
 .examples h1 {
     font-size: 100px;
     font-weight: 700;

@@ -45,6 +45,7 @@ const WidgetContent = () => {
 			  "customer_id": userData?._id,
 			  "type": "whatsapp",
 		  }
+		  console.log('payload ', payload)
 			const res = await fetch(`http://localhost:8080/widgets`, {
 			  method: 'POST',
 			  headers: {
@@ -70,7 +71,9 @@ const WidgetContent = () => {
 	}
 	
 	useEffect(() => {
-	getWidgetTemplate();
+	if(userData._id){
+		getWidgetTemplate();
+	}
 	}, [])
 	
 
@@ -93,7 +96,7 @@ const WidgetContent = () => {
 					</div>
 					{widgetRef.current && (
 					<div className="col-lg-3 col-md-6 col-sm-6">
-					<div onClick={() => {setTemplate((pre) => ({template_id: widgetRef.current.template_id, type: widgetRef.current.type}))}}  className="example">
+					<div onClick={() => {setTemplate((pre) => ({template_id: widgetRef.current.template_id, type: widgetRef.current.type}))}}  className="example current-template">
 						<div className="text">
 							<div className="title">Current Template</div>
 						</div>

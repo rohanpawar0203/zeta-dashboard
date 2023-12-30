@@ -20,6 +20,14 @@ import EditRepresentative from "./EditRepresentativeModal";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+const button_styles = [
+  require('../../assets/images/whatsapp/btn_1.png'),
+  require('../../assets/images/whatsapp/btn_2.png'),
+  require('../../assets/images/whatsapp/btn_3.png'),
+  require('../../assets/images/whatsapp/btn_4.png'),
+  require('../../assets/images/whatsapp/btn_5.png'),
+]
+
 const userData = JSON.parse(sessionStorage.getItem('currentUser'));
 const token = sessionStorage.getItem('token');
 const colorsArr = [
@@ -32,7 +40,6 @@ const colorsArr = [
 ]
 
 const Avatar = {
-  id: uuidv4(),
   avatar: {
     src: '<img src="assets/img/person/1.jpg" alt="">' /* Image, Icon or SVG */,
     backgroundColor: "#ffffff" /* Html color code */,
@@ -62,8 +69,13 @@ const Avatar = {
   },
 };
 
+const avatar_name = ["Lorna Hensley", "Mattie Simmonds", "Kole Cleg"];
+
+
 const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWidgetTemplate }) => {
   const templateRef = useRef({ ...template });
+  const radioInputRef = useRef();
+  const [counter, setcounter] = useState(0);
   const [repEditMode, setrepEditMode] = useState({
     status: false,
     avatarID: "",
@@ -95,6 +107,25 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
     }
   }
   
+  useEffect(() => {
+    console.log('type?.popup?.persons ', template?.popup?.persons)
+  }, [template])
+  
+  useEffect(() => {
+    if(counter === 3){
+      setcounter(0);
+    }
+  }, [counter])
+
+  useEffect(() => {
+    let updatedPersons = template?.popup?.persons.map((ele, ind) => ({...ele, id: uuidv4()}));
+    setTemplate((pre) => ({
+      ...pre,
+      type: {...pre?.type, popup: { ...pre?.type?.popup, persons: [...updatedPersons] }}
+    }));
+  }, []);
+  
+  
 
   return (
     <Fragment>
@@ -109,7 +140,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
               noValidate=""
               onSubmit={(e) => {addWidgetTemplate(e)}}
             >
-              <H6 attrH6={{className: 'd-inline-block border border-light p-2 bg-light text-white rounded'}}>{"Button"}</H6>
+              <H6 attrH6={{className: 'd-inline-block border border-light p-2 bg-light text-dark  rounded'}}>{"Button"}</H6>
               <Row>
                 <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
@@ -136,9 +167,29 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
-                <Col md="4 mb-3">
+                <Col md="8 mb-3">
                   <Label htmlFor="validationCustom01">{"Style"}</Label>
-                  <select
+                  <div className="d-flex align-items-center gap-3 flex-wrap ">
+                    {[1, 2, 3, 4, 5].map((ele, ind) => (
+                      <div key={ind} style={{height: '50px'}} className="d-flex  align-items-center gap-1">
+                      <input style={{width: '15px', height:'15px', cursor: 'pointer'}}
+                        type="radio"
+                        onChange={(e) => {
+                          if(e.target.checked === true){
+                          setTemplate((pre) => ({
+                            ...pre,
+                            type: {...pre?.type, button: { ...pre?.type?.button, style: ele }}
+                          }));
+                          console.log('template ',  template?.button?.style)
+                        }
+                        }}
+                        checked={template?.button?.style === ele ? true : false}
+                      />
+                      <img src={button_styles[ind]} alt="button_1" className="btn-styles"/>
+                      </div>
+                    ))}
+                  </div>
+                  {/* <select
                     className="form-control"
                     name="style"
                     defaultValue={template?.button?.style}
@@ -154,13 +205,18 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   >
                     <option value={""}>Select Style</option>
                     {[1, 2, 3, 4, 5, 6, 7].map((ele, ind) => (
-                      <option value={ele}>Type {`${ele}`}</option>
+                      <option style={{backgroundImage: 'url("https://cloudify.store/assets/lp/img/logos/cloudify.png")'}} value={ele}>
+                        1
+                      </option>
                     ))}
-                  </select>
+                  </select> */}
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
-                <Col md="4 mb-3">
+              </Row>
+
+              <Row>
+              <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
                     {"Background Color"}
                   </Label>
@@ -207,33 +263,6 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
-              </Row>
-
-              <Row>
-                <Col md="4 mb-3">
-                  <Label htmlFor="validationCustom01">{"Effect"}</Label>
-                  <select
-                    className="form-control"
-                    name="buttonEffect"
-                    defaultValue={template?.button?.style}
-                    onChange={(e) => {
-                      e.preventDefault();
-                      setTemplate((pre) => ({
-                        ...pre,
-                        type: {...pre?.type, button: { ...pre?.type?.button, effect: e.target.value }}
-                      }));
-                    }}
-                    placeholder="Effect"
-                    required={true}
-                  >
-                    <option value={""}>Select Effect</option>
-                    {[1, 2, 3, 4, 5, 6, 7].map((ele, ind) => (
-                      <option value={ele}>Effect {`${ele}`}</option>
-                    ))}
-                  </select>
-                  <span></span>
-                  <div className="valid-feedback">{"Looks good!"}</div>
-                </Col>
                 <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
                     {"Speech Bubble"}
@@ -260,7 +289,8 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
-                <Col md="4 mb-3">
+                {template?.button?.style === 1 && (
+                  <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
                     {"Pulse effect"}
                   </Label>
@@ -290,10 +320,12 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
+                )}
               </Row>
 
               <Row>
-                <Col md="4 mb-3">
+                {template?.button?.style !== 1 && (
+                  <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">{"Title"}</Label>
                   <input
                     className="form-control"
@@ -317,7 +349,9 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
-                <Col md="4 mb-3">
+                )}
+                {(template?.button?.style === 2 || template?.button?.style === 4 || template?.button?.style === 5) && (
+                  <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
                     {"description"}
                   </Label>
@@ -347,13 +381,10 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
+                )}
                 
               </Row>
-
-              <Row>
-                <H6 attrH6={{className: 'd-inline-block border border-light p-2 bg-light text-white rounded'}}>Popup</H6>
-              </Row>
-
+                <H6 attrH6={{className: 'd-inline-block border border-light p-2 bg-light text-dark  rounded'}}>Popup</H6>
               <Row>
                 <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
@@ -415,6 +446,36 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
+                <Col md="4 mb-3">
+                  <Label htmlFor="validationCustom01">
+                    {"Automatic Open"}
+                  </Label>
+                  <select
+                    className="form-control"
+                    name="buttonPulseEffect"
+                    defaultValue={template?.popup?.automaticOpen}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setTemplate((pre) => ({
+                        ...pre,
+                        type: {...pre?.type, 
+                          popup: {
+                          ...pre?.type?.popup,
+                          automaticOpen: e.target.value === "true" ? true : false,
+                        }}
+                      }));
+                    }}
+                    placeholder="Pulse effect"
+                    required={true}
+                  >
+                    <option value={""}>Select Pulse Effect</option>
+                    {[true, false].map((ele, ind) => (
+                      <option value={ele}>{ele ? "Yes" : "No"}</option>
+                    ))}
+                  </select>
+                  <span></span>
+                  <div className="valid-feedback">{"Looks good!"}</div>
+                </Col>
               </Row>
 
               <Row>
@@ -437,11 +498,12 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                                     ...pre?.type?.pop,
                                     persons: [
                                       ...pre?.type?.popup?.persons,
-                                      { id: uuidv4(), ...Avatar },
+                                      {...Avatar, id: uuidv4()},
                                     ],
                                   },
                                 }
                               }));
+                              setcounter((pre) => (pre + 1));
                             }
                           }}
                         />
@@ -488,8 +550,8 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                                       ...pre?.type?.pop,
                                       persons: [
                                         ...pre?.type?.popup?.persons.filter(
-                                          (item, ind) => item.id !== ele?.id
-                                        ),
+                                          (item, ind) => (item?.id !== ele?.id)
+                                          )
                                       ],
                                     },
                                   }

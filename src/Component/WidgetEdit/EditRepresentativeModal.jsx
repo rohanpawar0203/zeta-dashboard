@@ -14,9 +14,9 @@ const token = sessionStorage.getItem('token');
 const EditRepresentative = ({template, setTemplate, avatarID, setrepEditMode}) => {
      const [companyLogoFile, setcompanyLogoFile] = useState('');
      const templateRef = useRef(template);
-     const [avtProfile, setAvtProfile] = useState({...template?.popup?.persons?.find((ele) => (ele.id === avatarID))})
+     const [avtProfile, setAvtProfile] = useState({...template?.popup?.persons?.find((ele) => (ele?.id === avatarID))})
      const [companyLogoURL, setcompanyLogoURL] = useState('')
-     const companayLogoRef = useRef('')
+     const companayLogoRef = useRef('');
      const [companyLogoMode, setCompanyLogoMode] = useState('logo');
     const handleTemplateChange = (e, value, key, property) => {
         e.preventDefault();
@@ -124,7 +124,7 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                           className="form-control"
                           name="avatarOnlineCircle"
                           defaultValue={
-                            template?.popup?.persons?.find((ele) => (ele.id === avatarID))?.avatar?.onlineCircle}
+                            template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.avatar?.onlineCircle}
                             onChange={(e) => {handleTemplateChange(e, (e.target.value === 'true') ? true: false, 'avatar', 'onlineCircle')}}
                           required={true}
                         >
@@ -148,7 +148,7 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                           className="form-control"
                           name="avatarTitle"
                           type="text"
-                          defaultValue={template?.popup?.persons?.find((ele) => (ele.id === avatarID))?.text?.title}
+                          defaultValue={template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.text?.title}
 						  placeholder="Avatar title"
                           onChange={(e) => {handleTemplateChange(e, e.target.value, 'text', 'title')}}
                           required={true}
@@ -165,7 +165,7 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                           className="form-control"
                           name="avatardescription"
                           type="text"
-                          defaultValue={template?.popup?.persons?.find((ele) => (ele.id === avatarID))?.text?.description}
+                          defaultValue={template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.text?.description}
 						  placeholder="Avatar description"
                           onChange={(e) => {handleTemplateChange(e, e.target.value, 'text', 'description')}}
                           required={true}
@@ -187,7 +187,7 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                           className="form-control"
                           name="avatarOnlineDesTag"
                           type="text"
-                          defaultValue={template?.popup?.persons?.find((ele) => (ele.id === avatarID))?.text?.online}
+                          defaultValue={template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.text?.online}
 						  placeholder="Avatar online description tag"
                           onChange={(e) => {handleTemplateChange(e, e.target.value, 'text', 'online')}}
                           required={true}
@@ -205,7 +205,7 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                           className="form-control"
                           name="avatarDesktopLink"
                           type="url"
-                          defaultValue={template?.popup?.persons?.find((ele) => (ele.id === avatarID))?.link?.desktop}
+                          defaultValue={template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.link?.desktop}
 						  placeholder="Avatar desktop link"
                           onChange={(e) => {handleTemplateChange(e, e.target.value, 'link', 'desktop')}}
                           required={true}
@@ -226,7 +226,7 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                           className="form-control"
                           name="avatarMobileLink"
                           type="url"
-                          defaultValue={template?.popup?.persons?.find((ele) => (ele.id === avatarID))?.link?.mobile}
+                          defaultValue={template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.link?.mobile}
 						  placeholder="Avatar mobile link"
                           onChange={(e) => {handleTemplateChange(e, e.target.value, 'link', 'mobile')}}
                           required={true}
@@ -286,15 +286,13 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
 
                 <div className="d-flex gap-2">
                   <MdDone style={{width: '20px', height: '20px', cursor: 'pointer', color: 'green'}} onClick={() => {
-                   if(!companyLogoFile){
-                    toast.error('Please upload profile image!');
-                   }else{
-                    uploadCompanyLogo();
+                    if(companyLogoFile){
+                      uploadCompanyLogo();
+                    }
                     setrepEditMode({
                       status: false,
                       avatarID: null,
                     });
-                   }
                    setCompanyLogoMode('logo')
                   }}/>
                 <MdCancel style={{width: '20px', height: '20px', cursor: 'pointer', color: 'red'}} onClick={() => {
