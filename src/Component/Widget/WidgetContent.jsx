@@ -45,7 +45,6 @@ const WidgetContent = () => {
 			  "customer_id": userData?._id,
 			  "type": "whatsapp",
 		  }
-		  console.log('payload ', payload)
 			const res = await fetch(`http://localhost:8080/widgets`, {
 			  method: 'POST',
 			  headers: {
@@ -54,11 +53,9 @@ const WidgetContent = () => {
 			  },
 			  body: JSON.stringify(payload),
 			})
-			console.log('widget customization res ', res);
 			let result = await res.json();
 			
 			if(res.ok && result){
-			  console.log('widget customization res ', result);
 			  setallTemplates([...result]);
 			  widgetRef.current = {type: JSON.parse(result.find((ele) => (ele.status === 'active'))?.settings) , template_id : result.find((ele) => (ele.status === 'active'))?.template_id};
 			  setTemplate({type: JSON.parse(result.find((ele) => (ele.status === 'active'))?.settings) , template_id : result.find((ele) => (ele.status === 'active'))?.template_id})
@@ -71,7 +68,7 @@ const WidgetContent = () => {
 	}
 	
 	useEffect(() => {
-	if(userData._id){
+	if(userData?._id){
 		getWidgetTemplate();
 	}
 	}, [])
@@ -94,20 +91,8 @@ const WidgetContent = () => {
 					<div className="col-12">
 						<h1>Whatsapp</h1>
 					</div>
-					{widgetRef.current && (
 					<div className="col-lg-3 col-md-6 col-sm-6">
-					<div onClick={() => {setTemplate((pre) => ({template_id: widgetRef.current.template_id, type: widgetRef.current.type}))}}  className="example current-template">
-						<div className="text">
-							<div className="title">Current Template</div>
-						</div>
-						<div className="image">
-							<img src={whatsAppImgs[0]} alt="Current template type" />
-						</div>
-					</div>
-				</div>
-					)}
-					<div className="col-lg-3 col-md-6 col-sm-6">
-						<div onClick={() => {setTemplate((pre) => ({template_id: "multiple_accounts_1", type: JSON.parse(allTemplates.find((ele) => (ele.template_id === 'multiple_accounts_1'))?.settings)}))}}  className="example">
+						<div onClick={() => {setTemplate((pre) => ({template_id: "multiple_accounts_1", type: JSON.parse(allTemplates.find((ele) => (ele.template_id === 'multiple_accounts_1'))?.settings)}))}}  className={`example ${widgetRef?.current?.template_id === 'multiple_accounts_1' ? 'current-template' : ''}`}>
 							<div className="text">
 								<div className="title">Multiple Accounts 1</div>
 							</div>
@@ -117,7 +102,7 @@ const WidgetContent = () => {
 						</div>
 					</div>
 					<div className="col-lg-3 col-md-6 col-sm-6">
-						<div className="example" onClick={() => {setTemplate((pre) => ({template_id: "multiple_accounts_2"	, type: JSON.parse(allTemplates.find((ele) => (ele.template_id === 'multiple_accounts_2'))?.settings)}))}}>
+						<div className={`example ${widgetRef?.current?.template_id === 'multiple_accounts_2' ? 'current-template' : ''}`} onClick={() => {setTemplate((pre) => ({template_id: "multiple_accounts_2"	, type: JSON.parse(allTemplates.find((ele) => (ele.template_id === 'multiple_accounts_2'))?.settings)}))}}>
 							<div className="text">
 								<div className="title">Multiple Accounts 2</div>
 							</div>
@@ -127,7 +112,7 @@ const WidgetContent = () => {
 						</div>
 					</div>
 					<div className="col-lg-3 col-md-6 col-sm-6">
-						<div onClick={() => {setTemplate((pre) => ({template_id: 'multiple_accounts_3', type: JSON.parse(allTemplates.find((ele) => (ele.template_id === 'multiple_accounts_3'))?.settings)}))}} className="example">
+						<div onClick={() => {setTemplate((pre) => ({template_id: 'multiple_accounts_3', type: JSON.parse(allTemplates.find((ele) => (ele.template_id === 'multiple_accounts_3'))?.settings)}))}} className={`example ${widgetRef?.current?.template_id === 'multiple_accounts_3' ? 'current-template' : ''}`}>
 							<div className="text">
 								<div className="title">Multiple Accounts 3</div>
 							</div>
@@ -141,7 +126,7 @@ const WidgetContent = () => {
 		        </section>
 			}
          
-        {mode !== 'edit' ? <div className={(template?.template_id === "multiple_accounts_3") ? ('editIcon editIcon-second') : 'editIcon'} onClick={() => {setMode('edit')}}>
+        {mode !== 'edit' ? <div className={(template?.type?.button?.style !== 1) ? ('editIcon editIcon-second') : 'editIcon'} onClick={() => {setMode('edit')}}>
 		<FaRegEdit style={{width: '18px', height: '18px', cursor:'pointer'}}/>
 		</div> : 
 		''

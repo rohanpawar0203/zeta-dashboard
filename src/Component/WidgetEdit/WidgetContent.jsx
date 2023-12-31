@@ -87,12 +87,11 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
       const payload = {
         "settings": template,
         "customer_id": userData?._id,
-        "type": "whatsApp",
+        "type": "whatsapp",
         "template_id": templateID,
-        "status": "active"
     }
-      const res = await fetch(`http://localhost:8080/bot-customization`, {
-        method: "POST",
+      const res = await fetch(`http://localhost:8080/widgets`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json", 
           // Add other headers if needed
@@ -108,7 +107,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
   }
   
   useEffect(() => {
-    console.log('type?.popup?.persons ', template?.popup?.persons)
+    // console.log('type?.popup?.persons ', template)
   }, [template])
   
   useEffect(() => {
@@ -180,7 +179,6 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                             ...pre,
                             type: {...pre?.type, button: { ...pre?.type?.button, style: ele }}
                           }));
-                          console.log('template ',  template?.button?.style)
                         }
                         }}
                         checked={template?.button?.style === ele ? true : false}
@@ -237,7 +235,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                         }));
                       }}
                       placeholder="Background Color"
-                      required={true}
+                      // required={true}
                     >
                       <option
                         style={{ width: "15px", height: "15px" }}
@@ -514,6 +512,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                     repEditMode.status === false && (
                       <>
                         <span className="mb-1">Representatives</span>
+                        <div className="d-flex flex-wrap gap-2 align-items-center">
                         {template?.popup?.persons?.map((ele, ind) => (
                           <div
                             key={ele?.id}
@@ -560,6 +559,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                             />
                           </div>
                         ))}
+                        </div>
                       </>
                     )}
                 </Col>
@@ -574,6 +574,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   />
                 </>
               )}
+               <div className="d-flex flex-wrap gap-2 align-items-center">
               <Btn attrBtn={{ color: "primary", type: "submit" }}>
                 {"Submit form"}
               </Btn>
@@ -581,13 +582,24 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                 attrBtn={{
                   color: "danger",
                   onClick: () => {
-                    setTemplate((pre) => ({...pre, type: {...templateRef?.current?.type}}));
+                    // setTemplate((pre) => ({...pre, type: {...templateRef?.current?.type}}));
                     setMode("");
                   },
                 }}
               >
                 {"Back"}
               </Btn>
+              <Btn
+                attrBtn={{
+                  color: "danger",
+                  onClick: () => {
+                    setTemplate((pre) => ({...pre, type: {...templateRef?.current}}));
+                  },
+                }}
+              >
+                {"Restore"}
+              </Btn>
+              </div>
             </Form>
 
             {/* <div id={"example-sample"}></div> */}

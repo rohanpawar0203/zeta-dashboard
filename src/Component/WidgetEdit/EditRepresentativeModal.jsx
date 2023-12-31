@@ -68,8 +68,8 @@ var htmlString = avtProfile?.avatar?.src;
 var parser = new DOMParser();
 var doc = parser.parseFromString(htmlString, 'text/html');
 var imgElement = doc.querySelector('img');
-companayLogoRef.current = imgElement.getAttribute('src');
-setcompanyLogoURL(imgElement.getAttribute('src'))
+companayLogoRef.current = imgElement?.getAttribute('src');
+setcompanyLogoURL(imgElement?.getAttribute('src'))
     }, [template])
     
 
@@ -103,11 +103,13 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                           value={`Select background Color`}
                           onChange={(e) => {handleTemplateChange(e, e.target.value, 'avatar', 'backgroundColor')}}
                           placeholder="Avatar background Color"
-                          required={true}
+                          // required={true}
                         >
 							<option style={{width: '15px',height: '15px'}} value={''}>Select background Color</option>
 						{['#7B241C', '#4A235A', '#0B5345', '#145A32', '#7B7D7D', '#F1C40F', '#424949'].map((ele, ind) => (
-							<option style={{width: '15px',height: '15px', borderRadius: '50%', backgroundColor: ele}} value={ele}></option>
+							<option style={{width: '15px',height: '15px', borderRadius: '50%', backgroundColor: ele}} value={ele}>
+                {ele?.color}
+              </option>
 						))}
 						</select>
 						</div>
