@@ -287,6 +287,38 @@ setcompanyLogoURL(imgElement?.getAttribute('src'))
                   </Row>
 
                 <div className="d-flex gap-2">
+                <Btn
+                attrBtn={{
+                  color: "success",
+                  onClick: () => {
+                    if(companyLogoFile){
+                      uploadCompanyLogo();
+                    }
+                    setrepEditMode({
+                      status: false,
+                      avatarID: null,
+                    });
+                   setCompanyLogoMode('logo')
+                  }
+                }}
+              >
+                {"Save"}
+              </Btn>
+              <Btn
+                attrBtn={{
+                  color: "danger",
+                  onClick: () => {
+                    setTemplate((pre) => ({...pre, type: {...pre?.type, popup: {...pre?.type?.popup, persons: [...templateRef?.current?.popup?.persons] } }}));
+                    setrepEditMode({
+                     status: false,
+                     avatarID: null,
+                   });
+                    },
+                }}
+              >
+                {"Cancel"}
+              </Btn>
+                  {/* <div>
                   <MdDone style={{width: '20px', height: '20px', cursor: 'pointer', color: 'green'}} onClick={() => {
                     if(companyLogoFile){
                       uploadCompanyLogo();
@@ -304,6 +336,7 @@ setcompanyLogoURL(imgElement?.getAttribute('src'))
                         avatarID: null,
                       });
                        }}/>
+                  </div> */}
                 </div>
                   
 

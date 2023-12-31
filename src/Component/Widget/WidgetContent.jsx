@@ -47,11 +47,12 @@ const WidgetContent = () => {
 		  }
 			const res = await fetch(`http://localhost:8080/widgets`, {
 			  method: 'POST',
+			  body: JSON.stringify(payload),
 			  headers: {
 				"Content-Type": "application/json", 
+				// Authorization: `Bearer ${token}`,
 				// Add other headers if needed
 			  },
-			  body: JSON.stringify(payload),
 			})
 			let result = await res.json();
 			

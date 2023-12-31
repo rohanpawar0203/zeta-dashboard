@@ -40,7 +40,7 @@ const Header = () => {
             </i>
           </div>
         </div>
-        <SearchBar />
+        {/* <SearchBar /> */}
         <HeaderContain />
       </Row>
     </Fragment>

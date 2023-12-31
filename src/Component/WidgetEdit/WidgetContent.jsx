@@ -92,14 +92,17 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
     }
       const res = await fetch(`http://localhost:8080/widgets`, {
         method: "PUT",
+        body: JSON.stringify(payload),
         headers: {
           "Content-Type": "application/json", 
+          // "Authorization": `Bearer ${token}`,
           // Add other headers if needed
         },
-        body: JSON.stringify(payload),
       })
-      getWidgetTemplate();
-      toast.success(`Successfully saved widget template data`);
+      if(`${res.status}` === '200'){
+        getWidgetTemplate();
+        toast.success(`Successfully saved widget template data`);
+      }
     } catch (error) {
       console.log('widget customization error ', error);
       toast.error(error?.message)
@@ -107,7 +110,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
   }
   
   useEffect(() => {
-    // console.log('type?.popup?.persons ', template)
+    console.log('type?.popup?.persons ', template)
   }, [template])
   
   useEffect(() => {
@@ -564,23 +567,21 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                     )}
                 </Col>
               </Row>
-              {repEditMode.status === true && (
-                <>
+              {repEditMode.status === true ? 
                   <EditRepresentative
                     template={template}
                     setTemplate={setTemplate}
                     avatarID={repEditMode?.avatarID}
                     setrepEditMode={setrepEditMode}
                   />
-                </>
-              )}
-               <div className="d-flex flex-wrap gap-2 align-items-center">
+                  :
+                  <div className="d-flex flex-wrap gap-2 align-items-center">
               <Btn attrBtn={{ color: "primary", type: "submit" }}>
                 {"Submit form"}
               </Btn>
               <Btn
                 attrBtn={{
-                  color: "danger",
+                  color: "secondary",
                   onClick: () => {
                     // setTemplate((pre) => ({...pre, type: {...templateRef?.current?.type}}));
                     setMode("");
@@ -599,7 +600,8 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
               >
                 {"Restore"}
               </Btn>
-              </div>
+                  </div>
+              }
             </Form>
 
             {/* <div id={"example-sample"}></div> */}
