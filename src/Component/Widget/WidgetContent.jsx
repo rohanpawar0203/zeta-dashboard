@@ -87,6 +87,7 @@ const WidgetContent = () => {
 				<WidgetEditComponent  template={template?.type} templateID={template?.template_id} setTemplate={setTemplate} setMode={setMode} getWidgetTemplate={getWidgetTemplate}/>
 				:
                 <section className="examples whatsapp-examples" id="whatsapp-examples">
+			{(allTemplates.length > 0) ? 
 			<div className="container container-xl">
 				<div className="row justify-content-center">
 					<div className="col-12">
@@ -123,7 +124,8 @@ const WidgetContent = () => {
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> : ''
+			}
 		        </section>
 			}
          
