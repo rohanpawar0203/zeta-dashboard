@@ -8,6 +8,7 @@ import { FaRegEdit } from "react-icons/fa";
 import WidgetEditComponent from "../WidgetEdit/WidgetContent";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { WidgetsAPI } from "../../api";
 
 const userData = JSON.parse(sessionStorage.getItem('currentUser'));
 const token = sessionStorage.getItem('token');
@@ -45,7 +46,7 @@ const WidgetContent = () => {
 			  "customer_id": userData?._id,
 			  "type": "whatsapp",
 		  }
-			const res = await fetch(`http://localhost:8080/widgets`, {
+			const res = await fetch(`${WidgetsAPI}`, {
 			  method: 'POST',
 			  body: JSON.stringify(payload),
 			  headers: {

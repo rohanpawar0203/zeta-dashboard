@@ -55,3 +55,4 @@ export const FAQFilesAPI = `${process.env.REACT_APP_API_FILE_SERVER}/uploadClien
 export const UploadCompanyLogoAPI = `${process.env.REACT_APP_API_FILE_SERVER}/uploadClientBotLogos`;
 export const FileServerAPI = `${process.env.REACT_APP_API_FILE_SERVER}`;
 export const WhatsAppAnalyticsAPI = `${process.env.REACT_APP_API_BASE_URL}/events/whatsappCounts`;
+export const WidgetsAPI = `${process.env.REACT_APP_API_BASE_URL}/widgets`;

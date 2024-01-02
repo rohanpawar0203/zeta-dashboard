@@ -17,9 +17,9 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
 import { MdOutlineRemoveCircleOutline } from "react-icons/md";
 import EditRepresentative from "./EditRepresentativeModal";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { validatorObj } from "../../Services/Custom_Hooks/form_validations";
+import { WidgetsAPI } from "../../api";
 
 const button_styles = [
   require('../Widget/assets/img/popup/whatsapp/button-only-1.png'),
@@ -93,7 +93,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
           "type": "whatsapp",
           "template_id": templateID,
       }
-        const res = await fetch(`http://localhost:8080/widgets`, {
+        const res = await fetch(`${WidgetsAPI}`, {
           method: "PUT",
           body: JSON.stringify(payload),
           headers: {
@@ -329,7 +329,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
                 )}
-                {(template?.button?.style === 2 || template?.button?.style === 4 || template?.button?.style === 5) && (
+                {([2, 4].includes(template?.button?.style)) && (
                   <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
                     {"description"}

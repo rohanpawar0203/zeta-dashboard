@@ -53,14 +53,21 @@ const EditRepresentative = ({template, setTemplate, avatarID, setrepEditMode}) =
         })
         const responseUrl = await res?.data?.filenames[0];
          if(responseUrl){
-          setcompanyLogoURL(responseUrl);
           getUserDetails(userData?._id);
+          setcompanyLogoFile('');
           let imgElement = document.createElement('img');
           let urlString = FileServerAPI+'/'+ responseUrl;
+          setcompanyLogoURL(urlString);
           imgElement.src = urlString;
           imgElement.alt = '';
           let evnt = new Event('click');
           handleTemplateChange(evnt, imgElement?.outerHTML, 'avatar', 'src');
+          setrepEditMode({
+            status: false,
+            avatarID: null,
+          });
+         setCompanyLogoMode('logo');
+         setcompanyLogoFile('');
          }
         } catch (error) {
           toast.error('File Upload Failed');
@@ -80,8 +87,8 @@ const EditRepresentative = ({template, setTemplate, avatarID, setrepEditMode}) =
       }else if(validatorObj?.regExpValidator('web_url', avatarObj?.link?.mobile) === false){
         console.log('avatarObj?.link?.mobile ', avatarObj?.link?.mobile)
         err = "Invalid mobile link!";
-      }else if(companyLogoFile?.name){
-        console.log('file ', validatorObj?.fileFormatValidator(companyLogoFile?.name, imgExtensions))
+      }else if(companyLogoFile?.name && !validatorObj?.fileFormatValidator(companyLogoFile?.name, imgExtensions)){
+        console.log('file ', )
         err = "Invalid file format!";
       }
       if(err){
@@ -96,8 +103,9 @@ var parser = new DOMParser();
 var doc = parser.parseFromString(htmlString, 'text/html');
 var imgElement = doc.querySelector('img');
 companayLogoRef.current = imgElement?.getAttribute('src');
+console.log('logo url ', imgElement?.getAttribute('src'));
 setcompanyLogoURL(imgElement?.getAttribute('src'))
-    }, [])
+    }, [avatarID]);
 
 useEffect(() => {
   if(colorsArr.length){
@@ -270,11 +278,11 @@ useEffect(() => {
                           name="avatarMobileLink"
                           type="url"
                           value={template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.link?.mobile}
-						  placeholder="Avatar mobile link"
+						              placeholder="Avatar mobile link"
                           onChange={(e) => {handleTemplateChange(e, e.target.value, 'link', 'mobile')}}
                           required={true}
                         >
-						</input>
+						          </input>
                       <span>
                       </span>
                       <div className="valid-feedback">{"Looks good!"}</div>
@@ -342,6 +350,7 @@ useEffect(() => {
                           avatarID: null,
                         });
                        setCompanyLogoMode('logo');
+                       setcompanyLogoFile('');
                       }
                       }
                       
@@ -360,6 +369,7 @@ useEffect(() => {
                      status: false,
                      avatarID: null,
                    });
+                   setcompanyLogoFile('');
                     },
                 }}
               >

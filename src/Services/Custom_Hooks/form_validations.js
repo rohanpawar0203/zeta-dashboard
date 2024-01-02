@@ -12,6 +12,7 @@ export const validatorObj = {
 
     fileFormatValidator: function(fileName, validExtensionsArray){
         let fileExtension = fileName?.split(".")?.pop();
+        console.log('fileExtension got', fileExtension);
         return validExtensionsArray?.includes(fileExtension);
     }
 
