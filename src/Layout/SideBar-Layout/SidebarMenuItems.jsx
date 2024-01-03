@@ -13,7 +13,6 @@ const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
   const {data: MENUITEMS} = GetMenuItemsProps();
   const { t } = useTranslation();
   const toggletNavActive = (item) => {
-    console.log('toggling nav item')
     if (window.innerWidth <= 991) {
       document.querySelector('.page-header').className =
         'page-header close_icon';

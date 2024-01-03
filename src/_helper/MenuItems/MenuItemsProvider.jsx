@@ -49,7 +49,6 @@ export const MenuItemsContextProvider = ({ children }) => {
       }
     }, [userData]);
     
-    console.log('MenuItemsContext.Provider')
 
     return (
       <MenuItemsContext.Provider value={{ data, setData, handleFilterForStorePresent, routesData}}>

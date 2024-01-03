@@ -93,7 +93,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
           "type": "whatsapp",
           "template_id": templateID,
       }
-        const res = await fetch(`http://localhost:8080/widgets`, {
+        const res = await fetch(`${WidgetsAPI}`, {
           method: "PUT",
           body: JSON.stringify(payload),
           headers: {
@@ -124,10 +124,6 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
     }
     return err;
   }
-  
-  useEffect(() => {
-    console.log('type?.popup?.persons ', template)
-  }, [template])
   
   useEffect(() => {
     if(counter === 3){

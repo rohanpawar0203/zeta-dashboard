@@ -6,16 +6,15 @@ import Layout from '../Layout/Layout';
 
 const LayoutRoutes = () => {
   const {routesData} = GetMenuItemsProps();
-  console.log('routesData ', routesData)
   return (
     <Fragment>
       <Routes>
         {routesData.map(({ path, Component }, i) => (
-          <Route element={<Layout />} key={i}>
-            <Route path={path} element={Component} />
+          <Route key={i} path={path} element={<Layout />}>
+            <Route index  element={Component} />
           </Route>
         ))}
-      </Routes>
+        </Routes>
     </Fragment >
   );
 };

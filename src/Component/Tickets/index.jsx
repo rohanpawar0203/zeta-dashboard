@@ -3,7 +3,6 @@ import { Card, Col, Container, Row } from "reactstrap";
 import CreateTicketContent from "./CreateTicketContent";
 
 const CreateTicketContain = () => {
-  console.log('CreateTicketContain');
   return (
     <Fragment>
           <CreateTicketContent />

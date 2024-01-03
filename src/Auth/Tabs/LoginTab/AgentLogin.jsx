@@ -39,6 +39,8 @@ const AgentLogin = ({ selected }) => {
   const inputRef = useRef();
   const { setUserData, setToken, userData } = appStore();
 
+  console.log('process.env.REACT_APP_API_BASE_URL ', process.env.REACT_APP_API_BASE_URL)
+
   const userLogin = async (e) => {
     setLoading(true);
     const requestOptions = {

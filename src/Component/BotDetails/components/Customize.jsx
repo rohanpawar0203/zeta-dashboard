@@ -120,10 +120,6 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
     console.log('Error at bot update ', error);
   }
   }
-
-  useEffect(() => {
-    // console.log('myBot?.companyLogo ', myBot);
-  }, [])
   
   
   return (

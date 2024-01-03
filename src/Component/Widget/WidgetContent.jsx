@@ -47,7 +47,7 @@ const WidgetContent = () => {
 			  "customer_id": userData?._id,
 			  "type": "whatsapp",
 		  }
-			const res = await fetch(`http://localhost:8080/widgets`, {
+			const res = await fetch(`${WidgetsAPI}`, {
 			  method: 'POST',
 			  body: JSON.stringify(payload),
 			  headers: {
@@ -71,10 +71,9 @@ const WidgetContent = () => {
 	}
 	
 	useEffect(() => {
-	console.log('count ', count);
-	if(count === 0){
+	const userData = JSON.parse(sessionStorage.getItem('currentUser'));
+	if(userData?._id){
 		getWidgetTemplate();
-		setCount(1);
 	}
 	}, [])
 	
