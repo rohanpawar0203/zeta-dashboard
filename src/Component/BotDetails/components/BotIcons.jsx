@@ -27,8 +27,8 @@ const BotIcons = ({ botIcons, setMyBot, myBot}) => {
       {botIcons.map((ele, i) => {
         if (ele === "BiBot") {
           return (
-            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
-              className={`p-2 shadow-sm rounded border border-lightgray d-flex justify-content-center align-items-center ms-4 
+            <div  onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
+              className={`p-2 shadow-sm rounded mb-2 border border-lightgray d-flex justify-content-center align-items-center ms-4 
               ${ele === myBot?.bubbleIcon ? 'border-primary' : ''}`}
             >
               {/* <BiBot style={{ width: "30px", height: "30px" }} /> */}
@@ -38,8 +38,8 @@ const BotIcons = ({ botIcons, setMyBot, myBot}) => {
         }
         if (ele === "BsRobot") {
           return (
-            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
-              className={`p-2 shadow-sm rounded border border-lightgray d-flex justify-content-center align-items-center ms-4 
+            <div  onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
+              className={`p-2 shadow-sm rounded mb-2 border border-lightgray d-flex justify-content-center align-items-center ms-4 
               ${ele === myBot?.bubbleIcon ? 'border-primary' : ''}`}
             >
               {/* <BsRobot style={{ width: "30px", height: "30px" }} /> */}
@@ -49,8 +49,8 @@ const BotIcons = ({ botIcons, setMyBot, myBot}) => {
         }
         if (ele === "TbMessageDots") {
           return (
-            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
-              className={`p-2 shadow-sm rounded border border-lightgray d-flex justify-content-center align-items-center ms-4 
+            <div  onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
+              className={`p-2 shadow-sm rounded mb-2 border border-lightgray d-flex justify-content-center align-items-center ms-4 
               ${ele === myBot?.bubbleIcon ? 'border-primary' : ''}`}
             >
               {/* <TbMessageDots style={{ width: "30px", height: "30px" }} /> */}
@@ -60,8 +60,8 @@ const BotIcons = ({ botIcons, setMyBot, myBot}) => {
         }
         if (ele === "BiUser") {
           return (
-            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
-              className={`p-2 shadow-sm rounded border border-lightgray d-flex justify-content-center align-items-center ms-4 
+            <div  onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
+              className={`p-2 shadow-sm rounded mb-2 border border-lightgray d-flex justify-content-center align-items-center ms-4 
               ${ele === myBot?.bubbleIcon ? 'border-primary' : ''}`}
             >
               {/* <BiUser style={{ width: "30px", height: "30px" }} /> */}
@@ -72,8 +72,8 @@ const BotIcons = ({ botIcons, setMyBot, myBot}) => {
         }
         if (ele === "AiOutlineQuestionCircle") {
           return (
-            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
-              className={`p-2 shadow-sm rounded border border-lightgray d-flex justify-content-center align-items-center ms-4 
+            <div  onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
+              className={`p-2 shadow-sm rounded mb-2 border border-lightgray d-flex justify-content-center align-items-center ms-4 
               ${ele === myBot?.bubbleIcon ? 'border-primary' : ''}`}
             >
               {/* <AiOutlineQuestionCircle style={{ width: "30px", height: "30px" }} /> */}
@@ -84,8 +84,8 @@ const BotIcons = ({ botIcons, setMyBot, myBot}) => {
         }
         if (ele === "TfiHeadphoneAlt") {
           return (
-            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
-              className={`p-2 shadow-sm rounded border border-lightgray d-flex justify-content-center align-items-center ms-4 
+            <div  onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
+              className={`p-2 shadow-sm rounded mb-2 border border-lightgray d-flex justify-content-center align-items-center ms-4 
               ${ele === myBot?.bubbleIcon ? 'border-primary' : ''}`}
             >
               {/* <TfiHeadphoneAlt style={{ width: "30px", height: "30px" }} /> */}
@@ -96,8 +96,8 @@ const BotIcons = ({ botIcons, setMyBot, myBot}) => {
         }
         if (ele === "Ri24HoursLine") {
           return (
-            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
-              className={`p-2 shadow-sm rounded border border-lightgray d-flex justify-content-center align-items-center ms-4 
+            <div  onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
+              className={`p-2 shadow-sm rounded mb-2 border border-lightgray d-flex justify-content-center align-items-center ms-4 
               ${ele === myBot?.bubbleIcon ? 'border-primary' : ''}`}
             >
               {/* <Ri24HoursLine style={{ width: "30px", height: "30px" }} /> */}
@@ -108,8 +108,8 @@ const BotIcons = ({ botIcons, setMyBot, myBot}) => {
         }
         if (ele === "LuMessagesSquare") {
           return (
-            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
-              className={`p-2 shadow-sm rounded border border-lightgray d-flex justify-content-center align-items-center ms-4 
+            <div  onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
+              className={`p-2 shadow-sm rounded mb-2 border border-lightgray d-flex justify-content-center align-items-center ms-4 
               ${ele === myBot?.bubbleIcon ? 'border-primary' : ''}`}
             >
               {/* <LuMessagesSquare style={{ width: "30px", height: "30px" }} /> */}
@@ -120,8 +120,8 @@ const BotIcons = ({ botIcons, setMyBot, myBot}) => {
         }
         if (ele === "TfiCommentsSmiley") {
           return (
-            <div onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
-              className={`p-2 shadow-sm rounded border border-lightgray d-flex justify-content-center align-items-center ms-4 
+            <div  onClick={() => {setMyBot((pre) => ({...pre, bubbleIcon: ele}))}}
+              className={`p-2 shadow-sm rounded mb-2 border border-lightgray d-flex justify-content-center align-items-center ms-4 
               ${ele === myBot?.bubbleIcon ? 'border-primary' : ''}`}
             >
               {/* <TfiCommentsSmiley style={{ width: "30px", height: "30px" }} /> */}

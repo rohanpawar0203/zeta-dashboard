@@ -24,6 +24,7 @@ import { BotCreate, FAQFilesAPI, FileServerAPI, UploadCompanyLogoAPI } from "../
 import { toast } from "react-toastify";
 import axios from "axios";
 import { getUserDetails } from "../../../Services/UsersServices";
+import ScrollBar from "react-perfect-scrollbar";
 
 const userData = JSON.parse(sessionStorage.getItem('currentUser'));
 const token = sessionStorage.getItem('token');
