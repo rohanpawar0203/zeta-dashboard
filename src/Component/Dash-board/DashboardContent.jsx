@@ -75,7 +75,7 @@ const DashboardContent = () => {
           <Row className="d-flex justify-content-evenly">
             <Fragment>
             <H3 attrH6={{ className: "font-roboto" }}>
-                          Whats App
+                        Whats App
                         </H3>
               <Col sm="6" xl="3" lg="10">
                 <Card className="o-hidden">

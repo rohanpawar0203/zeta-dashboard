@@ -93,7 +93,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
           "type": "whatsapp",
           "template_id": templateID,
       }
-        const res = await fetch(`${WidgetsAPI}`, {
+        const res = await fetch(`http://localhost:8080/widgets`, {
           method: "PUT",
           body: JSON.stringify(payload),
           headers: {

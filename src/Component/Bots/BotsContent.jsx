@@ -168,7 +168,7 @@ const BotsContent = () => {
         {myBots.length > 0 && (
           <>
            <div className="w-100 d-flex justify-content-between align-items-center px-2">
-           <H6 className="mb-2 fw-bolder text-gray">1 live bots</H6>
+           <H6 className="mb-2 fw-bolder text-gray">{myBots.length ? myBots.length: ''} live bots</H6>
             <button type="button" className="btn btn-primary btn-md" onClick={toggle}>Create new bot</button>
            <CreateBotFormModal modal={modal} NewMessage={'New Bot'} toggle={toggle} getAllBot={getAllBot}></CreateBotFormModal>
            </div>

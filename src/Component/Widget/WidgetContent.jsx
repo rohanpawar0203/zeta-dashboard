@@ -29,6 +29,7 @@ const WidgetContent = () => {
 	const [template, setTemplate] = useState({type: {...def_template}, template_id: ''});
 	const [allTemplates, setallTemplates] = useState([]);
 	const [mode, setMode] = useState('')
+	const [count, setCount] = useState(0);
 	const templateChangerRef = useRef('')
     
 	useEffect(() => {
@@ -46,7 +47,7 @@ const WidgetContent = () => {
 			  "customer_id": userData?._id,
 			  "type": "whatsapp",
 		  }
-			const res = await fetch(`${WidgetsAPI}`, {
+			const res = await fetch(`http://localhost:8080/widgets`, {
 			  method: 'POST',
 			  body: JSON.stringify(payload),
 			  headers: {
@@ -70,8 +71,10 @@ const WidgetContent = () => {
 	}
 	
 	useEffect(() => {
-	if(userData?._id){
+	console.log('count ', count);
+	if(count === 0){
 		getWidgetTemplate();
+		setCount(1);
 	}
 	}, [])
 	

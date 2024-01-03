@@ -14,6 +14,7 @@ import ConfigDB from '../Config/Theme-Config';
 import AnimationThemeContext from '../_helper/AnimationTheme';
 
 const Layout = ({ children, classNames, ...rest }) => {
+  console.log('layout wrapper')
   const { sidebar_types, settings, toggleIcon, setToggleIcon, defaultClass, setDefaultClass
   } = useContext(CheckContext);
   const { setIsVertical } = useContext(ProductContext);

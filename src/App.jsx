@@ -32,6 +32,7 @@ import { toast } from "react-toastify";
 import { PlanDetails } from "./api";
 
 function App() {
+  console.log('app render')
   const {userData, token} = appStore();
 
   useEffect(() => {

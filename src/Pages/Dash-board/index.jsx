@@ -3,6 +3,7 @@ import Breadcrumbs from '../../CommonElements/Breadcrumbs';
 import DashboardContain from '../../Component/Dash-board';
 
 const Dashboard = () => {
+  console.log('Dashboard')
   return (
     <Fragment>
       <Breadcrumbs parent="" title=" Home  " />
