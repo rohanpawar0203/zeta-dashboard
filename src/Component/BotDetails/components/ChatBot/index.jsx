@@ -10,6 +10,7 @@ import { TfiHeadphoneAlt, TfiCommentsSmiley } from "react-icons/tfi";
 import { Ri24HoursLine } from "react-icons/ri";
 import { LuMessagesSquare } from "react-icons/lu";
 import { useState } from "react";
+import { botIconSrcs } from "../BotIcons";
 
 const ChatBot = ({ myBot, setMyBot }) => {
   const [bot, setbot] = useState("smallBot");
@@ -32,95 +33,107 @@ const ChatBot = ({ myBot, setMyBot }) => {
               style={{
                 width: "50px",
                 height: "50px",
+                zIndex: "1",
                 borderRadius: "50%",
-                background: `${myBot?.accentColor}`,
+                boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                // border : `1px solid ${myBot?.accentColor}` ,
+                // background: `${myBot?.accentColor}`,
                 cursor: 'pointer'
               }}
               className="d-flex align-items-center justify-content-center"
             >
               {myBot?.bubbleIcon === "BiBot" ? (
-                <BiBot
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    color: "white",
-                    fontWeight: "600",
-                  }}
-                />
+                // <BiBot
+                //   style={{
+                //     width: "30px",
+                //     height: "30px",
+                //     color: "white",
+                //     fontWeight: "600",
+                //   }}
+                // />
+                <ImgElement imgSource={botIconSrcs[0]} imgInfoNum={1}/>
               ) : myBot?.bubbleIcon === "BsRobot" ? (
-                <BsRobot
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    color: "white",
-                    fontWeight: "600",
-                  }}
-                />
+                // <BsRobot
+                //   style={{
+                //     width: "30px",
+                //     height: "30px",
+                //     color: "white",
+                //     fontWeight: "600",
+                //   }}
+                // />
+                <ImgElement imgSource={botIconSrcs[1]} imgInfoNum={2}/>
               ) : myBot?.bubbleIcon === "TbMessageDots" ? (
-                <TbMessageDots
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    color: "white",
-                    fontWeight: "600",
-                  }}
-                />
+                // <TbMessageDots
+                //   style={{
+                //     width: "30px",
+                //     height: "30px",
+                //     color: "white",
+                //     fontWeight: "600",
+                //   }}
+                // />
+                <ImgElement imgSource={botIconSrcs[2]} imgInfoNum={3}/>
               ) : myBot?.bubbleIcon === "BiUser" ? (
-                <BiUser
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    color: "white",
-                    fontWeight: "600",
-                  }}
-                />
-              ) : myBot?.bubbleIcon === "AiOutlineQuestionCircle" ? (
-                <AiOutlineQuestionCircle
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    color: "white",
-                    fontWeight: "600",
-                  }}
-                />
-              ) : myBot?.bubbleIcon === "TfiHeadphoneAlt" ? (
-                <TfiHeadphoneAlt
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    color: "white",
-                    fontWeight: "600",
-                  }}
-                />
-              ) : myBot?.bubbleIcon === "Ri24HoursLine" ? (
-                <Ri24HoursLine
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    color: "white",
-                    fontWeight: "600",
-                  }}
-                />
-              ) : myBot?.bubbleIcon === "LuMessagesSquare" ? (
-                <LuMessagesSquare
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    color: "white",
-                    fontWeight: "600",
-                  }}
-                />
-              ) : myBot?.bubbleIcon === "TfiCommentsSmiley" ? (
-                <TfiCommentsSmiley
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    color: "white",
-                    fontWeight: "600",
-                  }}
-                />
-              ) : (
-                ""
+                // <BiUser
+                //   style={{
+                //     width: "30px",
+                //     height: "30px",
+                //     color: "white",
+                //     fontWeight: "600",
+                //   }}
+                // />
+                <ImgElement imgSource={botIconSrcs[3]} imgInfoNum={4}/>
+                ) : myBot?.bubbleIcon === "AiOutlineQuestionCircle" ? (
+                  // <AiOutlineQuestionCircle
+                  // style={{
+                  //   width: "30px",
+                  //   height: "30px",
+                  //   color: "white",
+                  //   fontWeight: "600",
+                  // }}
+                  // />
+                  <ImgElement imgSource={botIconSrcs[4]} imgInfoNum={5}/>
+                  ) : myBot?.bubbleIcon === "TfiHeadphoneAlt" ? (
+                  //   <TfiHeadphoneAlt
+                  // style={{
+                  //   width: "30px",
+                  //   height: "30px",
+                  //   color: "white",
+                  //   fontWeight: "600",
+                  // }}
+                  // />
+                  <ImgElement imgSource={botIconSrcs[5]} imgInfoNum={6}/>
+                  ) : myBot?.bubbleIcon === "Ri24HoursLine" ? (
+                //     <Ri24HoursLine
+                //   style={{
+                //     width: "30px",
+                //     height: "30px",
+                //     color: "white",
+                //     fontWeight: "600",
+                //   }}
+                // />
+                <ImgElement imgSource={botIconSrcs[6]} imgInfoNum={7}/>
+                ) : myBot?.bubbleIcon === "LuMessagesSquare" ? (
+                  // <LuMessagesSquare
+                  // style={{
+                  //   width: "30px",
+                  //   height: "30px",
+                  //   color: "white",
+                  //   fontWeight: "600",
+                  // }}
+                  // />
+                  <ImgElement imgSource={botIconSrcs[7]} imgInfoNum={8}/>
+                  ) : myBot?.bubbleIcon === "TfiCommentsSmiley" ? (
+                  //   <TfiCommentsSmiley
+                  // style={{
+                  //   width: "30px",
+                  //   height: "30px",
+                  //   color: "white",
+                  //   fontWeight: "600",
+                  // }}
+                  // />
+                  <ImgElement imgSource={botIconSrcs[8]} imgInfoNum={9}/>
+                  ) : (
+                    ""
               )}
             </div>
           </div>
@@ -159,5 +172,11 @@ const ChatBot = ({ myBot, setMyBot }) => {
     </div>
   );
 };
+
+export const ImgElement = ({imgSource, imgInfoNum}) => {
+  return (
+    <img style={{ width: "50px", height: "50px" }} src={imgSource} alt={`bot_icon_0${imgInfoNum}.png`} />
+  )
+}
 
 export default ChatBot;
