@@ -30,6 +30,7 @@ const BigBot = ({ myBot }) => {
   const chatContainerRef = useRef();
   const token = sessionStorage.getItem("token");
   const user = JSON.parse(sessionStorage.getItem("currentUser"));
+  const userAvatar = require('../../../../../assets/images/avtar/boy.png');
   const botAvatar =
     "https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75";
 
@@ -93,7 +94,7 @@ const BigBot = ({ myBot }) => {
           >
             <div className="d-flex jusify-content-end align-items-center mb-1">
               <img
-                src="https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75"
+                src={myBot?.companyLogo}
                 alt=""
                 width="30px"
                 height="30px"
@@ -113,7 +114,7 @@ const BigBot = ({ myBot }) => {
                 }`}
               >
                 <img
-                  src={`${ele?.user ? myBot.companyLogo : botAvatar}`}
+                  src={`${ele?.user ? userAvatar : myBot.companyLogo}`}
                   alt={`${ele?.user ? "user avatar" : "bot avatar"}`}
                   width="30px"
                   height="30px"
@@ -131,7 +132,7 @@ const BigBot = ({ myBot }) => {
             className={`d-flex align-items-center mb-2  flex-row`}
           >
             <img
-              src={`${botAvatar}`}
+              src={`${myBot?.companyLogo}`}
               alt={`bot avatar`}
               width="30px"
               height="30px"

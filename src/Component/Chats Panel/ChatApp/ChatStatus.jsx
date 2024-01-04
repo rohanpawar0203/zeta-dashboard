@@ -28,6 +28,7 @@ const ChatStatus = ({}) => {
   };
   var activeChat = 0;
   if (selectedUserr != null) activeChat = selectedUserr._id;
+
   
   return (
     <Fragment>
@@ -61,7 +62,7 @@ const ChatStatus = ({}) => {
                         <Media body>
                           <div className="about">
                             <div className="name">{item?.phoneNumber}</div>
-                            <div className="status">{item?.chat[item?.chat.length - 1]?.message}</div>
+                            <div className="status">{item?.chat[item?.chat.length - 1]?.message?.slice(0, 25)}</div>
                             </div>
                         </Media>
                       </Media>

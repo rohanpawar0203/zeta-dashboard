@@ -141,9 +141,9 @@ import Tickets from '../Pages/Tickets'
 import CustomFlow from '../Pages/Custom Flow'
 import ChatsPanel from '../Pages/Chats Panel/ChatApp'
 import LiveChatPanel from '../Pages/Live Chats/ChatApp'
-import Widget from '../Pages/Widget/index'
 import DashBoard from '../Pages/Dash-board';
 import Store from '../Pages/Store';
+import WhatsAppWidget from '../Pages/WhatsAppWidget';
 
 
 export const routes = [
@@ -161,5 +161,5 @@ export const routes = [
     { path: `${process.env.PUBLIC_URL}/add-agents`, Component: <AddAgents /> },
     { path: `${process.env.PUBLIC_URL}/users/userprofile`, Component: <UsersProfile /> },
     { path: `${process.env.PUBLIC_URL}/users/useredit`, Component: <UsersEdit /> },
-    { path: `${process.env.PUBLIC_URL}/widget`, Component: <Widget /> },
+    { path: `${process.env.PUBLIC_URL}/whats-app-widget`, Component: <WhatsAppWidget /> },
 ];
