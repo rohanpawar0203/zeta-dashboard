@@ -14,7 +14,6 @@ import { connectWithSocketIOServer } from '../Component/Live Chats/Client/wss';
 import ErrorPage from './ErrorPage';
 import DashBoard from '../Pages/Dash-board';
 import appStore from '../Component/Live Chats/Client/AppStore';
-
 configureFakeBackend();
 const Routers = () => {
   const {userData} = appStore();
@@ -44,7 +43,6 @@ const Routers = () => {
                 {authRoutes.map(({ path, Component }, i) => (
                   <Route path={path} element={Component} key={i} />
                 ))}
-                <Route path={`*`} element={<ErrorPage />} />
               </Routes>
             </Suspense>
           </>

@@ -113,16 +113,16 @@ footer a {
 	display: flex;
 	align-items: center;
     justify-content: center;
-	color: teal;
+	color: black;
 	font-weight: 700;
 }
 .editIcon-second{
-	right: 250px;
+	right: 300px;
 	bottom: 32px;
 }
 .editIcon:hover{
 	background-color: white;
-	color: black;
+	color: green;
 	cursor: pointer;
 }
 .banner p {
@@ -158,6 +158,17 @@ footer a {
 
 .examples {
     border-bottom: 5px solid #fff;
+}
+.examples .current-template{
+	background-color: rgb(16, 195, 121);
+}
+.examples .current-template .text .title{
+	color: white;
+}
+.btn-styles{
+	width: 100px;
+    height: 50px;
+    object-fit: contain;
 }
 .examples h1 {
     font-size: 100px;

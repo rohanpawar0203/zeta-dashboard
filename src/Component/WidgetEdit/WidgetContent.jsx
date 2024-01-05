@@ -11,28 +11,37 @@ import {
   Label,
 } from "reactstrap";
 import "../Widget/styles/style.css";
-import { Btn, H5 } from "../../AbstractElements";
+import { Btn, H5, H6 } from "../../AbstractElements";
 import { v4 as uuidv4 } from "uuid";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
 import { MdOutlineRemoveCircleOutline } from "react-icons/md";
 import EditRepresentative from "./EditRepresentativeModal";
-import axios from "axios";
 import { toast } from "react-toastify";
+import { validatorObj } from "../../Services/Custom_Hooks/form_validations";
+import { WidgetsAPI } from "../../api";
+
+const button_styles = [
+  require('../Widget/assets/img/popup/whatsapp/button-only-1.png'),
+  require('../Widget/assets/img/popup/whatsapp/button-only-2.png'),
+  require('../Widget/assets/img/popup/whatsapp/button-only-3.png'),
+  require('../Widget/assets/img/popup/whatsapp/button-only-4.png'),
+  require('../Widget/assets/img/popup/whatsapp/button-only-5.png'),
+]
 
 const userData = JSON.parse(sessionStorage.getItem('currentUser'));
 const token = sessionStorage.getItem('token');
-const colorsArr = [
-  {code: "#CD5C5C", color: 'IndianRed'},
+export const colorsArr = [
+  {code: "#10c379", color: 'Default'},
+  {code: "#CD5C5C", color: 'Indian Red'},
   {code: "#000000", color: 'Black'},
   {code: "#808000", color: 'Olive'},
   {code: "#008000", color: 'Green'},
   {code: "#0000FF", color: 'Blue'},
-  {code: "#800080", color: 'Purple'},
+  {code: "#800080", color: 'Purple'}
 ]
 
 const Avatar = {
-  id: uuidv4(),
   avatar: {
     src: '<img src="assets/img/person/1.jpg" alt="">' /* Image, Icon or SVG */,
     backgroundColor: "#ffffff" /* Html color code */,
@@ -62,8 +71,13 @@ const Avatar = {
   },
 };
 
+const avatar_name = ["Lorna Hensley", "Mattie Simmonds", "Kole Cleg"];
+
+
 const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWidgetTemplate }) => {
   const templateRef = useRef({ ...template });
+  const radioInputRef = useRef();
+  const [counter, setcounter] = useState(0);
   const [repEditMode, setrepEditMode] = useState({
     status: false,
     avatarID: "",
@@ -71,29 +85,60 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
 
   const addWidgetTemplate = async(e) => {
     e.preventDefault();
-    try {
-      const payload = {
-        "settings": template,
-        "customer_id": userData?._id,
-        "type": "whatsApp",
-        "template_id": templateID,
-        "status": "active"
+    if(!handleValidations()){
+      try {
+        const payload = {
+          "settings": template,
+          "customer_id": userData?._id,
+          "type": "whatsapp",
+          "template_id": templateID,
+      }
+        const res = await fetch(`${WidgetsAPI}`, {
+          method: "PUT",
+          body: JSON.stringify(payload),
+          headers: {
+            "Content-Type": "application/json", 
+            // "Authorization": `Bearer ${token}`,
+            // Add other headers if needed
+          },
+        })
+        if(`${res.status}` === '200'){
+          getWidgetTemplate();
+          toast.success(`Successfully saved widget template data`);
+        }
+      } catch (error) {
+        console.log('widget customization error ', error);
+        toast.error(error?.message)
+      }
     }
-      const res = await fetch(`http://localhost:8080/bot-customization`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json", 
-          // Add other headers if needed
-        },
-        body: JSON.stringify(payload),
-      })
-      getWidgetTemplate();
-      toast.success(`Successfully saved widget template data`);
-    } catch (error) {
-      console.log('widget customization error ', error);
-      toast.error(error?.message)
-    }
+    
   }
+
+  const handleValidations = () => {
+    let err = null;
+    if(validatorObj?.regExpValidator('color_code', template?.button?.backgroundColor)=== false){
+      err = "Invalid hexadecimal colour code!";
+    }
+    if(err){
+     toast.error(`${err}`);
+    }
+    return err;
+  }
+  
+  useEffect(() => {
+    if(counter === 3){
+      setcounter(0);
+    }
+  }, [counter])
+
+  useEffect(() => {
+    let updatedPersons = template?.popup?.persons.map((ele, ind) => ({...ele, id: uuidv4()}));
+    setTemplate((pre) => ({
+      ...pre,
+      type: {...pre?.type, popup: { ...pre?.type?.popup, persons: [...updatedPersons] }}
+    }));
+  }, []);
+  
   
 
   return (
@@ -109,16 +154,17 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
               noValidate=""
               onSubmit={(e) => {addWidgetTemplate(e)}}
             >
+              <H6 attrH6={{className: 'd-inline-block border border-light p-2 bg-light text-dark  rounded'}}>{"Button"}</H6>
               <Row>
                 <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
-                    {"Button Position"}
+                    {"Position"}
                   </Label>
                   <select
                     className="form-control"
                     name="position"
-                    defaultValue={template?.button?.position}
-                    placeholder="Button Position"
+                    value={template?.button?.position}
+                    placeholder="Position"
                     onChange={(e) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
@@ -135,73 +181,26 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
-                <Col md="4 mb-3">
-                  <Label htmlFor="validationCustom01">{"Button style"}</Label>
-                  <select
-                    className="form-control"
-                    name="style"
-                    defaultValue={template?.button?.style}
-                    onChange={(e) => {
-                      e.preventDefault();
-                      setTemplate((pre) => ({
-                        ...pre,
-                        type: {...pre?.type, button: { ...pre?.type?.button, style: e.target.value }}
-                      }));
-                    }}
-                    placeholder="Button style"
-                    required={true}
-                  >
-                    <option value={""}>Select Style</option>
-                    {[1, 2, 3, 4, 5, 6, 7].map((ele, ind) => (
-                      <option value={ele}>Type {`${ele}`}</option>
+                <Col md="8 mb-3">
+                  <Label htmlFor="validationCustom01">{"Style"}</Label>
+                  <div className="d-flex align-items-center gap-3 flex-wrap ">
+                    {[1, 2, 3, 4, 5].map((ele, ind) => (
+                      <div key={ind} style={{height: '50px'}} className="d-flex  align-items-center gap-1">
+                      <input style={{width: '15px', height:'15px', cursor: 'pointer'}}
+                        type="radio"
+                        onChange={(e) => {
+                          if(e.target.checked === true){
+                          setTemplate((pre) => ({
+                            ...pre,
+                            type: {...pre?.type, button: { ...pre?.type?.button, style: ele }}
+                          }));
+                        }
+                        }}
+                        checked={template?.button?.style === ele ? true : false}
+                      />
+                      <img src={button_styles[ind]} alt="button_1" className="btn-styles"/>
+                      </div>
                     ))}
-                  </select>
-                  <span></span>
-                  <div className="valid-feedback">{"Looks good!"}</div>
-                </Col>
-                <Col md="4 mb-3">
-                  <Label htmlFor="validationCustom01">
-                    {"Button background Color"}
-                  </Label>
-                  <div className="d-flex gap-2 align-items-center">
-                    <select
-                      className="form-control"
-                      name="buttonBackgroundColor"
-                      defaultValue={colorsArr?.find((ele) => (ele?.code === template?.button?.backgroundColor))?.color}
-                      onChange={(e) => {
-                        e.preventDefault();
-                        setTemplate((pre) => ({
-                          ...pre,
-                          type: {...pre?.type,  
-                            button: {
-                            ...pre?.type?.button,
-                            backgroundColor: e?.target?.value,
-                          },}
-                        }));
-                      }}
-                      placeholder="buttonBackgroundColor"
-                      required={true}
-                    >
-                      <option
-                        style={{ width: "15px", height: "15px" }}
-                        value={""}
-                      >
-                        Select background Color
-                      </option>
-                      {colorsArr?.map((ele, ind) => (
-                        <option
-                          style={{
-                            width: "15px",
-                            height: "15px",
-                            borderRadius: "50%",
-                            backgroundColor: ele?.code,
-                            color: 'white',
-                          }}
-                          value={ele?.code}
-                        >{ele?.color}</option>
-                      ))}
-                    </select>
-                    <ColorDiv bgColor={template?.button?.backgroundColor} />
                   </div>
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
@@ -209,40 +208,46 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
               </Row>
 
               <Row>
-                <Col md="4 mb-3">
-                  <Label htmlFor="validationCustom01">{"Button effect"}</Label>
-                  <select
+              <Col md="4 mb-3">
+                  <Label htmlFor="validationCustom01">
+                    {"Background Color"}
+                  </Label>
+                  <div className="d-flex gap-2 align-items-center">
+                    <input
                     className="form-control"
-                    name="buttonEffect"
-                    defaultValue={template?.button?.style}
+                    name="buttonBackgroundColor"
+                    type="text"
+                    value={template?.button?.backgroundColor}
+                    placeholder="Hexadecimal colour code"
                     onChange={(e) => {
-                      e.preventDefault();
-                      setTemplate((pre) => ({
-                        ...pre,
-                        type: {...pre?.type, button: { ...pre?.type?.button, effect: e.target.value }}
-                      }));
-                    }}
-                    placeholder="Button Effect"
+                  //     let regex = new RegExp(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/);
+                  //     if(regex.test(e?.target?.value) === false){
+                    setTemplate((pre) => ({
+                      ...pre,
+                      type: {...pre?.type,  
+                        button: {
+                        ...pre?.type?.button,
+                        backgroundColor: e.target.value
+                      }}
+                    }));
+                   }}
                     required={true}
-                  >
-                    <option value={""}>Select Effect</option>
-                    {[1, 2, 3, 4, 5, 6, 7].map((ele, ind) => (
-                      <option value={ele}>Effect {`${ele}`}</option>
-                    ))}
-                  </select>
+                  ></input>
+                    <ColorDiv bgColor={template?.button?.backgroundColor ? template?.button?.backgroundColor : "#10c379"} />
+                  </div>
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
                 <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
-                    {"Button Speech Bubble"}
+                    {"Speech Bubble"}
                   </Label>
                   <input
                     className="form-control"
                     name="speechBubble"
                     type="text"
-                    defaultValue={template?.button?.speechBubble}
-                    placeholder="Button Speech Bubble"
+                    value={template?.button?.speechBubble}
+                    placeholder="Speech Bubble"
                     onChange={(e) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
@@ -259,14 +264,15 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
-                <Col md="4 mb-3">
+                {template?.button?.style === 1 && (
+                  <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
-                    {"Button Pulse effect"}
+                    {"Pulse effect"}
                   </Label>
                   <select
                     className="form-control"
                     name="buttonPulseEffect"
-                    defaultValue={template?.button?.pulseEffect}
+                    value={template?.button?.pulseEffect}
                     onChange={(e) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
@@ -278,7 +284,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                         }}
                       }));
                     }}
-                    placeholder="Button Pulse effect"
+                    placeholder="Pulse effect"
                     required={true}
                   >
                     <option value={""}>Select Pulse Effect</option>
@@ -289,17 +295,19 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
+                )}
               </Row>
 
               <Row>
-                <Col md="4 mb-3">
-                  <Label htmlFor="validationCustom01">{"Button Title"}</Label>
+                {template?.button?.style !== 1 && (
+                  <Col md="4 mb-3">
+                  <Label htmlFor="validationCustom01">{"Title"}</Label>
                   <input
                     className="form-control"
                     name="buttonTitle"
                     type="text"
-                    defaultValue={template?.button?.text?.title}
-                    placeholder="Button Title"
+                    value={template?.button?.text?.title}
+                    placeholder="Title"
                     onChange={(e) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
@@ -316,16 +324,18 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
-                <Col md="4 mb-3">
+                )}
+                {([2, 4].includes(template?.button?.style)) && (
+                  <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
-                    {"Button description"}
+                    {"description"}
                   </Label>
                   <input
                     className="form-control"
                     name="buttonDescription"
                     type="text"
-                    defaultValue={template?.button?.text?.description}
-                    placeholder="Button description"
+                    value={template?.button?.text?.description}
+                    placeholder="description"
                     onChange={(e) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
@@ -346,128 +356,21 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
-                <Col md="4 mb-3">
-                  <Label htmlFor="validationCustom01">
-                    {"Popup automatic open"}
-                  </Label>
-                  <select
-                    className="form-control"
-                    name="automaticOpen"
-                    defaultValue={template?.popup?.automaticOpen}
-                    onChange={(e) => {
-                      e.preventDefault();
-                      setTemplate((pre) => ({
-                        ...pre,
-                        type: {...pre?.type, 
-                          popup: {
-                            ...pre?.type?.popup,
-                            automaticOpen:
-                              e.target.value === "true" ? true : false,
-                          },
-                        }
-                      }));
-                    }}
-                    placeholder="Popup automatic open"
-                    required={true}
-                  >
-                    <option value={""}>Select auto open</option>
-                    {[true, false].map((ele, ind) => (
-                      <option value={ele}>{ele ? "Yes" : "No"}</option>
-                    ))}
-                  </select>
-                  <span></span>
-                  <div className="valid-feedback">{"Looks good!"}</div>
-                </Col>
+                )}
+                
               </Row>
-
-              <Row>
-                <Col md="4 mb-3">
-                  <Label htmlFor="validationCustom01">{"Popup Effect"}</Label>
-                  <select
-                    className="form-control"
-                    name="popupEffect"
-                    defaultValue={template?.button?.style}
-                    onChange={(e) => {
-                      e.preventDefault();
-                      setTemplate((pre) => ({
-                        ...pre,
-                        type: {...pre?.type, 
-                          popup: { ...pre?.type?.popup, effect: e.target.value },
-                        }
-                      }));
-                    }}
-                    placeholder="Button style"
-                    required={true}
-                  >
-                    <option value={""}>Select Popup Effect</option>
-                    {new Array(15).fill("1").map((ele, ind) => (
-                      <option value={ind + 1}>Effect {`${ind + 1}`}</option>
-                    ))}
-                  </select>
-                  <span></span>
-                  <div className="valid-feedback">{"Looks good!"}</div>
-                </Col>
-                <Col md="4 mb-3">
-                  <Label htmlFor="validationCustom01">
-                    {"Popup header background Color"}
-                  </Label>
-                  <div className="d-flex gap-2 align-items-center">
-                    <select
-                      className="form-control"
-                      name="popupHeaderBackgroundColor"
-                      defaultValue={colorsArr?.find((ele) => (ele?.code === template?.popup?.header?.backgroundColor))?.color}
-                      onChange={(e) => {
-                        e.preventDefault();
-                        setTemplate((pre) => ({
-                          ...pre,
-                          type : {...pre?.type,
-                            popup: {
-                              ...pre?.type?.popup,
-                              header: {
-                                ...pre?.type?.popup?.header,
-                                backgroundColor: e.target.value,
-                              },
-                          }
-                          },
-                        }));
-                      }}
-                      placeholder="Popup header background Color"
-                      required={true}
-                    >
-                      <option value={""}>Select background Color</option>
-                      {colorsArr.map((ele, ind) => (
-                        <option
-                          style={{
-                            width: "15px",
-                            height: "15px",
-                            borderRadius: "50%",
-                            backgroundColor: ele?.code,
-                            color: 'white'
-                          }}
-                          value={ele?.code}
-                        >{ele?.color}</option>
-                      ))}
-                    </select>
-                    <ColorDiv
-                      bgColor={template?.popup?.header?.backgroundColor}
-                    />
-                  </div>
-                  <span></span>
-                  <div className="valid-feedback">{"Looks good!"}</div>
-                </Col>
-              </Row>
-
+                <H6 attrH6={{className: 'd-inline-block border border-light p-2 bg-light text-dark  rounded'}}>Popup</H6>
               <Row>
                 <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
-                    {"Popup Header description"}
+                    {"Header description"}
                   </Label>
                   <input
                     className="form-control"
                     name="popupHeaderDescription"
                     type="text"
-                    defaultValue={template?.popup?.header?.description}
-                    placeholder="Popup Header description"
+                    value={template?.popup?.header?.description}
+                    placeholder="Header description"
                     onChange={(e) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
@@ -490,14 +393,14 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                 </Col>
                 <Col md="4 mb-3">
                   <Label htmlFor="validationCustom01">
-                    {"Popup Header Title"}
+                    {"Header Title"}
                   </Label>
                   <input
                     className="form-control"
                     name="popupHeaderTitle"
                     type="text"
-                    defaultValue={template?.popup?.header?.title}
-                    placeholder="Popup Header Title"
+                    value={template?.popup?.header?.title}
+                    placeholder="Header Title"
                     onChange={(e) => {
                       e.preventDefault();
                       setTemplate((pre) => ({
@@ -518,10 +421,40 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
+                <Col md="4 mb-3">
+                  <Label htmlFor="validationCustom01">
+                    {"Automatic Open"}
+                  </Label>
+                  <select
+                    className="form-control"
+                    name="buttonPulseEffect"
+                    value={template?.popup?.automaticOpen}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setTemplate((pre) => ({
+                        ...pre,
+                        type: {...pre?.type, 
+                          popup: {
+                          ...pre?.type?.popup,
+                          automaticOpen: e.target.value === "true" ? true : false,
+                        }}
+                      }));
+                    }}
+                    placeholder="Pulse effect"
+                    required={true}
+                  >
+                    <option value={""}>Select Pulse Effect</option>
+                    {[true, false].map((ele, ind) => (
+                      <option value={ele}>{ele ? "Yes" : "No"}</option>
+                    ))}
+                  </select>
+                  <span></span>
+                  <div className="valid-feedback">{"Looks good!"}</div>
+                </Col>
               </Row>
 
               <Row>
-                <Col md="4 mb-3">
+                {/* <Col> */}
                   <span
                     style={{ cursor: "pointer" }}
                     className="d-flex align-items-center"
@@ -540,11 +473,12 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                                     ...pre?.type?.pop,
                                     persons: [
                                       ...pre?.type?.popup?.persons,
-                                      { id: uuidv4(), ...Avatar },
+                                      {...Avatar, id: uuidv4()},
                                     ],
                                   },
                                 }
                               }));
+                              setcounter((pre) => (pre + 1));
                             }
                           }}
                         />
@@ -555,11 +489,12 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                     repEditMode.status === false && (
                       <>
                         <span className="mb-1">Representatives</span>
+                        <div className="d-flex flex-wrap gap-2 mb-2 align-items-center">
                         {template?.popup?.persons?.map((ele, ind) => (
                           <div
                             key={ele?.id}
-                            className="mb-1 w-75 d-flex justify-content-evenly align-items-center p-1 border border-lightgray"
-                            style={{ borderRadius: "4px" }}
+                            className="mb-1 d-flex justify-content-evenly align-items-center p-1 border border-lightgray"
+                            style={{ borderRadius: "4px", width: '175px'}}
                           > 
                           <img
                               style={{
@@ -591,8 +526,8 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                                       ...pre?.type?.pop,
                                       persons: [
                                         ...pre?.type?.popup?.persons.filter(
-                                          (item, ind) => item.id !== ele?.id
-                                        ),
+                                          (item, ind) => (item?.id !== ele?.id)
+                                          )
                                       ],
                                     },
                                   }
@@ -601,34 +536,46 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
                             />
                           </div>
                         ))}
+                        </div>
                       </>
                     )}
-                </Col>
+                {/* </Col> */}
               </Row>
-              {repEditMode.status === true && (
-                <>
+              {repEditMode.status === true ? 
                   <EditRepresentative
                     template={template}
                     setTemplate={setTemplate}
                     avatarID={repEditMode?.avatarID}
                     setrepEditMode={setrepEditMode}
                   />
-                </>
-              )}
+                  :
+                  <div className="d-flex flex-wrap gap-2 align-items-center">
               <Btn attrBtn={{ color: "primary", type: "submit" }}>
                 {"Submit form"}
               </Btn>
               <Btn
                 attrBtn={{
-                  color: "danger",
+                  color: "secondary",
                   onClick: () => {
-                    setTemplate((pre) => ({...pre, type: {...templateRef?.current?.type}}));
+                    // setTemplate((pre) => ({...pre, type: {...templateRef?.current?.type}}));
                     setMode("");
                   },
                 }}
               >
                 {"Back"}
               </Btn>
+              <Btn
+                attrBtn={{
+                  color: "danger",
+                  onClick: () => {
+                    setTemplate((pre) => ({...pre, type: {...templateRef?.current}}));
+                  },
+                }}
+              >
+                {"Restore"}
+              </Btn>
+                  </div>
+              }
             </Form>
 
             {/* <div id={"example-sample"}></div> */}
@@ -640,7 +587,7 @@ const WidgetEditComponent = ({ template, setTemplate, setMode, templateID, getWi
 };
 export default WidgetEditComponent;
 
-const ColorDiv = ({ bgColor }) => {
+export const ColorDiv = ({ bgColor }) => {
   return (
     <div
       className="d-flex align-items-center justify-content-center"

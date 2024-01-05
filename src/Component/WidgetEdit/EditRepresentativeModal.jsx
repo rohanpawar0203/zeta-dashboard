@@ -7,6 +7,9 @@ import { MdCancel, MdDone  } from 'react-icons/md';
 import { FaRegEdit } from 'react-icons/fa';
 import { getUserDetails } from '../../Services/UsersServices';
 import { FileServerAPI, UploadCompanyLogoAPI } from '../../api';
+import { ColorDiv } from './WidgetContent';
+import { colorsArr } from './WidgetContent';
+import { validatorObj } from '../../Services/Custom_Hooks/form_validations';
 
 const userData = JSON.parse(sessionStorage.getItem('currentUser'));
 const token = sessionStorage.getItem('token');
@@ -14,12 +17,13 @@ const token = sessionStorage.getItem('token');
 const EditRepresentative = ({template, setTemplate, avatarID, setrepEditMode}) => {
      const [companyLogoFile, setcompanyLogoFile] = useState('');
      const templateRef = useRef(template);
-     const [avtProfile, setAvtProfile] = useState({...template?.popup?.persons?.find((ele) => (ele.id === avatarID))})
+     const [avtProfile, setAvtProfile] = useState({...template?.popup?.persons?.find((ele) => (ele?.id === avatarID))})
      const [companyLogoURL, setcompanyLogoURL] = useState('')
-     const companayLogoRef = useRef('')
+     const [colors_array, setColors_array] = useState([]);
+     const companayLogoRef = useRef('');
      const [companyLogoMode, setCompanyLogoMode] = useState('logo');
+     console.log('avtProfile ', avtProfile);
     const handleTemplateChange = (e, value, key, property) => {
-        e.preventDefault();
         setTemplate((pre) => {
             let personsArr = pre?.type?.popup?.persons;
            let result =  personsArr.map((ele, ind) => {
@@ -31,8 +35,9 @@ const EditRepresentative = ({template, setTemplate, avatarID, setrepEditMode}) =
                 }
                 return item;
             })
+            console.log('return ', {...pre, type: {...pre?.type, popup: {...pre?.type?.popup, persons: [...result]}}})
             return {...pre, type: {...pre?.type, popup: {...pre?.type?.popup, persons: [...result]}}}
-        })
+        });
     }
 
     const uploadCompanyLogo = async () => {
@@ -48,14 +53,21 @@ const EditRepresentative = ({template, setTemplate, avatarID, setrepEditMode}) =
         })
         const responseUrl = await res?.data?.filenames[0];
          if(responseUrl){
-          setcompanyLogoURL(responseUrl);
           getUserDetails(userData?._id);
+          setcompanyLogoFile('');
           let imgElement = document.createElement('img');
           let urlString = FileServerAPI+'/'+ responseUrl;
+          setcompanyLogoURL(urlString);
           imgElement.src = urlString;
           imgElement.alt = '';
           let evnt = new Event('click');
           handleTemplateChange(evnt, imgElement?.outerHTML, 'avatar', 'src');
+          setrepEditMode({
+            status: false,
+            avatarID: null,
+          });
+         setCompanyLogoMode('logo');
+         setcompanyLogoFile('');
          }
         } catch (error) {
           toast.error('File Upload Failed');
@@ -63,15 +75,52 @@ const EditRepresentative = ({template, setTemplate, avatarID, setrepEditMode}) =
          }
       };
 
+    const handleValidations = () => {
+      let avatarObj = {...template?.popup?.persons?.find((ele) => (ele?.id === avatarID))};
+      let imgExtensions = ['png', 'jpeg'];
+      let err = null;
+      if(validatorObj?.regExpValidator('color_code', avatarObj?.avatar?.backgroundColor)=== false){
+        err = "Invalid hexadecimal colour code!";
+      }else if(validatorObj?.regExpValidator('web_url', avatarObj?.link?.desktop) === false){
+        console.log('avatarObj?.link?.mobile ', validatorObj?.regExpValidator('web_url', avatarObj?.link?.desktop))
+        err = "Invalid desktop link!";
+      }else if(validatorObj?.regExpValidator('web_url', avatarObj?.link?.mobile) === false){
+        console.log('avatarObj?.link?.mobile ', avatarObj?.link?.mobile)
+        err = "Invalid mobile link!";
+      }else if(companyLogoFile?.name && !validatorObj?.fileFormatValidator(companyLogoFile?.name, imgExtensions)){
+        console.log('file ', )
+        err = "Invalid file format!";
+      }
+      if(err){
+        toast.error(`${err}`);
+      }
+      return err;
+    }
+console.log('companyLogoFile ', companyLogoFile);
 useEffect(() => {  
 var htmlString = avtProfile?.avatar?.src;
 var parser = new DOMParser();
 var doc = parser.parseFromString(htmlString, 'text/html');
 var imgElement = doc.querySelector('img');
-companayLogoRef.current = imgElement.getAttribute('src');
-setcompanyLogoURL(imgElement.getAttribute('src'))
-    }, [template])
-    
+companayLogoRef.current = imgElement?.getAttribute('src');
+console.log('logo url ', imgElement?.getAttribute('src'));
+setcompanyLogoURL(imgElement?.getAttribute('src'))
+    }, [avatarID]);
+
+useEffect(() => {
+  if(colorsArr.length){
+    setColors_array([...colorsArr?.map((ele) => {
+      if(ele?.color === 'Default'){
+        return {...ele, code : "#d6dde1"};
+      }else{
+        return ele;
+      }
+    })])
+  }
+}, [])
+
+
+
 
   return (
     <Fragment>
@@ -79,13 +128,13 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                    <Row>
                     <Col md="4 mb-3">
                         <div className="d-flex gap-2 align-items-center">
-						<input style={{cursor:'not-allowed', color: 'maroon'}}
+						           <input style={{cursor:'not-allowed', color: 'maroon'}}
                           className="form-control"
                           name="avatarBackgroundColor"
                           value={"Avatar : " + avtProfile?.text?.title}
                           disabled={true}
                         />
-						</div>
+						         </div>
                       <span>
                       </span>
                       <div className="valid-feedback">{"Looks good!"}</div>
@@ -94,22 +143,24 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                   <Row>
                     <Col md="4 mb-3">
                       <Label htmlFor="validationCustom01">
-                        {"Avatar background Color"}
+                        {"background Color"}
                       </Label>
                         <div className="d-flex gap-2 align-items-center">
-						<select 
-                          className="form-control"
-                          name="avatarBackgroundColor"
-                          value={`Select background Color`}
-                          onChange={(e) => {handleTemplateChange(e, e.target.value, 'avatar', 'backgroundColor')}}
-                          placeholder="Avatar background Color"
-                          required={true}
-                        >
-							<option style={{width: '15px',height: '15px'}} value={''}>Select background Color</option>
-						{['#7B241C', '#4A235A', '#0B5345', '#145A32', '#7B7D7D', '#F1C40F', '#424949'].map((ele, ind) => (
-							<option style={{width: '15px',height: '15px', borderRadius: '50%', backgroundColor: ele}} value={ele}></option>
-						))}
-						</select>
+                        <input
+                    className="form-control"
+                    name="avatarBackgroundColor"
+                    type="text"
+                    value={template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.avatar?.backgroundColor}
+                    placeholder="Hexadecimal colour code"
+                    onChange={(e) => {
+                  //     let regex = new RegExp(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/);
+                  //     if(regex.test(e?.target?.value) === false)
+                    handleTemplateChange(e, e.target.value, 'avatar', 'backgroundColor')
+                    }}
+                    required={true}
+                  ></input>
+            <ColorDiv bgColor={template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.avatar?.backgroundColor ? 
+            template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.avatar?.backgroundColor : "#10c379"} />
 						</div>
                       <span>
                       </span>
@@ -118,13 +169,13 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
 
                     <Col md="4 mb-3">
                     <Label htmlFor="validationCustom01">
-                        {"Avatar Online Circle"}
+                        {"Online Circle"}
                       </Label>
                         <select 
                           className="form-control"
                           name="avatarOnlineCircle"
-                          defaultValue={
-                            template?.popup?.persons?.find((ele) => (ele.id === avatarID))?.avatar?.onlineCircle}
+                          value={
+                            template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.avatar?.onlineCircle}
                             onChange={(e) => {handleTemplateChange(e, (e.target.value === 'true') ? true: false, 'avatar', 'onlineCircle')}}
                           required={true}
                         >
@@ -142,14 +193,14 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                   <Row>
                   <Col md="4 mb-3">
                       <Label htmlFor="validationCustom01">
-                        {"Avatar title"}
+                        {"title"}
                       </Label>
                         <input 
                           className="form-control"
                           name="avatarTitle"
                           type="text"
-                          defaultValue={template?.popup?.persons?.find((ele) => (ele.id === avatarID))?.text?.title}
-						  placeholder="Avatar title"
+                          value={template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.text?.title}
+						             placeholder="Avatar title"
                           onChange={(e) => {handleTemplateChange(e, e.target.value, 'text', 'title')}}
                           required={true}
                         />
@@ -159,13 +210,13 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                     </Col>
                   <Col md="4 mb-3">
                       <Label htmlFor="validationCustom01">
-                        {"Avatar description"}
+                        {"description"}
                       </Label>
                         <input 
                           className="form-control"
                           name="avatardescription"
                           type="text"
-                          defaultValue={template?.popup?.persons?.find((ele) => (ele.id === avatarID))?.text?.description}
+                          value={template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.text?.description}
 						  placeholder="Avatar description"
                           onChange={(e) => {handleTemplateChange(e, e.target.value, 'text', 'description')}}
                           required={true}
@@ -181,13 +232,13 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                   <Row>
                   <Col md="4 mb-3">
                       <Label htmlFor="validationCustom01">
-                        {"Avatar online description tag"}
+                        {"online description tag"}
                       </Label>
                         <input 
                           className="form-control"
                           name="avatarOnlineDesTag"
                           type="text"
-                          defaultValue={template?.popup?.persons?.find((ele) => (ele.id === avatarID))?.text?.online}
+                          value={template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.text?.online}
 						  placeholder="Avatar online description tag"
                           onChange={(e) => {handleTemplateChange(e, e.target.value, 'text', 'online')}}
                           required={true}
@@ -199,13 +250,13 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                     </Col>
                   <Col md="4 mb-3">
                       <Label htmlFor="validationCustom01">
-                        {"Avatar desktop link"}
+                        {"desktop link"}
                       </Label>
                         <input 
                           className="form-control"
                           name="avatarDesktopLink"
                           type="url"
-                          defaultValue={template?.popup?.persons?.find((ele) => (ele.id === avatarID))?.link?.desktop}
+                          value={template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.link?.desktop}
 						  placeholder="Avatar desktop link"
                           onChange={(e) => {handleTemplateChange(e, e.target.value, 'link', 'desktop')}}
                           required={true}
@@ -220,18 +271,18 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                   <Row>
                   <Col md="4 mb-3">
                       <Label htmlFor="validationCustom01">
-                        {"Avatar mobile link"}
+                        {"mobile link"}
                       </Label>
                         <input 
                           className="form-control"
                           name="avatarMobileLink"
                           type="url"
-                          defaultValue={template?.popup?.persons?.find((ele) => (ele.id === avatarID))?.link?.mobile}
-						  placeholder="Avatar mobile link"
+                          value={template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.link?.mobile}
+						              placeholder="Avatar mobile link"
                           onChange={(e) => {handleTemplateChange(e, e.target.value, 'link', 'mobile')}}
                           required={true}
                         >
-						</input>
+						          </input>
                       <span>
                       </span>
                       <div className="valid-feedback">{"Looks good!"}</div>
@@ -240,10 +291,10 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                       {companyLogoURL && companyLogoMode==='logo' ? 
                        <span>
                         <Label htmlFor="validationCustom01">
-                        {"Company Logo"}
+                        {"Profile Logo"}
                       </Label>
                       <div className="avatar d-flex align-items-center gap-3">
-                        <Image attrImage={{ body: true, className: 'img-100  border border-2 border-info', src: companyLogoURL, alt: '#', style: {objectFit: 'cover', borderRadius: '6px'}}} />
+                        <Image attrImage={{ body: true, accept: "image/jpeg, image/png", className: 'img-100  border border-2 border-info', src: companyLogoURL, alt: '#', style: {objectFit: 'cover', borderRadius: '6px'}}} />
                       <div className="status status-30"></div>
                       <FaRegEdit style={{width: '20px', height: '20px', cursor: 'pointer'}} onClick={() => {setCompanyLogoMode('edit')}}/>
                       </div>
@@ -274,6 +325,7 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                         required={true}
                       />
                        <MdCancel style={{width: '20px', height: '20px', cursor: 'pointer', color: 'red'}} onClick={() => {
+                        setcompanyLogoFile('');
                         setcompanyLogoURL(companayLogoRef.current);
                         setCompanyLogoMode('logo')
                        }}/>
@@ -285,16 +337,53 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                   </Row>
 
                 <div className="d-flex gap-2">
+                <Btn
+                attrBtn={{
+                  color: "success",
+                  onClick: () => {
+                      if(!handleValidations()){
+                        if(companyLogoFile){
+                          uploadCompanyLogo();
+                        }else{ 
+                        setrepEditMode({
+                          status: false,
+                          avatarID: null,
+                        });
+                       setCompanyLogoMode('logo');
+                       setcompanyLogoFile('');
+                      }
+                      }
+                      
+                    }
+                  }
+                }
+              >
+                {"Save"}
+              </Btn>
+              <Btn
+                attrBtn={{
+                  color: "danger",
+                  onClick: () => {
+                    setTemplate((pre) => ({...pre, type: {...pre?.type, popup: {...pre?.type?.popup, persons: [...templateRef?.current?.popup?.persons] } }}));
+                    setrepEditMode({
+                     status: false,
+                     avatarID: null,
+                   });
+                   setcompanyLogoFile('');
+                    },
+                }}
+              >
+                {"Cancel"}
+              </Btn>
+                  {/* <div>
                   <MdDone style={{width: '20px', height: '20px', cursor: 'pointer', color: 'green'}} onClick={() => {
-                   if(!companyLogoFile){
-                    toast.error('Please upload profile image!');
-                   }else{
-                    uploadCompanyLogo();
+                    if(companyLogoFile){
+                      uploadCompanyLogo();
+                    }
                     setrepEditMode({
                       status: false,
                       avatarID: null,
                     });
-                   }
                    setCompanyLogoMode('logo')
                   }}/>
                 <MdCancel style={{width: '20px', height: '20px', cursor: 'pointer', color: 'red'}} onClick={() => {
@@ -304,6 +393,7 @@ setcompanyLogoURL(imgElement.getAttribute('src'))
                         avatarID: null,
                       });
                        }}/>
+                  </div> */}
                 </div>
                   
 

@@ -85,6 +85,7 @@ const SideBarLayout = (props) => {
             window.removeEventListener('resize', handleResize);
         };
     }, [layout]);
+    
     return (
         <Fragment>
             <SidebarLogo sidebartoogle={sidebartoogle} setSidebartoogle={setSidebartoogle} />

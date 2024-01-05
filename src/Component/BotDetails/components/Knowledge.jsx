@@ -26,8 +26,8 @@ import axios from 'axios';
 import { FAQFilesAPI, User } from '../../../api';
 import { toast } from 'react-toastify';
 import { v4 as uuid } from "uuid";
+import appStore from '../../Live Chats/Client/AppStore';
 
-const userData = JSON.parse(sessionStorage.getItem('currentUser'));
 const token = sessionStorage.getItem('token');
 
 const Knowledge = ({myBot}) => {
@@ -36,12 +36,12 @@ const [selectedTab, setselectedTab] = useState('Embed the bot');
 const [loading, setLoading] = useState(false);
 const [mode, setMode] = useState('')
 const [faqList, setFaqList] = useState([]);
+const {userData, setUserData} = appStore();
 
 useEffect(() => {
-  if(userData?.faqListURL){
-    setFaqList([...userData?.faqListURL]);
-  }
-}, []);
+  setFaqList([...userData?.faqListURL]);
+}, [userData])
+
 
 
   return (
@@ -63,9 +63,9 @@ useEffect(() => {
                   <Spinner attrSpinner={{ className: 'loader-3' }} /> 
                   </div> : 
                   mode === 'create' ? 
-                  < AddCSVForm setMode={setMode} mode={mode} loading={loading} setLoading={setLoading} faqList={faqList} setFaqList={setFaqList}/> :
+                  < AddCSVForm userData={userData} setUserData={setUserData} setMode={setMode} mode={mode} loading={loading} setLoading={setLoading} faqList={faqList} setFaqList={setFaqList}/> :
                   (faqList && faqList.length > 0) ? 
-                  <CSVFileInfoList faqList={faqList} setFaqList={setFaqList} setLoading={setLoading}/> :
+                  <CSVFileInfoList userData={userData} setUserData={setUserData} faqList={faqList} setFaqList={setFaqList} setLoading={setLoading}/> :
                   <div className="w-100 h-100 d-flex justify-content-center align-items-center">
                   <H6 className='my-2 mx-0'>No Files Uploaded</H6>
                   </div>
@@ -82,7 +82,7 @@ useEffect(() => {
   )
 }
 
-const AddCSVForm = ({setMode, mode, setLoading, loading, faqList, setFaqList}) => {
+const AddCSVForm = ({setMode, mode, setLoading, loading, faqList, setFaqList, userData, setUserData}) => {
   const { register, handleSubmit, reset, formState: { errors }, getValues } = useForm({});
   const [csvFile, setCsvFile] = useState('');
   const [csvValidation, setcsvValidation] = useState(false);
@@ -158,8 +158,9 @@ const AddCSVForm = ({setMode, mode, setLoading, loading, faqList, setFaqList}) =
         
         // console.log(response.ok);
         sessionStorage.setItem("currentUser", JSON.stringify(responseData.updateUser));
+        setUserData({...responseData.updateUser})
         setFaqList([...responseData?.updateUser?.faqListURL.map((ele) => ({
-          ...ele, id: uuid()
+          ...ele
         }))]);
         reset();
         setCsvFile('');
@@ -212,7 +213,7 @@ return (
 }
 
 
-const CSVFileInfoList = ({faqList, setFaqList, setLoading}) => {
+const CSVFileInfoList = ({faqList, setFaqList, setLoading, userData, setUserData}) => {
 
   const handleCSVFileDelete = (id) => {
     let filteredList = faqList?.filter((item) => (item.id !== id));
@@ -236,6 +237,7 @@ const CSVFileInfoList = ({faqList, setFaqList, setLoading}) => {
       const responseData = await response.json();
       if (response.ok) {
         sessionStorage.setItem("currentUser", JSON.stringify(responseData.updateUser));
+        setUserData({...responseData.updateUser});
         setFaqList([...responseData?.updateUser?.faqListURL]);
         toast.success('File removed successfully');
       } else {

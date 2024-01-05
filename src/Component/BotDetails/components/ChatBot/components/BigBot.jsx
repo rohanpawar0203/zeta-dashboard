@@ -6,6 +6,7 @@ import ScrollBar from "react-perfect-scrollbar";
 import { toast } from "react-toastify";
 import { BotCreate } from "../../../../../api";
 import Lottie from 'react-lottie';
+import { Player, Controls } from "@lottiefiles/react-lottie-player";
 import animationData from '../../../../../assets/json/lotties/Animation - 1701895887722.json';
 import {
   createOrConnectRoom,
@@ -22,6 +23,7 @@ const BigBot = ({ myBot }) => {
     roomId,
     showTyping,
     liveConversation,
+    setShowTyping
   } = appStore();
   // const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState("");
@@ -44,8 +46,10 @@ const BigBot = ({ myBot }) => {
     const sendData = {
       identity: "USER",
       message: userMessage,
+      domain: user?.websiteLink,
+      company_name: user?.companyName,
       roomId: getSessionId(sessionStorage.getItem("sessionUUID")),
-      organization_id: user?.store?.id,   // 
+      organization_id: user?._id,   // 
       type: "csv",
       time: "",
     };
@@ -61,6 +65,7 @@ const BigBot = ({ myBot }) => {
   useEffect(() => {
     // Scroll to the bottom whenever messages change
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    // console.log('messages at bigbit ', messages);
   }, [messages]);
 
   return (
@@ -121,12 +126,22 @@ const BigBot = ({ myBot }) => {
                 </p>
               </div>
             ))}
-            
-            {showTyping && <div className="w-100 d-flex justify-content-start">
-            <div>
-            <Lottie options={defaultOptions} height={100} width={100}/>
-            </div>
-            </div>}
+            {showTyping && 
+            <div style={{width: '100px', height: '50px'}}
+            className={`d-flex align-items-center mb-2  flex-row`}
+          >
+            <img
+              src={`${botAvatar}`}
+              alt={`bot avatar`}
+              width="30px"
+              height="30px"
+            />
+             <Lottie options={defaultOptions}
+             height={20}
+             width={70}
+             />
+          </div>
+          }
           </div>
         </ScrollBar>
 

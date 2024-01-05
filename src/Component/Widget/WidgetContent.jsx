@@ -1,11 +1,14 @@
 import React, { Fragment, useState, useEffect, useRef } from "react";
 import { Card, CardBody, Col, Media, Container, Row, CardHeader } from "reactstrap";
+import { Spinner } from "../../AbstractElements";
 import './styles/style.css'
 import {templateController} from './TemplateController/templateController'
 import {def_template} from './Templates/WhatsApp/default'
 import { FaRegEdit } from "react-icons/fa";
 import WidgetEditComponent from "../WidgetEdit/WidgetContent";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { WidgetsAPI } from "../../api";
 
 const userData = JSON.parse(sessionStorage.getItem('currentUser'));
 const token = sessionStorage.getItem('token');
@@ -22,8 +25,11 @@ const whatsAppImgs = [
 const WidgetContent = () => {
 	const $ = window.jQuery;
 	const widgetRef = useRef();
+	const [loading, setloading] = useState(false);
 	const [template, setTemplate] = useState({type: {...def_template}, template_id: ''});
+	const [allTemplates, setallTemplates] = useState([]);
 	const [mode, setMode] = useState('')
+	const [count, setCount] = useState(0);
 	const templateChangerRef = useRef('')
     
 	useEffect(() => {
@@ -35,65 +41,63 @@ const WidgetContent = () => {
 		}, [template.type])
 
 	const getWidgetTemplate = async() => {
+		setloading(true);
 		try {
 			const payload = {
 			  "customer_id": userData?._id,
-			  "type": "whatsApp",
+			  "type": "whatsapp",
 		  }
-			const res = await fetch(`http://localhost:8080/bot-customization/template`, {
-			  method: "POST",
+			const res = await fetch(`${WidgetsAPI}`, {
+			  method: 'POST',
+			  body: JSON.stringify(payload),
 			  headers: {
 				"Content-Type": "application/json", 
+				// Authorization: `Bearer ${token}`,
 				// Add other headers if needed
 			  },
-			  body: JSON.stringify(payload),
 			})
 			let result = await res.json();
-
-		  if(res.ok){
-			if(result?.data){
-				widgetRef.current = JSON.parse(result?.data?.settings);
-				setTemplate({type: {...widgetRef.current}, template_id: ''})
-			}
+			
+			if(res.ok && result){
+			  setallTemplates([...result]);
+			  widgetRef.current = {type: JSON.parse(result.find((ele) => (ele.status === 'active'))?.settings) , template_id : result.find((ele) => (ele.status === 'active'))?.template_id};
+			  setTemplate({type: JSON.parse(result.find((ele) => (ele.status === 'active'))?.settings) , template_id : result.find((ele) => (ele.status === 'active'))?.template_id})
 		  }
 		  } catch (error) {
 			console.log('widget customization error ', error);
 			toast.error(error?.message)
 		  }
+		  setloading(false);
 	}
 	
 	useEffect(() => {
-	getWidgetTemplate();
+	const userData = JSON.parse(sessionStorage.getItem('currentUser'));
+	if(userData?._id){
+		getWidgetTemplate();
+	}
 	}, [])
 	
 
   return (
     <Fragment>
       <Container fluid={true} className="mt-2 d-flex justify-content-center">
-            {
+            {    loading ? 
+			     <div className="loader-box">
+				 <Spinner attrSpinner={{ className: 'loader-3' }} /> 
+				 </div>
+			       : 
 				(mode === 'edit') ? 
 				<WidgetEditComponent  template={template?.type} templateID={template?.template_id} setTemplate={setTemplate} setMode={setMode} getWidgetTemplate={getWidgetTemplate}/>
 				:
                 <section className="examples whatsapp-examples" id="whatsapp-examples">
+			{(allTemplates.length > 0) ? 
 			<div className="container container-xl">
 				<div className="row justify-content-center">
 					<div className="col-12">
 						<h1>Whatsapp</h1>
 					</div>
-					{widgetRef.current && (
 					<div className="col-lg-3 col-md-6 col-sm-6">
-					<div onClick={() => {setTemplate((pre) => ({template_id: 'current', type: widgetRef.current}))}}  className="example">
-						<div className="text">
-							<div className="title">Current Template</div>
-						</div>
-						<div className="image">
-							<img src={whatsAppImgs[0]} alt="Current template type" />
-						</div>
-					</div>
-				</div>
-					)}
-					<div className="col-lg-3 col-md-6 col-sm-6">
-						<div onClick={() => {setTemplate((pre) => ({template_id: 'multi_accounts_1', type: templateController.sendTemplateType('whatsApp', 'multi_accounts_1')}))}}  className="example">
+						<div onClick={() => {setTemplate((pre) => ({template_id: "multiple_accounts_1", type: JSON.parse(allTemplates.find((ele) => (ele.template_id === 'multiple_accounts_1'))?.settings)}))}}  className={`example ${widgetRef?.current?.template_id === 'multiple_accounts_1' ? 'current-template' : ''}`}>
 							<div className="text">
 								<div className="title">Multiple Accounts 1</div>
 							</div>
@@ -103,7 +107,7 @@ const WidgetContent = () => {
 						</div>
 					</div>
 					<div className="col-lg-3 col-md-6 col-sm-6">
-						<div className="example" onClick={() => {setTemplate((pre) => ({template_id: 'multi_accounts_2'	, type: templateController.sendTemplateType('whatsApp', 'multi_accounts_2')}))}}>
+						<div className={`example ${widgetRef?.current?.template_id === 'multiple_accounts_2' ? 'current-template' : ''}`} onClick={() => {setTemplate((pre) => ({template_id: "multiple_accounts_2"	, type: JSON.parse(allTemplates.find((ele) => (ele.template_id === 'multiple_accounts_2'))?.settings)}))}}>
 							<div className="text">
 								<div className="title">Multiple Accounts 2</div>
 							</div>
@@ -113,7 +117,7 @@ const WidgetContent = () => {
 						</div>
 					</div>
 					<div className="col-lg-3 col-md-6 col-sm-6">
-						<div onClick={() => {setTemplate((pre) => ({template_id: 'multi_accounts_3', type: templateController.sendTemplateType('whatsApp', 'multi_accounts_3')}))}} className="example">
+						<div onClick={() => {setTemplate((pre) => ({template_id: 'multiple_accounts_3', type: JSON.parse(allTemplates.find((ele) => (ele.template_id === 'multiple_accounts_3'))?.settings)}))}} className={`example ${widgetRef?.current?.template_id === 'multiple_accounts_3' ? 'current-template' : ''}`}>
 							<div className="text">
 								<div className="title">Multiple Accounts 3</div>
 							</div>
@@ -123,11 +127,12 @@ const WidgetContent = () => {
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> : ''
+			}
 		        </section>
 			}
          
-        {mode !== 'edit' ? <div className={(template?.template_id === "multi_accounts_3") ? ('editIcon editIcon-second') : 'editIcon'} onClick={() => {setMode('edit')}}>
+        {mode !== 'edit' ? <div className={(template?.type?.button?.style !== 1) ? ('editIcon editIcon-second') : 'editIcon'} onClick={() => {setMode('edit')}}>
 		<FaRegEdit style={{width: '18px', height: '18px', cursor:'pointer'}}/>
 		</div> : 
 		''

@@ -35,6 +35,7 @@ import Share from "./components/Share";
 import ChatBot from "./components/ChatBot";
 import appStore from "../Live Chats/Client/AppStore";
 import Knowledge from "./components/Knowledge";
+import ScrollBar from "react-perfect-scrollbar";
 
 const BotInfoContent = ({boatId}) => {
   const {setBotDetails} = appStore.getState();
@@ -98,7 +99,9 @@ const BotInfoContent = ({boatId}) => {
             </div>
             </div>
           </Nav>
-          <div style={{ height: '75vh'}}>            {
+          {/* <ScrollBar className="vertical-scroll ps-container ps-theme-default ps-active-y">          */}
+          <div> 
+          {
               loading ? 
               <div className="vh-75 loader-box">
               <Spinner attrSpinner={{ className: 'loader-3' }} />
@@ -119,6 +122,7 @@ const BotInfoContent = ({boatId}) => {
               </>
             }
             </div>
+            {/* </ScrollBar>  */}
             
         </CardBody>
         </div>

@@ -38,8 +38,7 @@ const [selectedTab, setselectedTab] = useState('Embed the bot')
                  <div style={{background: 'whitesmoke', borderRadius:'8px', boxSizing: 'border-box'}} className="d-flex flex-wrap justify-content-evenly align-items-center p-2">
                  {shareTabs.map((ele, i) => (
                   <div onClick={() => {
-                    if(ele === 'Embed the bot' 
-                     || ele === 'Integrations'){
+                    if(ele === 'Embed the bot'){
                       setselectedTab(ele)
                     }
                   }} key={i} className="d-flex justify-content-center align-items-center p-2 fw-bolder" style={{fontSize: '16px', cursor: 'pointer' , boxSizing: 'border-box', width: '150px', ...(selectedTab === ele && {background: 'white', color: 'blue',  borderRadius:'6px', padding: '1rem 2rem'})}}>
@@ -49,7 +48,7 @@ const [selectedTab, setselectedTab] = useState('Embed the bot')
                  </div>
                  <div style={{height: '400px'}}>
                  {
-                  selectedTab === 'Embed the bot' ? (<EmbedBot/>) :
+                  selectedTab === 'Embed the bot' ? (<EmbedBot myBot={myBot}/>) :
                   selectedTab === 'Embed Iframe'  ? <EmbedIframe/> : 
                   selectedTab === 'Get Rest API'  ? <GetRestAPI/> :
                   selectedTab === 'Integrations' ?  <Integrations/> : 

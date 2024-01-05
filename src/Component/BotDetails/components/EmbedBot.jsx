@@ -1,10 +1,10 @@
 import React, {useRef} from 'react'
 import {MdOutlineContentCopy} from 'react-icons/md'
 import { toast } from 'react-toastify';
-const EmbedBot = () => {
+const EmbedBot = ({myBot}) => {
     const scriptRef = useRef(null);
     
-    const copyContent = '<script defer="defer" src="https://www.ulai.in/file-server/web-sdk/web-sdk-init.js"></script> <div id="chatBot" data-value=654bb43769a5df1f26afe709></div>'
+    const copyContent = `<script defer="defer" src="https://www.ulai.in/file-server/web-sdk/web-sdk-init.js"></script> <div id="chatBot" data-value=${myBot?._id}></div>`
     
   const handleCopyScript = () => {
     const input = document.createElement('input');
@@ -35,7 +35,7 @@ const EmbedBot = () => {
          <div style={{width: '90%'}}>
          <p ref={scriptRef}>{copyContent}</p>
          </div>
-         <div onClick={handleCopyScript} style={{background: 'skyblue', width: '50px', height: '50px', borderRadius: '50%'}} className='d-flex align-items-center justify-content-center'>
+         <div onClick={handleCopyScript} style={{background: 'white', color: 'black', width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer'}} className='d-flex flex-wrap align-items-center justify-content-center'>
             <MdOutlineContentCopy style={{width: '20px', height: '20px'}} /> 
          </div>
         </div>

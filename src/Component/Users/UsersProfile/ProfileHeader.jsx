@@ -6,9 +6,13 @@ import Img from "../../../assets/images/user-profile/bg-profile.jpg";
 import axios from "axios";
 import { PlanDetails } from "../../../api";
 
+const user = JSON.parse(sessionStorage.getItem("currentUser"));
+const token = sessionStorage.getItem("token");
+
 const ProfileHeader = () => {
   const [planIds, setPlanIds] = useState([])
   const [plan, setPlan] = useState('');
+  const [userProfile, setuserProfile] = useState('')
   const userDetails = JSON.parse(sessionStorage.getItem("currentUser"));
 
   const getPlanIds = async() => {
@@ -19,8 +23,34 @@ const ProfileHeader = () => {
         console.log('planIds fetch error', error);
     }
   }
+
+  const getAllBot = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/bot/${user._id}/user`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const responseData = await response.json();
+      if (response.ok && responseData.length > 0) {
+        setuserProfile(responseData[0]);
+      } else {
+        setuserProfile('');
+        // setMyBots([]);
+      }
+    } catch (error) {
+      console.log('getAllBot error ', error);
+    }
+  };
+
   useEffect(() => {
     getPlanIds();
+    getAllBot();
   }, [])
 
   useEffect(() => {
@@ -39,10 +69,11 @@ const ProfileHeader = () => {
         <Card
           className="profile-header bg-image"
           style={{
-            backgroundImage: `url(${Img})`,
+            // backgroundImage: `url(${Img})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             display: "block",
+            backgroundColor: 'blue'
           }}
         >
           <div className="profile-img-wrrap">
@@ -50,7 +81,7 @@ const ProfileHeader = () => {
               style={{
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                display: "block",
+                display: "block"
               }}
               attrImage={{
                 className: "img-fluid bg-img-cover",
@@ -66,7 +97,7 @@ const ProfileHeader = () => {
                   attrImage={{
                     className: "img-fluid",
                     alt: "",
-                    src: `${require("../../../assets/images/user/7.jpg")}`,
+                    src: userProfile?.companyLogo,
                   }}
                 />
               </div>

@@ -42,6 +42,7 @@ const appStore = create((set, get) => ({
       messages: [...get().messages, { text: data, user: isUser }],
     }));
   },
+  clearMessages: () => set({ messages: [] }),
   messageType: (data) => {
     if (data.productList && data.productList.length !== 0) {
       data.productList.map((ele) => {

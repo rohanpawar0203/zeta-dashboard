@@ -3,7 +3,6 @@ import Breadcrumbs from '../../CommonElements/Breadcrumbs';
 import StoreContain from '../../Component/Store';
 
 const Store = () => {
-
   return (
     <Fragment>
       <Breadcrumbs parent="" title="Store" />

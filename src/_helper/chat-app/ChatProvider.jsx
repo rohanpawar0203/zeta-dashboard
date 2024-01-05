@@ -52,7 +52,6 @@ export const ChatProvider = (props) => {
 
   const getChatMembersData = async () => {
     try {
-      console.log('userData ', userData);
       const orgId = userData?.userId ? userData?.userId : userData?._id;
       const resp = await axios.get(
         `${GetConversationsAPI}/${orgId}`,
@@ -62,7 +61,6 @@ export const ChatProvider = (props) => {
           },
         }
       );
-      console.log('chats // ', resp.data);
       setMembers(resp.data.reverse());
     } catch (error) {
       console.log('error', error);
@@ -229,6 +227,7 @@ export const ChatProvider = (props) => {
         liveUser, 
         currentUserr,
         memberss,
+        setMembers,
         sidebarToggle,
         setSidebarToggle: setSidebarToggle,
         getChatsSuccess: getChatsSuccess,
