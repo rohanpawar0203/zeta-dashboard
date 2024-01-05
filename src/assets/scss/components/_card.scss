@@ -242,8 +242,16 @@
     }
   }
 }
-#path-filler path{
-  fill: 'none'
+#path-filler path {
+  fill: "none";
+}
+
+.bot-info-card {
+  height: 82vh;
+
+  @media screen and (max-height: 700px) {
+    height: 75vh;
+  }
 }
 /**=====================
     10. Card CSS End

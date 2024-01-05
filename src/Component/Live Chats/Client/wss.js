@@ -17,7 +17,7 @@ const token = sessionStorage.getItem("token");
 // const SERVER = "http://localhost:8081";
 
 var socket = null;
-const{setLiveConversation, liveConversation} = appStore.getState();
+const { setLiveConversation, liveConversation } = appStore.getState();
 
 export const connectWithSocketIOServer = () => {
   socket = io(SERVER, {
@@ -58,15 +58,19 @@ export const connectWithSocketIOServer = () => {
   });
 
   socket.on("message-recieved", (data) => {
-    console.log('message-recieved', data);
+    console.log("message-recieved", data);
     appStore.getState().setShowTyping(false);
     let newMessage = JSON.parse(data);
     const newArray = appStore.getState().liveConversation.map((el) => {
       if (el.chatSessionId === newMessage.roomId) {
         el.chat = [
           ...el.chat,
-          { time: newMessage.time, message: newMessage.message, from: newMessage?.identity },
-        ];  
+          {
+            time: newMessage.time,
+            message: newMessage.message,
+            from: newMessage?.identity,
+          },
+        ];
       }
       return el;
     });
@@ -162,10 +166,10 @@ export const envConversationToServer = async (roomId) => {
   const response = await axios.post(`${serverApi}/endConversation`, {
     roomId: roomId,
   });
-  if(response.status === '200' || response.status === 200){
+  if (response.status === "200" || response.status === 200) {
     getLiveRooms();
     appStore.getState().setViewConversation({});
-    toast.success('Conversation got closed')
+    toast.success("Conversation got closed");
   }
 };
 
@@ -200,7 +204,7 @@ const setLiveConversations = async () => {
       } catch (error) {
         console.log("Error", error);
       }
-    }   // comment reason: for fetching latest live conversation
+    } // comment reason: for fetching latest live conversation
     //  else {
     //   console.log('conversation length > 0', conversation);
     //   const filterArray = conversation.filter((el) => {

@@ -1,30 +1,30 @@
-import React, { useContext, useState } from 'react';
-import { Col, Input, InputGroup, Row } from 'reactstrap';
-import Picker from 'emoji-picker-react';
-import { Send } from '../../../Constant/index';
-import ChatAppContext from '../../../_helper/chat-app/index';
-import { Btn, Image } from '../../../AbstractElements';
-import { joinSession, sendDataToConnectedUser }  from '../Client/wss';
-import appStore from '../Client/AppStore';
-import { toast } from 'react-toastify';
+import React, { useContext, useState } from "react";
+import { Col, Input, InputGroup, Row } from "reactstrap";
+import Picker from "emoji-picker-react";
+import { Send } from "../../../Constant/index";
+import ChatAppContext from "../../../_helper/chat-app/index";
+import { Btn, Image } from "../../../AbstractElements";
+import { joinSession, sendDataToConnectedUser } from "../Client/wss";
+import appStore from "../Client/AppStore";
+import { toast } from "react-toastify";
 
-const SendChat = ({viewConversation,showKeyboard, setViewConversation}) => {
-  const { liveConversation, setLiveConversation} = appStore();
+const SendChat = ({ viewConversation, showKeyboard, setViewConversation }) => {
+  const { liveConversation, setLiveConversation } = appStore();
 
   const [msg, setMsg] = useState("");
 
   const handleMessageChange = (message) => {
     setMsg(message);
-  }
+  };
   const handleMessagePress = (e) => {
-    if(e.key === 'Enter'){
-      if(!msg || msg === ''){
-        toast.error('Please enter valid message text !');
-      }else{
+    if (e.key === "Enter") {
+      if (!msg || msg === "") {
+        toast.error("Please enter valid message text !");
+      } else {
         sendMsg();
       }
     }
-  }
+  };
 
   function getCustomTimestamp() {
     const currentTimeMs = Date.now();
@@ -56,14 +56,19 @@ const SendChat = ({viewConversation,showKeyboard, setViewConversation}) => {
   };
   return (
     <div className="chat-message clearfix">
-      <Row>
-        <div>
-        </div>
+      <Row style={{ marginLeft: 0, marginRight: 0 }}>
+        <div></div>
         <Col xl="12" className="d-flex">
-          <div className="smiley-box bg-primary">
+          {/* <div className="smiley-box bg-primary">
             <div className="picker">
-              <Image attrImage={{ src: `${require('../../../assets/images/smiley.png')}`, alt: '' }} /></div>
-          </div>
+              <Image
+                attrImage={{
+                  src: `${require("../../../assets/images/smiley.png")}`,
+                  alt: "",
+                }}
+              />
+            </div>
+          </div> */}
           <InputGroup className="text-box">
             <Input
               type="text"
@@ -71,8 +76,16 @@ const SendChat = ({viewConversation,showKeyboard, setViewConversation}) => {
               placeholder="Type a message......"
               value={msg}
               onKeyPress={(e) => handleMessagePress(e)}
-              onChange={(e) => handleMessageChange(e.target.value)} />
-            <Btn attrBtn={{ color: 'primary', className: 'h-100 ms-2' ,  onClick: () => sendMsg(), disabled: !msg || msg === '' }}>
+              onChange={(e) => handleMessageChange(e.target.value)}
+            />
+            <Btn
+              attrBtn={{
+                color: "primary",
+                className: "h-100 ms-2",
+                onClick: () => sendMsg(),
+                disabled: !msg || msg === "",
+              }}
+            >
               {Send}
             </Btn>
           </InputGroup>

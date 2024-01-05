@@ -1,30 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="icon"
+      href="../src/assets/images/dashboard/ulai-logo-01-dark-small.png"
+      type="image/x-icon"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="../src/assets/images/dashboard/ulai-logo-01-dark-small.png"
+    />
+    <title>Ulai admin dashboard</title>
 
-<head>
-  <meta charset="utf-8" />
-  <link rel="icon" href="../src/assets/images/dashboard/ulai-logo-01-dark-small.png" type="image/x-icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Web site created using create-react-app" />
-  <link rel="apple-touch-icon" href="../src/assets/images/dashboard/ulai-logo-01-dark-small.png" />
-  <title>Ulai admin dashboard </title>
-
-  <!-- Google font-->
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-      <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap"
-    rel="stylesheet">
+    <!-- Google font-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap"
+      rel="stylesheet"
+    />
     <!-- links for social-chat-support -->
     <!-- <link href="./main-file/plugin/components/font-awesome/css/fontawesome.min.css" rel="stylesheet"> -->
     <!-- <link href="./main-file/plugin/czm-chat-support.css" rel="stylesheet">  -->
-</head>
+  </head>
 
-<body id="mainBody">
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
-  <!-- <div id="example"></div> -->
-  <!--
+  <body id="mainBody">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!-- Facebook SDK initialization script -->
+    <script>
+      window.fbAsyncInit = function () {
+        window.FB.init({
+          appId: "863075105199057", // Replace with your actual App ID
+          autoLogAppEvents: true,
+          xfbml: true,
+          version: "v17.0",
+        });
+      };
+    </script>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js"
+    ></script>
+    <!-- <div id="example"></div> -->
+    <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -35,14 +62,12 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
 
-
     <!-- scripts for social-chat-support -->
 
     <!-- <script id="me" src="https://www.ulai.in/file-server/uploads/Ulai/ulaiwidget.js?12345&6572a58afc76f2c972faffbc"></script> -->
     <script src="./main-file/plugin/components/jquery/jquery-1.9.0.min.js"></script>
-<script src="./main-file/plugin/czm-chat-support.min.js"></script>
-<!-- <script src="./main-file/plugin/components/moment/moment.min.js"></script> -->
-<!-- <script src="./main-file/plugin/components/moment/moment-timezone-with-data.min.js"></script> -->
-</body>
-
+    <script src="./main-file/plugin/czm-chat-support.min.js"></script>
+    <!-- <script src="./main-file/plugin/components/moment/moment.min.js"></script> -->
+    <!-- <script src="./main-file/plugin/components/moment/moment-timezone-with-data.min.js"></script> -->
+  </body>
 </html>

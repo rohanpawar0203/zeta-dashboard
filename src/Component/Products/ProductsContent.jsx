@@ -28,19 +28,18 @@ import {
   TruckSvg,
   TruckSvg1,
 } from "../Widgets/SvgIcons";
-import {BsCheckCircle} from 'react-icons/bs'
+import { BsCheckCircle } from "react-icons/bs";
 import CreateBotFormModal from "./components/ProductFormModal";
 import ProductsTable from "./components/ProductsTable";
 
 const BotContent = () => {
-
   return (
     <Fragment>
-       <Container fluid={true}>
+      <Container fluid={true}>
         <Row>
-        <ProductsTable/>
+          <ProductsTable />
         </Row>
-       </Container>
+      </Container>
     </Fragment>
   );
 };

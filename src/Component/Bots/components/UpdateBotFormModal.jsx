@@ -1,20 +1,26 @@
-import React, {useState} from 'react'
-import { Form, FormGroup, Input, Label } from 'reactstrap';
-import CommonModal from '../../../_core/Ui-kits/Modals/common/modal';
-import { NewBot, BotCreationQstn, renameBot} from '../../../Constant';
+import React, { useState } from "react";
+import { Form, FormGroup, Input, Label } from "reactstrap";
+import CommonModal from "../../../_core/Ui-kits/Modals/common/modal";
+import { NewBot, BotCreationQstn, renameBot } from "../../../Constant";
 import { toast } from "react-toastify";
-import { useNavigate } from 'react-router-dom';
-import { BotCreate } from '../../../api';
+import { useNavigate } from "react-router-dom";
+import { BotCreate } from "../../../api";
 
-const UpdateBotFormModal
- = ({modal, title, toggle, getAllBot, botName, botId}) => {
-  const [formValues, setformValues] = useState({botName: botName, error: ''});
+const UpdateBotFormModal = ({
+  modal,
+  title,
+  toggle,
+  getAllBot,
+  botName,
+  botId,
+}) => {
+  const [formValues, setformValues] = useState({ botName: botName, error: "" });
   const user = JSON.parse(sessionStorage.getItem("currentUser"));
   const token = sessionStorage.getItem("token");
   const history = useNavigate();
   const customBot = {
     userId: user._id,
-    botName: '',
+    botName: "",
     companyName: "Ulai",
     botAvatar:
       "https://writesonic-frontend.s3.us-east-1.amazonaws.com/frontend-assets/templates-new/BotsonicNew.png",
@@ -26,35 +32,32 @@ const UpdateBotFormModal
     welcomeMessage: "Hey there, how can I help you?",
     inputPlaceholder: "Send a message...",
     showFloating: true,
-      }
-  
-  const handleChange = (e) => {
-    const {name, value}= e.target;
-      setformValues((pre) => (
-        {
-          ...pre,
-         [name] : value,
-         error: ''
-        }
-      ));
-  }
+  };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setformValues((pre) => ({
+      ...pre,
+      [name]: value,
+      error: "",
+    }));
+  };
 
   const submitEvent = () => {
-    if(!formValues.botName){
-      return  setformValues((pre) => ({
-          ...pre,
-          error: '* Please enter Bot Name!'
-        }))
-      }else{
-        UpdateBot();
-      }
-  }
+    if (!formValues.botName) {
+      return setformValues((pre) => ({
+        ...pre,
+        error: "* Please enter Bot Name!",
+      }));
+    } else {
+      UpdateBot();
+    }
+  };
 
   const UpdateBot = async () => {
     try {
-       customBot['botName'] = formValues['botName'];
-       const response = await fetch(`${BotCreate}/${botId}`, {
+      customBot["botName"] = formValues["botName"];
+      const response = await fetch(`${BotCreate}/${botId}`, {
         method: "PATCH",
         body: JSON.stringify(customBot),
         headers: {
@@ -67,7 +70,9 @@ const UpdateBotFormModal
         getAllBot && getAllBot();
         toast.success(responseData?.message);
         toggle();
-        setTimeout(() =>{history(`${process.env.PUBLIC_URL}/bots`)}, 2000);
+        setTimeout(() => {
+          history(`${process.env.PUBLIC_URL}/bots`);
+        }, 2000);
       } else {
         toast.error(responseData.message);
       }
@@ -77,16 +82,35 @@ const UpdateBotFormModal
     toggle();
   };
   return (
-    <CommonModal isOpen={modal} title={renameBot} toggler={toggle} event={submitEvent}>
-      <Form >
+    <CommonModal
+      isOpen={modal}
+      title={renameBot}
+      toggler={toggle}
+      event={submitEvent}
+    >
+      <Form>
         <FormGroup>
-          <Label className="col-form-label fw-500 mb-2" for="recipient-name">{BotCreationQstn}</Label>
-          <Input className="form-control" type="text" name='botName' onChange={(e) => {handleChange(e)}} defaultValue={formValues?.botName}/>
-          {formValues.error && <Label className="fw-bolder mt-2 text-danger">{formValues.error}</Label>}
+          <Label className="col-form-label fw-500 mb-2" for="recipient-name">
+            {BotCreationQstn}
+          </Label>
+          <Input
+            className="form-control"
+            type="text"
+            name="botName"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            defaultValue={formValues?.botName}
+          />
+          {formValues.error && (
+            <Label className="fw-bolder mt-2 text-danger">
+              {formValues.error}
+            </Label>
+          )}
         </FormGroup>
       </Form>
     </CommonModal>
-  )
-}
+  );
+};
 
 export default UpdateBotFormModal;

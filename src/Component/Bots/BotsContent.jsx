@@ -67,9 +67,9 @@ const BotsContent = () => {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   const [updatemodal, setupdateModal] = useState(false);
-  const history = useNavigate()
+  const history = useNavigate();
   const toggleUpdateModal = () => {
-    setupdateModal(!updatemodal)
+    setupdateModal(!updatemodal);
   };
 
   const [renameBotId, setRenameBotId] = useState();
@@ -83,7 +83,7 @@ const BotsContent = () => {
     background: "whitesmoke",
     cursor: "pointer",
   };
-  const [dropdownBotOpen, setDropdownBotOpen] = useState('');
+  const [dropdownBotOpen, setDropdownBotOpen] = useState("");
 
   const toggleDropDownBot = (id) => setDropdownBotOpen(id);
 
@@ -117,16 +117,13 @@ const BotsContent = () => {
   const deleteBot = async (botId) => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `${BotCreate}/${botId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${BotCreate}/${botId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const responseData = await response.json();
       if (response.ok) {
         getAllBot();
@@ -144,111 +141,174 @@ const BotsContent = () => {
     const fetchBotData = async () => {
       getAllBot();
     };
-      fetchBotData();
+    fetchBotData();
   }, []);
 
   return (
     <Fragment>
-      <div style={{ height: "73vh", background: "white", padding: "15px", borderRadius: '12px' }}>
-        {
-        loading ? 
-        <div className="loader-box">
-        <Spinner attrSpinner={{ className: 'loader-3' }} /> 
-        </div>
-        :
-        <>
-        {myBots.length === 0 && (
-          <div className="mw-100 h-100  d-flex flex-column justify-content-center align-items-center">
-           <H6 className='mb-2 fw-bolder text-gray'>Create your first bot</H6>
-           <H5 className='mb-2'>It will take less than a minute</H5>
-          <button type="button" className="btn btn-primary btn-md" onClick={toggle}>Create new bot</button>
-           <CreateBotFormModal modal={modal} NewMessage={'New Bot'} toggle={toggle} getAllBot={getAllBot}></CreateBotFormModal>
-           </div>
-        )}
-        {myBots.length > 0 && (
+      <div
+        style={{
+          height: "73vh",
+          background: "white",
+          padding: "15px",
+          borderRadius: "12px",
+        }}
+      >
+        {loading ? (
+          <div className="loader-box">
+            <Spinner attrSpinner={{ className: "loader-3" }} />
+          </div>
+        ) : (
           <>
-           <div className="w-100 d-flex justify-content-between align-items-center px-2">
-           <H6 className="mb-2 fw-bolder text-gray">{myBots.length ? myBots.length: ''} live bots</H6>
-            <button type="button" className="btn btn-primary btn-md" onClick={toggle}>Create new bot</button>
-           <CreateBotFormModal modal={modal} NewMessage={'New Bot'} toggle={toggle} getAllBot={getAllBot}></CreateBotFormModal>
-           </div>
-            {myBots.map((myBot, i) => (
-              <div
-                key={i}
-                className="w-100 d-flex border border-lightgray justify-content-between align-items-center p-3 mt-5 rounded"
-              >
-                <div className="d-flex  align-items-center">
-                  <img
-                    src="https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75"
-                    width={"42px"}
-                    alt={myBot.botName}
-                    height={"42px"}
-                    style={{
-                      padding: "4px",
-                      border: "1px solid #cbc6c2",
-                      borderRadius: "4px",
-                    }}
-                  />
-                  <H5 attrH5={{ className: "my-0 ms-2" }}>{myBot.botName}</H5>
-                </div>
-                <div className="d-flex justify-content-between align-items-center p-3">
-                  <button onClick={() => {
-                    if(myBot._id){
-                      history(`${process.env.PUBLIC_URL}/bot/${myBot._id}`);
-                    }
-                    }} type="button" className="btn btn-primary me-2 btn-sm">
-                    View Bot
+            {myBots.length === 0 && (
+              <div className="mw-100 h-100  d-flex flex-column justify-content-center align-items-center">
+                <H6 className="mb-2 fw-bolder text-gray">
+                  Create your first bot
+                </H6>
+                <H5 className="mb-2">It will take less than a minute</H5>
+                <button
+                  type="button"
+                  className="btn btn-primary btn-md"
+                  onClick={toggle}
+                >
+                  Create new bot
+                </button>
+                <CreateBotFormModal
+                  modal={modal}
+                  NewMessage={"New Bot"}
+                  toggle={toggle}
+                  getAllBot={getAllBot}
+                ></CreateBotFormModal>
+              </div>
+            )}
+            {myBots.length > 0 && (
+              <>
+                <div className="w-100 d-flex justify-content-between align-items-center px-2">
+                  <H6 className="mb-2 fw-bolder text-gray">
+                    {myBots.length ? myBots.length : ""} live bots
+                  </H6>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-md"
+                    onClick={toggle}
+                  >
+                    Create new bot
                   </button>
-                  <Dropdown isOpen={myBot._id === dropdownBotOpen} toggle={() => {toggleDropDownBot((pre) => {
-                    return !pre ? myBot._id : null;
-                  })}}>
-                    <DropdownToggle
-                      aria-expanded
-                      data-toggle="dropdown"
-                      tag="span"
-                    >
-                      <div
+                  <CreateBotFormModal
+                    modal={modal}
+                    NewMessage={"New Bot"}
+                    toggle={toggle}
+                    getAllBot={getAllBot}
+                  ></CreateBotFormModal>
+                </div>
+                {myBots.map((myBot, i) => (
+                  <div
+                    key={i}
+                    className="w-100 d-flex border border-lightgray justify-content-between align-items-center p-3 mt-5 rounded"
+                  >
+                    <div className="d-flex  align-items-center">
+                      <img
+                        src="https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75"
+                        width={"42px"}
+                        alt={myBot.botName}
+                        height={"42px"}
                         style={{
-                          width: "30px",
-                          height: "30px",
-                          border: "1px solid lightgray",
-                          ...(myBot._id === isHovered && hoverStyle),
+                          padding: "4px",
+                          border: "1px solid #cbc6c2",
+                          borderRadius: "4px",
                         }}
-                        className="d-flex justify-content-center align-items-center rounded"
-                        onMouseEnter={() => {
-                          setisHovered(myBot._id);
+                      />
+                      <H5 attrH5={{ className: "my-0 ms-2" }}>
+                        {myBot.botName}
+                      </H5>
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center p-3">
+                      <button
+                        onClick={() => {
+                          if (myBot._id) {
+                            history(
+                              `${process.env.PUBLIC_URL}/bot/${myBot._id}`
+                            );
+                          }
                         }}
-                        onMouseLeave={() => {
-                          setisHovered(false);
+                        type="button"
+                        className="btn btn-primary me-2 btn-sm"
+                      >
+                        View Bot
+                      </button>
+                      <Dropdown
+                        isOpen={myBot._id === dropdownBotOpen}
+                        toggle={() => {
+                          toggleDropDownBot((pre) => {
+                            return !pre ? myBot._id : null;
+                          });
                         }}
                       >
-                        <HiOutlineDotsVertical
-                          style={{
-                            height: "17px",
-                            width: "17px",
-                            color: "gray",
-                          }}
-                        />
-                      </div>
-                    </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem onClick={toggleUpdateModal}>
-                        <H5 attrH5={{ className: "my-0 ms-2 fw-bolder mb-1" }}>Rename Bot</H5>
-                      </DropdownItem>
-                      <DropdownItem onClick={() => {deleteBot(myBot._id)}}>
-                      <H5 attrH5={{ className: "my-0 ms-2 fw-bolder mb-1" }}>Delete Bot</H5>
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
-                  <UpdateBotFormModal modal={updatemodal} NewMessage={'Update Bot'} toggle={toggleUpdateModal} getAllBot={getAllBot} botName={myBot.botName} botId={myBot._id}></UpdateBotFormModal>
-                </div>
-              </div>
-            ))}
+                        <DropdownToggle
+                          aria-expanded
+                          data-toggle="dropdown"
+                          tag="span"
+                        >
+                          <div
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                              border: "1px solid lightgray",
+                              ...(myBot._id === isHovered && hoverStyle),
+                            }}
+                            className="d-flex justify-content-center align-items-center rounded"
+                            onMouseEnter={() => {
+                              setisHovered(myBot._id);
+                            }}
+                            onMouseLeave={() => {
+                              setisHovered(false);
+                            }}
+                          >
+                            <HiOutlineDotsVertical
+                              style={{
+                                height: "17px",
+                                width: "17px",
+                                color: "gray",
+                              }}
+                            />
+                          </div>
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          <DropdownItem onClick={toggleUpdateModal}>
+                            <H5
+                              attrH5={{ className: "my-0 ms-2 fw-bolder mb-1" }}
+                            >
+                              Rename Bot
+                            </H5>
+                          </DropdownItem>
+                          <DropdownItem
+                            onClick={() => {
+                              deleteBot(myBot._id);
+                            }}
+                          >
+                            <H5
+                              attrH5={{ className: "my-0 ms-2 fw-bolder mb-1" }}
+                            >
+                              Delete Bot
+                            </H5>
+                          </DropdownItem>
+                        </DropdownMenu>
+                      </Dropdown>
+                      <UpdateBotFormModal
+                        modal={updatemodal}
+                        NewMessage={"Update Bot"}
+                        toggle={toggleUpdateModal}
+                        getAllBot={getAllBot}
+                        botName={myBot.botName}
+                        botId={myBot._id}
+                      ></UpdateBotFormModal>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </>
         )}
-        </>
-        }
-        
       </div>
     </Fragment>
   );

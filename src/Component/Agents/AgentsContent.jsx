@@ -28,18 +28,18 @@ import {
   TruckSvg,
   TruckSvg1,
 } from "../Widgets/SvgIcons";
-import {BsCheckCircle} from 'react-icons/bs'
+import { BsCheckCircle } from "react-icons/bs";
 import CreateBotFormModal from "./components/UpdateAgentFormModal";
 import AgentsTable from "./components/AgentsTable";
 
 const AgentsContent = () => {
   return (
     <Fragment>
-       <Container fluid={true}>
+      <Container fluid={true}>
         <Row>
-          <AgentsTable/>
+          <AgentsTable />
         </Row>
-       </Container>
+      </Container>
     </Fragment>
   );
 };
