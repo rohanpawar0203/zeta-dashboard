@@ -3,6 +3,7 @@ import Breadcrumbs from '../../CommonElements/Breadcrumbs';
 import WidgetContain from '../../Component/Widget';
 
 const Widget = React.memo((props) => {
+  console.log('hi')
   return (
     <Fragment>
       <WidgetContain />

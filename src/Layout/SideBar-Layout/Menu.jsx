@@ -62,9 +62,9 @@ export const MENUITEMS = [
         ]
     },
     {
-        menutitle: 'Widget',
+        menutitle: 'WhatsApp Widget',
         Items: [
-            { path: `${process.env.PUBLIC_URL}/widget`, bookmark: true, icon: FilemanagerSvg, title: 'Widget', type: 'link' }
+            { path: `${process.env.PUBLIC_URL}/whats-app-widget`, bookmark: true, icon: FilemanagerSvg, title: 'WhatsApp Widget', type: 'link' }
         ]
     }
 ];

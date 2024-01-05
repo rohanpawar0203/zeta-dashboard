@@ -56,3 +56,4 @@ export const UploadCompanyLogoAPI = `${process.env.REACT_APP_API_FILE_SERVER}/up
 export const FileServerAPI = `${process.env.REACT_APP_API_FILE_SERVER}`;
 export const WhatsAppAnalyticsAPI = `${process.env.REACT_APP_API_BASE_URL}/events/whatsappCounts`;
 export const WidgetsAPI = `${process.env.REACT_APP_API_BASE_URL}/widgets`;
+export const WidgetContentAPI = `${process.env.REACT_APP_API_BASE_URL}/widget-content`;
