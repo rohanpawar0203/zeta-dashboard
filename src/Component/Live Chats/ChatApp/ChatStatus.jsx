@@ -42,6 +42,10 @@ const ChatStatus = ({ checkValid }) => {
     }
   };
 
+  useEffect(() => {
+    console.log("LiveConversation", liveConversation);
+  }, [liveConversation]);
+
   return (
     <Fragment>
       <div className="chat-box">
@@ -80,7 +84,15 @@ const ChatStatus = ({ checkValid }) => {
                         ></div> */}
                         <Media body>
                           <div className="w-100 about">
-                            <div className="name">{item?.phoneNumber}</div>
+                            <div className="name">
+                              {item?.customer.firstName !== ""
+                                ? `${
+                                    item?.customer.firstName +
+                                    " " +
+                                    item?.customer.lastName
+                                  }`
+                                : item?.phoneNumber}
+                            </div>
                             <div className="w-100 d-flex justify-content-between align-items-center pe-1">
                               <div className="status">
                                 {checkMessageType(

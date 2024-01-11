@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
-import Breadcrumbs from '../../CommonElements/Breadcrumbs';
-import DashboardContain from '../../Component/Dash-board';
+import React, { Fragment } from "react";
+import Breadcrumbs from "../../CommonElements/Breadcrumbs";
+import DashboardContain from "../../Component/Dash-board";
 
 const Dashboard = () => {
   return (

@@ -38,15 +38,21 @@ const AgentLogin = ({ selected }) => {
   const history = useNavigate();
   const inputRef = useRef();
   const { setUserData, setToken, userData } = appStore();
+  const [apiError, setApiError] = useState("");
 
-  console.log('process.env.REACT_APP_API_BASE_URL ', process.env.REACT_APP_API_BASE_URL)
+  console.log(
+    "process.env.REACT_APP_API_BASE_URL ",
+    process.env.REACT_APP_API_BASE_URL
+  );
 
   const userLogin = async (e) => {
+    toast.error("error");
+
     setLoading(true);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, type: 'agent' }),
+      body: JSON.stringify({ email, password, type: "agent" }),
     };
     try {
       const res = await fetch(
@@ -65,19 +71,19 @@ const AgentLogin = ({ selected }) => {
         toast.success("User Logged In successfully");
         if (user.userId) {
           history(`${process.env.PUBLIC_URL}/live-chat`);
-        }
-        else if(!user.store && !user.userId){
+        } else if (!user.store && !user.userId) {
           history(`${process.env.PUBLIC_URL}/store`);
-        }
-        else if(user.store && !user.userId){
+        } else if (user.store && !user.userId) {
           history(`${process.env.PUBLIC_URL}/dashboard`);
         }
-        
       } else {
-        toast.error(`${resBody.msg}`);
+        setApiError(resBody.msg);
+        // toast.error(`${resBody.msg}`);
       }
     } catch (err) {
-      toast.error(`${err.message}`);
+      setApiError(err);
+
+      // toast.error(`${err.message}`);
     }
     setLoading(false);
   };
@@ -118,6 +124,7 @@ const AgentLogin = ({ selected }) => {
               type="email"
               required={true}
               onChange={(e) => {
+                setApiError("");
                 setEmail(e.target.value);
               }}
               placeholder="Enter Agent Email ID"
@@ -141,10 +148,12 @@ const AgentLogin = ({ selected }) => {
               className="form-control"
               type={togglePassword ? "text" : "password"}
               onChange={(e) => {
+                setApiError("");
+
                 setPassword(e.target.value);
               }}
               onKeyPress={(e) => {
-                if(e.key === 'Enter'){
+                if (e.key === "Enter") {
                   formValidate();
                   if (!isErrors.current) {
                     userLogin();
@@ -168,21 +177,26 @@ const AgentLogin = ({ selected }) => {
           )}
         </FormGroup>
         <FormGroup>
-              <Btn
-                attrBtn={{
-                  color: "primary",
-                  className: `btn-block mb-3 ${loading && "btn-disabled"}`,
-                  disabled: loading,
-                  onClick: (e) => {
-                    formValidate();
-                    if (!isErrors.current) {
-                      userLogin();
-                    } 
-                  },
-                }}
-              >
-                {loading ? "LOADING..." : SignIn}
-              </Btn>
+          <Btn
+            attrBtn={{
+              color: "primary",
+              className: `btn-block mb-3 ${loading && "btn-disabled"}`,
+              disabled: loading,
+              onClick: (e) => {
+                formValidate();
+                if (!isErrors.current) {
+                  userLogin();
+                }
+              },
+            }}
+          >
+            {loading ? "LOADING..." : SignIn}
+          </Btn>
+          {apiError && apiError !== "" ? (
+            <h6 style={{ color: "red", textAlign: "center" }}>{apiError}</h6>
+          ) : (
+            ""
+          )}
         </FormGroup>
       </Form>
     </Fragment>

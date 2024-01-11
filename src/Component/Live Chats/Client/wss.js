@@ -160,7 +160,7 @@ export const getLiveRooms = async () => {
   setLiveConversations();
 };
 
-export const envConversationToServer = async (roomId) => {
+export const envConversationToServer = async (roomId, name) => {
   // const serverApi = "http://localhost:8081";
   const serverApi = `${LiveChatsAPI}`;
   const response = await axios.post(`${serverApi}/endConversation`, {
@@ -170,6 +170,28 @@ export const envConversationToServer = async (roomId) => {
     getLiveRooms();
     appStore.getState().setViewConversation({});
     toast.success("Conversation got closed");
+    informAiBackend(roomId, name);
+  }
+};
+
+const informAiBackend = async (roomId, name) => {
+  try {
+    let payload = {
+      session_id: roomId,
+      event:
+        "User has been talking to an agent/customer care/service for a while.Now that conversation has ended.",
+      user_name: name,
+    };
+    const response = await axios.post(
+      "https://ulai.in/ai-backend-staging-v1/api/session_event_update",
+      {
+        data: payload,
+      }
+    );
+
+    console.log("informAiBackend", response);
+  } catch (error) {
+    console.log("Error", error);
   }
 };
 

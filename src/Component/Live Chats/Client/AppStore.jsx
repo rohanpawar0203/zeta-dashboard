@@ -12,6 +12,8 @@ const appStore = create((set, get) => ({
   liveConversationNewEntry: [],
   currentLocationPathname: "",
   plans: [],
+  whatsAppAnalytics: {},
+  setwhatsAppAnalytics: (data) => set({ whatsAppAnalytics: data }),
   setUserData: (data) => set({ userData: data }),
   setConversation: (data) => set({ conversation: data }),
   setViewConversation: (data) => set({ viewConversation: data }),

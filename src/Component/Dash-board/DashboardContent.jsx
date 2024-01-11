@@ -30,10 +30,11 @@ import {
 } from "../Widgets/SvgIcons";
 import { connectWithSocketIOServer } from "../Live Chats/Client/wss";
 import { WhatsAppAnalyticsAPI } from "../../api";
+import appStore from "../Live Chats/Client/AppStore";
 
 const userData = JSON.parse(sessionStorage.getItem("currentUser"));
 const DashboardContent = () => {
-  const [whatsAppAnalytics, setwhatsAppAnalytics] = useState({});
+  const { whatsAppAnalytics, setwhatsAppAnalytics } = appStore();
 
   const getWhatsAppAnalytics = async () => {
     try {
@@ -69,10 +70,11 @@ const DashboardContent = () => {
     }
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     connectWithSocketIOServer();
-    getWhatsAppAnalytics();
+    await getWhatsAppAnalytics();
   }, []);
+  useEffect(() => {}, [whatsAppAnalytics]);
 
   return (
     <Fragment>

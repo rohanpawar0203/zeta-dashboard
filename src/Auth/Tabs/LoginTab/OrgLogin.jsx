@@ -27,8 +27,11 @@ import { connectWithSocketIOServer } from "../../../Component/Live Chats/Client/
 import appStore from "../../../Component/Live Chats/Client/AppStore";
 import { getSessionId } from "../../../Component/Bots/sessionSetup";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
+import { WhatsAppAnalyticsAPI } from "../../../api";
 
-const OrgLogin = ({ selected }) => {
+const OrgLogin = ({ selected, showToast }) => {
+  const { setwhatsAppAnalytics } = appStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,13 +41,48 @@ const OrgLogin = ({ selected }) => {
   const history = useNavigate();
   const inputRef = useRef();
   const { setUserData, setToken, userData } = appStore();
+  const [apiError, setApiError] = useState("");
 
   const userLogin = async (e) => {
+    const getWhatsAppAnalytics = async (data) => {
+      try {
+        const current_date = new Date();
+        const currentDate = new Date().toGMTString();
+        const start_date = new Date(
+          `${current_date.getFullYear()}-${current_date.getMonth() + 1}-01`
+        ).toGMTString();
+        const payLoad = {
+          dateFrom: start_date,
+          dateAt: currentDate,
+          phoneNumber: `${data?.user?.contact}`,
+        };
+        const res = await axios.post(WhatsAppAnalyticsAPI, payLoad);
+        const result = await res?.data[0];
+        const whatsappDeliveredCount = result?.whatsappDeliveredCount[0]
+          ?.deliveredCount
+          ? result?.whatsappDeliveredCount[0]?.deliveredCount
+          : "NA";
+        const whatsappReadCount = result?.whatsappReadCount[0]?.readCount
+          ? result?.whatsappReadCount[0]?.readCount
+          : "NA";
+        const whatsappSentCount = result?.whatsappSentCount[0]?.sentCount
+          ? result?.whatsappSentCount[0]?.sentCount
+          : "NA";
+        setwhatsAppAnalytics({
+          whatsappDeliveredCount,
+          whatsappReadCount,
+          whatsappSentCount,
+        });
+      } catch (error) {
+        console.log("getWhatsAppAnalytics error got ", error);
+      }
+    };
     setLoading(true);
+
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, type: 'organization'}),
+      body: JSON.stringify({ email, password, type: "organization" }),
     };
     try {
       const res = await fetch(
@@ -55,6 +93,7 @@ const OrgLogin = ({ selected }) => {
       if (res.status.toString() === "200") {
         setEmail("");
         setPassword("");
+        await getWhatsAppAnalytics(resBody);
         const { user, token } = resBody;
         sessionStorage.setItem("token", token);
         sessionStorage.setItem("currentUser", JSON.stringify(user));
@@ -63,19 +102,21 @@ const OrgLogin = ({ selected }) => {
         toast.success("User Logged In successfully");
         if (user.userId) {
           history(`${process.env.PUBLIC_URL}/live-chat`);
-        }
-        else if(!user.store && !user.userId){
+        } else if (!user.store && !user.userId) {
           history(`${process.env.PUBLIC_URL}/store`);
-        }
-        else if(user.store && !user.userId){
+        } else if (user.store && !user.userId) {
           history(`${process.env.PUBLIC_URL}/dashboard`);
+        } else {
+          console.log("adasd");
         }
-        
       } else {
-        toast.error(`${resBody.msg}`);
+        // console.log("ENERED IN ERROR", resBody.msg);
+        setApiError(resBody.msg);
+        // alert(resBody.msg);
       }
     } catch (err) {
-      toast.error(`${err.message}`);
+      setApiError(err.message);
+      // toast.error(`${err.message}`);
     }
     setLoading(false);
   };
@@ -116,6 +157,7 @@ const OrgLogin = ({ selected }) => {
               type="email"
               required={true}
               onChange={(e) => {
+                setApiError("");
                 setEmail(e.target.value);
               }}
               placeholder="Enter Organization Email ID"
@@ -139,10 +181,11 @@ const OrgLogin = ({ selected }) => {
               className="form-control"
               type={togglePassword ? "text" : "password"}
               onChange={(e) => {
+                setApiError("");
                 setPassword(e.target.value);
               }}
               onKeyPress={(e) => {
-                if(e.key === 'Enter'){
+                if (e.key === "Enter") {
                   formValidate();
                   if (!isErrors.current) {
                     userLogin();
@@ -166,21 +209,26 @@ const OrgLogin = ({ selected }) => {
           )}
         </FormGroup>
         <FormGroup>
-              <Btn
-                attrBtn={{
-                  color: "primary",
-                  className: `btn-block mb-3 ${loading && "btn-disabled"}`,
-                  disabled: loading,
-                  onClick: (e) => {
-                    formValidate();
-                    if (!isErrors.current) {
-                      userLogin();
-                    }
-                  },
-                }}
-              >
-                {loading ? "LOADING..." : SignIn}
-              </Btn>          
+          <Btn
+            attrBtn={{
+              color: "primary",
+              className: `btn-block mb-3 ${loading && "btn-disabled"}`,
+              disabled: loading,
+              onClick: (e) => {
+                formValidate();
+                if (!isErrors.current) {
+                  userLogin();
+                }
+              },
+            }}
+          >
+            {loading ? "LOADING..." : SignIn}
+          </Btn>
+          {apiError && apiError !== "" ? (
+            <h6 style={{ color: "red", textAlign: "center" }}>{apiError}</h6>
+          ) : (
+            ""
+          )}
         </FormGroup>
       </Form>
     </Fragment>

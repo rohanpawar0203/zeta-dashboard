@@ -8,6 +8,7 @@ import { Media } from "reactstrap";
 import { FaRegUser } from "react-icons/fa";
 import UserProfile from "../../../assets/images/user/userProfile.png";
 import appStore from "../../Live Chats/Client/AppStore";
+import axios from "axios";
 
 const ChatStatus = ({}) => {
   const {
@@ -44,6 +45,31 @@ const ChatStatus = ({}) => {
   };
   var activeChat = 0;
   if (selectedUserr != null) activeChat = selectedUserr._id;
+
+  // const getName = async (data) => {
+  //   console.log("Get Name", data);
+  //   try {
+  //     await axios
+  //       .get(
+  //         `${process.env.REACT_APP_API_BASE_URL}/customers/${data.phoneNumber}/${data.userId}`
+  //       )
+  //       .then((resp) => {
+  //         if (resp.data.customer) {
+  //           console.log("resp", resp);
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log("Error", error);
+  //       });
+  //   } catch (error) {
+  //     console.log("Error", error);
+  //   }
+  // };
+
+  // useEffect(async () => {
+
+  //   await getName();
+  // }, []);
 
   return (
     <Fragment>
@@ -85,7 +111,25 @@ const ChatStatus = ({}) => {
                         ></div> */}
                           <Media body>
                             <div className="about">
-                              <div className="name">{item?.phoneNumber}</div>
+                              <div className="name">
+                                {item?.customer.firstName !== ""
+                                  ? `${
+                                      item?.customer.firstName +
+                                      " " +
+                                      item?.customer.lastName
+                                    }`
+                                  : item?.phoneNumber}
+                                <br />
+                                <p
+                                  style={{
+                                    fontSize: "10px",
+                                    color: "gray",
+                                    lineHeight: 1,
+                                  }}
+                                >
+                                  {item?.chatSessionId}
+                                </p>
+                              </div>
                               <div className="status">
                                 {checkMessageType(
                                   item?.chat[item?.chat.length - 1]?.message
