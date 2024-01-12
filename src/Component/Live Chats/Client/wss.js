@@ -11,17 +11,17 @@ import { getSessionId } from "../../Bots/sessionSetup";
 const { v4: uuidv4 } = require("uuid");
 
 // import { setLiveConversation } from "../components/dashboard/liveChat/liveChat";
-const SERVER = process.env.REACT_APP_API_SERVER;
+// const SERVER = process.env.REACT_APP_API_SERVER;
 const user = JSON.parse(sessionStorage.getItem("currentUser"));
 const token = sessionStorage.getItem("token");
-// const SERVER = "http://localhost:8081";
+const SERVER = "http://localhost:8085";
 
 var socket = null;
 const { setLiveConversation, liveConversation } = appStore.getState();
 
 export const connectWithSocketIOServer = () => {
   socket = io(SERVER, {
-    path: "/agent-live-chat-socket/",
+    // path: "/agent-live-chat-socket/",
   });
 
   socket.on("connect", () => {
@@ -94,9 +94,13 @@ export const connectWithSocketIOServer = () => {
     toast.success("New Live Chat for Agent !");
     getLiveRooms();
   });
+  socket.on("get-logged-agent-info", function (data) {
+   console.log('get-logged-agent-info ', data);
+   console.log('user data' , appStore.getState().userData)  
+  });
 };
 export const getRoomExists = async (roomId) => {
-  // const serverApi = "http://localhost:8081";
+  // const serverApi = "http://localhost:8085";
   const serverApi = `${AgentLiveChatAPI}`;
   const response = await axios.get(`${serverApi}/room-exists/${roomId}`);
   return response.data;
@@ -150,7 +154,7 @@ export const sendDataToConnectedUser = (data) => {
   socket.emit("mssg-sent", JSON.stringify(data));
 };
 export const getLiveRooms = async () => {
-  // const serverApi = "http://localhost:8081";
+  // const serverApi = "http://localhost:8085";
   const serverApi = `${LiveChatsAPI}`;
   const response = await axios.post(`${serverApi}/getChatsForAgent`, {
     organization_id: user?.userId ? user?.userId : user?._id,
@@ -161,7 +165,7 @@ export const getLiveRooms = async () => {
 };
 
 export const envConversationToServer = async (roomId, name) => {
-  // const serverApi = "http://localhost:8081";
+  // const serverApi = "http://localhost:8085";
   const serverApi = `${LiveChatsAPI}`;
   const response = await axios.post(`${serverApi}/endConversation`, {
     roomId: roomId,
@@ -245,3 +249,8 @@ const setLiveConversations = async () => {
     // }
   }
 };
+
+export const sendLoggedAgentInfo = (agent_data) => {
+  console.log('sendLoggedAgentInfo ' , agent_data);
+  socket.emit('agent-logged-in', agent_data);
+}

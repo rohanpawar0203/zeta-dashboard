@@ -23,7 +23,7 @@ import FormHeader from "./FormHeader";
 import FormPassword from "./FormPassword";
 import SignInWith from "./SignInWith";
 import { cls } from "react-image-crop";
-import { connectWithSocketIOServer } from "../../../Component/Live Chats/Client/wss";
+import { connectWithSocketIOServer, sendLoggedAgentInfo } from "../../../Component/Live Chats/Client/wss";
 import appStore from "../../../Component/Live Chats/Client/AppStore";
 import { getSessionId } from "../../../Component/Bots/sessionSetup";
 import { v4 as uuidv4 } from "uuid";
@@ -56,7 +56,8 @@ const AgentLogin = ({ selected }) => {
     };
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/login`,
+        // `${process.env.REACT_APP_API_BASE_URL}/auth/login`,
+        `http://localhost:8086/auth/login`,
         requestOptions
       );
       const resBody = await res.json();
@@ -64,6 +65,8 @@ const AgentLogin = ({ selected }) => {
         setEmail("");
         setPassword("");
         const { agent: user, token } = resBody;
+        // Agent AutoLogout trigger
+        sendLoggedAgentInfo(user);  
         sessionStorage.setItem("token", token);
         sessionStorage.setItem("currentUser", JSON.stringify(user));
         setUserData(user);
