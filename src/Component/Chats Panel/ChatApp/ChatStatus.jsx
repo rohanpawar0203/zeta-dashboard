@@ -13,18 +13,16 @@ import axios from "axios";
 const ChatStatus = ({}) => {
   const {
     selectedUserr,
-    memberss,
     currentUserr,
     chatss,
     changeChat,
     createNewChatAsyn,
     setCurrentLocationPathName,
   } = useContext(ChatAppContext);
-  const userData = JSON.parse(sessionStorage.getItem("currentUser"));
-  const { liveConversation, isConnected } = appStore();
+  const {chatPanelMsgs, userData} = appStore();
   const changeChatClick = (e, selectedUserId) => {
     // const currentUserId = currentUserr.id;
-    const currentChat = memberss.find((x) => x._id === selectedUserId);
+    const currentChat = chatPanelMsgs.find((x) => x._id === selectedUserId);
     if (currentChat) {
       changeChat(selectedUserId);
     }
@@ -70,7 +68,7 @@ const ChatStatus = ({}) => {
 
   //   await getName();
   // }, []);
-
+ 
   return (
     <Fragment>
       <div className="chat-box">
@@ -79,9 +77,9 @@ const ChatStatus = ({}) => {
           <h5>All Chats</h5>
           <div className="people-list" id="people-list">
             <SearchChatList />
-            {memberss && memberss.length > 0 ? (
+            {chatPanelMsgs && chatPanelMsgs.length > 0 ? (
               <UL attrUL={{ className: "simple-list list custom-scrollbar" }}>
-                {memberss
+                {chatPanelMsgs
                   .filter((x) => x._id !== userData._id)
                   .map((item, i) => {
                     return (
@@ -112,11 +110,11 @@ const ChatStatus = ({}) => {
                           <Media body>
                             <div className="about">
                               <div className="name">
-                                {item?.customer.firstName !== ""
+                                {item?.customer?.firstName !== ""
                                   ? `${
-                                      item?.customer.firstName +
+                                      item?.customer?.firstName +
                                       " " +
-                                      item?.customer.lastName
+                                      item?.customer?.lastName
                                     }`
                                   : item?.phoneNumber}
                                 <br />

@@ -17,6 +17,7 @@ import Bookmark from './Bookmark/index';
 import { Account, Inbox, LogOut, Taskboard } from '../../Constant';
 import appStore from '../../Component/Live Chats/Client/AppStore';
 import ChatAppContext from '../../_helper/chat-app';
+import  UserLogoutHook  from '../../Services/Custom_Hooks/user_log_out';
 
 const HeaderContain = () => {// eslint-disable-next-line
   const [profile, setProfile] = useState('');
@@ -41,7 +42,6 @@ const HeaderContain = () => {// eslint-disable-next-line
     setToken(''); 
     sessionStorage.clear();
     setTimeout(() =>{history(`${process.env.PUBLIC_URL}/login`)},  1000); 
-
   };
   return (
     <Fragment>

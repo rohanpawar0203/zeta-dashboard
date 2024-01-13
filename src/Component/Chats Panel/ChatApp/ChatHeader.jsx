@@ -6,7 +6,7 @@ import UserProfile from "../../../assets/images/user/userProfile.png";
 
 const ChatHeader = () => {
   const { selectedUserr } = useContext(ChatAppContext);
-  console.log("SelectedUSer", selectedUserr);
+  // console.log("SelectedUSer", selectedUserr);
   return (
     <Fragment>
       {selectedUserr && (
@@ -22,14 +22,14 @@ const ChatHeader = () => {
             <div className="about">
               <div className="name f-4">
                 {selectedUserr
-                  ? selectedUserr.customer.firstName &&
-                    selectedUserr.customer.firstName !== ""
+                  ? selectedUserr?.customer?.firstName &&
+                    selectedUserr?.customer?.firstName !== ""
                     ? `${
-                        selectedUserr.customer.firstName +
+                        selectedUserr?.customer?.firstName +
                         " " +
-                        selectedUserr.customer.lastName
+                        selectedUserr?.customer?.lastName
                       }`
-                    : selectedUserr.phoneNumber
+                    : selectedUserr?.phoneNumber
                   : ""}
                 {selectedUserr && selectedUserr.typing ? (
                   <span className="font-primary f-12"> Typing...</span>

@@ -12,7 +12,8 @@ export const ChatProvider = (props) => {
   const [selectedUserr, setSelectedUser] = useState();
   const [liveUser, setliveUser] = useState();
   const [sidebarToggle, setSidebarToggle] = useState(false);
-  const {userData} = AppStore();
+
+  const {userData, setChatPanelMsgs, chatPanelMsgs} = AppStore();
   const token = sessionStorage.getItem('token');
   const [appStore, setappStore] = useState({
   isConnected: false,
@@ -61,7 +62,7 @@ export const ChatProvider = (props) => {
           },
         }
       );
-      setMembers(resp.data.reverse());
+      setChatPanelMsgs(resp.data.reverse());
     } catch (error) {
       console.log('error', error);
     }
@@ -202,7 +203,7 @@ export const ChatProvider = (props) => {
   };
 
   const changeChat = (userID) => {
-    setSelectedUser(memberss.find((x) => x._id === userID));
+    setSelectedUser(chatPanelMsgs.find((x) => x._id === userID));
   };
 
   const searchMember = (keywords) => {

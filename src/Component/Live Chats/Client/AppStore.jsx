@@ -13,6 +13,8 @@ const appStore = create((set, get) => ({
   currentLocationPathname: "",
   plans: [],
   whatsAppAnalytics: {},
+  chatPanelMsgs: [],
+  setChatPanelMsgs: (data) => set({ chatPanelMsgs: data }),
   setwhatsAppAnalytics: (data) => set({ whatsAppAnalytics: data }),
   setUserData: (data) => set({ userData: data }),
   setConversation: (data) => set({ conversation: data }),

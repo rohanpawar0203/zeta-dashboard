@@ -40,11 +40,6 @@ const AgentLogin = ({ selected }) => {
   const { setUserData, setToken, userData } = appStore();
   const [apiError, setApiError] = useState("");
 
-  console.log(
-    "process.env.REACT_APP_API_BASE_URL ",
-    process.env.REACT_APP_API_BASE_URL
-  );
-
   const userLogin = async (e) => {
     toast.error("error");
 
@@ -67,6 +62,21 @@ const AgentLogin = ({ selected }) => {
         const { agent: user, token } = resBody;
         // Agent AutoLogout trigger
         sendLoggedAgentInfo(user);  
+        
+        setTimeout(() => {handleStorageNRoutes(user, token)}, 1000);  // delay to handle agent autoLogut
+      } else {
+        setApiError(resBody.msg);
+        // toast.error(`${resBody.msg}`);
+      }
+    } catch (err) {
+      setApiError(err);
+
+      // toast.error(`${err.message}`);
+    }
+    setLoading(false);
+  };
+
+  const handleStorageNRoutes = (user, token) => {
         sessionStorage.setItem("token", token);
         sessionStorage.setItem("currentUser", JSON.stringify(user));
         setUserData(user);
@@ -79,17 +89,8 @@ const AgentLogin = ({ selected }) => {
         } else if (user.store && !user.userId) {
           history(`${process.env.PUBLIC_URL}/dashboard`);
         }
-      } else {
-        setApiError(resBody.msg);
-        // toast.error(`${resBody.msg}`);
-      }
-    } catch (err) {
-      setApiError(err);
+  }
 
-      // toast.error(`${err.message}`);
-    }
-    setLoading(false);
-  };
   const formValidate = () => {
     isErrors.current = false;
     setErrors({});

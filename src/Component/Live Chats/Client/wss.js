@@ -8,6 +8,7 @@ import {
 } from "../../../api";
 import appStore from "./AppStore";
 import { getSessionId } from "../../Bots/sessionSetup";
+import  UserLogoutHook  from "../../../Services/Custom_Hooks/user_log_out";
 const { v4: uuidv4 } = require("uuid");
 
 // import { setLiveConversation } from "../components/dashboard/liveChat/liveChat";
@@ -95,8 +96,9 @@ export const connectWithSocketIOServer = () => {
     getLiveRooms();
   });
   socket.on("get-logged-agent-info", function (data) {
-   console.log('get-logged-agent-info ', data);
-   console.log('user data' , appStore.getState().userData)  
+  //  console.log('get-logged-agent-info ', data);
+  //  console.log('user data' , appStore.getState().userData) 
+   handleAgentAutoLogout(data)
   });
 };
 export const getRoomExists = async (roomId) => {
@@ -193,7 +195,7 @@ const informAiBackend = async (roomId, name) => {
       }
     );
 
-    console.log("informAiBackend", response);
+    // console.log("informAiBackend", response);
   } catch (error) {
     console.log("Error", error);
   }
@@ -251,6 +253,18 @@ const setLiveConversations = async () => {
 };
 
 export const sendLoggedAgentInfo = (agent_data) => {
-  console.log('sendLoggedAgentInfo ' , agent_data);
+  // console.log('sendLoggedAgentInfo ' , agent_data);
   socket.emit('agent-logged-in', agent_data);
+}
+
+const handleAgentAutoLogout = (loggedAgent) => {
+  let agent_logged_in = loggedAgent;
+  let pre_existing_agent = appStore.getState().userData;
+  if(Object.keys(pre_existing_agent).length){
+  let {userId, _id} = agent_logged_in;  // current logged in agent
+  let {userId: preExsUserId, _id: _preExsId} = pre_existing_agent;  // pre existing agent
+  if((userId === preExsUserId) && (_id === _preExsId)){
+    UserLogoutHook();   // autoLoggingOut already logged in agents from system
+  }
+  }
 }
