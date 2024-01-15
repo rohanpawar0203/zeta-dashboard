@@ -43,7 +43,7 @@ const ChatStatus = ({ checkValid }) => {
   };
 
   useEffect(() => {
-    console.log("LiveConversation", liveConversation);
+    // console.log("LiveConversation", liveConversation);
   }, [liveConversation]);
 
   return (
@@ -85,11 +85,11 @@ const ChatStatus = ({ checkValid }) => {
                         <Media body>
                           <div className="w-100 about">
                             <div className="name">
-                              {item?.customer.firstName !== ""
+                              {item?.customer?.firstName && item?.customer?.firstName !== ""
                                 ? `${
-                                    item?.customer.firstName +
+                                    item?.customer?.firstName +
                                     " " +
-                                    item?.customer.lastName
+                                    item?.customer?.lastName
                                   }`
                                 : item?.phoneNumber}
                             </div>

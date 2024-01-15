@@ -137,7 +137,7 @@ const StoreContent = () => {
         // const formData = new FormData();
         // formData.append("file", formData.file);
         // formData.append("userId", user._id);
-        console.log({ formData });
+        // console.log({ formData });
         if (!formData.file) {
           toast.error("Please Upload CSV File!");
           return;

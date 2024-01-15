@@ -40,7 +40,7 @@ const ChatMessage = ({ viewConversation, showKeyboard }) => {
     };
   }
   useEffect(() => {
-    console.log("showKeyboard", showKeyboard);
+    // console.log("showKeyboard", showKeyboard);
     if (showKeyboard === true) {
       toast.success("Live chat connected!");
       // console.log("Live chat connected!")

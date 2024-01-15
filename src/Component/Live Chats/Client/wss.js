@@ -12,17 +12,17 @@ import  UserLogoutHook  from "../../../Services/Custom_Hooks/user_log_out";
 const { v4: uuidv4 } = require("uuid");
 
 // import { setLiveConversation } from "../components/dashboard/liveChat/liveChat";
-// const SERVER = process.env.REACT_APP_API_SERVER;
+const SERVER = process.env.REACT_APP_API_SERVER;
 const user = JSON.parse(sessionStorage.getItem("currentUser"));
 const token = sessionStorage.getItem("token");
-const SERVER = "http://localhost:8085";
+// const SERVER = "http://localhost:8085";
 
 var socket = null;
 const { setLiveConversation, liveConversation } = appStore.getState();
 
 export const connectWithSocketIOServer = () => {
   socket = io(SERVER, {
-    // path: "/agent-live-chat-socket/",
+    path: "/agent-live-chat-socket/",
   });
 
   socket.on("connect", () => {
@@ -59,7 +59,7 @@ export const connectWithSocketIOServer = () => {
   });
 
   socket.on("message-recieved", (data) => {
-    console.log("message-recieved", data);
+    // console.log("message-recieved", data);
     appStore.getState().setShowTyping(false);
     let newMessage = JSON.parse(data);
     const newArray = appStore.getState().liveConversation.map((el) => {

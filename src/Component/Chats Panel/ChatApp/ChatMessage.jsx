@@ -92,7 +92,7 @@ const ChatMessage = () => {
                         </span>
                       </div>
                       {`${checkMessageType(item?.message)}`}
-                      {console.log("message", item?.message)}
+                      {/* {console.log("message", item?.message)} */}
                     </div>
                   </LI>
                 </UL>

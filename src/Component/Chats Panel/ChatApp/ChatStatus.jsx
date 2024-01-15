@@ -110,7 +110,7 @@ const ChatStatus = ({}) => {
                           <Media body>
                             <div className="about">
                               <div className="name">
-                                {item?.customer?.firstName !== ""
+                                {item?.customer?.firstName && item?.customer?.firstName !== "" 
                                   ? `${
                                       item?.customer?.firstName +
                                       " " +

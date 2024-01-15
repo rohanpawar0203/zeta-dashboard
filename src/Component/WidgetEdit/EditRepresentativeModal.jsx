@@ -22,7 +22,7 @@ const EditRepresentative = ({template, setTemplate, avatarID, setrepEditMode}) =
      const [colors_array, setColors_array] = useState([]);
      const companayLogoRef = useRef('');
      const [companyLogoMode, setCompanyLogoMode] = useState('logo');
-     console.log('avtProfile ', avtProfile);
+    //  console.log('avtProfile ', avtProfile);
     const handleTemplateChange = (e, value, key, property) => {
         setTemplate((pre) => {
             let personsArr = pre?.type?.popup?.persons;
@@ -35,7 +35,7 @@ const EditRepresentative = ({template, setTemplate, avatarID, setrepEditMode}) =
                 }
                 return item;
             })
-            console.log('return ', {...pre, type: {...pre?.type, popup: {...pre?.type?.popup, persons: [...result]}}})
+            // console.log('return ', {...pre, type: {...pre?.type, popup: {...pre?.type?.popup, persons: [...result]}}})
             return {...pre, type: {...pre?.type, popup: {...pre?.type?.popup, persons: [...result]}}}
         });
     }
@@ -82,13 +82,13 @@ const EditRepresentative = ({template, setTemplate, avatarID, setrepEditMode}) =
       if(validatorObj?.regExpValidator('color_code', avatarObj?.avatar?.backgroundColor)=== false){
         err = "Invalid hexadecimal colour code!";
       }else if(validatorObj?.regExpValidator('web_url', avatarObj?.link?.desktop) === false){
-        console.log('avatarObj?.link?.mobile ', validatorObj?.regExpValidator('web_url', avatarObj?.link?.desktop))
+        // console.log('avatarObj?.link?.mobile ', validatorObj?.regExpValidator('web_url', avatarObj?.link?.desktop))
         err = "Invalid desktop link!";
       }else if(validatorObj?.regExpValidator('web_url', avatarObj?.link?.mobile) === false){
-        console.log('avatarObj?.link?.mobile ', avatarObj?.link?.mobile)
+        // console.log('avatarObj?.link?.mobile ', avatarObj?.link?.mobile)
         err = "Invalid mobile link!";
       }else if(companyLogoFile?.name && !validatorObj?.fileFormatValidator(companyLogoFile?.name, imgExtensions)){
-        console.log('file ', )
+        // console.log('file ', )
         err = "Invalid file format!";
       }
       if(err){
@@ -96,14 +96,14 @@ const EditRepresentative = ({template, setTemplate, avatarID, setrepEditMode}) =
       }
       return err;
     }
-console.log('companyLogoFile ', companyLogoFile);
+// console.log('companyLogoFile ', companyLogoFile);
 useEffect(() => {  
 var htmlString = avtProfile?.avatar?.src;
 var parser = new DOMParser();
 var doc = parser.parseFromString(htmlString, 'text/html');
 var imgElement = doc.querySelector('img');
 companayLogoRef.current = imgElement?.getAttribute('src');
-console.log('logo url ', imgElement?.getAttribute('src'));
+// console.log('logo url ', imgElement?.getAttribute('src'));
 setcompanyLogoURL(imgElement?.getAttribute('src'))
     }, [avatarID]);
 

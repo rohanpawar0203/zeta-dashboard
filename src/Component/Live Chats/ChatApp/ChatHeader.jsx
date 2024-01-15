@@ -25,15 +25,15 @@ const ChatHeader = ({ viewConversation }) => {
             <div className="w-100 d-flex justify-content-between">
               <div className="about">
                 <div className="name f-4">
-                  {liveUser.customer.firstName &&
-                  liveUser.customer.firstName !== " "
+                  {liveUser?.customer?.firstName &&
+                  liveUser?.customer?.firstName !== " "
                     ? `${
-                        liveUser.customer.firstName +
+                        liveUser?.customer?.firstName +
                         " " +
-                        liveUser.customer.lastName
+                        liveUser?.customer?.lastName
                       }`
-                    : liveUser.phoneNumber}
-                  {liveUser && liveUser.typing ? (
+                    : liveUser?.phoneNumber}
+                  {liveUser && liveUser?.typing ? (
                     <span className="font-primary f-12"> Typing...</span>
                   ) : (
                     ""
@@ -48,7 +48,7 @@ const ChatHeader = ({ viewConversation }) => {
                   onClick: () => {
                     envConversationToServer(
                       viewConversation?.chatSessionId,
-                      liveUser.customer.firstName
+                      liveUser?.customer?.firstName
                     );
                     setliveUser(null);
                     setTimeout(() => {

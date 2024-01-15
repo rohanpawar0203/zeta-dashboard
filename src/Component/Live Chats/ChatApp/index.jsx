@@ -32,7 +32,7 @@ const ChatAppContain = () => {
   };
 
   useEffect(() => {
-    console.log("First useEffect triggered");
+    // console.log("First useEffect triggered");
     setCurrentLocationPathName(window.location.pathname);
     (async () => {
       try {
@@ -46,10 +46,10 @@ const ChatAppContain = () => {
   }, [liveConversation]);
 
   useEffect(() => {
-    console.log("Second useEffect triggered");
+    // console.log("Second useEffect triggered");
 
     setViewConversation({});
-    console.log("notified");
+    // console.log("notified");
   }, []);
   return (
     <Fragment>

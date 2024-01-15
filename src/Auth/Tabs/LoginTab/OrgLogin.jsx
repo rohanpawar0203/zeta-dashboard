@@ -107,7 +107,7 @@ const OrgLogin = ({ selected, showToast }) => {
         } else if (user.store && !user.userId) {
           history(`${process.env.PUBLIC_URL}/dashboard`);
         } else {
-          console.log("adasd");
+          // console.log("adasd");
         }
       } else {
         // console.log("ENERED IN ERROR", resBody.msg);

@@ -19,7 +19,7 @@ export const getUserDetails = async(id) => {
                 resolve(result?.data);
             }
         } catch (error) {
-            console.log('use details fetch error :  ', error);
+            // console.log('use details fetch error :  ', error);
             reject(error);
         }
     })

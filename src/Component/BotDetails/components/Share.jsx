@@ -52,7 +52,7 @@ const Share = ({ myBot }) => {
                         <div
                           onClick={() => {
                             // if (ele === "Embed the bot") {
-                            console.log("Tab Selected", ele);
+                            // console.log("Tab Selected", ele);
                             setselectedTab(ele);
                             // }
                           }}
