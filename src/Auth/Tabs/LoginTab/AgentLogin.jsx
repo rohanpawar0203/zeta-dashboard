@@ -41,8 +41,6 @@ const AgentLogin = ({ selected }) => {
   const [apiError, setApiError] = useState("");
 
   const userLogin = async (e) => {
-    toast.error("error");
-
     setLoading(true);
     const requestOptions = {
       method: "POST",
@@ -51,8 +49,8 @@ const AgentLogin = ({ selected }) => {
     };
     try {
       const res = await fetch(
-        // `${process.env.REACT_APP_API_BASE_URL}/auth/login`,
-        `http://localhost:8086/auth/login`,
+        `${process.env.REACT_APP_API_BASE_URL}/auth/login`,
+        // `http://localhost:8086/auth/login`,
         requestOptions
       );
       const resBody = await res.json();
