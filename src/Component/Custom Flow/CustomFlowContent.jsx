@@ -1,9 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
-import CountUp from "react-countup";
 import { Card, CardBody, Col, Media, Container, Row } from "reactstrap";
-import { toast } from "react-toastify";
-import { PlusSquare, Upload, card } from "react-feather";
 import {
   H4,
   H6,
@@ -17,8 +14,6 @@ import {
   Btn,
   Spinner,
 } from "../../AbstractElements";
-import errorImg from "../../assets/images/search-not-found.png";
-import TurnoverChart from "../Widgets/ChartsWidgets/TurnoverChart";
 import {
   AddNew,
   AllFiles,
@@ -40,7 +35,6 @@ import {
   TruckSvg,
   TruckSvg1,
 } from "../Widgets/SvgIcons";
-import { BsCheckCircle } from "react-icons/bs";
 import CreateContextModal from "./components/CreateContextModal";
 import ContextTable from "./components/ContextsTable";
 import { GetAllContextsAPI } from "../../api";
@@ -78,7 +72,7 @@ const CustomFlowContent = () => {
       <Container fluid={true}>
         <Row>
           <Col sm="12">
-            <Card className=" mt-2  p-4" style={{ height: "80vh" }}>
+            <Card className=" mt-2  p-4" style={{ height: "80vh"}}>
               {loading ? (
                 <div className="loader-box">
                   <Spinner attrSpinner={{ className: "loader-3" }} />

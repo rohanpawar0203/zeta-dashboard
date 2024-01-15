@@ -60,14 +60,14 @@ const ConxtEditElement = ({contextID, setEditContext}) => {
       </Col>
       <Row>
       <Col className='w-50 vh-75'>
-      <div style={{height: '550px'}} className="shadow-sm  shadow-showcase p-2 mx-0">
+      <div style={{height: '475px'}} className="shadow-sm  shadow-showcase p-2 mx-0">
         <ScrollBar className='vertical-scroll ps-container ps-theme-default ps-active-y h-100'>
           <QuestionList contextID={contextID}/>
           </ScrollBar>
         </div>
       </Col>
       <Col className='w-50'> 
-        <div style={{height: '550px'}} className="shadow-sm  shadow-showcase p-2 mx-0">
+        <div style={{height: '475px'}} className="shadow-sm  shadow-showcase p-2 mx-0">
         <ScrollBar className='vertical-scroll ps-container ps-theme-default ps-active-y h-100'>
           <AddQuestion />
           </ScrollBar>
