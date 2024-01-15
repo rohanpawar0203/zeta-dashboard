@@ -12,20 +12,22 @@ import {
 import { Btn, H5, P, UL } from "../../../AbstractElements";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBuilding, faAddressBook } from '@fortawesome/free-solid-svg-icons';
+
 import {
   EmailAddress,
   LoginWithJWT,
   Password,
   SignUp,
 } from "../../../Constant";
-import { handleResponse } from "../../../Services/Fack.Backend";
 import FormHeader from "./FormHeader";
 import SignupWith from "./SignupWith";
 import appStore from "../../../Component/Live Chats/Client/AppStore";
-import axios from "axios";
 import { PlanDetails } from "../../../api";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faAddressBook } from '@fortawesome/free-solid-svg-icons';
+import CustomSpinner from "../../../CommonElements/CustomSpinner/CustomSpinner";
+
 const pattern = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}([\/?].*)?$/;
 
 const SignupTab = ({ selected }) => {
@@ -357,7 +359,7 @@ const SignupTab = ({ selected }) => {
             className="w-100 btn btn-primary"
             type="button"
           >
-            {loading ? "LOADING..." : SignUp}
+            {loading ? <CustomSpinner/> : SignUp}
           </button>
         </div>
 

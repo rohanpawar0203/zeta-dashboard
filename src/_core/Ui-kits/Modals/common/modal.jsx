@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { Btn } from "../../../../AbstractElements";
 import { Close, Submit, NewBot } from "../../../../Constant/index";
+import CustomSpinner from "../../../../CommonElements/CustomSpinner/CustomSpinner";
 
 const CommonModal = (props) => {
+  
   return (
     <Modal
       isOpen={props.isOpen}
@@ -27,7 +29,8 @@ const CommonModal = (props) => {
                 onClick: props?.event,
               }}
             >
-              {props?.delete
+              {props?.submitLoader ? <CustomSpinner/> :
+              props?.delete
                 ? props?.delete
                 : props?.submitTxt
                 ? props?.submitTxt

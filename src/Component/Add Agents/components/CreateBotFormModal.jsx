@@ -8,6 +8,7 @@ import { BotCreate } from "../../../api";
 
 const CreateBotForm = ({ modal, title, toggle }) => {
   const [formValues, setformValues] = useState({ botName: "", error: "" });
+  const [submitLoader, setsubmitLoader] = useState(false);
   const user = JSON.parse(sessionStorage.getItem("currentUser"));
   const token = sessionStorage.getItem("token");
   const history = useNavigate();
@@ -48,6 +49,7 @@ const CreateBotForm = ({ modal, title, toggle }) => {
   };
 
   const createBot = async () => {
+    setsubmitLoader(true);
     try {
       customBot["botName"] = formValues["botName"];
       const response = await fetch(BotCreate, {
@@ -60,12 +62,15 @@ const CreateBotForm = ({ modal, title, toggle }) => {
       });
       const responseData = await response.json();
       if (response.ok) {
+        setsubmitLoader(false);
         toggle();
         history(`${process.env.PUBLIC_URL}/dashboard`);
       } else {
+        setsubmitLoader(false);
         toast.error(responseData.message);
       }
     } catch (error) {
+      setsubmitLoader(false);
       toast.error(error);
     }
     toggle();
@@ -87,8 +92,19 @@ const CreateBotForm = ({ modal, title, toggle }) => {
             type="text"
             name="botName"
             onChange={(e) => {
-              handleChange(e);
+              e.preventDefault();
+              if(e.key === 'Enter'){
+                submitEvent();
+              }else{
+                handleChange(e);
+              }
             }}
+            // onKeyDown={(e) => {
+            //   e.preventDefault();
+            //   if(e.key === 'Enter'){
+            //     submitEvent();
+            //   }
+            // }}
             placeholder="Bot Name..."
           />
           {formValues.error && (

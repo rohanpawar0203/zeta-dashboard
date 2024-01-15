@@ -57,6 +57,7 @@ import {
 import appStore from "../Live Chats/Client/AppStore";
 import { getUserDetails } from "../../Services/UsersServices";
 import BigCommerceForm from "./components/BigCommerceForm";
+import CustomSpinner from "../../CommonElements/CustomSpinner/CustomSpinner";
 
 const StoreContent = () => {
   const {
@@ -73,14 +74,15 @@ const StoreContent = () => {
   const { handleForStore, handleForLogout } = GetMenuItemsProps();
   const { handleFilterForStorePresent } = GetMenuItemsProps();
   const { setUserData, userData } = appStore();
+
   const handleRegisterTypeChange = (e) => {
-    e.target.checked && setregisterType(e.target.value);
+    let {name} = e.target;
+    name && setregisterType(name);
   };
 
   const onSubmit = async (data) => {
-    // console.log({data});
+    setSubmitLoader(true);
     try {
-      setSubmitLoader(true);
       const body = {};
       if (registerType === "bigCommerce") {
         body.userId = user._id;
@@ -97,8 +99,8 @@ const StoreContent = () => {
         const response = await res.json();
         if (res.ok) {
           // handleForStore();
-          toast.success("Profile created successfully");
           setSubmitLoader(false);
+          toast.success("Profile created successfully");
           const userId = userData._id;
           setTimeout(async () => {
             await updateUserDetails(userId);
@@ -123,6 +125,7 @@ const StoreContent = () => {
 
         const response = await res.json();
         if (res.ok) {
+          setSubmitLoader(false);
           toast.success("Profile created successfully");
           const userId = userData._id;
           setTimeout(async () => {
@@ -139,6 +142,7 @@ const StoreContent = () => {
         // formData.append("userId", user._id);
         // console.log({ formData });
         if (!formData.file) {
+          setSubmitLoader(false);
           toast.error("Please Upload CSV File!");
           return;
         }
@@ -158,6 +162,7 @@ const StoreContent = () => {
         const response = await res.json();
         if (res.ok) {
           // handleForStore();
+          setSubmitLoader(false);
           toast.success("Profile created successfully");
           const userId = userData._id;
           setTimeout(async () => {
@@ -182,8 +187,8 @@ const StoreContent = () => {
         const response = await res.json();
         if (res.ok) {
           // handleForStore();
+          setSubmitLoader(false);
           toast.success("Profile created successfully");
-          setSubmitLoader(true);
           const userId = userData._id;
           setTimeout(async () => {
             await updateUserDetails(userId);
@@ -244,64 +249,52 @@ const StoreContent = () => {
                         <div className="m-checkbox-inline mb-0 custom-radio-ml">
                           <div className="radio radio-primary">
                             <Input
-                              id="radioinline1"
                               type="radio"
-                              onChange={(e) => {
-                                handleRegisterTypeChange(e);
-                              }}
+                              id='radioinline1'
                               name="bigCommerce"
-                              value="bigCommerce"
                               checked={registerType === "bigCommerce"}
+                              onChange={(e) => {handleRegisterTypeChange(e)}}
                             />
-                            <Label className="mb-0" for="radioinline3">
+                            <Label className="mb-0" for="radioinline1">
                               {Option}
                               <span className="digits">Big Commerce</span>
                             </Label>
                           </div>
                           <div className="radio radio-primary">
                             <Input
-                              id="radioinline2"
                               type="radio"
-                              onChange={(e) => {
-                                handleRegisterTypeChange(e);
-                              }}
+                              id='radioinline2'
                               name="shopify"
-                              value="shopify"
                               checked={registerType === "shopify"}
+                              onChange={(e) => {handleRegisterTypeChange(e)}}
                             />
-                            <Label className="mb-0" for="radioinline1">
+                            <Label className="mb-0" for="radioinline2">
                               {Option}
                               <span className="digits">Shopify</span>
                             </Label>
                           </div>
                           <div className="radio radio-primary">
                             <Input
-                              id="radioinline3"
                               type="radio"
-                              onChange={(e) => {
-                                handleRegisterTypeChange(e);
-                              }}
+                              id='radioinline3'
                               name="custom"
-                              value="custom"
                               checked={registerType === "custom"}
+                              onChange={(e) => {handleRegisterTypeChange(e)}}
                             />
-                            <Label className="mb-0" for="radioinline2">
+                            <Label className="mb-0" for="radioinline3">
                               {Option}
                               <span className="digits">Custom</span>
                             </Label>
                           </div>
                           <div className="radio radio-primary">
                             <Input
-                              id="radioinline4"
                               type="radio"
-                              onChange={(e) => {
-                                handleRegisterTypeChange(e);
-                              }}
+                              id='radioinline4'
                               name="crawler"
-                              value="crawler"
                               checked={registerType === "crawler"}
+                              onChange={(e) => {handleRegisterTypeChange(e)}}
                             />
-                            <Label className="mb-0" for="radioinline3">
+                            <Label className="mb-0" for="radioinline4">
                               {Option}
                               <span className="digits">Crawler</span>
                             </Label>
@@ -309,7 +302,9 @@ const StoreContent = () => {
                         </div>
                       </Col>
                     </Row>
-                    <Btn attrBtn={{ color: "primary" }}>{"Register"}</Btn>
+                    <Btn attrBtn={{ color: "primary" }}>{
+                      submitLoader ? <CustomSpinner/> : "Register"
+                    }</Btn>
                   </Form>
                 </Fragment>
               </CardBody>
