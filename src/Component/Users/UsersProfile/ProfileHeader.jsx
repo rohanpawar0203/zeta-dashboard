@@ -1,6 +1,16 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Card, CardBody, Col, Container, Form, FormGroup, Input, Label, Row } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  Row,
+} from "reactstrap";
 import { H4, H6, LI, UL, Image } from "../../../AbstractElements";
 import Img from "../../../assets/images/user-profile/bg-profile.jpg";
 import axios from "axios";
@@ -10,19 +20,19 @@ const user = JSON.parse(sessionStorage.getItem("currentUser"));
 const token = sessionStorage.getItem("token");
 
 const ProfileHeader = () => {
-  const [planIds, setPlanIds] = useState([])
-  const [plan, setPlan] = useState('');
-  const [userProfile, setuserProfile] = useState('')
+  const [planIds, setPlanIds] = useState([]);
+  const [plan, setPlan] = useState("");
+  const [userProfile, setuserProfile] = useState("");
   const userDetails = JSON.parse(sessionStorage.getItem("currentUser"));
 
-  const getPlanIds = async() => {
+  const getPlanIds = async () => {
     try {
-        let result = await axios.get(PlanDetails);
-        result?.data && setPlanIds([...result?.data]);
+      let result = await axios.get(PlanDetails);
+      result?.data && setPlanIds([...result?.data]);
     } catch (error) {
-        console.log('planIds fetch error', error);
+      console.log("planIds fetch error", error);
     }
-  }
+  };
 
   const getAllBot = async () => {
     try {
@@ -40,89 +50,90 @@ const ProfileHeader = () => {
       if (response.ok && responseData.length > 0) {
         setuserProfile(responseData[0]);
       } else {
-        setuserProfile('');
+        setuserProfile("");
         // setMyBots([]);
       }
     } catch (error) {
-      console.log('getAllBot error ', error);
+      console.log("getAllBot error ", error);
     }
   };
 
   useEffect(() => {
     getPlanIds();
     getAllBot();
-  }, [])
+  }, []);
 
   useEffect(() => {
-    if(planIds.length){
-      let planFiltered = planIds.find((planItem) => (planItem?._id === userDetails.planId));
+    if (planIds.length) {
+      let planFiltered = planIds.find(
+        (planItem) => planItem?._id === userDetails.planId
+      );
       setPlan(planFiltered?.name);
       // console.log('plan  ', plan);
     }
-  }, [planIds])
-  
+  }, [planIds]);
+
   return (
     <Fragment>
       <Container fluid={true}>
-      <Row>
-      <Col>
-        <Card
-          className="profile-header bg-image"
-          style={{
-            // backgroundImage: `url(${Img})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            display: "block",
-            backgroundColor: 'blue'
-          }}
-        >
-          <div className="profile-img-wrrap">
-            <Image
+        <Row>
+          <Col>
+            <Card
+              className="profile-header bg-image"
               style={{
+                // backgroundImage: `url(${Img})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                display: "block"
+                display: "block",
+                backgroundColor: "#fff",
+                alignItems: "center",
               }}
-              attrImage={{
-                className: "img-fluid bg-img-cover",
-                src: `${require("../../../assets/images/user-profile/bg-profile.jpg")}`,
-                alt: "",
-              }}
-            />
-          </div>
-          <div className="userpro-box">
-            <div className="img-wrraper">
-              <div className="avatar">
+            >
+              <div className="profile-img-wrrap">
                 <Image
+                  style={{
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    display: "block",
+                  }}
                   attrImage={{
-                    className: "img-fluid",
+                    className: "img-fluid bg-img-cover",
+                    src: `${require("../../../assets/images/user-profile/bg-profile.jpg")}`,
                     alt: "",
-                    src: userProfile?.companyLogo,
                   }}
                 />
               </div>
-              <Link
-                className="icon-wrapper"
-                to={`${process.env.PUBLIC_URL}/users/useredit`}
-              >
-                <i className="icofont icofont-pencil-alt-5"></i>
-              </Link>
-            </div>
-            <div className="user-designation">
-              <div className="title">
-                <a target="_blank" href="#javascript">
-                  <H4>{userDetails.companyName}</H4>
-                  <H6>{userDetails.email}</H6>
-                </a>
+              <div className="userpro-box">
+                <div className="img-wrraper">
+                  <div className="avatar">
+                    <Image
+                      attrImage={{
+                        className: "img-fluid",
+                        alt: "",
+                        src: userProfile?.companyLogo,
+                      }}
+                    />
+                  </div>
+                  <Link
+                    className="icon-wrapper"
+                    to={`${process.env.PUBLIC_URL}/users/useredit`}
+                  >
+                    <i className="icofont icofont-pencil-alt-5"></i>
+                  </Link>
+                </div>
+                <div className="user-designation">
+                  <div className="title">
+                    <a target="_blank" href="#javascript">
+                      <H4>{userDetails.companyName}</H4>
+                      <H6>{userDetails.email}</H6>
+                    </a>
+                  </div>
+                  <div></div>
+                </div>
               </div>
-              <div>
-             
-            </div>
-            </div>
-          </div>
-        </Card>
-        </Col>
-        {/* <Col sm="6">
+            </Card>
+          </Col>
+          {/* <Col sm="6">
         <Card >
           <Fragment>
       <CardBody>
@@ -174,7 +185,7 @@ const ProfileHeader = () => {
     </Fragment>
         </Card>
       </Col> */}
-      </Row>
+        </Row>
       </Container>
     </Fragment>
   );
