@@ -1,11 +1,11 @@
-import React, { Fragment, useState, useLayoutEffect, useContext } from 'react';
-import { Row } from 'reactstrap';
-import { Image } from '../../AbstractElements';
-import HeaderContain from './HeaderContain';
-import SearchBar from './SearchBar';
-import ulaiLogo from '../../assets/images/dashboard/ulai-logo-01-dark-small.png';
-import CheckContext from '../../_helper/customizer/index';
-import { ToggleIconss } from '../../Data/svgIcons';
+import React, { Fragment, useState, useLayoutEffect, useContext } from "react";
+import { Row } from "reactstrap";
+import { Image } from "../../AbstractElements";
+import HeaderContain from "./HeaderContain";
+import SearchBar from "./SearchBar";
+import ulaiLogo from "../../assets/images/dashboard/ulai-logo-01-dark-small.png";
+import CheckContext from "../../_helper/customizer/index";
+import { ToggleIconss } from "../../Data/svgIcons";
 
 const Header = () => {
   const { toggleSidebar } = useContext(CheckContext);
@@ -16,12 +16,12 @@ const Header = () => {
       function updateSize() {
         setSize(window.innerWidth);
       }
-      window.addEventListener('resize', updateSize);
+      window.addEventListener("resize", updateSize);
       updateSize();
-      return () => window.removeEventListener('resize', updateSize);
+      return () => window.removeEventListener("resize", updateSize);
     }, []);
     return size;
-  }// eslint-disable-next-line
+  } // eslint-disable-next-line
   const width = useWindowSize();
   const openCloseSidebar = () => {
     setToggle(!toggle);
@@ -31,17 +31,27 @@ const Header = () => {
     <Fragment>
       <Row className="header-wrapper m-0">
         <div className="header-logo-wrapper col-auto p-0" id="out_side_click">
-          <div className="logo-wrapper" >
+          <div className="logo-wrapper">
             {/* <a href="#javascript"><Image attrImage={{ className: 'img-fluid', src: `${ulaiLogo}`, alt: '' }} /></a> */}
-            </div>
-          <div className="toggle-sidebar" onClick={() => openCloseSidebar()} id="sidebar-toggle">
-            <i className="status_toggle sidebar-toggle d-flex" >
+          </div>
+          <div
+            className="toggle-sidebar"
+            onClick={() => openCloseSidebar()}
+            id="sidebar-toggle"
+          >
+            <i className="status_toggle sidebar-toggle d-flex">
               <ToggleIconss />
             </i>
           </div>
         </div>
         {/* <SearchBar /> */}
         <HeaderContain />
+        <h1 className="header-company-name">
+          {JSON.parse(sessionStorage.getItem("currentUser")) &&
+          JSON.parse(sessionStorage.getItem("currentUser")).length !== 0
+            ? JSON.parse(sessionStorage.getItem("currentUser")).companyName
+            : ""}
+        </h1>
       </Row>
     </Fragment>
   );

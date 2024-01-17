@@ -2,12 +2,12 @@
     58. Authentication CSS Start
 ==========================**/
 // login page //
-.btn-disabled:hover{
+.btn-disabled:hover {
   cursor: not-allowed;
 }
-.copyright-login{
-  position: absolute;
-  bottom: 20px;
+.copyright-login {
+  // position: absolute;
+  // bottom: 20px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -19,10 +19,10 @@
 .login-card {
   min-height: 100vh;
   display: flex;
-  align-items: start;
-  // justify-content: center;
+  align-items: center;
+  justify-content: center;
   margin: 0 auto;
-  background-color: rgba($primary-color, 0.1) ;
+  background-color: rgba($primary-color, 0.1);
   background-position: center;
   padding: 30px 0;
   .btn-showcase {
@@ -30,7 +30,7 @@
       line-height: 1;
       padding: 10px 15px;
       margin: 0;
-      &+.btn {
+      & + .btn {
         margin-left: 5px;
       }
       svg {
@@ -45,7 +45,7 @@
   .login-main1 {
     width: 35vw;
     padding: 20px;
-    height: 600px;
+    // height: 600px;
     border-radius: 10px;
     box-shadow: 0 0 37px rgba(8, 21, 66, 0.05);
     margin: 0 auto;
@@ -58,17 +58,17 @@
         font-size: 15px;
         letter-spacing: 0.4px;
       }
-      .hidenTxt{
+      .hidenTxt {
         opacity: 0;
         transition: opacity 5s ease-in-out;
       }
-      .appearedTxt{
+      .appearedTxt {
         opacity: 1;
       }
-      .checkbox{
-        label{
+      .checkbox {
+        label {
           color: $light-text;
-          &::before{
+          &::before {
             border: 1px solid #dfdfdf;
             top: 1px;
             background-color: $transparent-color;
@@ -173,7 +173,7 @@
         }
       }
       .tab-content {
-        height: 458px;
+        // height: 458px;
       }
       .border-tab {
         border-radius: 0;
@@ -183,7 +183,9 @@
               border-bottom: none;
               border-right: 2px solid transparent;
               border-top-right-radius: 0;
-              &.active, &.show, &:focus {
+              &.active,
+              &.show,
+              &:focus {
                 border-right: 2px solid var(--theme-default);
                 border-bottom: none;
               }
@@ -201,19 +203,19 @@
   }
 }
 
-.login-card1{
+.login-card1 {
   margin: 0 auto;
   padding: 30px 12px;
-  .login-form{
+  .login-form {
     // padding: 30px;
     // width: 450px;
     background-color: $white;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
-    .input-group{
-      .input-group-text{
-        svg{
+    .input-group {
+      .input-group-text {
+        svg {
           width: 18px;
           stroke: $primary-color;
         }
@@ -255,22 +257,22 @@
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  .input-group{
-    input{
+  .input-group {
+    input {
       background-color: $white !important;
     }
-    span.input-group-text{
+    span.input-group-text {
       background-color: rgba($primary-color, 0.1);
       border: unset;
-      i{
+      i {
         color: $primary-color;
       }
     }
   }
- .errTxt{
-  font-size: 12px !important;
-  color: red;
- }
+  .errTxt {
+    font-size: 12px !important;
+    color: red;
+  }
   h4 {
     text-transform: capitalize;
     font-weight: 600;
@@ -394,7 +396,7 @@
   }
 }
 @media (max-width: 1000px) {
-  .login-card .login-main1{
+  .login-card .login-main1 {
     width: 50vw;
     padding: 30px;
   }
@@ -416,16 +418,16 @@
   }
 }
 @media (max-width: 480px) {
-  .login-card1{
-    .login-form{
-      .form-group{
-        .checkbox{
+  .login-card1 {
+    .login-form {
+      .form-group {
+        .checkbox {
           display: block;
         }
       }
     }
   }
-  .login-card .login-main1{
+  .login-card .login-main1 {
     width: 90vw;
     padding: 15px;
   }

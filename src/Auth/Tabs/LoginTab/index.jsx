@@ -99,8 +99,8 @@ const LoginTab = ({ selected }) => {
           <AgentLogin />
           <SignInWith />
         </TabPane>
-        <CopyRight />
       </TabContent>
+      <CopyRight />
     </Fragment>
   );
 };

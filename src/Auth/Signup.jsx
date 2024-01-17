@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Row, Col, TabContent, TabPane } from "reactstrap";
 import SignupTab from "./Tabs/SignupTab";
 import NavAuth from "./Nav";
+import { P } from "../AbstractElements";
 
 const Signup = () => {
   const [selected, setSelected] = useState("firebase");
@@ -29,9 +30,18 @@ const Signup = () => {
             </div>
           </div>
         </Col>
+        {/* <Copyright /> */}
       </Row>
     </Container>
   );
 };
+
+// const Copyright = () => {
+//   return (
+//     <P attrPara={{ className: "my-3 copyright-signup" }}>
+//       Copyright 2023 © Ulai.in{" "}
+//     </P>
+//   );
+// };
 
 export default Signup;

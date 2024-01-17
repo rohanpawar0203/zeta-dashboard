@@ -34,7 +34,8 @@ import appStore from "../Live Chats/Client/AppStore";
 
 const userData = JSON.parse(sessionStorage.getItem("currentUser"));
 const DashboardContent = () => {
-  const { whatsAppAnalytics, setwhatsAppAnalytics } = appStore();
+  // const { whatsAppAnalytics, setwhatsAppAnalytics } = appStore();
+  const [whatsAppAnalytics, setwhatsAppAnalytics] = useState({});
 
   const getWhatsAppAnalytics = async () => {
     try {

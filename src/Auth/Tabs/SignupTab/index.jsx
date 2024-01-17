@@ -13,8 +13,8 @@ import { Btn, H5, P, UL } from "../../../AbstractElements";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faAddressBook } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBuilding, faAddressBook } from "@fortawesome/free-solid-svg-icons";
 
 import {
   EmailAddress,
@@ -41,13 +41,13 @@ const SignupTab = ({ selected }) => {
     store: "",
     productList: "",
   });
-   const [planIds, setPlanIds] = useState([])
+  const [planIds, setPlanIds] = useState([]);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [togglePassword, setTogglePassword] = useState(false);
   const isErrors = useRef(false);
   const history = useNavigate();
-  const { setToken, setUserData: setUser} = appStore();
+  const { setToken, setUserData: setUser } = appStore();
   const handleFormChange = (e) => {
     const { value, name } = e.target;
     setUserData((pre) => ({
@@ -89,7 +89,7 @@ const SignupTab = ({ selected }) => {
         toast.error(resBody?.error);
       }
     } catch (err) {
-      console.log('err ', err)
+      console.log("err ", err);
       toast.error(err);
     }
     setLoading(false);
@@ -136,24 +136,24 @@ const SignupTab = ({ selected }) => {
     }
   };
 
-  const getPlanIds = async() => {
+  const getPlanIds = async () => {
     try {
-        let result = await axios.get(PlanDetails);
-        result?.data && setPlanIds([...result?.data]);
+      let result = await axios.get(PlanDetails);
+      result?.data && setPlanIds([...result?.data]);
     } catch (error) {
-        console.log('planIds fetch error', error);
+      console.log("planIds fetch error", error);
     }
-  }
+  };
   useEffect(() => {
     getPlanIds();
-  }, [])
-  
+  }, []);
+
   return (
     <Fragment>
       <Form className="theme-form login-form">
         <FormHeader selected={selected} />
-            <Row>
-            <Col sm="6" md="6">
+        <Row>
+          <Col sm="12" className="registration-form">
             <FormGroup className="m-0 first-form-group">
               <Label className="p-0 mb-1 mt-2">First Name</Label>
               <InputGroup>
@@ -176,11 +176,75 @@ const SignupTab = ({ selected }) => {
               )}
             </FormGroup>
             <FormGroup className="m-0 first-form-group">
+              <Label className="p-0 mb-1 mt-2">Last Name</Label>
+              <InputGroup>
+                <InputGroupText>
+                  <i className="icon-user"></i>
+                </InputGroupText>
+                <Input
+                  name="lastName"
+                  className="form-control"
+                  type="text"
+                  onChange={(e) => handleFormChange(e)}
+                  placeholder="Last Name"
+                  required=""
+                />
+              </InputGroup>
+              {errors.lastName && (
+                <Label className="fw-bolder mt-2 errTxt">
+                  {errors?.lastName}
+                </Label>
+              )}
+            </FormGroup>
+            <FormGroup className="m-0">
+              <Label className="p-0 mb-1 mt-2">{EmailAddress}</Label>
+              <InputGroup>
+                <InputGroupText>
+                  <i className="icon-email"></i>
+                </InputGroupText>
+                <Input
+                  className="form-control"
+                  type="email"
+                  name="email"
+                  required=""
+                  onChange={(e) => handleFormChange(e)}
+                  placeholder="Email Address"
+                />
+              </InputGroup>
+              {errors.email && (
+                <Label className="fw-bolder mt-2 errTxt">{errors?.email}</Label>
+              )}
+            </FormGroup>
+            <FormGroup className="m-0">
+              <Label className="p-0 mb-1 mt-2">Contact</Label>
+              <InputGroup>
+                <InputGroupText>
+                  <FontAwesomeIcon
+                    className="common-icons"
+                    icon={faAddressBook}
+                  />
+                </InputGroupText>
+                <Input
+                  name="contact"
+                  className="form-control"
+                  type="text"
+                  onChange={(e) => handleFormChange(e)}
+                  placeholder="Contact Number"
+                  required=""
+                />
+              </InputGroup>
+              {errors.contact && (
+                <Label className="fw-bolder mt-2 errTxt">
+                  {errors?.contact}
+                </Label>
+              )}
+            </FormGroup>
+            <FormGroup className="m-0 first-form-group">
               <Label className="p-0 mb-1 mt-2">Company Name</Label>
               <InputGroup>
                 <InputGroupText>
                   {/* <i class="icon-home"></i> */}
-                  <FontAwesomeIcon className="common-icons"  icon={faBuilding} />
+                  <FontAwesomeIcon className="common-icons" icon={faBuilding} />
                 </InputGroupText>
                 <Input
                   name="companyName"
@@ -245,69 +309,8 @@ const SignupTab = ({ selected }) => {
                 </Label>
               )}
             </FormGroup>
-            </Col>
-            <Col sm="6" md="6">
-            <FormGroup className="m-0 first-form-group">
-              <Label className="p-0 mb-1 mt-2">Last Name</Label>
-              <InputGroup>
-                <InputGroupText>
-                  <i className="icon-user"></i>
-                </InputGroupText>
-                <Input
-                  name="lastName"
-                  className="form-control"
-                  type="text"
-                  onChange={(e) => handleFormChange(e)}
-                  placeholder="Last Name"
-                  required=""
-                />
-              </InputGroup>
-              {errors.lastName && (
-                <Label className="fw-bolder mt-2 errTxt">
-                  {errors?.lastName}
-                </Label>
-              )}
-            </FormGroup>
-            <FormGroup className="m-0">
-              <Label className="p-0 mb-1 mt-2">{EmailAddress}</Label>
-              <InputGroup>
-                <InputGroupText>
-                  <i className="icon-email"></i>
-                </InputGroupText>
-                <Input
-                  className="form-control"
-                  type="email"
-                  name="email"
-                  required=""
-                  onChange={(e) => handleFormChange(e)}
-                  placeholder="Email Address"
-                />
-              </InputGroup>
-              {errors.email && (
-                <Label className="fw-bolder mt-2 errTxt">{errors?.email}</Label>
-              )}
-            </FormGroup>
-            <FormGroup className="m-0">
-              <Label className="p-0 mb-1 mt-2">Contact</Label>
-              <InputGroup>
-                <InputGroupText>
-                <FontAwesomeIcon className="common-icons"  icon={faAddressBook} />
-                </InputGroupText>
-                <Input
-                  name="contact"
-                  className="form-control"
-                  type="text"
-                  onChange={(e) => handleFormChange(e)}
-                  placeholder="Contact Number"
-                  required=""
-                />
-              </InputGroup>
-              {errors.contact && (
-                <Label className="fw-bolder mt-2 errTxt">
-                  {errors?.contact}
-                </Label>
-              )}
-            </FormGroup>
+            {/* </Col>
+            <Col sm="6" md="6"> */}
             <FormGroup className="m-0">
               <Label className="p-0 mb-1 mt-2">Plan ID</Label>
               <InputGroup>
@@ -320,22 +323,22 @@ const SignupTab = ({ selected }) => {
                   type="select"
                   onChange={(e) => handleFormChange(e)}
                   onKeyDown={(e) => {
-                    if(e.key === 'Enter'){
+                    if (e.key === "Enter") {
                       formValidate();
-                    if (!isErrors.current) {
-                      userSignup();
-                    }
+                      if (!isErrors.current) {
+                        userSignup();
+                      }
                     }
                   }}
                   placeholder="Plan ID"
                   required=""
                 >
                   <option value="">{"Select Plan ID"}</option>
-                  {(planIds.length > 0) ? 
-                   planIds.map((plan, ind) => (
-                    <option value={plan?._id}>{plan?.name}</option>
-                   )) : ''
-                  }
+                  {planIds.length > 0
+                    ? planIds.map((plan, ind) => (
+                        <option value={plan?._id}>{plan?.name}</option>
+                      ))
+                    : ""}
                 </Input>
               </InputGroup>
               {errors.planId && (
@@ -344,10 +347,9 @@ const SignupTab = ({ selected }) => {
                 </Label>
               )}
             </FormGroup>
-            </Col>
-            </Row>
-           
-           
+          </Col>
+        </Row>
+
         <div class="w-100 my-4 d-flex justify-content-center align-items-center">
           <button
             onClick={(e) => {
@@ -359,22 +361,24 @@ const SignupTab = ({ selected }) => {
             className="w-100 btn btn-primary"
             type="button"
           >
-            {loading ? <CustomSpinner/> : SignUp}
+            {loading ? <CustomSpinner /> : SignUp}
           </button>
         </div>
 
         {/* <FormPassword /> */}
         <SignupWith />
-        <Copyright />
       </Form>
+      <Copyright />
     </Fragment>
   );
 };
 
 const Copyright = () => {
   return (
-    <P attrPara={{ className: 'my-3 copyright-signup'}}>Copyright 2023 © Ulai.in  </P>
-  )
-}
+    <P attrPara={{ className: "my-3 copyright-signup" }}>
+      Copyright 2023 © Ulai.in{" "}
+    </P>
+  );
+};
 
 export default SignupTab;
