@@ -341,9 +341,9 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                   </Row>
                   <Row>
                   <Col md="4 mb-3">
+                  
                   <Media>
                   <Label className="col-form-label m-r-10" >{'PI Type'}</Label>
-                  <br />
                   <Media body className="text-evenly gap-2 icon-state">
                     <Label className="switch">
                       <Input type="checkbox" /><span className='switch-state' ></span>
@@ -351,7 +351,6 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                   </Media>
                 </Media>
                   </Col>
-                    
                     <Col md="4 mb-3">
                     <Label htmlFor="validationCustom01">
                         {"Payment Methods"}
