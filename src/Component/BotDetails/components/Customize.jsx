@@ -12,14 +12,16 @@ import {
   InputGroupText,
   InputGroup,
   Form,
+  Media,
 } from "reactstrap";
-import { Btn, H5, Image, Spinner } from "../../../AbstractElements";
+import { Btn, H5, Image, LI, Spinner, UL } from "../../../AbstractElements";
 import { FaRegEdit } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import BotIcons from "./BotIcons";
 import IconColors from "./IconColors";
 import { CreateNewProject } from "../../../Constant";
+import paymentProfile from '../../../assets/images/Payments/icons8-payment-100.png'
 import {
   BotCreate,
   FAQFilesAPI,
@@ -337,7 +339,26 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                       )}
                     </Col>
                   </Row>
-                  <Row></Row>
+                  <Row>
+                  <Col md="4 mb-3">
+                  <Media>
+                  <Label className="col-form-label m-r-10" >{'PI Type'}</Label>
+                  <br />
+                  <Media body className="text-evenly gap-2 icon-state">
+                    <Label className="switch">
+                      <Input type="checkbox" /><span className='switch-state' ></span>
+                    </Label>
+                  </Media>
+                </Media>
+                  </Col>
+                    
+                    <Col md="4 mb-3">
+                    <Label htmlFor="validationCustom01">
+                        {"Payment Methods"}
+                      </Label>
+                     <PaymentMethods />
+                    </Col>
+                  </Row>
                   <Btn attrBtn={{ color: "primary" }}>{"Submit form"}</Btn>
                 </Form>
               </Fragment>
@@ -350,4 +371,24 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
   );
 };
 
+
+const PaymentMethods = () => {
+  const pay_methods= ['Cash On Delivery(COD)', 'Debit Card', 'Credit Card'];
+  return (
+            <UL>
+              {pay_methods?.map((ele , ind) => (
+              <LI key={ind} attrLI={{ className: 'list-group-item-action', tag: 'a'}}>
+              <Media>
+                 <Label className="col-form-label m-r-10">{ele}</Label>
+                 <Media body className="text-end icon-state">
+                   <Label className="switch">
+                     <Input type="checkbox" /><span className='switch-state' ></span>
+                   </Label>
+                 </Media>
+               </Media>
+             </LI>
+              ))}
+              </UL>
+  )
+}
 export default Customize;
