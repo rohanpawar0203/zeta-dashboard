@@ -34,8 +34,8 @@ import appStore from "../Live Chats/Client/AppStore";
 
 const userData = JSON.parse(sessionStorage.getItem("currentUser"));
 const DashboardContent = () => {
-  // const { whatsAppAnalytics, setwhatsAppAnalytics } = appStore();
-  const [whatsAppAnalytics, setwhatsAppAnalytics] = useState({});
+  const { whatsAppAnalytics, setwhatsAppAnalytics } = appStore();
+  // const [whatsAppAnalytics, setwhatsAppAnalytics] = useState({});
 
   const getWhatsAppAnalytics = async () => {
     try {
@@ -73,16 +73,14 @@ const DashboardContent = () => {
 
   useEffect(async () => {
     connectWithSocketIOServer();
+    }, []);
+
+  useEffect(async() => {
     await getWhatsAppAnalytics();
-  }, []);
-  useEffect(() => {}, [whatsAppAnalytics]);
+  }, []); 
 
   return (
-    <Fragment>
       <Fragment>
-        <Container fluid={true} className="general-widget">
-          <Row className="d-flex justify-content-evenly">
-            <Fragment>
               <H3 attrH6={{ className: "font-roboto" }}>WhatsApp</H3>
               <Col sm="6" xl="3" lg="10">
                 <Card className="o-hidden">
@@ -179,16 +177,7 @@ const DashboardContent = () => {
                   </CardBody>
                 </Card>
               </Col>
-            </Fragment>
-          </Row>
-          {/* <Row>
-            <TurnoverChart chartName="Total Queries-resolved"/>
-            <TurnoverChart chartName="Total Messages received"/>
-            <TurnoverChart chartName="Total Messages sent by Bot"/>
-          </Row> */}
-        </Container>
       </Fragment>
-    </Fragment>
   );
 };
 export default DashboardContent;

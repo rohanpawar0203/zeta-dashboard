@@ -44,39 +44,7 @@ const OrgLogin = ({ selected, showToast }) => {
   const [apiError, setApiError] = useState("");
 
   const userLogin = async (e) => {
-    const getWhatsAppAnalytics = async (data) => {
-      try {
-        const current_date = new Date();
-        const currentDate = new Date().toGMTString();
-        const start_date = new Date(
-          `${current_date.getFullYear()}-${current_date.getMonth() + 1}-01`
-        ).toGMTString();
-        const payLoad = {
-          dateFrom: start_date,
-          dateAt: currentDate,
-          phoneNumber: `${data?.user?.contact}`,
-        };
-        const res = await axios.post(WhatsAppAnalyticsAPI, payLoad);
-        const result = await res?.data[0];
-        const whatsappDeliveredCount = result?.whatsappDeliveredCount[0]
-          ?.deliveredCount
-          ? result?.whatsappDeliveredCount[0]?.deliveredCount
-          : "NA";
-        const whatsappReadCount = result?.whatsappReadCount[0]?.readCount
-          ? result?.whatsappReadCount[0]?.readCount
-          : "NA";
-        const whatsappSentCount = result?.whatsappSentCount[0]?.sentCount
-          ? result?.whatsappSentCount[0]?.sentCount
-          : "NA";
-        setwhatsAppAnalytics({
-          whatsappDeliveredCount,
-          whatsappReadCount,
-          whatsappSentCount,
-        });
-      } catch (error) {
-        console.log("getWhatsAppAnalytics error got ", error);
-      }
-    };
+    
     setLoading(true);
 
     const requestOptions = {
@@ -93,7 +61,6 @@ const OrgLogin = ({ selected, showToast }) => {
       if (res.status.toString() === "200") {
         setEmail("");
         setPassword("");
-        await getWhatsAppAnalytics(resBody);
         const { user, token } = resBody;
         sessionStorage.setItem("token", token);
         sessionStorage.setItem("currentUser", JSON.stringify(user));

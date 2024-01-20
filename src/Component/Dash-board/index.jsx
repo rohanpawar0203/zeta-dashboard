@@ -5,7 +5,7 @@ import DashboardContent from "./DashboardContent";
 const DashboardContain = () => {
   return (
     <Fragment>
-      <Container fluid={true}>
+      <Container fluid={true} className="general-widget">
         <Row>
           <DashboardContent />
         </Row>

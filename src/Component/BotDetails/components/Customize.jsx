@@ -21,7 +21,7 @@ import { useForm } from "react-hook-form";
 import BotIcons from "./BotIcons";
 import IconColors from "./IconColors";
 import { CreateNewProject } from "../../../Constant";
-import paymentProfile from '../../../assets/images/Payments/icons8-payment-100.png'
+import paymentProfile from "../../../assets/images/Payments/icons8-payment-100.png";
 import {
   BotCreate,
   FAQFilesAPI,
@@ -53,6 +53,14 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
   const [companyLogoURL, setcompanyLogoURL] = useState(myBot?.companyLogo);
   //  const [isBotChaged, setisBotChaged] = useState(false);
   const [companyLogoMode, setCompanyLogoMode] = useState("logo");
+  const [paymentMethod, setpaymentMethod] = useState("");
+  const payment_methods = [
+    { code: "default", text: "Select Payment Mode" },
+    { code: "COD", text: "Cash On Delivery" },
+    { code: "ONLINE", text: "Online" },
+  ];
+  const online_payment_modes = [{ code: "JUSPAY", text: "JusPay" }, { code: "JUSPAY", text: "JusPay" }];
+
   const colorOptions = [
     "#705CF6",
     "#CC7849",
@@ -340,22 +348,49 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                     </Col>
                   </Row>
                   <Row>
-                  <Col md="4 mb-3">
-                  
-                  <Media>
-                  <Label className="col-form-label m-r-10" >{'PI Type'}</Label>
-                  <Media body className="text-evenly gap-2 icon-state">
-                    <Label className="switch">
-                      <Input type="checkbox" /><span className='switch-state' ></span>
-                    </Label>
-                  </Media>
-                </Media>
-                  </Col>
                     <Col md="4 mb-3">
-                    <Label htmlFor="validationCustom01">
+                      <Label htmlFor="validationCustom01">
                         {"Payment Methods"}
                       </Label>
-                     <PaymentMethods />
+                      <select
+                        className="form-control mb-2"
+                        name="paymentMethod"
+                        onChange={(e) => {
+                          setpaymentMethod(e.target.value);
+                        }}
+                        required={true}
+                      >
+                        {payment_methods.map((ele) => (
+                          <option key={ele?.code} value={ele?.code}>
+                            {ele?.text}
+                          </option>
+                        ))}
+                      </select>
+                    </Col>
+                    <Col md="8 mb-3">
+                      {paymentMethod === "COD" ? (
+                        <div style={{height: '75px'}} className="d-flex align-items-end">
+                        <DynamicSwitch
+                          title={
+                            payment_methods?.find(
+                              (item) => item?.code === paymentMethod
+                            )?.text
+                          }
+                          code={paymentMethod}
+                        />
+                        </div>
+                      ) : paymentMethod === "ONLINE" ? (
+                        <div style={{marginTop: '30px'}} className='d-flex flex-wrap align-items-center gap-2'>
+                          {online_payment_modes?.map((ele, ind) => (
+                            <div key={ind}>
+                              <DynamicSwitch
+                                title={ele?.text}
+                                code={ele?.code}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      ) : null}
                     </Col>
                   </Row>
                   <Btn attrBtn={{ color: "primary" }}>{"Submit form"}</Btn>
@@ -370,24 +405,16 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
   );
 };
 
-
-const PaymentMethods = () => {
-  const pay_methods= ['Cash On Delivery(COD)', 'Debit Card', 'Credit Card'];
-  return (
-            <UL>
-              {pay_methods?.map((ele , ind) => (
-              <LI key={ind} attrLI={{ className: 'list-group-item-action', tag: 'a'}}>
-              <Media>
-                 <Label className="col-form-label m-r-10">{ele}</Label>
-                 <Media body className="text-end icon-state">
-                   <Label className="switch">
-                     <Input type="checkbox" /><span className='switch-state' ></span>
-                   </Label>
-                 </Media>
-               </Media>
-             </LI>
-              ))}
-              </UL>
-  )
-}
+export const DynamicSwitch = ({ title, code }) => {
+  return (<Media>
+        <Label className="col-form-label m-r-10">{`${title}`}</Label>
+        <Media body className="text-evenly icon-state">
+          <Label className="switch">
+            <Input type="checkbox" />
+            <span className="switch-state"></span>
+          </Label>
+        </Media>
+      </Media>
+  );
+};
 export default Customize;
