@@ -1,13 +1,12 @@
-import React, { Fragment } from 'react';
-import Breadcrumbs from '../../CommonElements/Breadcrumbs';
-import ProductsContain from '../../Component/Products';
+import React, { Fragment } from "react";
+import Breadcrumbs from "../../CommonElements/Breadcrumbs";
+import ProductsContain from "../../Component/Products";
 
 const Products = () => {
   return (
     <Fragment>
-      <div className='mt-2'>
+      <Breadcrumbs parent="" title="Products" />
       <ProductsContain />
-      </div>
     </Fragment>
   );
 };

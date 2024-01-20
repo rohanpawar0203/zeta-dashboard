@@ -27,6 +27,7 @@ import SignupWith from "./SignupWith";
 import appStore from "../../../Component/Live Chats/Client/AppStore";
 import { PlanDetails } from "../../../api";
 import CustomSpinner from "../../../CommonElements/CustomSpinner/CustomSpinner";
+import isUrl from "is-url";
 
 const pattern = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}([\/?].*)?$/;
 
@@ -95,6 +96,8 @@ const SignupTab = ({ selected }) => {
     setLoading(false);
   };
   const formValidate = () => {
+    console.log("Website check -->", isUrl(userData?.websiteLink));
+
     isErrors.current = false;
     setErrors({});
     let errorsObj = {};
@@ -125,9 +128,10 @@ const SignupTab = ({ selected }) => {
     } else if (!/^(0|91)?[6-9][0-9]{9}$/.test(userData?.contact)) {
       errorsObj = { ...errorsObj, contact: "Invalid Contact Number!" };
     }
+
     if (!userData?.websiteLink) {
       errorsObj = { ...errorsObj, websiteLink: "Company Website is required!" };
-    } else if (!pattern.test(userData?.websiteLink)) {
+    } else if (!isUrl(userData?.websiteLink)) {
       errorsObj = { ...errorsObj, websiteLink: "Invalid website link!" };
     }
     if (Object.values(errorsObj).length > 0) {

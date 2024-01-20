@@ -85,28 +85,34 @@ const AgentsTable = () => {
   return (
     <Fragment>
       <Col sm="12">
-        <Card className="mt-2" style={{ height: "80vh" }}>
-          <CardHeader className="w-100 d-flex justify-content-between">
-            <H5>{"All Agents"}</H5>
-            <div>
-              <button
-                type="button"
-                class="btn btn-success"
-                onClick={() => {
-                  toggleagentAddModal();
-                }}
-              >
-                Create New Agent
-              </button>
-              <AddAgentModal
-                modal={agentAddModal}
-                toggle={toggleagentAddModal}
-                handleGetData={handleGetData}
-              />
-            </div>
-          </CardHeader>
-
-          <div style={{ width: "100%", height: "80vh", overflowY: "scroll" }}>
+        <Card
+          style={{
+            height: "70vh",
+            marginBottom: "5vh",
+            overflow: "hidden",
+            paddingBottom: "10vh",
+          }}
+        >
+          <div style={{ width: "100%" }}>
+            <CardHeader className="w-100 d-flex justify-content-end">
+              {/* <H5>{"All Agents"}</H5> */}
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  onClick={() => {
+                    toggleagentAddModal();
+                  }}
+                >
+                  Create New Agent
+                </button>
+                <AddAgentModal
+                  modal={agentAddModal}
+                  toggle={toggleagentAddModal}
+                  handleGetData={handleGetData}
+                />
+              </div>
+            </CardHeader>
             {loading ? (
               <div className="loader-box">
                 <Spinner attrSpinner={{ className: "loader-3" }} />
@@ -124,7 +130,7 @@ const AgentsTable = () => {
                           <th scope="col">{"Actions"}</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody style={{ height: "60vh", overflowY: "scroll" }}>
                         {agents?.map((item, ind) => (
                           <tr key={ind}>
                             <th scope="row">{item.name}</th>

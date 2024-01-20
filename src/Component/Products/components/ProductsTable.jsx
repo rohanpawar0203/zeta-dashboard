@@ -88,25 +88,32 @@ const ProductsTable = () => {
   return (
     <Fragment>
       <Col sm="12">
-        <Card className="mt-2 " style={{ height: "80vh" }}>
-          <CardHeader className="w-100 d-flex justify-content-between">
-            <div>
+        <Card>
+          <div
+            style={{
+              height: "70vh",
+              marginBottom: "5vh",
+              overflow: "hidden",
+              paddingBottom: "10vh",
+            }}
+          >
+            <CardHeader className="w-100 d-flex justify-content-end">
+              {/* <div>
               <H5>{"Products"}</H5>
-            </div>
-            <div>
-              <button
-                type="button"
-                class="btn btn-success"
-                onClick={() => {
-                  setselectedProductId("");
-                  toggle();
-                }}
-              >
-                Add New Product
-              </button>
-            </div>
-          </CardHeader>
-          <div style={{ height: "60vh", overflowY: "scroll" }}>
+            </div> */}
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  onClick={() => {
+                    setselectedProductId("");
+                    toggle();
+                  }}
+                >
+                  Add New Product
+                </button>
+              </div>
+            </CardHeader>
             {loading ? (
               <div className="loader-box">
                 <Spinner attrSpinner={{ className: "loader-3" }} />
@@ -124,7 +131,7 @@ const ProductsTable = () => {
                       <th scope="col"> </th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody style={{ height: "60vh", overflowY: "scroll" }}>
                     {products?.map((item, ind) => (
                       <tr key={ind}>
                         <th scope="row">{item.productId}</th>

@@ -101,8 +101,15 @@ const BotInfoContent = ({ boatId }) => {
       <Container fluid={true}>
         <Row>
           <Col sm="12 bot-info-card">
-            <Card className="mt-2 bot-info-card">
-              <div style={{ height: "100%" }}>
+            <Card>
+              <div
+                style={{
+                  height: "70vh",
+                  marginBottom: "5vh",
+                  overflow: "hidden",
+                  paddingBottom: "10vh",
+                }}
+              >
                 <CardBody className="h-100">
                   <Nav className="nav-pills">
                     <div className="w-100  d-flex justify-content-center align-items-center">

@@ -91,24 +91,31 @@ const TicketsList = ({ setMode }) => {
   return (
     <Fragment>
       <Col sm="12">
-        <Card className="mt-2" style={{ height: "80vh" }}>
-          <CardHeader className="w-100 d-flex justify-content-between">
-            <div>
+        <Card
+          style={{
+            height: "70vh",
+            marginBottom: "5vh",
+            overflow: "hidden",
+            paddingBottom: "10vh",
+          }}
+        >
+          <div>
+            <CardHeader className="w-100 d-flex justify-content-end">
+              {/* <div>
               <H5>{"Tickets"}</H5>
-            </div>
-            <div>
-              <button
-                type="button"
-                class="btn btn-success"
-                onClick={() => {
-                  setMode("create");
-                }}
-              >
-                Create Ticket
-              </button>
-            </div>
-          </CardHeader>
-          <div style={{ height: "78vh", overflowY: "scroll" }}>
+            </div> */}
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  onClick={() => {
+                    setMode("create");
+                  }}
+                >
+                  Create Ticket
+                </button>
+              </div>
+            </CardHeader>
             {loading ? (
               <div className="loader-box">
                 <Spinner attrSpinner={{ className: "loader-3" }} />
@@ -125,7 +132,7 @@ const TicketsList = ({ setMode }) => {
                       <th scope="col">{"Created By"}</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody style={{ height: "60vh", overflowY: "scroll" }}>
                     {products.length > 0 &&
                       products.map((ele, ind) => (
                         <tr>

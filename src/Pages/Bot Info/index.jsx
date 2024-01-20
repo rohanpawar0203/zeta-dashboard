@@ -1,13 +1,14 @@
-import React, { Fragment } from 'react';
-import Breadcrumbs from '../../CommonElements/Breadcrumbs';
-import BotInfo from '../../Component/BotDetails';
-import { useParams } from 'react-router-dom';
+import React, { Fragment } from "react";
+import Breadcrumbs from "../../CommonElements/Breadcrumbs";
+import BotInfo from "../../Component/BotDetails";
+import { useParams } from "react-router-dom";
 
 const BotDetails = () => {
-  const {boatId} = useParams();
+  const { boatId } = useParams();
   return (
     <Fragment>
-      <BotInfo boatId={boatId}/>
+      <Breadcrumbs parent="Your Bots" title="Bot Info" />
+      <BotInfo boatId={boatId} />
     </Fragment>
   );
 };
