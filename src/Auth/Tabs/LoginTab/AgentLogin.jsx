@@ -57,11 +57,11 @@ const AgentLogin = ({ selected }) => {
       if (res.status.toString() === "200") {
         setEmail("");
         setPassword("");
-        const { agent: user, token } = resBody;
+        let { agent: user, token } = resBody;
         // Agent AutoLogout trigger
-        sendLoggedAgentInfo(user);  
-        
-        setTimeout(() => {handleStorageNRoutes(user, token)}, 1000);  // delay to handle agent autoLogut
+        user = {...user, logIn_sessionID: token};
+        handleStorageNRoutes(user, token);
+        sendLoggedAgentInfo(user);
       } else {
         setApiError(resBody.msg);
         // toast.error(`${resBody.msg}`);

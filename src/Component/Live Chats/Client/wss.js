@@ -15,7 +15,7 @@ const { v4: uuidv4 } = require("uuid");
 const SERVER = process.env.REACT_APP_API_SERVER;
 const user = JSON.parse(sessionStorage.getItem("currentUser"));
 const token = sessionStorage.getItem("token");
-// const SERVER = "http://localhost:8085";
+// const SERVER = process.env.REACT_APP_API_AGENT_BACKEND_LOCAL_HOST;
 
 var socket = null;
 const { setLiveConversation, liveConversation } = appStore.getState();
@@ -261,9 +261,9 @@ const handleAgentAutoLogout = (loggedAgent) => {
   let agent_logged_in = loggedAgent;
   let pre_existing_agent = appStore.getState().userData;
   if(Object.keys(pre_existing_agent).length){
-  let {userId, _id} = agent_logged_in;  // current logged in agent
-  let {userId: preExsUserId, _id: _preExsId} = pre_existing_agent;  // pre existing agent
-  if((userId === preExsUserId) && (_id === _preExsId)){
+  let {userId, _id, logIn_sessionID} = agent_logged_in;  // current logged in agent
+  let {userId: preExsUserId, _id: _preExsId, logIn_sessionID: preExsLogIn_sessionID} = pre_existing_agent;  // pre existing agent
+  if((userId === preExsUserId) && (_id === _preExsId) && (logIn_sessionID !== preExsLogIn_sessionID)){
     UserLogoutHook();   // autoLoggingOut already logged in agents from system
   }
   }
