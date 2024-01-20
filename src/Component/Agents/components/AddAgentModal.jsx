@@ -68,6 +68,11 @@ const AddAgentModal = ({modal, toggle, handleGetData}) => {
             <div className="valid-feedback">{'Looks good!'}</div>
           </FormGroup>
           <FormGroup>
+            <Label>{'Mobile'}</Label>
+            <input className="form-control" name="mobile" type="text" placeholder="Mobile" {...register('mobile')} />
+            <div className="valid-feedback">{'Looks good!'}</div>
+          </FormGroup>
+          <FormGroup>
             <Label>{'Password *'}</Label>
             <InputGroup>
                 <input 
