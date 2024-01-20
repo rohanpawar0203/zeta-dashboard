@@ -15,7 +15,7 @@ const { v4: uuidv4 } = require("uuid");
 const SERVER = process.env.REACT_APP_API_SERVER;
 const user = JSON.parse(sessionStorage.getItem("currentUser"));
 const token = sessionStorage.getItem("token");
-// const SERVER = process.env.REACT_APP_API_AGENT_BACKEND_LOCAL_HOST;
+// const SERVER = `http://localhost:${process.env.REACT_APP_API_AGENT_BACKEND_LOCAL_HOST_PORT}`;
 
 var socket = null;
 const { setLiveConversation, liveConversation } = appStore.getState();
@@ -102,7 +102,7 @@ export const connectWithSocketIOServer = () => {
   });
 };
 export const getRoomExists = async (roomId) => {
-  // const serverApi = "http://localhost:8085";
+  // const serverApi = `http://localhost:${process.env.REACT_APP_API_AGENT_BACKEND_LOCAL_HOST_PORT}`;
   const serverApi = `${AgentLiveChatAPI}`;
   const response = await axios.get(`${serverApi}/room-exists/${roomId}`);
   return response.data;
@@ -156,7 +156,7 @@ export const sendDataToConnectedUser = (data) => {
   socket.emit("mssg-sent", JSON.stringify(data));
 };
 export const getLiveRooms = async () => {
-  // const serverApi = "http://localhost:8085";
+  // const serverApi = `http://localhost:${process.env.REACT_APP_API_AGENT_BACKEND_LOCAL_HOST_PORT}`;
   const serverApi = `${LiveChatsAPI}`;
   const response = await axios.post(`${serverApi}/getChatsForAgent`, {
     organization_id: user?.userId ? user?.userId : user?._id,
@@ -167,7 +167,7 @@ export const getLiveRooms = async () => {
 };
 
 export const envConversationToServer = async (roomId, name) => {
-  // const serverApi = "http://localhost:8085";
+  // const serverApi = `http://localhost:${process.env.REACT_APP_API_AGENT_BACKEND_LOCAL_HOST_PORT}`;
   const serverApi = `${LiveChatsAPI}`;
   const response = await axios.post(`${serverApi}/endConversation`, {
     roomId: roomId,
