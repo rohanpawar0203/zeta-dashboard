@@ -36,13 +36,9 @@ import Chart from "react-apexcharts";
 import configDB from "../../Config/Theme-Config";
 import { apiCall } from "./chartData";
 
-const userData = JSON.parse(sessionStorage.getItem("currentUser"));
 const DashboardContent = () => {
-  const primary =
-    localStorage.getItem("default_color") || configDB.data.color.primary_color;
-  const secondary =
-    localStorage.getItem("secondary_color") ||
-    configDB.data.color.secondary_color;
+  const { userData } = appStore();
+  // const userDataToken = JSON.parse(appStore);
   const [chatSeries, setChatSeries] = useState([
     {
       data: [],
@@ -505,11 +501,12 @@ const DashboardContent = () => {
     },
   });
 
-  useEffect(async () => {
-    connectWithSocketIOServer();
-  }, []);
+  // useEffect(async () => {
+  // }, []);
 
   useEffect(async () => {
+    connectWithSocketIOServer();
+
     let getChatData = await apiCall(
       userData._id,
       "no-of-chat-session-each-day"
