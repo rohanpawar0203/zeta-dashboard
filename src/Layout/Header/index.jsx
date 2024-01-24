@@ -46,12 +46,6 @@ const Header = () => {
         </div>
         {/* <SearchBar /> */}
         <HeaderContain />
-        <h1 className="header-company-name">
-          {JSON.parse(sessionStorage.getItem("currentUser")) &&
-          JSON.parse(sessionStorage.getItem("currentUser")).length !== 0
-            ? JSON.parse(sessionStorage.getItem("currentUser")).companyName
-            : ""}
-        </h1>
       </Row>
     </Fragment>
   );

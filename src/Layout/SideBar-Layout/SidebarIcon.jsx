@@ -15,7 +15,7 @@ const SidebarIcon = () => {
   return (
     <div className="logo-wrapper">
       <a href="#javascript">
-        <Image
+        {/* <Image
           attrImage={{
             className: "img-fluid for-light",
             src: `${logo}`,
@@ -28,7 +28,14 @@ const SidebarIcon = () => {
             src: `${logo}`,
             alt: "",
           }}
-        />
+        /> */}
+
+        <h1 className="header-company-name">
+          {JSON.parse(sessionStorage.getItem("currentUser")) &&
+          JSON.parse(sessionStorage.getItem("currentUser")).length !== 0
+            ? JSON.parse(sessionStorage.getItem("currentUser")).companyName
+            : ""}
+        </h1>
       </a>
       <div className="back-btn" onClick={() => openCloseSidebar()}>
         <i

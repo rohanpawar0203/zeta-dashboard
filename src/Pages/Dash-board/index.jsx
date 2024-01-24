@@ -5,7 +5,7 @@ import DashboardContain from "../../Component/Dash-board";
 const Dashboard = () => {
   return (
     <Fragment>
-      <Breadcrumbs parent="" title=" Home  " />
+      {/* <Breadcrumbs parent="" title=" Home  " /> */}
       <DashboardContain />
     </Fragment>
   );

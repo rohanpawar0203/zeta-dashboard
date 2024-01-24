@@ -5,8 +5,12 @@ import DashboardContent from "./DashboardContent";
 const DashboardContain = () => {
   return (
     <Fragment>
-      <Container fluid={true} className="general-widget">
-        <Row>
+      <Container
+        fluid={true}
+        className="general-widget"
+        style={{ height: "85vh", overflow: "scroll" }}
+      >
+        <Row style={{ gap: "5%", justifyContent: "center", marginTop: "2%" }}>
           <DashboardContent />
         </Row>
       </Container>
