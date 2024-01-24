@@ -10,6 +10,7 @@ import {
   DropdownItem,
   Dropdown,
   DropdownToggle,
+  Input,
 } from "reactstrap";
 import { useNavigate } from "react-router";
 import { H4, H5, H6, Spinner } from "../../../AbstractElements";
@@ -79,6 +80,30 @@ const AgentsTable = () => {
     setLoading(false);
   };
 
+  const handleNotification = async (value) => {
+    setLoading(true);
+    try {
+      let agentID = JSON.parse(JSON.stringify(value.user_id));
+      console.log(":: agentID ::", agentID, token);
+      delete value.user_id;
+      const resp = await axios.patch(
+        `${AgentAPI}/${agentID}`,
+        { data: value },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Agent Updated Successfully!");
+      handleGetData();
+    } catch (error) {
+      toString.error("Something went wrong");
+      toast(error.message);
+      console.log("error", error);
+    }
+  };
+
   useEffect(() => {
     handleGetData();
   }, []);
@@ -126,6 +151,8 @@ const AgentsTable = () => {
                         <tr className="table-primary">
                           <th scope="col">{"Name"}</th>
                           <th scope="col">{"Email"}</th>
+                          <th scope="col">{"Mobile"}</th>
+                          <th scope="col">{"Notification Enabled"}</th>
                           <th scope="col">{"Last Login"}</th>
                           <th scope="col">{"Actions"}</th>
                         </tr>
@@ -135,6 +162,20 @@ const AgentsTable = () => {
                           <tr key={ind}>
                             <th scope="row">{item.name}</th>
                             <td>{item.email}</td>
+                            <td>{item.mobile}</td>
+                            <td>
+                              <Input
+                                type="checkbox"
+                                checked={item?.notification_enabled}
+                                onChange={(e) => {
+                                  handleNotification({
+                                    notification_enabled: e?.target?.checked,
+                                    user_id: item._id,
+                                  });
+                                }}
+                                style={{ transform: "scale(1.5)" }}
+                              />
+                            </td>
                             <td></td>
                             <td>
                               <Dropdown
