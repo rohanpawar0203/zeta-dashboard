@@ -31,13 +31,6 @@ import appStore from "../../Live Chats/Client/AppStore";
 const token = sessionStorage.getItem("token");
 
 const Knowledge = ({ myBot }) => {
-  const [shareTabs, setshareTabs] = useState([
-    "Embed the bot",
-    "Embed Iframe",
-    "Get Rest API",
-    "Integrations",
-  ]);
-  const [selectedTab, setselectedTab] = useState("Embed the bot");
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState("");
   const [faqList, setFaqList] = useState([]);
@@ -52,6 +45,52 @@ const Knowledge = ({ myBot }) => {
       <Container fluid={true}>
         <Row>
           <Col sm="12">
+            <Form
+              className="needs-validation "
+              noValidate=""
+              // onSubmit={handleBotEdit}
+              // style={{ height: "60vh", overflowY: "scroll" }}
+            >
+              <Row>
+                <Col md="4 mb-3">
+                  <Label htmlFor="validationCustom01">{"Bot Name"}</Label>
+                  <input
+                    className="form-control"
+                    name="botName"
+                    type="text"
+                    defaultValue={myBot?.botName}
+                    // onChange={(e) => {
+                    //   handleChange(e);
+                    // }}
+                    disabled
+                    placeholder="Bot Name"
+                    required={true}
+                  />
+                  <span></span>
+                  <div className="valid-feedback">{"Looks good!"}</div>
+                </Col>
+                <Col md="4 mb-3">
+                  <Label htmlFor="validationCustom02">{"Company Name"}</Label>
+                  <input
+                    className="form-control"
+                    name="companyName"
+                    type="text"
+                    defaultValue={myBot?.companyName}
+                    // onChange={(e) => {
+                    //   handleChange(e);
+                    // }}
+                    disabled
+                    placeholder="Company Name"
+                    required={true}
+                  />
+                  <span></span>
+                  <div className="valid-feedback">{"Looks good!"}</div>
+                </Col>
+              </Row>
+            </Form>
+          </Col>
+          <Col sm="12">
+            <h2>Knowledge</h2>
             <Card className="shadow-none">
               <CardHeader className="p-0 mx-0 mt-2 d-flex flex-wrap w-100 justify-content-between">
                 <H6 className="my-2 mx-0">Please Upload CSV File</H6>
@@ -334,38 +373,40 @@ const CSVFileInfoList = ({
   };
 
   return (
-    <div className="h-100 table-responsive">
-      <Table>
-        <thead>
-          <tr className="table-primary">
-            <th scope="col" style={{ width: "80%" }}>
-              {"File Name"}
-            </th>
-            <th scope="col" style={{ textAlign: "center" }}>
-              {"Delete"}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {faqList?.length > 0 &&
-            faqList?.map((ele, ind) => (
-              <tr key={ele?.id}>
-                <td>{ele?.fileName ? ele?.fileName : "NA"}</td>
-                <td style={{ textAlign: "center" }}>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => {
-                      handleCSVFileDelete(ele?.id);
-                    }}
-                  >
-                    Delete CSV
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </Table>
-    </div>
+    <Container style={{ margin: "0", padding: "0", maxWidth: "100%" }}>
+      <div className="h-100  table-responsive" style={{ width: "100%" }}>
+        <Table style={{ maxWidth: "100%" }}>
+          <thead>
+            <tr className="table-primary">
+              <th scope="col" style={{ width: "80%" }}>
+                {"File Name"}
+              </th>
+              <th scope="col" style={{ textAlign: "center" }}>
+                {"Delete"}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {faqList?.length > 0 &&
+              faqList?.map((ele, ind) => (
+                <tr key={ele?.id}>
+                  <td>{ele?.fileName ? ele?.fileName : "NA"}</td>
+                  <td style={{ textAlign: "center" }}>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        handleCSVFileDelete(ele?.id);
+                      }}
+                    >
+                      Delete CSV
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </Table>
+      </div>
+    </Container>
   );
 };
 
