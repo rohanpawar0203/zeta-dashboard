@@ -130,36 +130,53 @@
 // import Steps from '../Pages/Bonus UI/Steps';
 // import Bot from '../Pages/Bot';
 // import  ErrorPage  from '../Routes/ErrorPage';
-import UsersProfile from '../Pages/Users/UsersProfile';
-import UsersEdit from '../Pages/Users/UsersEdit';
-import Bots from '../Pages/Bots';
-import BotInfo from '../Pages/Bot Info';
-import Products2 from '../Pages/Products';
-import Agents from '../Pages/Agents'
-import AddAgents from '../Pages/Add Agents'
-import Tickets from '../Pages/Tickets'
-import CustomFlow from '../Pages/Custom Flow'
-import ChatsPanel from '../Pages/Chats Panel/ChatApp'
-import LiveChatPanel from '../Pages/Live Chats/ChatApp'
-import DashBoard from '../Pages/Dash-board';
-import Store from '../Pages/Store';
-import WhatsAppWidget from '../Pages/WhatsAppWidget';
-
+import UsersProfile from "../Pages/Users/UsersProfile";
+import UsersEdit from "../Pages/Users/UsersEdit";
+import Bots from "../Pages/Bots";
+import BotInfo from "../Pages/Bot Info";
+import Products2 from "../Pages/Products";
+import Agents from "../Pages/Agents";
+import AddAgents from "../Pages/Add Agents";
+import Tickets from "../Pages/Tickets";
+import CustomFlow from "../Pages/Custom Flow";
+import ChatsPanel from "../Pages/Chats Panel/ChatApp";
+import LiveChatPanel from "../Pages/Live Chats/ChatApp";
+import DashBoard from "../Pages/Dash-board";
+import Store from "../Pages/Store";
+import WhatsAppWidget from "../Pages/WhatsAppWidget";
+import WebSdkInfoContent from "../Component/BotDetails/webSdkInfo";
+import appStore from "../Component/Live Chats/Client/AppStore";
 
 export const routes = [
-    { path: `${process.env.PUBLIC_URL}`, Component: <DashBoard /> },
-    { path: `${process.env.PUBLIC_URL}/dashboard`, Component: <DashBoard /> },
-    { path: `${process.env.PUBLIC_URL}/store`, Component: <Store /> },
-    { path: `${process.env.PUBLIC_URL}/tickets`, Component: <Tickets /> },
-    { path: `${process.env.PUBLIC_URL}/agents`, Component: <Agents /> },
-    { path: `${process.env.PUBLIC_URL}/custom-chat-flow`, Component: <CustomFlow /> },
-    { path: `${process.env.PUBLIC_URL}/bots`, Component: <Bots /> },
-    { path: `${process.env.PUBLIC_URL}/bot/:boatId`, Component: <BotInfo /> },
-    { path: `${process.env.PUBLIC_URL}/chats-panel`, Component: <ChatsPanel /> },
-    { path: `${process.env.PUBLIC_URL}/live-chat`, Component: <LiveChatPanel /> },
-    { path: `${process.env.PUBLIC_URL}/products`, Component: <Products2 /> },
-    { path: `${process.env.PUBLIC_URL}/add-agents`, Component: <AddAgents /> },
-    { path: `${process.env.PUBLIC_URL}/users/userprofile`, Component: <UsersProfile /> },
-    { path: `${process.env.PUBLIC_URL}/users/useredit`, Component: <UsersEdit /> },
-    { path: `${process.env.PUBLIC_URL}/whats-app-widget`, Component: <WhatsAppWidget /> },
+  { path: `${process.env.PUBLIC_URL}`, Component: <DashBoard /> },
+  { path: `${process.env.PUBLIC_URL}/dashboard`, Component: <DashBoard /> },
+  { path: `${process.env.PUBLIC_URL}/store`, Component: <Store /> },
+  { path: `${process.env.PUBLIC_URL}/tickets`, Component: <Tickets /> },
+  { path: `${process.env.PUBLIC_URL}/agents`, Component: <Agents /> },
+  {
+    path: `${process.env.PUBLIC_URL}/custom-chat-flow`,
+    Component: <CustomFlow />,
+  },
+  { path: `${process.env.PUBLIC_URL}/bots`, Component: <Bots /> },
+  { path: `${process.env.PUBLIC_URL}/bot/:boatId`, Component: <BotInfo /> },
+  {
+    path: `${process.env.PUBLIC_URL}/web-sdk`,
+    Component: <WebSdkInfoContent />,
+  },
+  { path: `${process.env.PUBLIC_URL}/chats-panel`, Component: <ChatsPanel /> },
+  { path: `${process.env.PUBLIC_URL}/live-chat`, Component: <LiveChatPanel /> },
+  { path: `${process.env.PUBLIC_URL}/products`, Component: <Products2 /> },
+  { path: `${process.env.PUBLIC_URL}/add-agents`, Component: <AddAgents /> },
+  {
+    path: `${process.env.PUBLIC_URL}/users/userprofile`,
+    Component: <UsersProfile />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/users/useredit`,
+    Component: <UsersEdit />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/whats-app-widget`,
+    Component: <WhatsAppWidget />,
+  },
 ];

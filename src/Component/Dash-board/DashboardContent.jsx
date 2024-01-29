@@ -12,6 +12,7 @@ import {
   AllFiles,
   Files,
   Folders,
+  Primary,
   RecentlyOpenedFiles,
 } from "../../Constant";
 import {
@@ -35,471 +36,28 @@ import { Bar } from "react-chartjs-2";
 import Chart from "react-apexcharts";
 import configDB from "../../Config/Theme-Config";
 import { apiCall } from "./chartData";
+import {
+  apexBarChart,
+  apexColumnChartsone,
+} from "../Charts/apexCharts/apexData";
 
 const DashboardContent = () => {
   const { userData } = appStore();
   // const userDataToken = JSON.parse(appStore);
-  const [chatSeries, setChatSeries] = useState([
-    {
-      data: [],
-    },
-  ]);
-  const [chatOptions, setChatOptions] = useState({
-    chart: {
-      height: 350,
-      type: "column",
-      animations: {
-        enabled: true,
-        easing: "easein",
-        speed: 800,
-        dynamicAnimation: {
-          enabled: false,
-        },
-      },
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 0,
-        horizontal: false,
-        rowWidth: "100%",
-        // dataLabels: {
-        //   position: "bottom", // top, center, bottom
-        // },
-      },
-    },
-    stroke: {
-      width: 1,
-    },
-    dataLabels: {
-      enabled: false,
-      // formatter: function (val) {
-      //   return val;
-      // },
-      offsetY: -20,
-      style: {
-        fontSize: "12px",
-        colors: ["#304758"],
-      },
-    },
+  const [chatSeries, setChatSeries] = useState([]);
+  const [chatOptions, setChatOptions] = useState({});
 
-    xaxis: {
-      categories: [],
-      position: "top",
-      axisBorder: {
-        show: false,
-      },
-      axisTicks: {
-        show: false,
-      },
-      crosshairs: {
-        fill: {
-          type: "gradient",
-          gradient: {
-            colorFrom: "#D8E3F0",
-            colorTo: "#BED1E6",
-            stops: [0, 100],
-            opacityFrom: 0.4,
-            opacityTo: 0.5,
-          },
-        },
-      },
-      tooltip: {
-        enabled: true,
-      },
-    },
-    // yaxis: {
-    //   axisBorder: {
-    //     show: false,
-    //   },
-    //   axisTicks: {
-    //     show: false,
-    //   },
-    //   labels: {
-    //     show: false,
-    //     formatter: function (val) {
-    //       return val;
-    //     },
-    //   },
-    // },
-    title: {
-      text: "No of chat session. (per day)",
-      floating: false,
-      offsetY: 0,
-      align: "center",
-      style: {
-        color: "#444",
-      },
-    },
-    responsive: [
-      {
-        breakpoint: 360,
-        options: {
-          chart: {
-            height: 300,
-          },
-        },
-      },
-    ],
-    legend: {
-      position: "top",
-    },
-  });
+  const [cartSeries, setCartSeries] = useState([]);
+  const [cartOptions, setCartOptions] = useState({});
 
-  const [cartSeries, setCartSeries] = useState([
-    {
-      data: [],
-    },
-  ]);
-  const [cartOptions, setCartOptions] = useState({
-    chart: {
-      height: 350,
-      type: "radialBar",
-      animations: {
-        enabled: true,
-        easing: "easein",
-        speed: 800,
-        dynamicAnimation: {
-          enabled: false,
-        },
-      },
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 0,
-        horizontal: false,
-        // dataLabels: {
-        //   position: "bottom", // top, center, bottom
-        // },
-      },
-    },
-    dataLabels: {
-      enabled: false,
-      // formatter: function (val) {
-      //   return val;
-      // },
-      offsetY: -20,
-      style: {
-        fontSize: "12px",
-        colors: ["#304758"],
-      },
-    },
+  const [orderSeries, setOrderSeries] = useState([]);
+  const [orderOptions, setOrderOptions] = useState({});
 
-    xaxis: {
-      categories: [],
-      position: "top",
-      axisBorder: {
-        show: false,
-      },
-      axisTicks: {
-        show: false,
-      },
-      crosshairs: {
-        fill: {
-          type: "gradient",
-          gradient: {
-            colorFrom: "#D8E3F0",
-            colorTo: "#BED1E6",
-            stops: [0, 100],
-            opacityFrom: 0.4,
-            opacityTo: 0.5,
-          },
-        },
-      },
-      tooltip: {
-        enabled: true,
-      },
-    },
-    // yaxis: {
-    //   axisBorder: {
-    //     show: false,
-    //   },
-    //   axisTicks: {
-    //     show: false,
-    //   },
-    //   labels: {
-    //     show: false,
-    //     formatter: function (val) {
-    //       return val;
-    //     },
-    //   },
-    // },
-    title: {
-      text: "No of carts. (per day)",
-      floating: false,
-      offsetY: 0,
-      align: "center",
-      style: {
-        color: "#444",
-      },
-    },
-  });
+  const [chatHourSeries, setChatHourSeries] = useState([]);
+  const [chatHourOptions, setChatHourOptions] = useState({});
 
-  const [orderSeries, setOrderSeries] = useState([
-    {
-      data: [],
-    },
-  ]);
-  const [orderOptions, setOrderOptions] = useState({
-    chart: {
-      height: 350,
-      type: "radialBar",
-      animations: {
-        enabled: true,
-        easing: "easein",
-        speed: 800,
-        dynamicAnimation: {
-          enabled: false,
-        },
-      },
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 0,
-        horizontal: false,
-        // dataLabels: {
-        //   position: "bottom", // top, center, bottom
-        // },
-      },
-    },
-    dataLabels: {
-      enabled: false,
-      // formatter: function (val) {
-      //   return val;
-      // },
-      offsetY: -20,
-      style: {
-        fontSize: "12px",
-        colors: ["#304758"],
-      },
-    },
-
-    xaxis: {
-      categories: [],
-      position: "top",
-      axisBorder: {
-        show: false,
-      },
-      axisTicks: {
-        show: false,
-      },
-      crosshairs: {
-        fill: {
-          type: "gradient",
-          gradient: {
-            colorFrom: "#D8E3F0",
-            colorTo: "#BED1E6",
-            stops: [0, 100],
-            opacityFrom: 0.4,
-            opacityTo: 0.5,
-          },
-        },
-      },
-      tooltip: {
-        enabled: true,
-      },
-    },
-    // yaxis: {
-    //   axisBorder: {
-    //     show: false,
-    //   },
-    //   axisTicks: {
-    //     show: false,
-    //   },
-    //   labels: {
-    //     show: false,
-    //     formatter: function (val) {
-    //       return val;
-    //     },
-    //   },
-    // },
-    title: {
-      text: "No of orders. (per day)",
-      floating: false,
-      offsetY: 0,
-      align: "center",
-      style: {
-        color: "#444",
-      },
-    },
-  });
-
-  const [chatHourSeries, setChatHourSeries] = useState([
-    {
-      data: [],
-    },
-  ]);
-  const [chatHourOptions, setChatHourOptions] = useState({
-    chart: {
-      height: 350,
-      type: "radialBar",
-      animations: {
-        enabled: true,
-        easing: "easein",
-        speed: 800,
-        dynamicAnimation: {
-          enabled: false,
-        },
-      },
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 0,
-        horizontal: false,
-        // dataLabels: {
-        //   position: "bottom", // top, center, bottom
-        // },
-      },
-    },
-    dataLabels: {
-      enabled: false,
-      // formatter: function (val) {
-      //   return val;
-      // },
-      offsetY: -20,
-      style: {
-        fontSize: "12px",
-        colors: ["#304758"],
-      },
-    },
-
-    xaxis: {
-      categories: [],
-      position: "top",
-      axisBorder: {
-        show: false,
-      },
-      axisTicks: {
-        show: false,
-      },
-      crosshairs: {
-        fill: {
-          type: "gradient",
-          gradient: {
-            colorFrom: "#D8E3F0",
-            colorTo: "#BED1E6",
-            stops: [0, 100],
-            opacityFrom: 0.4,
-            opacityTo: 0.5,
-          },
-        },
-      },
-      tooltip: {
-        enabled: true,
-      },
-    },
-    // yaxis: {
-    //   axisBorder: {
-    //     show: false,
-    //   },
-    //   axisTicks: {
-    //     show: false,
-    //   },
-    //   labels: {
-    //     show: false,
-    //     formatter: function (val) {
-    //       return val;
-    //     },
-    //   },
-    // },
-    title: {
-      text: "No of chats. (per hour)",
-      floating: false,
-      offsetY: 0,
-      align: "center",
-      style: {
-        color: "#444",
-      },
-    },
-  });
-
-  const [trendingSeries, setTrendingSeries] = useState([
-    {
-      data: [],
-    },
-  ]);
-  const [trendingOptions, setTrendingOptions] = useState({
-    chart: {
-      height: 350,
-      type: "radialBar",
-      animations: {
-        enabled: true,
-        easing: "easein",
-        speed: 800,
-        dynamicAnimation: {
-          enabled: false,
-        },
-      },
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 0,
-        horizontal: true,
-        // dataLabels: {
-        //   position: "bottom", // top, center, bottom
-        // },
-      },
-    },
-    dataLabels: {
-      enabled: false,
-      // formatter: function (val) {
-      //   return val;
-      // },
-      offsetY: -20,
-      style: {
-        fontSize: "12px",
-        colors: ["#304758"],
-      },
-    },
-
-    xaxis: {
-      categories: [],
-      position: "top",
-      axisBorder: {
-        show: false,
-      },
-      axisTicks: {
-        show: false,
-      },
-      crosshairs: {
-        fill: {
-          type: "gradient",
-          gradient: {
-            colorFrom: "#D8E3F0",
-            colorTo: "#BED1E6",
-            stops: [0, 100],
-            opacityFrom: 0.4,
-            opacityTo: 0.5,
-          },
-        },
-      },
-      tooltip: {
-        enabled: true,
-      },
-    },
-    // yaxis: {
-    //   axisBorder: {
-    //     show: false,
-    //   },
-    //   axisTicks: {
-    //     show: false,
-    //   },
-    //   labels: {
-    //     show: false,
-    //     formatter: function (val) {
-    //       return val;
-    //     },
-    //   },
-    // },
-    title: {
-      text: "Trending Products",
-      floating: false,
-      offsetY: 0,
-      align: "center",
-      style: {
-        color: "#444",
-      },
-    },
-  });
+  const [trendingSeries, setTrendingSeries] = useState([]);
+  const [trendingOptions, setTrendingOptions] = useState({});
 
   // useEffect(async () => {
   // }, []);
@@ -513,82 +71,203 @@ const DashboardContent = () => {
     );
     getChatData.sort((a, b) => new Date(a._id) - new Date(b._id));
     if (getChatData.length !== 0) {
-      setChatOptions((prevOptions) => {
-        const newOptions = getChatData.map((element) =>
-          new Date(element._id).getDate()
-        );
-        return {
-          ...prevOptions,
-          xaxis: {
-            ...prevOptions.xaxis,
-            categories: [...prevOptions.xaxis.categories, ...newOptions],
+      const newOptions = getChatData.map((element) =>
+        new Date(element._id).getDate()
+      );
+      const newSeriesData = getChatData.map((element) => element.count);
+
+      setChatOptions({
+        chart: {
+          type: "bar",
+          height: 350,
+          toolbar: {
+            show: false,
           },
-        };
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        responsive: [
+          {
+            breakpoint: 360,
+            options: {
+              chart: {
+                offsetY: 10,
+              },
+            },
+          },
+        ],
+        // colors: [Primary],
+        xaxis: {
+          categories: newOptions,
+          crosshairs: {
+            fill: {
+              type: "gradient",
+              gradient: {
+                colorFrom: "#D8E3F0",
+                colorTo: "#BED1E6",
+                stops: [0, 100],
+                opacityFrom: 0.4,
+                opacityTo: 0.5,
+              },
+            },
+          },
+        },
+        title: {
+          text: "No of chats. (per day)",
+          floating: false,
+          offsetY: 0,
+          align: "center",
+          style: {
+            color: "#444",
+          },
+        },
       });
 
-      setChatSeries((prevSeries) => {
-        const newSeriesData = getChatData.map((element) => element.count);
-        return [
-          {
-            ...prevSeries[0],
-            data: [...prevSeries[0].data, ...newSeriesData],
-          },
-        ];
-      });
+      setChatSeries([
+        {
+          data: newSeriesData,
+        },
+      ]);
     }
 
     let getCartData = await apiCall(userData._id, "no-of-carts-each-day");
     getCartData.sort((a, b) => new Date(a._id) - new Date(b._id));
     if (getCartData.length !== 0) {
-      setCartOptions((prevOptions) => {
-        const newOptions = getCartData.map((element) =>
-          new Date(element._id).getDate()
-        );
-        return {
-          ...prevOptions,
-          xaxis: {
-            ...prevOptions.xaxis,
-            categories: [...prevOptions.xaxis.categories, ...newOptions],
-          },
-        };
-      });
+      const newOptions = getCartData.map((element) =>
+        new Date(element._id).getDate()
+      );
+      const newSeriesData = getCartData.map((element) => element.count);
 
-      setCartSeries((prevSeries) => {
-        const newSeriesData = getCartData.map((element) => element.count);
-        return [
-          {
-            ...prevSeries[0],
-            data: [...prevSeries[0].data, ...newSeriesData],
+      setCartOptions({
+        chart: {
+          type: "bar",
+          height: 350,
+          toolbar: {
+            show: false,
           },
-        ];
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        responsive: [
+          {
+            breakpoint: 360,
+            options: {
+              chart: {
+                offsetY: 10,
+              },
+            },
+          },
+        ],
+        // colors: [Primary],
+        xaxis: {
+          categories: newOptions,
+          crosshairs: {
+            fill: {
+              type: "gradient",
+              gradient: {
+                colorFrom: "#D8E3F0",
+                colorTo: "#BED1E6",
+                stops: [0, 100],
+                opacityFrom: 0.4,
+                opacityTo: 0.5,
+              },
+            },
+          },
+        },
+        title: {
+          text: "No of carts. (per day)",
+          floating: false,
+          offsetY: 0,
+          align: "center",
+          style: {
+            color: "#444",
+          },
+        },
       });
+      setCartSeries([
+        {
+          data: newSeriesData,
+        },
+      ]);
     }
 
     let getOrderData = await apiCall(userData._id, "no-orders-for-each-day");
     getOrderData.sort((a, b) => new Date(a._id) - new Date(b._id));
     if (getOrderData.length !== 0) {
-      setOrderOptions((prevOptions) => {
-        const newOptions = getOrderData.map((element) =>
-          new Date(element._id).getDate()
-        );
-        return {
-          ...prevOptions,
-          xaxis: {
-            ...prevOptions.xaxis,
-            categories: [...prevOptions.xaxis.categories, ...newOptions],
-          },
-        };
-      });
+      const newOptions = getOrderData.map((element) =>
+        new Date(element._id).getDate()
+      );
+      const newSeriesData = getOrderData.map((element) => element.count);
 
-      setOrderSeries((prevSeries) => {
-        const newSeriesData = getOrderData.map((element) => element.count);
-        return [
-          {
-            ...prevSeries[0],
-            data: [...prevSeries[0].data, ...newSeriesData],
+      setOrderOptions({
+        chart: {
+          type: "bar",
+          height: 350,
+          toolbar: {
+            show: false,
           },
-        ];
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        responsive: [
+          {
+            breakpoint: 360,
+            options: {
+              chart: {
+                offsetY: 10,
+              },
+            },
+          },
+        ],
+        // colors: [Primary],
+        xaxis: {
+          categories: newOptions,
+          crosshairs: {
+            fill: {
+              type: "gradient",
+              gradient: {
+                colorFrom: "#D8E3F0",
+                colorTo: "#BED1E6",
+                stops: [0, 100],
+                opacityFrom: 0.4,
+                opacityTo: 0.5,
+              },
+            },
+          },
+        },
+        title: {
+          text: "No of orders. (per day)",
+          floating: false,
+          offsetY: 0,
+          align: "center",
+          style: {
+            color: "#444",
+          },
+        },
       });
+      setOrderSeries([
+        {
+          data: newSeriesData,
+        },
+      ]);
     }
 
     let getChatHourData = await apiCall(userData._id, "no-chats-for-each-hour");
@@ -610,17 +289,83 @@ const DashboardContent = () => {
         newSeries.push(seriesData);
         setChatHourSeries(newSeries);
       });
-      setChatHourOptions((prevOptions) => {
-        const newOptions = getChatHourData.map((element) =>
-          new Date(element._id).getDate()
-        );
-        return {
-          ...prevOptions,
-          xaxis: {
-            ...prevOptions.xaxis,
-            categories: [...prevOptions.xaxis.categories, ...newOptions],
+      const newOptions = getChatHourData.map((element) =>
+        new Date(element._id).getDate()
+      );
+      setChatHourOptions({
+        chart: {
+          height: 350,
+          type: "radialBar",
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 0,
+            horizontal: false,
+            // dataLabels: {
+            //   position: "bottom", // top, center, bottom
+            // },
           },
-        };
+        },
+        dataLabels: {
+          enabled: false,
+          // formatter: function (val) {
+          //   return val;
+          // },
+          offsetY: -20,
+          style: {
+            fontSize: "12px",
+            colors: ["#304758"],
+          },
+        },
+
+        xaxis: {
+          categories: newOptions,
+          position: "top",
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          crosshairs: {
+            fill: {
+              type: "gradient",
+              gradient: {
+                colorFrom: "#D8E3F0",
+                colorTo: "#BED1E6",
+                stops: [0, 100],
+                opacityFrom: 0.4,
+                opacityTo: 0.5,
+              },
+            },
+          },
+          tooltip: {
+            enabled: true,
+          },
+        },
+        // yaxis: {
+        //   axisBorder: {
+        //     show: false,
+        //   },
+        //   axisTicks: {
+        //     show: false,
+        //   },
+        //   labels: {
+        //     show: false,
+        //     formatter: function (val) {
+        //       return val;
+        //     },
+        //   },
+        // },
+        title: {
+          text: "No of chats. (per hour)",
+          floating: false,
+          offsetY: 0,
+          align: "center",
+          style: {
+            color: "#444",
+          },
+        },
       });
     }
 
@@ -633,30 +378,69 @@ const DashboardContent = () => {
       .reverse();
     // getTrendingProductData.reverse();
     if (getOrderData.length !== 0) {
-      setTrendingOptions((prevOptions) => {
-        const newOptions = getTrendingProductData.map(
-          (element) => element._id.productName
-        );
-        return {
-          ...prevOptions,
-          xaxis: {
-            ...prevOptions.xaxis,
-            categories: [...prevOptions.xaxis.categories, ...newOptions],
+      const newOptions = getTrendingProductData.map(
+        (element) => element._id.productName
+      );
+      const newSeriesData = getTrendingProductData.map(
+        (element) => element.count
+      );
+      setTrendingOptions({
+        chart: {
+          type: "bar",
+          height: 350,
+          toolbar: {
+            show: false,
           },
-        };
-      });
-
-      setTrendingSeries((prevSeries) => {
-        const newSeriesData = getTrendingProductData.map(
-          (element) => element.count
-        );
-        return [
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true,
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        responsive: [
           {
-            ...prevSeries[0],
-            data: [...prevSeries[0].data, ...newSeriesData],
+            breakpoint: 360,
+            options: {
+              chart: {
+                offsetY: 10,
+              },
+            },
           },
-        ];
+        ],
+        // colors: [Primary],
+        xaxis: {
+          categories: newOptions,
+          crosshairs: {
+            fill: {
+              type: "gradient",
+              gradient: {
+                colorFrom: "#D8E3F0",
+                colorTo: "#BED1E6",
+                stops: [0, 100],
+                opacityFrom: 0.4,
+                opacityTo: 0.5,
+              },
+            },
+          },
+        },
+        title: {
+          text: "Trending products",
+          floating: false,
+          offsetY: 0,
+          align: "center",
+          style: {
+            color: "#444",
+          },
+        },
       });
+      setTrendingSeries([
+        {
+          data: newSeriesData,
+        },
+      ]);
     }
   }, []);
 
@@ -665,14 +449,15 @@ const DashboardContent = () => {
       <Col sm="6" xl="5" lg="10" style={{ marginBottom: "10px" }}>
         <Card className="o-hidden">
           <CardBody>
-            <Chart
-              key="chat"
-              options={chatOptions}
-              series={chatSeries}
-              type="bar"
-              width={"100%"}
-              height={380}
-            />
+            <div id="column-chart">
+              <Chart
+                options={chatOptions}
+                series={chatSeries}
+                type="bar"
+                width={"100%"}
+                height={380}
+              />
+            </div>
           </CardBody>
         </Card>
       </Col>
@@ -704,7 +489,6 @@ const DashboardContent = () => {
           </CardBody>
         </Card>
       </Col>
-
       <Col sm="6" xl="5" lg="10">
         <Card className="o-hidden">
           <CardBody>
@@ -719,7 +503,6 @@ const DashboardContent = () => {
           </CardBody>
         </Card>
       </Col>
-
       <Col sm="6" xl="11" lg="10">
         <Card className="o-hidden">
           <CardBody>

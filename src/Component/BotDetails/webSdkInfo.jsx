@@ -28,6 +28,7 @@ import {
   H3,
   H1,
   Spinner,
+  Breadcrumbs,
 } from "../../AbstractElements";
 import errorImg from "../../assets/images/search-not-found.png";
 import TurnoverChart from "../Widgets/ChartsWidgets/TurnoverChart";
@@ -61,8 +62,9 @@ import appStore from "../Live Chats/Client/AppStore";
 import Knowledge from "./components/Knowledge";
 import ScrollBar from "react-perfect-scrollbar";
 
-const BotInfoContent = ({ boatId }) => {
-  const { setBotDetails } = appStore.getState();
+const WebSdkInfoContent = () => {
+  const { setBotDetails, userData } = appStore.getState();
+  const boatId = userData.bots[0].botId;
   const [myBot, setMyBot] = useState({});
   const [pillTab, setpillTab] = useState("1");
   const [loading, setLoading] = useState(false);
@@ -98,6 +100,7 @@ const BotInfoContent = ({ boatId }) => {
 
   return (
     <Fragment>
+      <Breadcrumbs title="Web sdk" />
       <Container fluid={true}>
         <Row>
           <Col sm="12 bot-info-card">
@@ -117,7 +120,7 @@ const BotInfoContent = ({ boatId }) => {
                         style={{ background: "whitesmoke" }}
                         className="d-flex border border-lightgray p-1 rounded"
                       >
-                        {/* <NavItem style={{ cursor: "pointer" }}>
+                        <NavItem style={{ cursor: "pointer" }}>
                           <NavLink
                             className={
                               pillTab === "1"
@@ -140,23 +143,10 @@ const BotInfoContent = ({ boatId }) => {
                           >
                             {"Share"}
                           </NavLink>
-                        </NavItem> */}
-                        <NavItem style={{ cursor: "pointer" }} active>
-                          <NavLink
-                            className={
-                              pillTab === "1"
-                                ? "active cursor-pointer"
-                                : "cursor-pointer"
-                            }
-                            onClick={() => setpillTab("1")}
-                          >
-                            {"Knowledge"}
-                          </NavLink>
                         </NavItem>
                       </div>
                     </div>
                   </Nav>
-                  {/* <ScrollBar className="vertical-scroll ps-container ps-theme-default ps-active-y">          */}
                   <div style={{ height: "95%" }}>
                     {loading ? (
                       <div className="vh-75 loader-box">
@@ -168,7 +158,7 @@ const BotInfoContent = ({ boatId }) => {
                           activeTab={pillTab}
                           className="position-relative h-100"
                         >
-                          {/* <TabPane className="fade show h-100" tabId="1">
+                          <TabPane className="fade show h-100" tabId="1">
                             <Customize
                               myBot={myBot}
                               setMyBot={setMyBot}
@@ -178,16 +168,12 @@ const BotInfoContent = ({ boatId }) => {
                           </TabPane>
                           <TabPane tabId="2" className="vh-75">
                             <Share myBot={myBot} />
-                          </TabPane> */}
-                          <TabPane tabId="1" className="vh-75">
-                            <Knowledge />
                           </TabPane>
                         </TabContent>
-                        {/* <ChatBot myBot={myBot} setMyBot={setMyBot} /> */}
+                        <ChatBot myBot={myBot} setMyBot={setMyBot} />
                       </>
                     )}
                   </div>
-                  {/* </ScrollBar>  */}
                 </CardBody>
               </div>
             </Card>
@@ -197,4 +183,4 @@ const BotInfoContent = ({ boatId }) => {
     </Fragment>
   );
 };
-export default BotInfoContent;
+export default WebSdkInfoContent;

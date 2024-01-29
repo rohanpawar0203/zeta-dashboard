@@ -1,3 +1,4 @@
+import appStore from "../../Component/Live Chats/Client/AppStore";
 import {
   BlogSvg,
   BonusUISvg,
@@ -56,9 +57,34 @@ export const MENUITEMS = [
       {
         path: `${process.env.PUBLIC_URL}/bots`,
         bookmark: true,
-        icon: BotIcon,
-        title: "Bots",
+        icon: EcommerceSvg,
+        title: "Bot",
         type: "link",
+      },
+    ],
+  },
+  {
+    menutitle: "Channels",
+    Items: [
+      {
+        // path: `${process.env.PUBLIC_URL}/bots`,
+        bookmark: true,
+        icon: BotIcon,
+        title: "Channels",
+        type: "sub",
+        active: false,
+        children: [
+          {
+            path: `${process.env.PUBLIC_URL}/web-sdk`,
+            title: "WebSDK",
+            type: "link",
+          },
+          {
+            path: `${process.env.PUBLIC_URL}/whats-app-widget`,
+            title: "Whatsapp",
+            type: "link",
+          },
+        ],
       },
     ],
   },
@@ -146,18 +172,18 @@ export const MENUITEMS = [
       },
     ],
   },
-  {
-    menutitle: "WhatsApp Widget",
-    Items: [
-      {
-        path: `${process.env.PUBLIC_URL}/whats-app-widget`,
-        bookmark: true,
-        icon: WhatsappIcon,
-        title: "WhatsApp Widget",
-        type: "link",
-      },
-    ],
-  },
+  // {
+  //   menutitle: "WhatsApp Widget",
+  //   Items: [
+  //     {
+  //       path: `${process.env.PUBLIC_URL}/whats-app-widget`,
+  //       bookmark: true,
+  //       icon: WhatsappIcon,
+  //       title: "WhatsApp Widget",
+  //       type: "link",
+  //     },
+  //   ],
+  // },
   {
     menutitle: "Request a feature",
     Items: [

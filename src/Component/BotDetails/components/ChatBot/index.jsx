@@ -23,7 +23,12 @@ const ChatBot = ({ myBot, setMyBot }) => {
           <div className="d-flex flex-column justify-content-end align-items-end">
             <div className="mb-2">
               {!closeSmallBot && (
-                <SmallBot myBot={myBot} setcloseSmallBot={setcloseSmallBot} setbot={setbot} closeSmallBot={closeSmallBot}/>
+                <SmallBot
+                  myBot={myBot}
+                  setcloseSmallBot={setcloseSmallBot}
+                  setbot={setbot}
+                  closeSmallBot={closeSmallBot}
+                />
               )}
             </div>
             <div
@@ -38,7 +43,7 @@ const ChatBot = ({ myBot, setMyBot }) => {
                 boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
                 // border : `1px solid ${myBot?.accentColor}` ,
                 background: `${myBot?.accentColor}`,
-                cursor: 'pointer'
+                cursor: "pointer",
               }}
               className="d-flex align-items-center justify-content-center"
             >
@@ -51,8 +56,8 @@ const ChatBot = ({ myBot, setMyBot }) => {
                     fontWeight: "600",
                   }}
                 />
-                // <ImgElement imgSource={botIconSrcs[0]} imgInfoNum={1}/>
-              ) : myBot?.bubbleIcon === "BsRobot" ? (
+              ) : // <ImgElement imgSource={botIconSrcs[0]} imgInfoNum={1}/>
+              myBot?.bubbleIcon === "BsRobot" ? (
                 <BsRobot
                   style={{
                     width: "30px",
@@ -61,8 +66,8 @@ const ChatBot = ({ myBot, setMyBot }) => {
                     fontWeight: "600",
                   }}
                 />
-                // <ImgElement imgSource={botIconSrcs[1]} imgInfoNum={2}/>
-              ) : myBot?.bubbleIcon === "TbMessageDots" ? (
+              ) : // <ImgElement imgSource={botIconSrcs[1]} imgInfoNum={2}/>
+              myBot?.bubbleIcon === "TbMessageDots" ? (
                 <TbMessageDots
                   style={{
                     width: "30px",
@@ -71,8 +76,8 @@ const ChatBot = ({ myBot, setMyBot }) => {
                     fontWeight: "600",
                   }}
                 />
-                // <ImgElement imgSource={botIconSrcs[2]} imgInfoNum={3}/>
-              ) : myBot?.bubbleIcon === "BiUser" ? (
+              ) : // <ImgElement imgSource={botIconSrcs[2]} imgInfoNum={3}/>
+              myBot?.bubbleIcon === "BiUser" ? (
                 <BiUser
                   style={{
                     width: "30px",
@@ -81,29 +86,9 @@ const ChatBot = ({ myBot, setMyBot }) => {
                     fontWeight: "600",
                   }}
                 />
-                // <ImgElement imgSource={botIconSrcs[3]} imgInfoNum={4}/>
-                ) : myBot?.bubbleIcon === "AiOutlineQuestionCircle" ? (
-                  <AiOutlineQuestionCircle
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    color: "white",
-                    fontWeight: "600",
-                  }}
-                  />
-                  // <ImgElement imgSource={botIconSrcs[4]} imgInfoNum={5}/>
-                  ) : myBot?.bubbleIcon === "TfiHeadphoneAlt" ? (
-                    <TfiHeadphoneAlt
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    color: "white",
-                    fontWeight: "600",
-                  }}
-                  />
-                  // <ImgElement imgSource={botIconSrcs[5]} imgInfoNum={6}/>
-                  ) : myBot?.bubbleIcon === "Ri24HoursLine" ? (
-                    <Ri24HoursLine
+              ) : // <ImgElement imgSource={botIconSrcs[3]} imgInfoNum={4}/>
+              myBot?.bubbleIcon === "AiOutlineQuestionCircle" ? (
+                <AiOutlineQuestionCircle
                   style={{
                     width: "30px",
                     height: "30px",
@@ -111,29 +96,49 @@ const ChatBot = ({ myBot, setMyBot }) => {
                     fontWeight: "600",
                   }}
                 />
-                // <ImgElement imgSource={botIconSrcs[6]} imgInfoNum={7}/>
-                ) : myBot?.bubbleIcon === "LuMessagesSquare" ? (
-                  <LuMessagesSquare
+              ) : // <ImgElement imgSource={botIconSrcs[4]} imgInfoNum={5}/>
+              myBot?.bubbleIcon === "TfiHeadphoneAlt" ? (
+                <TfiHeadphoneAlt
                   style={{
                     width: "30px",
                     height: "30px",
                     color: "white",
                     fontWeight: "600",
                   }}
-                  />
-                  // <ImgElement imgSource={botIconSrcs[7]} imgInfoNum={8}/>
-                  ) : myBot?.bubbleIcon === "TfiCommentsSmiley" ? (
-                    <TfiCommentsSmiley
+                />
+              ) : // <ImgElement imgSource={botIconSrcs[5]} imgInfoNum={6}/>
+              myBot?.bubbleIcon === "Ri24HoursLine" ? (
+                <Ri24HoursLine
                   style={{
                     width: "30px",
                     height: "30px",
                     color: "white",
                     fontWeight: "600",
                   }}
-                  />
-                  // <ImgElement imgSource={botIconSrcs[8]} imgInfoNum={9}/>
-                  ) : (
-                    ""
+                />
+              ) : // <ImgElement imgSource={botIconSrcs[6]} imgInfoNum={7}/>
+              myBot?.bubbleIcon === "LuMessagesSquare" ? (
+                <LuMessagesSquare
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    color: "white",
+                    fontWeight: "600",
+                  }}
+                />
+              ) : // <ImgElement imgSource={botIconSrcs[7]} imgInfoNum={8}/>
+              myBot?.bubbleIcon === "TfiCommentsSmiley" ? (
+                <TfiCommentsSmiley
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    color: "white",
+                    fontWeight: "600",
+                  }}
+                />
+              ) : (
+                // <ImgElement imgSource={botIconSrcs[8]} imgInfoNum={9}/>
+                ""
               )}
             </div>
           </div>
@@ -153,7 +158,7 @@ const ChatBot = ({ myBot, setMyBot }) => {
                 height: "50px",
                 borderRadius: "50%",
                 background: myBot?.accentColor,
-                cursor: 'pointer'
+                cursor: "pointer",
               }}
               className="d-flex align-items-center justify-content-center"
             >
@@ -173,10 +178,14 @@ const ChatBot = ({ myBot, setMyBot }) => {
   );
 };
 
-export const ImgElement = ({imgSource, imgInfoNum}) => {
+export const ImgElement = ({ imgSource, imgInfoNum }) => {
   return (
-    <img style={{ width: "50px", height: "50px" }} src={imgSource} alt={`bot_icon_0${imgInfoNum}.png`} />
-  )
-}
+    <img
+      style={{ width: "50px", height: "50px" }}
+      src={imgSource}
+      alt={`bot_icon_0${imgInfoNum}.png`}
+    />
+  );
+};
 
 export default ChatBot;
