@@ -14,6 +14,7 @@ import {
   Form,
   Table,
   Spinner,
+  Media,
 } from "reactstrap";
 import { Btn, H3, H5, H6, Image } from "../../../AbstractElements";
 import EmbedBot from "./EmbedBot";
@@ -35,6 +36,13 @@ const Knowledge = ({ myBot }) => {
   const [mode, setMode] = useState("");
   const [faqList, setFaqList] = useState([]);
   const { userData, setUserData } = appStore();
+  const [paymentMethod, setpaymentMethod] = useState("");
+
+  const payment_methods = [
+    { code: "default", text: "Select Payment Mode" },
+    { code: "COD", text: "Cash On Delivery" },
+    { code: "ONLINE", text: "Online" },
+  ];
 
   useEffect(() => {
     setFaqList([...userData?.faqListURL]);
@@ -86,6 +94,30 @@ const Knowledge = ({ myBot }) => {
                   <span></span>
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
+              </Row>
+              <Row>
+              <Col md="8 mb-1">
+                      <Label htmlFor="validationCustom01">
+                        {"Payment Methods"}
+                      </Label>
+                      <div className="w-100 d-flex flex-wrap gap-2 align-items-top">
+                      <select
+                        className="w-75 form-control mb-2"
+                        name="paymentMethod"
+                        onChange={(e) => {
+                          setpaymentMethod(e.target.value);
+                        }}
+                        required={true}
+                      >
+                        {payment_methods.map((ele) => (
+                          <option key={ele?.code} value={ele?.code}>
+                            {ele?.text}
+                          </option>
+                        ))}
+                      </select>
+                      <DynamicSwitch />
+                      </div>
+              </Col>
               </Row>
             </Form>
           </Col>
@@ -411,3 +443,16 @@ const CSVFileInfoList = ({
 };
 
 export default Knowledge;
+
+const DynamicSwitch = ({}) => {
+  return (<Media>
+        <Label className="col-form-label m-r-10">{`ON/OFF`}</Label>
+        <Media body className="text-evenly icon-state">
+          <Label className="switch">
+            <Input type="checkbox" />
+            <span className="switch-state"></span>
+          </Label>
+        </Media>
+      </Media>
+  );
+};

@@ -106,7 +106,7 @@ const BotInfoContent = ({ boatId }) => {
                 style={{
                   height: "70vh",
                   marginBottom: "5vh",
-                  overflow: "hidden",
+                  overflowY: "scroll",
                   paddingBottom: "10vh",
                 }}
               >
