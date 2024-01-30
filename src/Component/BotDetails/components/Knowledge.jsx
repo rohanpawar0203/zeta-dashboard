@@ -28,6 +28,7 @@ import { FAQFilesAPI, User } from "../../../api";
 import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
 import appStore from "../../Live Chats/Client/AppStore";
+import PaymentModesForm from "./paymentModesForm";
 
 const token = sessionStorage.getItem("token");
 
@@ -44,6 +45,15 @@ const Knowledge = ({ myBot }) => {
     { code: "ONLINE", text: "Online" },
   ];
 
+ const [rawPaymentData, rawPaymentData] = useState({
+  "paymentEnabled": "",
+  "paymentType": "",
+  "paymentName": "",
+  "paymentKeyId": "",
+  "paymentKeySecret": "",
+  "paymentBase64Key": "",
+  "paymentApiKey": "",
+ })
   useEffect(() => {
     setFaqList([...userData?.faqListURL]);
   }, [userData]);
@@ -119,6 +129,8 @@ const Knowledge = ({ myBot }) => {
                       </div>
               </Col>
               </Row>
+              {paymentMethod === 'ONLINE' ?
+              <PaymentModesForm /> : ''}
             </Form>
           </Col>
           <Col sm="12">
