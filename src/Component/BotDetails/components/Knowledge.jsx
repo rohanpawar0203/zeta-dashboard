@@ -28,7 +28,7 @@ import { FAQFilesAPI, User } from "../../../api";
 import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
 import appStore from "../../Live Chats/Client/AppStore";
-import PaymentModesForm from "./paymentModesForm";
+import PaymentModesForm from "./PaymentModesForm";
 
 const token = sessionStorage.getItem("token");
 
@@ -38,14 +38,16 @@ const Knowledge = ({ myBot }) => {
   const [faqList, setFaqList] = useState([]);
   const { userData, setUserData } = appStore();
   const [paymentMethod, setpaymentMethod] = useState("");
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
 
   const payment_methods = [
-    { code: "default", text: "Select Payment Mode" },
+    { code: '' , text: "Select Payment Mode" },
     { code: "COD", text: "Cash On Delivery" },
     { code: "ONLINE", text: "Online" },
   ];
 
- const [rawPaymentData, rawPaymentData] = useState({
+ const [rawPaymentData, setRawPaymentData] = useState({
   "paymentEnabled": "",
   "paymentType": "",
   "paymentName": "",
@@ -54,6 +56,18 @@ const Knowledge = ({ myBot }) => {
   "paymentBase64Key": "",
   "paymentApiKey": "",
  })
+
+ const handlePaymentModeCreation = (data, event) => {
+  event.preventDefault();
+  console.log('data', data);
+  if (data !== '') {
+    console.log('data', data);
+    // alert('You submitted the form and stuff!');
+  } else {
+    errors.showMessages();
+  }
+};
+
   useEffect(() => {
     setFaqList([...userData?.faqListURL]);
   }, [userData]);
@@ -66,7 +80,7 @@ const Knowledge = ({ myBot }) => {
             <Form
               className="needs-validation "
               noValidate=""
-              // onSubmit={handleBotEdit}
+              onSubmit={handleSubmit(handlePaymentModeCreation)}
               // style={{ height: "60vh", overflowY: "scroll" }}
             >
               <Row>
@@ -116,21 +130,83 @@ const Knowledge = ({ myBot }) => {
                         name="paymentMethod"
                         onChange={(e) => {
                           setpaymentMethod(e.target.value);
+                          if(!paymentMethod){
+                            console.log('***');
+                            setRawPaymentData((pre) => ({...pre, paymentEnabled: false}))
+                          }
+                          
                         }}
+                        // {...register('paymentMethod', { required: true })}
                         required={true}
                       >
                         {payment_methods.map((ele) => (
-                          <option key={ele?.code} value={ele?.code}>
+                          <option key={ele?.text} value={ele?.code}>
                             {ele?.text}
                           </option>
                         ))}
                       </select>
-                      <DynamicSwitch />
+                      {/* <span>{errors.paymentMethod && 'Payment Method is required'}</span> */}
+                      <DynamicSwitch rawPaymentData={rawPaymentData} setRawPaymentData={setRawPaymentData} register={register('paymentEnabled', { required: true })}/>
                       </div>
               </Col>
               </Row>
-              {paymentMethod === 'ONLINE' ?
-              <PaymentModesForm /> : ''}
+              {(paymentMethod === 'ONLINE' && rawPaymentData['paymentEnabled'] === true) ?
+              <>
+               <Row>
+            <Col md="4 mb-3">
+              <Label htmlFor="validationCustom01">{"Payment Name"}</Label>
+              <InputGroup>
+                <InputGroupText>💰</InputGroupText>
+              <input className="form-control" name="paymentName" type="text" placeholder="Payment Name" {...register('paymentName', { required: true })} />
+              <span>{errors.paymentName && 'Payment Name is required'}</span>
+              </InputGroup>
+            </Col>
+            <Col md="4 mb-3">
+              <Label htmlFor="validationCustom02">{"Payment KeyId"}</Label>
+              <InputGroup>
+                <InputGroupText>&#x1F511;</InputGroupText>
+              <input className="form-control" name="paymentKeyId" type="text" placeholder="Payment KeyId" {...register('paymentKeyId', { required: true })} />
+              <span>{errors.paymentKeyId && 'Payment KeyId is required'}</span>
+              <div className="valid-feedback">{'Looks good!'}</div>
+              </InputGroup>
+            </Col>
+            <Col md="4 mb-3">
+              <Label htmlFor="validationCustomUsername">{"Payment Key Secret"}</Label>
+              <InputGroup>
+                <InputGroupText>&#x1F511;</InputGroupText>
+                {/* <InputGroupAddon addonType="prepend"> */}
+                {/* </InputGroupAddon> */}
+                <input className="form-control" name="paymentKeySecret" type="text" placeholder="Payment Key Secret" {...register('paymentKeySecret', { required: true })} />
+                <span>{errors.paymentKeySecret && 'Payment Key Secret is required'}</span>
+              </InputGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md="6 mb-3">
+              <Label htmlFor="validationCustom03">{"Payment Base64Key"}</Label>
+              <InputGroup>
+                <InputGroupText>&#x1F511;</InputGroupText>
+              <input className="form-control" name="paymentBase64Key" type="text" placeholder="Payment Base64Key" {...register('paymentBase64Key', { required: true })} />
+              <span>{errors.paymentBase64Key && 'Payment Base64Key is required'}</span>
+              </InputGroup>
+            </Col>
+            <Col md="3 mb-3">
+              <Label htmlFor="validationCustom04">{"Payment ApiKey"}</Label>
+              <InputGroup>
+                <InputGroupText>&#x1F511;</InputGroupText>
+              <input className="form-control" id="validationCustom04" name="paymentApiKey" type="text" placeholder="Payment ApiKey" {...register('paymentApiKey', { required: true })} />
+              <span>{errors.paymentApiKey && 'Payment ApiKey is required'}</span>
+              </InputGroup>
+            </Col>
+            {/* <Col md="3 mb-3">
+              <Label htmlFor="validationCustom05">Zip</Label>
+              <input className="form-control" id="validationCustom05" name="zip" type="text" placeholder="Zip" {...register('zip', { required: true })} />
+              <span >{errors.zip && 'Please provide a valid zip.'}</span>
+              <div className="invalid-feedback">{'Please provide a valid zip.'}</div>
+            </Col> */}
+          </Row>
+              </> : ''}
+              <Btn attrBtn={{ color: !paymentMethod ? 'light' : 'primary', disabled: !paymentMethod}}>{'Submit'}</Btn>
             </Form>
           </Col>
           <Col sm="12">
@@ -456,12 +532,17 @@ const CSVFileInfoList = ({
 
 export default Knowledge;
 
-const DynamicSwitch = ({}) => {
+const DynamicSwitch = ({setRawPaymentData,register,rawPaymentData}) => {
+  
+  const handleSwitchChange = (e) => {
+    console.log('e?.target?.checked **', e?.target?.checked);
+    setRawPaymentData((pre) => ({...pre, paymentEnabled: e?.target?.checked}));
+  }
   return (<Media>
         <Label className="col-form-label m-r-10">{`ON/OFF`}</Label>
         <Media body className="text-evenly icon-state">
           <Label className="switch">
-            <Input type="checkbox" />
+            <Input name='paymentEnabled' type="checkbox" onChange={handleSwitchChange} defaultChecked={rawPaymentData?.paymentEnabled}/>
             <span className="switch-state"></span>
           </Label>
         </Media>

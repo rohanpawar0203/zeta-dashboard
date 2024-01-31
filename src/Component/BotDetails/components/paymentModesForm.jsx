@@ -1,67 +1,78 @@
-import { Btn } from '../../../AbstractElements';
-import { FirstName, LastName, Username, State, City } from '../../../../Constant';
 import React, { Fragment } from 'react';
+import { Btn } from '../../../AbstractElements';
 import { useForm } from 'react-hook-form';
 import { Col, Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Row } from 'reactstrap';
 
 const PaymentModesForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = data => {
+    const handlePaymentModeCreation = (data, event) => {
+      event.preventDefault();
+      console.log('data', data);
       if (data !== '') {
-        alert('You submitted the form and stuff!');
+        console.log('data', data);
+        // alert('You submitted the form and stuff!');
       } else {
         errors.showMessages();
       }
     };
     return (
       <Fragment>
-        <Form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}>
+        {/* <Form className="needs-validation mb-2" noValidate="" onSubmit={handleSubmit(handlePaymentModeCreation)}> */}
           <Row>
             <Col md="4 mb-3">
-              <Label htmlFor="validationCustom01">{FirstName}</Label>
-              <input className="form-control" name="firstName" type="text" placeholder="First name" {...register('firstName', { required: true })} />
-              <span>{errors.firstName && 'First name is required'}</span>
-              <div className="valid-feedback">{'Looks good!'}</div>
-            </Col>
-            <Col md="4 mb-3">
-              <Label htmlFor="validationCustom02">{LastName}</Label>
-              <input className="form-control" name="lastName" type="text" placeholder="Last name" {...register('lastName', { required: true })} />
-              <span>{errors.lastName && 'Last name is required'}</span>
-              <div className="valid-feedback">{'Looks good!'}</div>
-            </Col>
-            <Col md="4 mb-3">
-              <Label htmlFor="validationCustomUsername">{Username}</Label>
+              <Label htmlFor="validationCustom01">{"Payment Name"}</Label>
               <InputGroup>
+                <InputGroupText>💰</InputGroupText>
+              <input className="form-control" name="paymentName" type="text" placeholder="Payment Name" {...register('paymentName', { required: true })} />
+              <span>{errors.paymentName && 'Payment Name is required'}</span>
+              </InputGroup>
+            </Col>
+            <Col md="4 mb-3">
+              <Label htmlFor="validationCustom02">{"Payment KeyId"}</Label>
+              <InputGroup>
+                <InputGroupText>&#x1F511;</InputGroupText>
+              <input className="form-control" name="paymentKeyId" type="text" placeholder="Payment KeyId" {...register('paymentKeyId', { required: true })} />
+              <span>{errors.paymentKeyId && 'Payment KeyId is required'}</span>
+              <div className="valid-feedback">{'Looks good!'}</div>
+              </InputGroup>
+            </Col>
+            <Col md="4 mb-3">
+              <Label htmlFor="validationCustomUsername">{"Payment Key Secret"}</Label>
+              <InputGroup>
+                <InputGroupText>&#x1F511;</InputGroupText>
                 {/* <InputGroupAddon addonType="prepend"> */}
-                <InputGroupText>{'@'}</InputGroupText>
                 {/* </InputGroupAddon> */}
-                <input className="form-control" name="userName" type="text" placeholder="Username" {...register('userName', { required: true })} />
-                <span>{errors.lastName && 'User name is required'}</span>
+                <input className="form-control" name="paymentKeySecret" type="text" placeholder="Payment Key Secret" {...register('paymentKeySecret', { required: true })} />
+                <span>{errors.paymentKeySecret && 'Payment Key Secret is required'}</span>
               </InputGroup>
             </Col>
           </Row>
           <Row>
             <Col md="6 mb-3">
-              <Label htmlFor="validationCustom03">{City}</Label>
-              <input className="form-control" name="city" type="text" placeholder="City" {...register('city', { required: true })} />
-              <span>{errors.city && 'Please provide a valid city'}</span>
-              <div className="invalid-feedback">{'Please provide a valid city.'}</div>
+              <Label htmlFor="validationCustom03">{"Payment Base64Key"}</Label>
+              <InputGroup>
+                <InputGroupText>&#x1F511;</InputGroupText>
+              <input className="form-control" name="paymentBase64Key" type="text" placeholder="Payment Base64Key" {...register('paymentBase64Key', { required: true })} />
+              <span>{errors.paymentBase64Key && 'Payment Base64Key is required'}</span>
+              </InputGroup>
             </Col>
             <Col md="3 mb-3">
-              <Label htmlFor="validationCustom04">{State}</Label>
-              <input className="form-control" id="validationCustom04" name="state" type="text" placeholder="State" {...register('state', { required: true })} />
-              <span>{errors.state && 'Please provide a valid state.'}</span>
-              <div className="invalid-feedback">{'Please provide a valid state.'}</div>
+              <Label htmlFor="validationCustom04">{"Payment ApiKey"}</Label>
+              <InputGroup>
+                <InputGroupText>&#x1F511;</InputGroupText>
+              <input className="form-control" id="validationCustom04" name="paymentApiKey" type="text" placeholder="Payment ApiKey" {...register('paymentApiKey', { required: true })} />
+              <span>{errors.paymentApiKey && 'Payment ApiKey is required'}</span>
+              </InputGroup>
             </Col>
-            <Col md="3 mb-3">
+            {/* <Col md="3 mb-3">
               <Label htmlFor="validationCustom05">Zip</Label>
               <input className="form-control" id="validationCustom05" name="zip" type="text" placeholder="Zip" {...register('zip', { required: true })} />
               <span >{errors.zip && 'Please provide a valid zip.'}</span>
               <div className="invalid-feedback">{'Please provide a valid zip.'}</div>
-            </Col>
+            </Col> */}
           </Row>
-          <FormGroup>
+          {/* <FormGroup>
             <div className="form-check">
               <div className="checkbox p-0">
                 <Input className="form-check-input" id="invalidCheck" type="checkbox" />
@@ -69,9 +80,10 @@ const PaymentModesForm = () => {
               </div>
               <div className="invalid-feedback">{'You must agree before submitting.'}</div>
             </div>
-          </FormGroup>
-          <Btn attrBtn={{ color: 'primary' }}>{'Submit form'}</Btn>
-        </Form>
+          </FormGroup> */}
+          
+          {/* <input type="submit" className='btn btn-primary' value='Submit'/> */}
+        {/* </Form> */}
       </Fragment>
     );
 }
