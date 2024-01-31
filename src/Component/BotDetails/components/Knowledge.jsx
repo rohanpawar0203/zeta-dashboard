@@ -16,7 +16,7 @@ import {
   Spinner,
   Media,
 } from "reactstrap";
-import { Btn, H3, H5, H6, Image } from "../../../AbstractElements";
+import { Btn, H3, H5, H6, Image, LI } from "../../../AbstractElements";
 import EmbedBot from "./EmbedBot";
 import EmbedIframe from "./EmbedIframe";
 import GetRestAPI from "./GetRestAPI";
@@ -24,21 +24,23 @@ import Integrations from "./Integrations";
 import { useForm } from "react-hook-form";
 import Dropzone from "react-dropzone-uploader";
 import axios from "axios";
-import { FAQFilesAPI, User } from "../../../api";
+import { FAQFilesAPI, PaymentModesAPI, User } from "../../../api";
 import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
 import appStore from "../../Live Chats/Client/AppStore";
 import PaymentModesForm from "./PaymentModesForm";
+import CustomSpinner from "../../../CommonElements/CustomSpinner/CustomSpinner";
 
 const token = sessionStorage.getItem("token");
 
 const Knowledge = ({ myBot }) => {
   const [loading, setLoading] = useState(false);
+  const [btnLoading, setbtnLoading] = useState(false);
   const [mode, setMode] = useState("");
   const [faqList, setFaqList] = useState([]);
-  const { userData, setUserData } = appStore();
+  const { userData, setUserData, token } = appStore();
   const [paymentMethod, setpaymentMethod] = useState("");
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset , formState: { errors } } = useForm();
 
 
   const payment_methods = [
@@ -48,7 +50,7 @@ const Knowledge = ({ myBot }) => {
   ];
 
  const [rawPaymentData, setRawPaymentData] = useState({
-  "paymentEnabled": "",
+  "paymentEnabled": false,
   "paymentType": "",
   "paymentName": "",
   "paymentKeyId": "",
@@ -57,11 +59,38 @@ const Knowledge = ({ myBot }) => {
   "paymentApiKey": "",
  })
 
- const handlePaymentModeCreation = (data, event) => {
-  event.preventDefault();
+ const createPaymentMode = async(payload) => {
+  setbtnLoading(true);
+  try {
+    const response = await fetch(`${PaymentModesAPI}`, {
+      method: "POST",
+      body: JSON.stringify([payload]),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const responseData = await response.json();
+    if (response.ok) {
+      toast.success('Successfully added payment mode');
+    } else {
+      toast.error(responseData.message);
+    }
+  } catch (error) {
+    toast.error(error);
+  }
+  setbtnLoading(false);
+ }
+
+ const handlePaymentModeCreation = (data) => {
   console.log('data', data);
   if (data !== '') {
-    console.log('data', data);
+     let payload = (paymentMethod === 'ONLINE') ? {...rawPaymentData, ...data, paymentType: "Online"} : 
+     {paymentType : "CashOnDelivery", paymentEnabled: rawPaymentData['paymentEnabled']};
+     if(payload){
+      payload = {userId: userData?._id, ...payload};  // userId
+      console.log('payload ',payload);
+      createPaymentMode(payload);
+     }
     // alert('You submitted the form and stuff!');
   } else {
     errors.showMessages();
@@ -77,14 +106,8 @@ const Knowledge = ({ myBot }) => {
       <Container fluid={true}>
         <Row>
           <Col sm="12">
-            <Form
-              className="needs-validation "
-              noValidate=""
-              onSubmit={handleSubmit(handlePaymentModeCreation)}
-              // style={{ height: "60vh", overflowY: "scroll" }}
-            >
               <Row>
-                <Col md="4 mb-3">
+                <Col md="4 mb-3"> 
                   <Label htmlFor="validationCustom01">{"Bot Name"}</Label>
                   <input
                     className="form-control"
@@ -122,7 +145,7 @@ const Knowledge = ({ myBot }) => {
               <Row>
               <Col md="8 mb-1">
                       <Label htmlFor="validationCustom01">
-                        {"Payment Methods"}
+                        {"Add Payment Modes"}
                       </Label>
                       <div className="w-100 d-flex flex-wrap gap-2 align-items-top">
                       <select
@@ -130,13 +153,7 @@ const Knowledge = ({ myBot }) => {
                         name="paymentMethod"
                         onChange={(e) => {
                           setpaymentMethod(e.target.value);
-                          if(!paymentMethod){
-                            console.log('***');
-                            setRawPaymentData((pre) => ({...pre, paymentEnabled: false}))
-                          }
-                          
                         }}
-                        // {...register('paymentMethod', { required: true })}
                         required={true}
                       >
                         {payment_methods.map((ele) => (
@@ -146,13 +163,21 @@ const Knowledge = ({ myBot }) => {
                         ))}
                       </select>
                       {/* <span>{errors.paymentMethod && 'Payment Method is required'}</span> */}
-                      <DynamicSwitch rawPaymentData={rawPaymentData} setRawPaymentData={setRawPaymentData} register={register('paymentEnabled', { required: true })}/>
+                      <DynamicSwitch rawPaymentData={rawPaymentData} setRawPaymentData={setRawPaymentData} />
                       </div>
               </Col>
+              <Col md="4 mb-3"> 
+              {/* <Label htmlFor="validationCustom02">{"Check Payment Modes"}</Label> */}
+              </Col>
               </Row>
-              {(paymentMethod === 'ONLINE' && rawPaymentData['paymentEnabled'] === true) ?
+              <Form
+              className="needs-validation mb-2"
+              onSubmit={handleSubmit(handlePaymentModeCreation)}
+              // style={{ height: "60vh", overflowY: "scroll" }}
+            >
+              {(paymentMethod === 'ONLINE') ?
               <>
-               <Row>
+               <Row>   
             <Col md="4 mb-3">
               <Label htmlFor="validationCustom01">{"Payment Name"}</Label>
               <InputGroup>
@@ -198,15 +223,11 @@ const Knowledge = ({ myBot }) => {
               <span>{errors.paymentApiKey && 'Payment ApiKey is required'}</span>
               </InputGroup>
             </Col>
-            {/* <Col md="3 mb-3">
-              <Label htmlFor="validationCustom05">Zip</Label>
-              <input className="form-control" id="validationCustom05" name="zip" type="text" placeholder="Zip" {...register('zip', { required: true })} />
-              <span >{errors.zip && 'Please provide a valid zip.'}</span>
-              <div className="invalid-feedback">{'Please provide a valid zip.'}</div>
-            </Col> */}
           </Row>
               </> : ''}
-              <Btn attrBtn={{ color: !paymentMethod ? 'light' : 'primary', disabled: !paymentMethod}}>{'Submit'}</Btn>
+              <Btn attrBtn={{ color: !paymentMethod ? 'light' : 'primary', disabled: !paymentMethod}}>
+              {btnLoading ? <CustomSpinner/> :  'Create'}
+              </Btn>
             </Form>
           </Col>
           <Col sm="12">
@@ -532,7 +553,7 @@ const CSVFileInfoList = ({
 
 export default Knowledge;
 
-const DynamicSwitch = ({setRawPaymentData,register,rawPaymentData}) => {
+const DynamicSwitch = ({setRawPaymentData, rawPaymentData}) => {
   
   const handleSwitchChange = (e) => {
     console.log('e?.target?.checked **', e?.target?.checked);
@@ -542,7 +563,7 @@ const DynamicSwitch = ({setRawPaymentData,register,rawPaymentData}) => {
         <Label className="col-form-label m-r-10">{`ON/OFF`}</Label>
         <Media body className="text-evenly icon-state">
           <Label className="switch">
-            <Input name='paymentEnabled' type="checkbox" onChange={handleSwitchChange} defaultChecked={rawPaymentData?.paymentEnabled}/>
+            <Input name='paymentEnabled' type="checkbox" onChange={handleSwitchChange} />
             <span className="switch-state"></span>
           </Label>
         </Media>
