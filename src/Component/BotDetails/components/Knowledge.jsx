@@ -46,56 +46,39 @@ const Knowledge = ({ myBot }) => {
   const { register, handleSubmit, reset , formState: { errors } } = useForm();
   const history = useNavigate();
 
+//  const createPaymentMode = async(payload) => {
+//   setbtnLoading(true);
+//   try {
+//     console.log('payload ', payload);
+//     const response = await fetch(`${PaymentModesAPI}`, {
+//       method: "POST",
+//       body: JSON.stringify([payload]),
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
+//     const responseData = await response.json();
+//     if (response.ok) {
+//       toast.success('Successfully added payment mode');
+//     } else {
+//       toast.error(responseData.message);
+//     }
+//   } catch (error) {
+//     toast.error(error);
+//   }
+//   setbtnLoading(false);
+//  }
 
-  const payment_methods = [
-    { code: '' , text: "Select Payment Mode" },
-    { code: "COD", text: "Cash On Delivery" },
-    { code: "ONLINE", text: "Online" },
-  ];
-
-  const [rawPaymentData, setRawPaymentData] = useState({
-    "paymentEnabled": false,
-    "paymentType": "",
-    "paymentName": "",
-    "paymentKeyId": "",
-    "paymentKeySecret": "",
-    "paymentBase64Key": "",
-    "paymentApiKey": "",
-   })
-
- const createPaymentMode = async(payload) => {
-  setbtnLoading(true);
-  try {
-    console.log('payload ', payload);
-    const response = await fetch(`${PaymentModesAPI}`, {
-      method: "POST",
-      body: JSON.stringify([payload]),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const responseData = await response.json();
-    if (response.ok) {
-      toast.success('Successfully added payment mode');
-    } else {
-      toast.error(responseData.message);
-    }
-  } catch (error) {
-    toast.error(error);
-  }
-  setbtnLoading(false);
- }
-
- const handlePaymentModeCreation = () => {
-  let payload = {userId: userData?._id, paymentType : "CashOnDelivery", paymentEnabled: rawPaymentData['paymentEnabled'],
-  "paymentName": "",
-  "paymentKeyId": "",
-  "paymentKeySecret": "",
-  "paymentBase64Key": "",
-  "paymentApiKey": ""
-}
-  if(payload) createPaymentMode(payload);
-};
+//  const handlePaymentModeCreation = () => {
+//   let payload = {userId: userData?._id, paymentType : "CashOnDelivery", paymentEnabled: rawPaymentData['paymentEnabled'],
+//   "paymentName": "",
+//   "paymentKeyId": "",
+//   "paymentKeySecret": "",
+//   "paymentBase64Key": "",
+//   "paymentApiKey": ""
+// }
+//   if(payload) createPaymentMode(payload);
+// };
 
   useEffect(() => {
     setFaqList([...userData?.faqListURL]);
@@ -144,56 +127,18 @@ const Knowledge = ({ myBot }) => {
                 </Col>
               </Row>
               <Row>
-              <Col md="8 mb-1">
-                      <Label htmlFor="validationCustom01">
-                        {"Add Payment Modes"}
-                      </Label>
-                      <div className="w-100 d-flex flex-wrap gap-4 align-items-top">
-                      {/* <select
-                        className="w-75 form-control mb-2"
-                        name="paymentMethod"
-                        onChange={(e) => {
-                          setpaymentMethod(e.target.value);
-                        }}
-                        required={true}
-                      >
-                        {payment_methods.map((ele) => (
-                          <option key={ele?.text} value={ele?.code}>
-                            {ele?.text}
-                          </option>
-                        ))}
-                      </select> */}
-                      <div className="checkbox">
-                    <Input name='COD' id="checkbox1" type="checkbox" checked={paymentMethod === 'COD'}  onChange={(e) => {
-                      let result = (e?.target?.checked) ? e?.target?.name : '';
-                      setpaymentMethod(result);
-                    }}/>
-                    <Label for="checkbox1">{'Cash On Delivery'}</Label>
-                     </div>
-
-                    <div className="checkbox">
-                    <Input name="ONLINE" id="checkbox2" type="checkbox" checked={paymentMethod === 'ONLINE'} onChange={(e) => {
-                      let result = (e?.target?.checked) ? e?.target?.name : '';
-                      // setpaymentMethod(result);
-                      history(`${process.env.PUBLIC_URL}/online-payment-modes`);
-                    }}/>
-                    <Label for="checkbox2">{'Online'}</Label>
-                     </div>
-                      {/* <span>{errors.paymentMethod && 'Payment Method is required'}</span> */}
-                      </div>
-              </Col>
               <Col md="4 mb-3"> 
               {/* <Label htmlFor="validationCustom02">{"Check Payment Modes"}</Label> */}
               </Col>
               </Row>
-              {paymentMethod === 'COD' &&  <>
+              {/* {paymentMethod === 'COD' &&  <>
               <DynamicSwitch setRawPaymentData={setRawPaymentData} rawPaymentData={rawPaymentData}/>
               <Btn attrBtn={{ color: paymentMethod !== 'COD' ? 'light' : 'primary', disabled: (paymentMethod !== 'COD'), 
               className:'mb-2', onClick: () => handlePaymentModeCreation()}}>
               {btnLoading ? <CustomSpinner/> :  'Save'}
               </Btn>
               </>
-              }
+              } */}
           </Col>
           <Col sm="12">
             <h2>Knowledge</h2>
@@ -518,11 +463,11 @@ const CSVFileInfoList = ({
 
 export default Knowledge;
 
-const DynamicSwitch = ({setRawPaymentData, rawPaymentData}) => {
+const DynamicSwitch = ({}) => {
   
   const handleSwitchChange = (e) => {
     console.log('e?.target?.checked **', e?.target?.checked);
-    setRawPaymentData((pre) => ({...pre, paymentEnabled: e?.target?.checked}));
+    // setRawPaymentData((pre) => ({...pre, paymentEnabled: e?.target?.checked}));
   }
   return (<Media>
         <Label className="col-form-label m-r-10">{`ON/OFF`}</Label>

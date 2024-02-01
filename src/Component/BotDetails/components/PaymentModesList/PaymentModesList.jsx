@@ -1,48 +1,72 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { paymentsData, paymentDataColumns } from './TableData'
-import DataTable from 'react-data-table-component';
-import { PaymentModesAPI } from '../../../../api';
-import appStore from '../../../Live Chats/Client/AppStore';
-import { toast } from 'react-toastify';
-import { Btn, H6 } from '../../../../AbstractElements';
-import { Col, Form, Input, InputGroup, InputGroupText, Label, Media, Row } from 'reactstrap';
-import CustomSpinner from '../../../../CommonElements/CustomSpinner/CustomSpinner';
+import { paymentsData, paymentDataColumns } from "./TableData";
+import DataTable from "react-data-table-component";
+import { PaymentModesAPI } from "../../../../api";
+import appStore from "../../../Live Chats/Client/AppStore";
+import { toast } from "react-toastify";
+import { Btn, H6 } from "../../../../AbstractElements";
+import { v4 as uuid } from "uuid";
+import {
+  Col,
+  Form,
+  Input,
+  InputGroup,
+  InputGroupText,
+  Label,
+  Media,
+  Row,
+} from "reactstrap";
+import CustomSpinner from "../../../../CommonElements/CustomSpinner/CustomSpinner";
+import FormModal from "./FormModal";
+import { MdEdit, MdOutlineEdit } from "react-icons/md";
 
 const style = {
   width: 40,
-  height: 40
+  height: 40,
 };
 const style2 = {
-  width: 60, fontSize: 13, padding: 3
+  width: 60,
+  fontSize: 13,
+  padding: 3,
 };
 
 const PaymentModesList = () => {
   const { userData, setUserData, token } = appStore();
   const [paymentModes, setPaymentModes] = useState([]);
   const [btnLoading, setbtnLoading] = useState(false);
-  const [paymentsTableData, setpaymentsTableData] = useState([]);
-  const { register, handleSubmit, reset , formState: { errors } } = useForm();
+  const [formModal, setFormModal] = useState(false);
+  const [eventMode, seteventMode] = useState('');
+  const toggleFormModal = () => setFormModal((pre) => !pre);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const [rawPaymentData, setRawPaymentData] = useState({
-    "paymentEnabled": false,
-    "paymentType": "",
-    "paymentName": "",
-    "paymentKeyId": "",
-    "paymentKeySecret": "",
-    "paymentBase64Key": "",
-    "paymentApiKey": "",
-   })
-
-   const handlePaymentModeCreation = (data) => {
-    console.log('data', data);
-    if (data !== '') {
-      // createPaymentMode(payload);
-    }else {
-      errors.showMessages();
+    paymentEnabled: false,
+    paymentType: "",
+    paymentName: "",
+    paymentKeyId: "",
+    paymentKeySecret: "",
+    paymentBase64Key: "",
+    paymentApiKey: "",
+  });
+  
+  const resetFormValues = () => {
+    for (const key in rawPaymentData) {
+        if(key in rawPaymentData && key !== 'paymentEnabled'){
+            rawPaymentData[key] = '';
+        }if(key in rawPaymentData && key === 'paymentEnabled'){
+          rawPaymentData[key] = false;
+        }
+        console.log('formData ', rawPaymentData);
+        setRawPaymentData({...rawPaymentData});
     }
-  };
+  }
 
-  const getPaymentModes = async() => {
+  const getPaymentModes = async () => {
     try {
       const response = await fetch(`${PaymentModesAPI}/${userData?._id}`, {
         method: "GET",
@@ -52,8 +76,10 @@ const PaymentModesList = () => {
       });
       const responseData = await response.json();
       if (response.ok) {
-        console.log('responseData ', responseData);
-        if(responseData) setPaymentModes([...setPaymentModes]);
+        console.log("responseData ", responseData);
+        if (responseData){
+          setPaymentModes([...responseData]);
+        }
       } else {
         toast.error(responseData.message);
       }
@@ -63,126 +89,125 @@ const PaymentModesList = () => {
   };
 
   const prepareTableData = () => {
-    if(paymentModes.length){
-     let data = paymentModes?.map((ele, ind) => (
-      { 
-        "userId": <H6>12345</H6>,
+    if (paymentModes.length) {
+      let data = paymentModes?.map((ele, ind) => ({
+        userId: <H6>12345</H6>,
         "Payment Name": <H6>JusPay</H6>,
         "Payment Type": <H6>Online</H6>,
         "Payment Enabled": <H6>Yes</H6>,
-        "action":
-          <div className='d-flex  gap-1'>
+        action: (
+          <div className="d-flex  gap-1">
             <span>
-              <Btn attrBtn={{ style: style2, color: 'danger', className: 'btn btn-xs', type: 'button' }}>Delete</Btn>
+              <Btn
+                attrBtn={{
+                  style: style2,
+                  color: "danger",
+                  className: "btn btn-xs",
+                  type: "button",
+                }}
+              >
+                Delete
+              </Btn>
             </span>
             <span>
-              <Btn attrBtn={{ style: style2, color: 'primary', className: 'btn btn-xs ms-2', type: 'button' }}>Edit </Btn>
+              <Btn
+                attrBtn={{
+                  style: style2,
+                  color: "primary",
+                  className: "btn btn-xs ms-2",
+                  type: "button",
+                }}
+              >
+                Edit{" "}
+              </Btn>
             </span>
-          </div >
-      }
-     ));
-
+          </div>
+        ),
+      }));
     }
-  }
+  };
+
+  const updatePaymentMode = async(payload) => {
+    try {
+      console.log('payload ', payload);
+      const response = await fetch(`${PaymentModesAPI}/${payload?._id}/update`, {
+        method: "PATCH",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const responseData = await response.json();
+      if (response.ok) {
+        getPaymentModes();
+        resetFormValues();
+        toast.success('Successfully updated payment mode');
+      } else {
+        toast.error(responseData.message);
+      }
+    } catch (error) {
+      toast.error(error);
+    }
+}
 
   useEffect(() => {
     getPaymentModes();
+    console.log((paymentModes?.length > 0));
   }, []);
 
-
-  
   return (
     <Fragment>
-      <>  
-      <Form className="needs-validation mb-2"
-              onSubmit={handleSubmit(handlePaymentModeCreation)}
-              // style={{ height: "60vh", overflowY: "scroll" }}
-            >
-          <Row>   
-            <Col md="4 mb-3">
-              <Label htmlFor="validationCustom01">{"Payment Name"}</Label>
-              <InputGroup>
-                <InputGroupText>💰</InputGroupText>
-              <input className="form-control" name="paymentName" type="text" placeholder="Payment Name" {...register('paymentName', { required: true })} />
-              <span>{errors.paymentName && 'Payment Name is required'}</span>
-              </InputGroup>
-            </Col>
-            <Col md="4 mb-3">
-              <Label htmlFor="validationCustom02">{"Payment KeyId"}</Label>
-              <InputGroup>
-                <InputGroupText>&#x1F511;</InputGroupText>
-              <input className="form-control" name="paymentKeyId" type="text" placeholder="Payment KeyId" {...register('paymentKeyId', { required: true })} />
-              <span>{errors.paymentKeyId && 'Payment KeyId is required'}</span>
-              <div className="valid-feedback">{'Looks good!'}</div>
-              </InputGroup>
-            </Col>
-            <Col md="4 mb-3">
-              <Label htmlFor="validationCustomUsername">{"Payment Key Secret"}</Label>
-              <InputGroup>
-                <InputGroupText>&#x1F511;</InputGroupText>
-                {/* <InputGroupAddon addonType="prepend"> */}
-                {/* </InputGroupAddon> */}
-                <input className="form-control" name="paymentKeySecret" type="text" placeholder="Payment Key Secret" {...register('paymentKeySecret', { required: true })} />
-                <span>{errors.paymentKeySecret && 'Payment Key Secret is required'}</span>
-              </InputGroup>
-            </Col>
-          </Row>
-          <Row>
-            <Col md="6 mb-3">
-              <Label htmlFor="validationCustom03">{"Payment Base64Key"}</Label>
-              <InputGroup>
-                <InputGroupText>&#x1F511;</InputGroupText>
-              <input className="form-control" name="paymentBase64Key" type="text" placeholder="Payment Base64Key" {...register('paymentBase64Key', { required: true })} />
-              <span>{errors.paymentBase64Key && 'Payment Base64Key is required'}</span>
-              </InputGroup>
-            </Col>
-            <Col md="3 mb-3">
-              <Label htmlFor="validationCustom04">{"Payment ApiKey"}</Label>
-              <InputGroup>
-                <InputGroupText>&#x1F511;</InputGroupText>
-              <input className="form-control" id="validationCustom04" name="paymentApiKey" type="text" placeholder="Payment ApiKey" {...register('paymentApiKey', { required: true })} />
-              <span>{errors.paymentApiKey && 'Payment ApiKey is required'}</span>
-              </InputGroup>
-            </Col>
-            <Col md="3 mb-3">
-              <Label htmlFor="validationCustom04">{"ON/OFF"}</Label>
-              <DynamicSwitch rawPaymentData={rawPaymentData} setRawPaymentData={setRawPaymentData} />
-            </Col>
-          </Row>
-          <Btn attrBtn={{ color:'primary'}}>
-              {btnLoading ? <CustomSpinner/> :  'Save'}
-           </Btn>
-      </Form>
-              </> 
-      <div className="table-responsive product-table">
-        <DataTable
-          noHeader
-          pagination
-          paginationServer
-          columns={paymentDataColumns}
-          data={paymentsData}
-        />
-      </div>
-    </Fragment>
-  )
-}
-
-const DynamicSwitch = ({setRawPaymentData, rawPaymentData}) => {
-  
-  const handleSwitchChange = (e) => {
-    console.log('e?.target?.checked **', e?.target?.checked);
-    setRawPaymentData((pre) => ({...pre, paymentEnabled: e?.target?.checked}));
-  }
-  return (<Media>
-        <Label className="col-form-label m-r-10">{`ON/OFF`}</Label>
-        <Media body className="text-evenly icon-state">
-          <Label className="switch">
-            <Input name='paymentEnabled' type="checkbox" onChange={handleSwitchChange} />
-            <span className="switch-state"></span>
+      <Row>
+        <div
+          style={{ width: "100%" }}
+          className="mt-2 d-flex justify-content-between mx-2"
+        >
+          <Label htmlFor="validationCustom01" className="fw-bold">
+            {"Payment Modes"}
           </Label>
-        </Media>
-      </Media>
+          <Btn attrBtn={{ color: "success" , onClick: () => {
+            seteventMode('create_payment_mode');
+            resetFormValues();
+            toggleFormModal();
+          }}}>{"Add Payment Mode"}</Btn>
+          <FormModal resetFormValues={resetFormValues} getPaymentModes={getPaymentModes} title={eventMode === 'create_payment_mode' ? 'Create Payment Mode' : 'Edit Payment Mode'}
+            modal={formModal} toggle={toggleFormModal} setFormData={setRawPaymentData}  formData={rawPaymentData} eventMode={eventMode}/>
+        </div>
+        <div className="w-100 flex-column gap-2">
+          <div className="checkbox mb-2">
+            <Input name="COD" id="checkbox1" type="checkbox" checked={true} />
+            <Label style={{ fontWeight: "600" }} for="checkbox1">
+              {"Cash On Delivery"}
+            </Label>
+          </div>
+          {
+            (paymentModes?.length > 0) ? 
+            paymentModes?.map((ele, ind) => {
+              let uniqCode = uuid();
+              return ( ele?.paymentType !== 'COD' ? <div key={uniqCode} className="checkbox">
+              <Input name="COD" id={uniqCode} type="checkbox"
+              onChange={(e) => {
+                console.log('yes');
+                let payLoad = {...ele, paymentEnabled: e?.target?.checked};
+                updatePaymentMode(payLoad);
+              }}
+              defaultChecked={ele?.paymentEnabled} />
+              <Label style={{ fontWeight: "600" }} for={uniqCode}>
+                {ele?.paymentName}
+              </Label>
+              <MdOutlineEdit style={{height: '18px', width: '18px', cursor: 'pointer', marginLeft: '8px'}} onClick={() => {
+                seteventMode('update_payment_mode');
+                setRawPaymentData({...ele});
+                toggleFormModal();
+              }}/>
+            </div> : '')
+            }) 
+            : ''
+          }
+        </div>
+      </Row>
+    </Fragment>
   );
 };
 
-export default PaymentModesList
+export default PaymentModesList;

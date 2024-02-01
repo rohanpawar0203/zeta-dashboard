@@ -60,6 +60,7 @@ import ChatBot from "./components/ChatBot";
 import appStore from "../Live Chats/Client/AppStore";
 import Knowledge from "./components/Knowledge";
 import ScrollBar from "react-perfect-scrollbar";
+import PaymentModesList from "./components/PaymentModesList/PaymentModesList";
 
 const BotInfoContent = ({ boatId }) => {
   const { setBotDetails } = appStore.getState();
@@ -99,23 +100,64 @@ const BotInfoContent = ({ boatId }) => {
   return (
     <Fragment>
       <Container fluid={true}>
-        <Row>
-          <Col sm="12 bot-info-card">
+        <Row> 
             <Card>
               <div
                 style={{
-                  height: "70vh",
+                  height: "65vh",
                   marginBottom: "5vh",
-                  overflowY: "scroll",
-                  paddingBottom: "10vh",
+                  overflowY: "scroll"
                 }}
               >
                 <CardBody className="h-100">
-                  <Knowledge myBot={myBot} />
+                  <Nav className="nav-pills">
+                    <div className="w-100  d-flex justify-content-center align-items-center">
+                      <div
+                        style={{ background: "whitesmoke" }}
+                        className="d-flex border border-lightgray p-1 rounded"
+                      >
+                        <NavItem style={{ cursor: "pointer" }}>
+                          <NavLink
+                            className={
+                              pillTab === "1"
+                                ? "active cursor-pointer"
+                                : "cursor-pointer"
+                            }
+                            onClick={() => setpillTab("1")}
+                          >
+                            {"Bot Info"}
+                          </NavLink>
+                        </NavItem>
+                        <NavItem style={{ cursor: "pointer" }}>
+                          <NavLink
+                            className={
+                              pillTab === "2"
+                                ? "active cursor-pointer"
+                                : "cursor-pointer"
+                            }
+                            onClick={() => setpillTab("2")}
+                          >
+                            {"Payment Modes"}
+                          </NavLink>
+                        </NavItem>
+                      </div>
+                    </div>
+                  </Nav>
+
+                  <TabContent
+                    activeTab={pillTab}
+                    className="position-relative h-100"
+                  >
+                    <TabPane className="fade show h-100" tabId="1">
+                      <Knowledge myBot={myBot} />
+                    </TabPane>
+                    <TabPane tabId="2" className="vh-75">
+                      <PaymentModesList />
+                    </TabPane>
+                  </TabContent>
                 </CardBody>
               </div>
             </Card>
-          </Col>
         </Row>
       </Container>
     </Fragment>
