@@ -141,6 +141,7 @@ import Tickets from "../Pages/Tickets";
 import CustomFlow from "../Pages/Custom Flow";
 import ChatsPanel from "../Pages/Chats Panel/ChatApp";
 import LiveChatPanel from "../Pages/Live Chats/ChatApp";
+import PaymentModesList from "../Pages/PaymentModeList";
 import DashBoard from "../Pages/Dash-board";
 import Store from "../Pages/Store";
 import WhatsAppWidget from "../Pages/WhatsAppWidget";
@@ -153,6 +154,7 @@ export const routes = [
   { path: `${process.env.PUBLIC_URL}/store`, Component: <Store /> },
   { path: `${process.env.PUBLIC_URL}/tickets`, Component: <Tickets /> },
   { path: `${process.env.PUBLIC_URL}/agents`, Component: <Agents /> },
+  { path: `${process.env.PUBLIC_URL}/online-payment-modes`, Component: <PaymentModesList /> },
   {
     path: `${process.env.PUBLIC_URL}/custom-chat-flow`,
     Component: <CustomFlow />,

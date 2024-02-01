@@ -28,8 +28,11 @@ import { FAQFilesAPI, PaymentModesAPI, User } from "../../../api";
 import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
 import appStore from "../../Live Chats/Client/AppStore";
-import PaymentModesForm from "./PaymentModesForm";
+import PaymentModesForm from "./PaymentModesList/PaymentModesList";
 import CustomSpinner from "../../../CommonElements/CustomSpinner/CustomSpinner";
+import ProductTableData from "../../Ecommerce/ProductList/ProductTableData";
+import PaymentModesList from "./PaymentModesList/PaymentModesList";
+import {useNavigate} from 'react-router-dom'
 
 const token = sessionStorage.getItem("token");
 
@@ -41,6 +44,7 @@ const Knowledge = ({ myBot }) => {
   const { userData, setUserData, token } = appStore();
   const [paymentMethod, setpaymentMethod] = useState("");
   const { register, handleSubmit, reset , formState: { errors } } = useForm();
+  const history = useNavigate();
 
 
   const payment_methods = [
@@ -49,19 +53,20 @@ const Knowledge = ({ myBot }) => {
     { code: "ONLINE", text: "Online" },
   ];
 
- const [rawPaymentData, setRawPaymentData] = useState({
-  "paymentEnabled": false,
-  "paymentType": "",
-  "paymentName": "",
-  "paymentKeyId": "",
-  "paymentKeySecret": "",
-  "paymentBase64Key": "",
-  "paymentApiKey": "",
- })
+  const [rawPaymentData, setRawPaymentData] = useState({
+    "paymentEnabled": false,
+    "paymentType": "",
+    "paymentName": "",
+    "paymentKeyId": "",
+    "paymentKeySecret": "",
+    "paymentBase64Key": "",
+    "paymentApiKey": "",
+   })
 
  const createPaymentMode = async(payload) => {
   setbtnLoading(true);
   try {
+    console.log('payload ', payload);
     const response = await fetch(`${PaymentModesAPI}`, {
       method: "POST",
       body: JSON.stringify([payload]),
@@ -81,20 +86,15 @@ const Knowledge = ({ myBot }) => {
   setbtnLoading(false);
  }
 
- const handlePaymentModeCreation = (data) => {
-  console.log('data', data);
-  if (data !== '') {
-     let payload = (paymentMethod === 'ONLINE') ? {...rawPaymentData, ...data, paymentType: "Online"} : 
-     {paymentType : "CashOnDelivery", paymentEnabled: rawPaymentData['paymentEnabled']};
-     if(payload){
-      payload = {userId: userData?._id, ...payload};  // userId
-      console.log('payload ',payload);
-      createPaymentMode(payload);
-     }
-    // alert('You submitted the form and stuff!');
-  } else {
-    errors.showMessages();
-  }
+ const handlePaymentModeCreation = () => {
+  let payload = {userId: userData?._id, paymentType : "CashOnDelivery", paymentEnabled: rawPaymentData['paymentEnabled'],
+  "paymentName": "",
+  "paymentKeyId": "",
+  "paymentKeySecret": "",
+  "paymentBase64Key": "",
+  "paymentApiKey": ""
+}
+  if(payload) createPaymentMode(payload);
 };
 
   useEffect(() => {
@@ -102,6 +102,7 @@ const Knowledge = ({ myBot }) => {
   }, [userData]);
 
   return (
+    // <PaymentModesList />
     <Fragment>
       <Container fluid={true}>
         <Row>
@@ -147,8 +148,8 @@ const Knowledge = ({ myBot }) => {
                       <Label htmlFor="validationCustom01">
                         {"Add Payment Modes"}
                       </Label>
-                      <div className="w-100 d-flex flex-wrap gap-2 align-items-top">
-                      <select
+                      <div className="w-100 d-flex flex-wrap gap-4 align-items-top">
+                      {/* <select
                         className="w-75 form-control mb-2"
                         name="paymentMethod"
                         onChange={(e) => {
@@ -161,74 +162,38 @@ const Knowledge = ({ myBot }) => {
                             {ele?.text}
                           </option>
                         ))}
-                      </select>
+                      </select> */}
+                      <div className="checkbox">
+                    <Input name='COD' id="checkbox1" type="checkbox" checked={paymentMethod === 'COD'}  onChange={(e) => {
+                      let result = (e?.target?.checked) ? e?.target?.name : '';
+                      setpaymentMethod(result);
+                    }}/>
+                    <Label for="checkbox1">{'Cash On Delivery'}</Label>
+                     </div>
+
+                    <div className="checkbox">
+                    <Input name="ONLINE" id="checkbox2" type="checkbox" checked={paymentMethod === 'ONLINE'} onChange={(e) => {
+                      let result = (e?.target?.checked) ? e?.target?.name : '';
+                      // setpaymentMethod(result);
+                      history(`${process.env.PUBLIC_URL}/online-payment-modes`);
+                    }}/>
+                    <Label for="checkbox2">{'Online'}</Label>
+                     </div>
                       {/* <span>{errors.paymentMethod && 'Payment Method is required'}</span> */}
-                      <DynamicSwitch rawPaymentData={rawPaymentData} setRawPaymentData={setRawPaymentData} />
                       </div>
               </Col>
               <Col md="4 mb-3"> 
               {/* <Label htmlFor="validationCustom02">{"Check Payment Modes"}</Label> */}
               </Col>
               </Row>
-              <Form
-              className="needs-validation mb-2"
-              onSubmit={handleSubmit(handlePaymentModeCreation)}
-              // style={{ height: "60vh", overflowY: "scroll" }}
-            >
-              {(paymentMethod === 'ONLINE') ?
-              <>
-               <Row>   
-            <Col md="4 mb-3">
-              <Label htmlFor="validationCustom01">{"Payment Name"}</Label>
-              <InputGroup>
-                <InputGroupText>💰</InputGroupText>
-              <input className="form-control" name="paymentName" type="text" placeholder="Payment Name" {...register('paymentName', { required: true })} />
-              <span>{errors.paymentName && 'Payment Name is required'}</span>
-              </InputGroup>
-            </Col>
-            <Col md="4 mb-3">
-              <Label htmlFor="validationCustom02">{"Payment KeyId"}</Label>
-              <InputGroup>
-                <InputGroupText>&#x1F511;</InputGroupText>
-              <input className="form-control" name="paymentKeyId" type="text" placeholder="Payment KeyId" {...register('paymentKeyId', { required: true })} />
-              <span>{errors.paymentKeyId && 'Payment KeyId is required'}</span>
-              <div className="valid-feedback">{'Looks good!'}</div>
-              </InputGroup>
-            </Col>
-            <Col md="4 mb-3">
-              <Label htmlFor="validationCustomUsername">{"Payment Key Secret"}</Label>
-              <InputGroup>
-                <InputGroupText>&#x1F511;</InputGroupText>
-                {/* <InputGroupAddon addonType="prepend"> */}
-                {/* </InputGroupAddon> */}
-                <input className="form-control" name="paymentKeySecret" type="text" placeholder="Payment Key Secret" {...register('paymentKeySecret', { required: true })} />
-                <span>{errors.paymentKeySecret && 'Payment Key Secret is required'}</span>
-              </InputGroup>
-            </Col>
-          </Row>
-          <Row>
-            <Col md="6 mb-3">
-              <Label htmlFor="validationCustom03">{"Payment Base64Key"}</Label>
-              <InputGroup>
-                <InputGroupText>&#x1F511;</InputGroupText>
-              <input className="form-control" name="paymentBase64Key" type="text" placeholder="Payment Base64Key" {...register('paymentBase64Key', { required: true })} />
-              <span>{errors.paymentBase64Key && 'Payment Base64Key is required'}</span>
-              </InputGroup>
-            </Col>
-            <Col md="3 mb-3">
-              <Label htmlFor="validationCustom04">{"Payment ApiKey"}</Label>
-              <InputGroup>
-                <InputGroupText>&#x1F511;</InputGroupText>
-              <input className="form-control" id="validationCustom04" name="paymentApiKey" type="text" placeholder="Payment ApiKey" {...register('paymentApiKey', { required: true })} />
-              <span>{errors.paymentApiKey && 'Payment ApiKey is required'}</span>
-              </InputGroup>
-            </Col>
-          </Row>
-              </> : ''}
-              <Btn attrBtn={{ color: !paymentMethod ? 'light' : 'primary', disabled: !paymentMethod}}>
-              {btnLoading ? <CustomSpinner/> :  'Create'}
+              {paymentMethod === 'COD' &&  <>
+              <DynamicSwitch setRawPaymentData={setRawPaymentData} rawPaymentData={rawPaymentData}/>
+              <Btn attrBtn={{ color: paymentMethod !== 'COD' ? 'light' : 'primary', disabled: (paymentMethod !== 'COD'), 
+              className:'mb-2', onClick: () => handlePaymentModeCreation()}}>
+              {btnLoading ? <CustomSpinner/> :  'Save'}
               </Btn>
-            </Form>
+              </>
+              }
           </Col>
           <Col sm="12">
             <h2>Knowledge</h2>
