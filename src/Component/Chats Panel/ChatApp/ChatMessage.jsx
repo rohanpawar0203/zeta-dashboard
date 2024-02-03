@@ -99,13 +99,7 @@ const ChatMessage = () => {
               );
             })
           ) : (
-            <Image
-              attrImage={{
-                className: "img-fluid",
-                src: `${start_conversion}`,
-                alt: "start conversion ",
-              }}
-            />
+            ''
           )}
         </div>
       ) : (

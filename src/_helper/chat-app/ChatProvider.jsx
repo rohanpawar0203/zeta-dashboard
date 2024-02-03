@@ -14,6 +14,7 @@ export const ChatProvider = (props) => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
 
   const {userData, setChatPanelMsgs, chatPanelMsgs} = AppStore();
+  const [isFetching, setisFetching] = useState(false);
   const token = sessionStorage.getItem('token');
   const [appStore, setappStore] = useState({
   isConnected: false,
@@ -52,6 +53,7 @@ export const ChatProvider = (props) => {
   const setAllAgents = (data) => setappStore((pre) => ({...pre, allAgents: data }));
 
   const getChatMembersData = async () => {
+    setisFetching(true);
     try {
       const orgId = userData?.userId ? userData?.userId : userData?._id;
       const resp = await axios.get(
@@ -66,6 +68,7 @@ export const ChatProvider = (props) => {
     } catch (error) {
       console.log('error', error);
     }
+    setisFetching(false);
   };
 
   const getMembersSuccess = (chats) => {
@@ -251,7 +254,9 @@ export const ChatProvider = (props) => {
          setIsConnected,
          setAllAgents,
          getChatMembersData,
-         setliveUser
+         isFetching,
+         setliveUser,
+         setSelectedUser
       }}
     >
       {props.children}

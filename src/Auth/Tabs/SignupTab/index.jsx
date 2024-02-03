@@ -96,7 +96,7 @@ const SignupTab = ({ selected }) => {
     setLoading(false);
   };
   const formValidate = () => {
-    console.log("Website check -->", isUrl(userData?.websiteLink));
+    // console.log("Website check -->", isUrl(userData?.websiteLink));
 
     isErrors.current = false;
     setErrors({});

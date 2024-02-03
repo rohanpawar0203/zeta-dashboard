@@ -409,21 +409,3 @@ const CSVFileInfoList = ({
 };
 
 export default Knowledge;
-
-const DynamicSwitch = ({}) => {
-  
-  const handleSwitchChange = (e) => {
-    console.log('e?.target?.checked **', e?.target?.checked);
-    // setRawPaymentData((pre) => ({...pre, paymentEnabled: e?.target?.checked}));
-  }
-  return (<Media>
-        <Label className="col-form-label m-r-10">{`ON/OFF`}</Label>
-        <Media body className="text-evenly icon-state">
-          <Label className="switch">
-            <Input name='paymentEnabled' type="checkbox" onChange={handleSwitchChange} />
-            <span className="switch-state"></span>
-          </Label>
-        </Media>
-      </Media>
-  );
-};

@@ -113,13 +113,7 @@ const ChatStatus = ({ checkValid }) => {
                 })}
               </UL>
             ) : (
-              <Image
-                attrImage={{
-                  className: "img-fluid m-auto",
-                  src: errorImg,
-                  alt: "",
-                }}
-              />
+              ''
             )}
           </div>
         </div>

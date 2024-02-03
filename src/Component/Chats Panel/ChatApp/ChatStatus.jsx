@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import ChatAppContext from "../../../_helper/chat-app/index";
-import { Image, LI, UL } from "../../../AbstractElements";
+import { Image, LI, UL, Spinner} from "../../../AbstractElements";
 import errorImg from "../../../assets/images/search-not-found.png";
 import SearchChatList from "./SearchChatList";
 import CurrentUser from "./CurrentUser";
@@ -10,7 +10,7 @@ import UserProfile from "../../../assets/images/user/userProfile.png";
 import appStore from "../../Live Chats/Client/AppStore";
 import axios from "axios";
 
-const ChatStatus = ({}) => {
+const ChatStatus = ({isFetching}) => {
   const {
     selectedUserr,
     currentUserr,
@@ -44,6 +44,14 @@ const ChatStatus = ({}) => {
   var activeChat = 0;
   if (selectedUserr != null) activeChat = selectedUserr._id;
 
+  useEffect(() => {
+    if(!isFetching){
+      let chatMsgs = chatPanelMsgs?.filter((x) => x._id !== userData._id);
+      chatMsgs?.length && changeChat(chatMsgs[0]?._id);
+    }
+  }, [isFetching])
+  
+
   // const getName = async (data) => {
   //   console.log("Get Name", data);
   //   try {
@@ -76,6 +84,11 @@ const ChatStatus = ({}) => {
           {/* <CurrentUser /> */}
           <h5>All Chats</h5>
           <div className="people-list" id="people-list">
+            {isFetching ? 
+            <div className="loader-box">
+            <Spinner attrSpinner={{ className: "loader-3" }} />
+          </div> :
+            <>
             <SearchChatList />
             {chatPanelMsgs && chatPanelMsgs.length > 0 ? (
               <UL attrUL={{ className: "simple-list list custom-scrollbar" }}>
@@ -141,14 +154,10 @@ const ChatStatus = ({}) => {
                   })}
               </UL>
             ) : (
-              <Image
-                attrImage={{
-                  className: "img-fluid m-auto",
-                  src: errorImg,
-                  alt: "",
-                }}
-              />
+              ''
             )}
+            </>
+            }
           </div>
         </div>
       </div>

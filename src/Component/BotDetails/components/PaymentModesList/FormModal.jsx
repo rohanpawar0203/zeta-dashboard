@@ -14,11 +14,9 @@ const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, e
 
   const handleSubmit = (data) => {
     if (data !== "") {
-      console.log("data ", data);
       let payload =  {...formData, userId: userData?._id, ...data, paymentType: 'Online'};
       if(eventMode === 'create_payment_mode'){
         payload = {...payload, paymentEnabled : formData?.paymentEnabled};
-        console.log("data cretate", payload);
         createPaymentMode(payload);
       }else{
         updatePaymentMode(payload, '');
@@ -29,7 +27,6 @@ const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, e
   const createPaymentMode = async(payload) => {
       setbtnLoading(true);
       try {
-        console.log('payload ', payload);
         const response = await fetch(`${PaymentModesAPI}`, {
           method: "POST",
           body: JSON.stringify([payload]),
@@ -53,7 +50,6 @@ const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, e
   }
  
   const handleSwitchChange = (e) => {
-    console.log('e?.target?.checked **', e?.target?.checked);
     setFormData((pre) => ({...pre, paymentEnabled: e?.target?.checked}));
   }
 

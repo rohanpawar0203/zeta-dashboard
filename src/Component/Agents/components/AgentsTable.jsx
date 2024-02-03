@@ -84,7 +84,7 @@ const AgentsTable = () => {
     setLoading(true);
     try {
       let agentID = JSON.parse(JSON.stringify(value.user_id));
-      console.log(":: agentID ::", agentID, token);
+      // console.log(":: agentID ::", agentID, token);
       delete value.user_id;
       const resp = await axios.patch(
         `${AgentAPI}/${agentID}`,

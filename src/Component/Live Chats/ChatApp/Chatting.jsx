@@ -26,23 +26,7 @@ const Chatting = ({ viewConversation, showKeyboard, setViewConversation }) => {
                 />
               </>
             ) : (
-              <div
-                style={{ height: "375px" }}
-                className="w-100 d-flex justify-content-center align-items-center"
-              >
-                <Image
-                  attrImage={{
-                    style: {
-                      width: "200px",
-                      height: "200px",
-                      objectFit: "cover",
-                    },
-                    className: "m-auto",
-                    src: errorImg,
-                    alt: "",
-                  }}
-                />
-              </div>
+             ''
             )}
           </div>
           {liveUser ? (

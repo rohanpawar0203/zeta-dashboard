@@ -5,7 +5,7 @@ import Chatting from "./Chatting";
 import ChatAppContext from "../../../_helper/chat-app";
 
 const ChatAppContain = () => {
-  const { getChatMembersData } = useContext(ChatAppContext);
+  const { getChatMembersData, isFetching } = useContext(ChatAppContext);
 
   useEffect(() => {
     getChatMembersData();
@@ -18,14 +18,14 @@ const ChatAppContain = () => {
           <Col className="call-chat-sidebar">
             <Card style={{ height: "90%", overflowX: "scroll" }}>
               <CardBody className="chat-body">
-                <ChatStatus />
+                <ChatStatus isFetching={isFetching} />
               </CardBody>
             </Card>
           </Col>
           <Col className="call-chat-body" style={{ height: "77vh" }}>
             <Card style={{ height: "90%", overflowX: "scroll" }}>
               <CardBody className="p-0">
-                <Chatting />
+                <Chatting isFetching={isFetching}/>
               </CardBody>
             </Card>
           </Col>
