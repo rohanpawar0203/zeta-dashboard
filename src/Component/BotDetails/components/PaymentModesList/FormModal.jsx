@@ -8,10 +8,9 @@ import { toast } from "react-toastify";
 import { PaymentModesAPI } from "../../../../api";
 import appStore from "../../../Live Chats/Client/AppStore";
 
-const FormModal = ({ modal, title, toggle, formData, eventMode, setFormData, getPaymentModes, resetFormValues, updatePaymentMode}) => {
-  const [btnLoading, setbtnLoading] = useState(false);
+const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, eventMode, setFormData, getPaymentModes, resetFormValues, updatePaymentMode}) => {
   const { userData, setUserData, token } = appStore();
-
+  
 
   const handleSubmit = (data) => {
     if (data !== "") {
@@ -22,7 +21,7 @@ const FormModal = ({ modal, title, toggle, formData, eventMode, setFormData, get
         console.log("data cretate", payload);
         createPaymentMode(payload);
       }else{
-        updatePaymentMode(payload);
+        updatePaymentMode(payload, '');
       }
     }
   };
@@ -52,32 +51,6 @@ const FormModal = ({ modal, title, toggle, formData, eventMode, setFormData, get
       }
       setbtnLoading(false);
   }
-
-//   const updatePaymentMode = async(payload) => {
-//     setbtnLoading(true);
-//     try {
-//       console.log('payload ', payload);
-//       const response = await fetch(`${PaymentModesAPI}/${payload?._id}/update`, {
-//         method: "PATCH",
-//         body: JSON.stringify(payload),
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       });
-//       const responseData = await response.json();
-//       if (response.ok) {
-//         getPaymentModes();
-//         resetFormValues();
-//         toggle();
-//         toast.success('Successfully updated payment mode');
-//       } else {
-//         toast.error(responseData.message);
-//       }
-//     } catch (error) {
-//       toast.error(error);
-//     }
-//     setbtnLoading(false);
-// }
  
   const handleSwitchChange = (e) => {
     console.log('e?.target?.checked **', e?.target?.checked);

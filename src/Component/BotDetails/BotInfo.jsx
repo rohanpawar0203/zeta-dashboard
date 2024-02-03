@@ -100,17 +100,12 @@ const BotInfoContent = ({ boatId }) => {
   return (
     <Fragment>
       <Container fluid={true}>
-        <Row> 
+      <Row>
+          <Col sm="12">
             <Card>
-              <div
-                style={{
-                  height: "65vh",
-                  marginBottom: "5vh",
-                  overflowY: "scroll"
-                }}
-              >
-                <CardBody className="h-100">
-                  <Nav className="nav-pills">
+                <CardBody>
+                <ScrollBar className="vertical-scroll">
+                  <Nav className="nav-pills mb-2">
                     <div className="w-100  d-flex justify-content-center align-items-center">
                       <div
                         style={{ background: "whitesmoke" }}
@@ -146,18 +141,19 @@ const BotInfoContent = ({ boatId }) => {
 
                   <TabContent
                     activeTab={pillTab}
-                    className="position-relative h-100"
+                    className="position-relative"
                   >
-                    <TabPane className="fade show h-100" tabId="1">
+                    <TabPane className="fade show" tabId="1">
                       <Knowledge myBot={myBot} />
                     </TabPane>
-                    <TabPane tabId="2" className="vh-75">
+                    <TabPane tabId="2">
                       <PaymentModesList />
                     </TabPane>
                   </TabContent>
+                  </ScrollBar>
                 </CardBody>
-              </div>
             </Card>
+            </Col>
         </Row>
       </Container>
     </Fragment>

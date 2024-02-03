@@ -33,52 +33,16 @@ import CustomSpinner from "../../../CommonElements/CustomSpinner/CustomSpinner";
 import ProductTableData from "../../Ecommerce/ProductList/ProductTableData";
 import PaymentModesList from "./PaymentModesList/PaymentModesList";
 import {useNavigate} from 'react-router-dom'
+import ScrollBar from "react-perfect-scrollbar";
 
 const token = sessionStorage.getItem("token");
 
 const Knowledge = ({ myBot }) => {
   const [loading, setLoading] = useState(false);
-  const [btnLoading, setbtnLoading] = useState(false);
   const [mode, setMode] = useState("");
   const [faqList, setFaqList] = useState([]);
   const { userData, setUserData, token } = appStore();
-  const [paymentMethod, setpaymentMethod] = useState("");
-  const { register, handleSubmit, reset , formState: { errors } } = useForm();
-  const history = useNavigate();
 
-//  const createPaymentMode = async(payload) => {
-//   setbtnLoading(true);
-//   try {
-//     console.log('payload ', payload);
-//     const response = await fetch(`${PaymentModesAPI}`, {
-//       method: "POST",
-//       body: JSON.stringify([payload]),
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
-//     const responseData = await response.json();
-//     if (response.ok) {
-//       toast.success('Successfully added payment mode');
-//     } else {
-//       toast.error(responseData.message);
-//     }
-//   } catch (error) {
-//     toast.error(error);
-//   }
-//   setbtnLoading(false);
-//  }
-
-//  const handlePaymentModeCreation = () => {
-//   let payload = {userId: userData?._id, paymentType : "CashOnDelivery", paymentEnabled: rawPaymentData['paymentEnabled'],
-//   "paymentName": "",
-//   "paymentKeyId": "",
-//   "paymentKeySecret": "",
-//   "paymentBase64Key": "",
-//   "paymentApiKey": ""
-// }
-//   if(payload) createPaymentMode(payload);
-// };
 
   useEffect(() => {
     setFaqList([...userData?.faqListURL]);
@@ -126,24 +90,11 @@ const Knowledge = ({ myBot }) => {
                   <div className="valid-feedback">{"Looks good!"}</div>
                 </Col>
               </Row>
-              <Row>
-              <Col md="4 mb-3"> 
-              {/* <Label htmlFor="validationCustom02">{"Check Payment Modes"}</Label> */}
-              </Col>
-              </Row>
-              {/* {paymentMethod === 'COD' &&  <>
-              <DynamicSwitch setRawPaymentData={setRawPaymentData} rawPaymentData={rawPaymentData}/>
-              <Btn attrBtn={{ color: paymentMethod !== 'COD' ? 'light' : 'primary', disabled: (paymentMethod !== 'COD'), 
-              className:'mb-2', onClick: () => handlePaymentModeCreation()}}>
-              {btnLoading ? <CustomSpinner/> :  'Save'}
-              </Btn>
-              </>
-              } */}
           </Col>
           <Col sm="12">
             <h2>Knowledge</h2>
             <Card className="shadow-none">
-              <CardHeader className="p-0 mx-0 mt-2 d-flex flex-wrap w-100 justify-content-between">
+              <CardHeader className="p-0 mx-0 mb-2 d-flex flex-wrap w-100 justify-content-between">
                 <H6 className="my-2 mx-0">Please Upload CSV File</H6>
                 <Btn
                   attrBtn={{
@@ -157,10 +108,8 @@ const Knowledge = ({ myBot }) => {
                   {"Add CSV"}
                 </Btn>
               </CardHeader>
-              <CardBody className="p-0 m-0 pt-2">
-                <Col sm="12" md="12">
                   <Fragment>
-                    <div style={{ height: "400px" }}>
+                    <div>
                       {loading ? (
                         <div className="loader-box">
                           <Spinner attrSpinner={{ className: "loader-3" }} />
@@ -191,8 +140,6 @@ const Knowledge = ({ myBot }) => {
                       )}
                     </div>
                   </Fragment>
-                </Col>
-              </CardBody>
             </Card>
           </Col>
         </Row>
@@ -425,7 +372,7 @@ const CSVFileInfoList = ({
 
   return (
     <Container style={{ margin: "0", padding: "0", maxWidth: "100%" }}>
-      <div className="h-100  table-responsive" style={{ width: "100%" }}>
+      <div className="h-100" style={{ width: "100%"}}>
         <Table style={{ maxWidth: "100%" }}>
           <thead>
             <tr className="table-primary">

@@ -9,6 +9,7 @@ import { Btn, H6 } from "../../../../AbstractElements";
 import { v4 as uuid } from "uuid";
 import {
   Col,
+  Container,
   Form,
   Input,
   InputGroup,
@@ -35,6 +36,7 @@ const style2 = {
 const PaymentModesList = () => {
   const { userData, setUserData, token } = appStore();
   const [paymentModes, setPaymentModes] = useState([]);
+  const [btnLoading, setbtnLoading] = useState(false);
   const [isLoading, setisLoading] = useState(false);
   const [formModal, setFormModal] = useState(false);
   const [eventMode, seteventMode] = useState("");
@@ -84,7 +86,8 @@ const PaymentModesList = () => {
     setisLoading(false);
   };
 
-  const updatePaymentMode = async (payload) => {
+  const updatePaymentMode = async (payload, checkChange) => {
+    setbtnLoading(true);
     try {
       console.log("payload ", payload);
       const response = await fetch(
@@ -101,6 +104,7 @@ const PaymentModesList = () => {
       if (response.ok) {
         getPaymentModes();
         resetFormValues();
+        !checkChange && toggleFormModal();
         toast.success("Successfully updated payment mode");
       } else {
         toast.error(responseData.message);
@@ -108,6 +112,7 @@ const PaymentModesList = () => {
     } catch (error) {
       toast.error(error);
     }
+    setbtnLoading(false);
   };
 
   useEffect(() => {
@@ -117,11 +122,10 @@ const PaymentModesList = () => {
 
   return (
     <Fragment>
-      <Row>
-        <div
-          style={{ width: "100%" }}
-          className="mt-2 d-flex justify-content-between mx-2"
-        >
+      <Container fluid={true}>
+        <Row>
+          <Col sm="12">
+        <div className="mt-2 d-flex justify-content-between mx-2">
           <Label htmlFor="validationCustom01" className="fw-bold">
             {"Payment Modes"}
           </Label>
@@ -137,7 +141,7 @@ const PaymentModesList = () => {
           >
             {"Add Payment Mode"}
           </Btn>
-          <FormModal
+          <FormModal btnLoading={btnLoading} setbtnLoading={setbtnLoading}
             resetFormValues={resetFormValues}
             getPaymentModes={getPaymentModes}
             updatePaymentMode={updatePaymentMode}
@@ -157,9 +161,9 @@ const PaymentModesList = () => {
           <div className="loader-box">
             <Spinner attrSpinner={{ className: "loader-3" }} />
           </div>  :
-          <div className="w-100 flex-column gap-2">
+          <div className="w-100 mt-2 d-flex flex-column gap-2  mx-2">
           <div className="checkbox mb-2">
-            <Input name="COD" id="checkbox1" type="checkbox" checked={true} />
+            <Input name="COD"  id="checkbox1" type="checkbox" checked={true} />
             <Label style={{ fontWeight: "600" }} for="checkbox1">
               {"Cash On Delivery"}
             </Label>
@@ -168,7 +172,7 @@ const PaymentModesList = () => {
             ? paymentModes?.map((ele, ind) => {
                 let uniqCode = uuid();
                 return ele?.paymentType !== "COD" ? (
-                  <div key={uniqCode} className="checkbox">
+                  <div key={uniqCode} className="checkbox  mb-2">
                     <Input
                       name="COD"
                       id={uniqCode}
@@ -179,7 +183,7 @@ const PaymentModesList = () => {
                           ...ele,
                           paymentEnabled: e?.target?.checked,
                         };
-                        updatePaymentMode(payLoad);
+                        updatePaymentMode(payLoad, 'checked');
                       }}
                       defaultChecked={ele?.paymentEnabled}
                     />
@@ -207,7 +211,9 @@ const PaymentModesList = () => {
             : ""}
         </div>
         }
+      </Col>
       </Row>
+      </Container>
     </Fragment>
   );
 };
