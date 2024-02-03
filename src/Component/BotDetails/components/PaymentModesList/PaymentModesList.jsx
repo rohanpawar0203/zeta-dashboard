@@ -16,6 +16,7 @@ import {
   Label,
   Media,
   Row,
+  Spinner,
 } from "reactstrap";
 import CustomSpinner from "../../../../CommonElements/CustomSpinner/CustomSpinner";
 import FormModal from "./FormModal";
@@ -34,9 +35,9 @@ const style2 = {
 const PaymentModesList = () => {
   const { userData, setUserData, token } = appStore();
   const [paymentModes, setPaymentModes] = useState([]);
-  const [btnLoading, setbtnLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
   const [formModal, setFormModal] = useState(false);
-  const [eventMode, seteventMode] = useState('');
+  const [eventMode, seteventMode] = useState("");
   const toggleFormModal = () => setFormModal((pre) => !pre);
   const {
     register,
@@ -44,7 +45,7 @@ const PaymentModesList = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const [rawPaymentData, setRawPaymentData] = useState({
+  const rawData = {
     paymentEnabled: false,
     paymentType: "",
     paymentName: "",
@@ -52,21 +53,15 @@ const PaymentModesList = () => {
     paymentKeySecret: "",
     paymentBase64Key: "",
     paymentApiKey: "",
-  });
-  
-  const resetFormValues = () => {
-    for (const key in rawPaymentData) {
-        if(key in rawPaymentData && key !== 'paymentEnabled'){
-            rawPaymentData[key] = '';
-        }if(key in rawPaymentData && key === 'paymentEnabled'){
-          rawPaymentData[key] = false;
-        }
-        console.log('formData ', rawPaymentData);
-        setRawPaymentData({...rawPaymentData});
-    }
   }
+  const [rawPaymentData, setRawPaymentData] = useState({...rawData});
+
+  const resetFormValues = () => {
+    setRawPaymentData({ ...rawData });
+  };
 
   const getPaymentModes = async () => {
+    setisLoading(true);
     try {
       const response = await fetch(`${PaymentModesAPI}/${userData?._id}`, {
         method: "GET",
@@ -77,7 +72,7 @@ const PaymentModesList = () => {
       const responseData = await response.json();
       if (response.ok) {
         console.log("responseData ", responseData);
-        if (responseData){
+        if (responseData) {
           setPaymentModes([...responseData]);
         }
       } else {
@@ -86,73 +81,38 @@ const PaymentModesList = () => {
     } catch (error) {
       toast.error(error);
     }
+    setisLoading(false);
   };
 
-  const prepareTableData = () => {
-    if (paymentModes.length) {
-      let data = paymentModes?.map((ele, ind) => ({
-        userId: <H6>12345</H6>,
-        "Payment Name": <H6>JusPay</H6>,
-        "Payment Type": <H6>Online</H6>,
-        "Payment Enabled": <H6>Yes</H6>,
-        action: (
-          <div className="d-flex  gap-1">
-            <span>
-              <Btn
-                attrBtn={{
-                  style: style2,
-                  color: "danger",
-                  className: "btn btn-xs",
-                  type: "button",
-                }}
-              >
-                Delete
-              </Btn>
-            </span>
-            <span>
-              <Btn
-                attrBtn={{
-                  style: style2,
-                  color: "primary",
-                  className: "btn btn-xs ms-2",
-                  type: "button",
-                }}
-              >
-                Edit{" "}
-              </Btn>
-            </span>
-          </div>
-        ),
-      }));
-    }
-  };
-
-  const updatePaymentMode = async(payload) => {
+  const updatePaymentMode = async (payload) => {
     try {
-      console.log('payload ', payload);
-      const response = await fetch(`${PaymentModesAPI}/${payload?._id}/update`, {
-        method: "PATCH",
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      console.log("payload ", payload);
+      const response = await fetch(
+        `${PaymentModesAPI}/${payload?._id}/update`,
+        {
+          method: "PATCH",
+          body: JSON.stringify(payload),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const responseData = await response.json();
       if (response.ok) {
         getPaymentModes();
         resetFormValues();
-        toast.success('Successfully updated payment mode');
+        toast.success("Successfully updated payment mode");
       } else {
         toast.error(responseData.message);
       }
     } catch (error) {
       toast.error(error);
     }
-}
+  };
 
   useEffect(() => {
     getPaymentModes();
-    console.log((paymentModes?.length > 0));
+    console.log(paymentModes?.length > 0);
   }, []);
 
   return (
@@ -165,46 +125,88 @@ const PaymentModesList = () => {
           <Label htmlFor="validationCustom01" className="fw-bold">
             {"Payment Modes"}
           </Label>
-          <Btn attrBtn={{ color: "success" , onClick: () => {
-            seteventMode('create_payment_mode');
-            resetFormValues();
-            toggleFormModal();
-          }}}>{"Add Payment Mode"}</Btn>
-          <FormModal resetFormValues={resetFormValues} getPaymentModes={getPaymentModes} title={eventMode === 'create_payment_mode' ? 'Create Payment Mode' : 'Edit Payment Mode'}
-            modal={formModal} toggle={toggleFormModal} setFormData={setRawPaymentData}  formData={rawPaymentData} eventMode={eventMode}/>
+          <Btn
+            attrBtn={{
+              color: "success",
+              onClick: () => {
+                seteventMode("create_payment_mode");
+                resetFormValues();
+                toggleFormModal();
+              },
+            }}
+          >
+            {"Add Payment Mode"}
+          </Btn>
+          <FormModal
+            resetFormValues={resetFormValues}
+            getPaymentModes={getPaymentModes}
+            updatePaymentMode={updatePaymentMode}
+            title={
+              eventMode === "create_payment_mode"
+                ? "Create Payment Mode"
+                : "Edit Payment Mode"
+            }
+            modal={formModal}
+            toggle={toggleFormModal}
+            setFormData={setRawPaymentData}
+            formData={rawPaymentData}
+            eventMode={eventMode}
+          />
         </div>
-        <div className="w-100 flex-column gap-2">
+        { isLoading ? 
+          <div className="loader-box">
+            <Spinner attrSpinner={{ className: "loader-3" }} />
+          </div>  :
+          <div className="w-100 flex-column gap-2">
           <div className="checkbox mb-2">
             <Input name="COD" id="checkbox1" type="checkbox" checked={true} />
             <Label style={{ fontWeight: "600" }} for="checkbox1">
               {"Cash On Delivery"}
             </Label>
           </div>
-          {
-            (paymentModes?.length > 0) ? 
-            paymentModes?.map((ele, ind) => {
-              let uniqCode = uuid();
-              return ( ele?.paymentType !== 'COD' ? <div key={uniqCode} className="checkbox">
-              <Input name="COD" id={uniqCode} type="checkbox"
-              onChange={(e) => {
-                console.log('yes');
-                let payLoad = {...ele, paymentEnabled: e?.target?.checked};
-                updatePaymentMode(payLoad);
-              }}
-              defaultChecked={ele?.paymentEnabled} />
-              <Label style={{ fontWeight: "600" }} for={uniqCode}>
-                {ele?.paymentName}
-              </Label>
-              <MdOutlineEdit style={{height: '18px', width: '18px', cursor: 'pointer', marginLeft: '8px'}} onClick={() => {
-                seteventMode('update_payment_mode');
-                setRawPaymentData({...ele});
-                toggleFormModal();
-              }}/>
-            </div> : '')
-            }) 
-            : ''
-          }
+          {paymentModes?.length > 0
+            ? paymentModes?.map((ele, ind) => {
+                let uniqCode = uuid();
+                return ele?.paymentType !== "COD" ? (
+                  <div key={uniqCode} className="checkbox">
+                    <Input
+                      name="COD"
+                      id={uniqCode}
+                      type="checkbox"
+                      onChange={(e) => {
+                        console.log("yes");
+                        let payLoad = {
+                          ...ele,
+                          paymentEnabled: e?.target?.checked,
+                        };
+                        updatePaymentMode(payLoad);
+                      }}
+                      defaultChecked={ele?.paymentEnabled}
+                    />
+                    <Label style={{ fontWeight: "600" }} for={uniqCode}>
+                      {ele?.paymentName}
+                    </Label>
+                    <MdOutlineEdit
+                      style={{
+                        height: "18px",
+                        width: "18px",
+                        cursor: "pointer",
+                        marginLeft: "8px",
+                      }}
+                      onClick={() => {
+                        seteventMode("update_payment_mode");
+                        setRawPaymentData({ ...ele });
+                        toggleFormModal();
+                      }}
+                    />
+                  </div>
+                ) : (
+                  ""
+                );
+              })
+            : ""}
         </div>
+        }
       </Row>
     </Fragment>
   );

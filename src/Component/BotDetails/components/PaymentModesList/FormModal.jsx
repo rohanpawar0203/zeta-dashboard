@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { PaymentModesAPI } from "../../../../api";
 import appStore from "../../../Live Chats/Client/AppStore";
 
-const FormModal = ({ modal, title, toggle, formData, eventMode, setFormData, getPaymentModes, resetFormValues }) => {
+const FormModal = ({ modal, title, toggle, formData, eventMode, setFormData, getPaymentModes, resetFormValues, updatePaymentMode}) => {
   const [btnLoading, setbtnLoading] = useState(false);
   const { userData, setUserData, token } = appStore();
 
@@ -16,7 +16,7 @@ const FormModal = ({ modal, title, toggle, formData, eventMode, setFormData, get
   const handleSubmit = (data) => {
     if (data !== "") {
       console.log("data ", data);
-      let payload =  {userId: userData?._id, ...data, paymentType: 'Online'};
+      let payload =  {...formData, userId: userData?._id, ...data, paymentType: 'Online'};
       if(eventMode === 'create_payment_mode'){
         payload = {...payload, paymentEnabled : formData?.paymentEnabled};
         console.log("data cretate", payload);
@@ -53,31 +53,31 @@ const FormModal = ({ modal, title, toggle, formData, eventMode, setFormData, get
       setbtnLoading(false);
   }
 
-  const updatePaymentMode = async(payload) => {
-    setbtnLoading(true);
-    try {
-      console.log('payload ', payload);
-      const response = await fetch(`${PaymentModesAPI}/${formData?._id}/update`, {
-        method: "PATCH",
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const responseData = await response.json();
-      if (response.ok) {
-        getPaymentModes();
-        resetFormValues();
-        toggle();
-        toast.success('Successfully updated payment mode');
-      } else {
-        toast.error(responseData.message);
-      }
-    } catch (error) {
-      toast.error(error);
-    }
-    setbtnLoading(false);
-}
+//   const updatePaymentMode = async(payload) => {
+//     setbtnLoading(true);
+//     try {
+//       console.log('payload ', payload);
+//       const response = await fetch(`${PaymentModesAPI}/${payload?._id}/update`, {
+//         method: "PATCH",
+//         body: JSON.stringify(payload),
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       });
+//       const responseData = await response.json();
+//       if (response.ok) {
+//         getPaymentModes();
+//         resetFormValues();
+//         toggle();
+//         toast.success('Successfully updated payment mode');
+//       } else {
+//         toast.error(responseData.message);
+//       }
+//     } catch (error) {
+//       toast.error(error);
+//     }
+//     setbtnLoading(false);
+// }
  
   const handleSwitchChange = (e) => {
     console.log('e?.target?.checked **', e?.target?.checked);
