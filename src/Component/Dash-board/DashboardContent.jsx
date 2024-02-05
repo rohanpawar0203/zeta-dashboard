@@ -30,7 +30,7 @@ import {
   TruckSvg1,
 } from "../Widgets/SvgIcons";
 import { connectWithSocketIOServer } from "../Live Chats/Client/wss";
-import { WhatsAppAnalyticsAPI } from "../../api";
+import { TotalOrdersCountAPI, WhatsAppAnalyticsAPI } from "../../api";
 import appStore from "../Live Chats/Client/AppStore";
 import { Bar } from "react-chartjs-2";
 import Chart from "react-apexcharts";
@@ -42,7 +42,8 @@ import {
 } from "../Charts/apexCharts/apexData";
 
 const DashboardContent = () => {
-  const { userData } = appStore();
+  const { userData, token } = appStore();
+  const [orderInfo, setorderInfo] = useState({});
   // const userDataToken = JSON.parse(appStore);
   const [chatSeries, setChatSeries] = useState([]);
   const [chatOptions, setChatOptions] = useState({});
@@ -59,8 +60,26 @@ const DashboardContent = () => {
   const [trendingSeries, setTrendingSeries] = useState([]);
   const [trendingOptions, setTrendingOptions] = useState({});
 
-  // useEffect(async () => {
-  // }, []);
+  
+  const getTotalOrdersCount = async() => {
+    try {
+      const res = await axios.get(`${TotalOrdersCountAPI}/${userData?._id}/orders-till-now/data`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if(res?.status ===  "200" ||res?.status ===  200){
+        let result = res?.data?.data[0];
+        setorderInfo(result);
+      }
+    } catch (error) {
+      console.log('cancelled', error);
+    }
+  }
+  
+  useEffect(() =>{
+    getTotalOrdersCount();
+  }, []);
 
   useEffect(async () => {
     connectWithSocketIOServer();
@@ -446,6 +465,59 @@ const DashboardContent = () => {
 
   return (
     <Fragment>
+       <Row style={{justifyContent: 'space-evenly'}}>
+        <Col sm="6" xl="3" lg="6" key={2}>
+              <Card className="o-hidden">
+                <CardBody>
+                  <Media className="static-widget">
+                    <Media body><H3 attrH3={{ className: 'font-roboto' }}>{"Total Orders"}</H3>
+                      <H4 attrH4={{ className: 'mb-0 counter' }}><CountUp end={orderInfo?.noOfOrders} /></H4>
+                    </Media>
+                    {<ProductSvg />}
+                  </Media>
+                  {/* <div className="progress-widget">
+                    <div className="progress sm-progress-bar progress-animate">
+                      <div className={"progress-gradient-success"} role="progressbar" style={{ width: '75%' }} aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><span className="animate-circle"></span></div>
+                    </div>
+                  </div> */}
+                </CardBody>
+              </Card>
+          </Col>
+        <Col sm="6" xl="3" lg="6" key={2}>
+              <Card className="o-hidden">
+                <CardBody>
+                  <Media className="static-widget">
+                    <Media body><H3 attrH3={{ className: 'font-roboto' }}>{"Total Order Value"}</H3>
+                      <H4 attrH4={{ className: 'mb-0 counter' }}><CountUp end={orderInfo?.totalOrderValue} /></H4>
+                    </Media>
+                    {<DollerSvg />}
+                  </Media>
+                  {/* <div className="progress-widget">
+                    <div className="progress sm-progress-bar progress-animate">
+                      <div className={"progress-gradient-success"} role="progressbar" style={{ width: '75%' }} aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><span className="animate-circle"></span></div>
+                    </div>
+                  </div> */}
+                </CardBody>
+              </Card>
+          </Col>
+        <Col sm="6" xl="3" lg="6" key={2}>
+              <Card className="o-hidden">
+                <CardBody>
+                  <Media className="static-widget">
+                    <Media body><H3 attrH3={{ className: 'font-roboto' }}>{"Avg Ordered Value"}</H3>
+                      <H4 attrH4={{ className: 'mb-0 counter' }}><CountUp end={orderInfo?.averageOrderValue} /></H4>
+                    </Media>
+                    {<DollerSvg />}
+                  </Media>
+                  {/* <div className="progress-widget">
+                    <div className="progress sm-progress-bar progress-animate">
+                      <div className={"progress-gradient-success"} role="progressbar" style={{ width: '75%' }} aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><span className="animate-circle"></span></div>
+                    </div>
+                  </div> */}
+                </CardBody>
+              </Card>
+          </Col>
+        </Row>
       <Col sm="6" xl="5" lg="10" style={{ marginBottom: "10px" }}>
         <Card className="o-hidden">
           <CardBody>
