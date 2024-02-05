@@ -14,7 +14,9 @@ const ChatAppContain = () => {
     setCurrentLocationPathName,
     viewConversation,
     setViewConversation,
+    isFetchLiveConversation
   } = appStore();
+  const [isFetchingLiveConvers, setisFetchingLiveConvers] = useState(false);
   const [error, setError] = useState(false);
 
   const checkValid = async (el) => {
@@ -34,6 +36,9 @@ const ChatAppContain = () => {
   useEffect(() => {
     // console.log("First useEffect triggered");
     setCurrentLocationPathName(window.location.pathname);
+    if(liveConversation?.length){
+
+    }
     (async () => {
       try {
         if (liveConversation.length === 0) {
@@ -56,9 +61,9 @@ const ChatAppContain = () => {
       <Container fluid={true}>
         <Row>
           <Col className="call-chat-sidebar">
-            <Card style={{ height: "90%"}}>
+            <Card style={{ height: "90%", overflowY: 'hidden'}}>
               <CardBody className="chat-body">
-                <ChatStatus
+                <ChatStatus isFetchLiveConversation={isFetchLiveConversation}
                   checkValid={checkValid}
                   viewConversation={viewConversation}
                   setViewConversation={setViewConversation}
@@ -67,9 +72,9 @@ const ChatAppContain = () => {
             </Card>
           </Col>
           <Col className="call-chat-body">
-            <Card style={{ height: "90%" }}>
+            <Card style={{ height: "90%"}}>
               <CardBody className="p-0 h-100">
-                <Chatting
+                <Chatting isFetchLiveConversation={isFetchLiveConversation}
                   viewConversation={viewConversation}
                   showKeyboard={true}
                   setViewConversation={setViewConversation}

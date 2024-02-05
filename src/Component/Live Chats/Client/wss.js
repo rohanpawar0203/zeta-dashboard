@@ -202,6 +202,8 @@ const informAiBackend = async (roomId, name) => {
 };
 
 const setLiveConversations = async () => {
+
+  appStore.getState().setisFetchLiveConversation(true);
   appStore.getState().setConversation([]);
   const liveConversationNewEntry = appStore.getState().liveConversationNewEntry;
   const conversation = appStore.getState().conversation;
@@ -250,6 +252,7 @@ const setLiveConversations = async () => {
     //   console.log('setLiveConversations 2', appStore.getState().liveConversation);
     // }
   }
+  appStore.getState().setisFetchLiveConversation(false);
 };
 
 export const sendLoggedAgentInfo = (agent_data) => {

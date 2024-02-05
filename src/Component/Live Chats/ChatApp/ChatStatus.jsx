@@ -1,13 +1,13 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import ChatAppContext from "../../../_helper/chat-app/index";
-import { H6, Image, LI, UL } from "../../../AbstractElements";
+import { H6, Image, LI, Spinner, UL } from "../../../AbstractElements";
 import errorImg from "../../../assets/images/search-not-found.png";
 import SearchChatList from "./SearchChatList";
 import { Media } from "reactstrap";
 import UserProfile from "../../../assets/images/user/userProfile.png";
 import appStore from "../Client/AppStore";
 
-const ChatStatus = ({ checkValid }) => {
+const ChatStatus = ({ checkValid , isFetchLiveConversation}) => {
   const { liveUser, setliveUser } = useContext(ChatAppContext);
   const { liveConversation, setLiveConversation } = appStore();
   function calculateTimePassed(timestamp) {
@@ -44,7 +44,11 @@ const ChatStatus = ({ checkValid }) => {
 
   useEffect(() => {
     // console.log("LiveConversation", liveConversation);
-  }, [liveConversation]);
+    if(!isFetchLiveConversation){
+      checkValid(liveConversation[0]);
+      setliveUser(liveConversation[0]);
+    }
+  }, [isFetchLiveConversation]);
 
   return (
     <Fragment>
@@ -53,6 +57,12 @@ const ChatStatus = ({ checkValid }) => {
           {/* <CurrentUser /> */}
           <h5>Your Inbox</h5>
           <div className="people-list" id="people-list">
+          {isFetchLiveConversation ?  
+          <div className="loader-box">
+          <Spinner attrSpinner={{ className: "loader-3" }} />
+          </div>
+          :
+            <>
             <SearchChatList />
             {liveConversation && liveConversation.length > 0 ? (
               <UL attrUL={{ className: "simple-list list custom-scrollbar" }}>
@@ -114,9 +124,11 @@ const ChatStatus = ({ checkValid }) => {
               </UL>
             ) : (
               <div style={{border: '1px solid none'}} className="mw-100 mh-100 d-flex align-items-center justify-content-center">
-      <H6>No Live Chats Available</H6>
-      </div>
+            <H6>No Live Chats Available</H6>
+             </div>
             )}
+            </> 
+           }
           </div>
         </div>
       </div>

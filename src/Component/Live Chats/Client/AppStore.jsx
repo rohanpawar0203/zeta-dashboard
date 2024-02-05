@@ -27,9 +27,11 @@ const appStore = create((set, get) => ({
   newProductModalId: null,
   setNewProductModalId: (status) => set({ newProductModalId: status }),
   liveConversation: [],
+  isFetchLiveConversation: false,
+  setisFetchLiveConversation: (value) => set({isFetchLiveConversation: value}),
   setLiveConversation: (data) => set({ liveConversation: data }),
   setLiveConversationNewEntry: (data) =>
-    set({ liveConversationNewEntry: data }),
+  set({ liveConversationNewEntry: data }),
   setIsConnected: (status) => set({ isConnected: status }),
   setAllAgents: (data) => set({ allAgents: data }),
   setCurrentLocationPathName: (data) => set({ currentLocationPathname: data }),

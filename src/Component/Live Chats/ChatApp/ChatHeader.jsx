@@ -7,7 +7,7 @@ import appStore from "../Client/AppStore";
 import { envConversationToServer } from "../Client/wss";
 
 const ChatHeader = ({ viewConversation }) => {
-  const { liveUser, setliveUser } = useContext(ChatAppContext);
+  const { liveUser, setliveUser, checkValid } = useContext(ChatAppContext);
   const { userData } = appStore();
 
   return (
