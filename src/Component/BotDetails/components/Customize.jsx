@@ -347,52 +347,6 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                       )}
                     </Col>
                   </Row>
-                  <Row>
-                    <Col md="4 mb-3">
-                      <Label htmlFor="validationCustom01">
-                        {"Payment Methods"}
-                      </Label>
-                      <select
-                        className="form-control mb-2"
-                        name="paymentMethod"
-                        onChange={(e) => {
-                          setpaymentMethod(e.target.value);
-                        }}
-                        required={true}
-                      >
-                        {payment_methods.map((ele) => (
-                          <option key={ele?.code} value={ele?.code}>
-                            {ele?.text}
-                          </option>
-                        ))}
-                      </select>
-                    </Col>
-                    <Col md="8 mb-3">
-                      {paymentMethod === "COD" ? (
-                        <div style={{height: '75px'}} className="d-flex align-items-end">
-                        <DynamicSwitch
-                          title={
-                            payment_methods?.find(
-                              (item) => item?.code === paymentMethod
-                            )?.text
-                          }
-                          code={paymentMethod}
-                        />
-                        </div>
-                      ) : paymentMethod === "ONLINE" ? (
-                        <div style={{marginTop: '30px'}} className='d-flex flex-wrap align-items-center gap-2'>
-                          {online_payment_modes?.map((ele, ind) => (
-                            <div key={ind}>
-                              <DynamicSwitch
-                                title={ele?.text}
-                                code={ele?.code}
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      ) : null}
-                    </Col>
-                  </Row>
                   <Btn attrBtn={{ color: "primary" }}>{"Submit form"}</Btn>
                 </Form>
               </Fragment>

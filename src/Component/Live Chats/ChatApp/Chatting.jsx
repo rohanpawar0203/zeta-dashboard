@@ -5,7 +5,7 @@ import ChatMenu from "./ChatMenu";
 import ChatHeader from "./ChatHeader";
 import SendChat from "./SendChat";
 import ChatAppContext from "../../../_helper/chat-app";
-import { Image } from "../../../AbstractElements";
+import { H6, Image } from "../../../AbstractElements";
 import errorImg from "../../../assets/images/search-not-found.png";
 import appStore from "../Client/AppStore";
 
@@ -26,7 +26,9 @@ const Chatting = ({ viewConversation, showKeyboard, setViewConversation }) => {
                 />
               </>
             ) : (
-             ''
+              <div style={{border: '1px solid none', height: '250px'}} className="mw-100 mh-100 d-flex align-items-center justify-content-center">
+              <H6>No Live Chats Available</H6>
+              </div>
             )}
           </div>
           {liveUser ? (

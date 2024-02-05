@@ -56,7 +56,7 @@ const ChatAppContain = () => {
       <Container fluid={true}>
         <Row>
           <Col className="call-chat-sidebar">
-            <Card style={{ height: "90%", overflowX: "scroll" }}>
+            <Card style={{ height: "90%"}}>
               <CardBody className="chat-body">
                 <ChatStatus
                   checkValid={checkValid}
