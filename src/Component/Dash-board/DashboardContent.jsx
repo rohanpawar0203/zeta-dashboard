@@ -501,7 +501,7 @@ const DashboardContent = () => {
               <Card className="o-hidden">
                 <CardBody>
                   <Media className="static-widget">
-                    <Media body><H6 attrH6={{ className: 'font-roboto' }}>{"Avg Ordered Value"}</H6>
+                    <Media body><H6 attrH6={{ className: 'font-roboto' }}>{"Avg Order Value"}</H6>
                       <H4 attrH4={{ className: 'mb-0 counter mt-4 text-center' }}><CountUp end={orderInfo?.averageOrderValue} /></H4>
                     </Media>
                   </Media>
