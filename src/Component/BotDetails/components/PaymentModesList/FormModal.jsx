@@ -12,16 +12,14 @@ const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, e
   const { userData, setUserData, token } = appStore();
   
 
-  const handleSubmit = (data) => {
-    if (data !== "") {
-      let payload =  {...formData, userId: userData?._id, ...data, paymentType: 'Online'};
+  const handleSubmit = () => {
+      let payload =  {...formData, userId: userData?._id};
       if(eventMode === 'create_payment_mode'){
         payload = {...payload, paymentEnabled : formData?.paymentEnabled};
         createPaymentMode(payload);
       }else{
         updatePaymentMode(payload, '');
       }
-    }
   };
 
   const createPaymentMode = async(payload) => {
@@ -55,7 +53,17 @@ const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, e
 
   const handleInputChanges = (e) => {
     const {name, value} = e?.target;
-    setFormData((pre) => ({...pre, [name]: value}));
+    
+    let uploadObj = {};
+    if(name === 'paymentType' && value === 'cash_on_delivery'){
+      uploadObj = {...formData, [name]: value, paymentName: 'COD (Cash on Delivery)',
+      paymentKeyId: '', paymentKeySecret: '', paymentBase64Key: '', paymentApiKey:''};
+    }else if(name === 'paymentType' && value === 'Online' && formData?.paymentName !== ''){
+      uploadObj = {...formData, [name]: value, paymentName: ''};
+    }else{
+      uploadObj = {...formData, [name] : value};
+    }
+    Object.values(uploadObj)?.length && setFormData({...uploadObj});
   }
   return (
     <CommonModal
@@ -66,8 +74,27 @@ const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, e
     >
       <Form className="needs-validation mb-2" onSubmit={(e) => {
         e.preventDefault();
-        handleSubmit(formData);
+        handleSubmit();
       }}>
+        <div className="mb-1">
+        <FormGroup>
+            <Label htmlFor="validationCustom01" className="mb-1">{"Payment Type"}</Label>
+            <InputGroup>
+              <InputGroupText>💰</InputGroupText>
+              <select className="form-control"
+                value={formData?.paymentType}
+                name="paymentType"
+                onChange={(e) => {handleInputChanges(e)}}
+                placeholder={`Payment Type`}
+                required={true}>
+                  <option value={''}>{"Select Payment Type"}</option>
+                  {[{code: 'Online', txt: 'Online'}, {code: 'cash_on_delivery', txt: 'Cash On Delivery'}]?.map((ele, ind) => (
+                    <option value={ele['code']}>{ele['txt']}</option>
+                  ))}
+              </select>
+            </InputGroup>
+            </FormGroup>
+        </div>
         <div className="mb-1">
         <FormGroup>
             <Label htmlFor="validationCustom01" className="mb-1">{"Payment Name"}</Label>
@@ -75,7 +102,7 @@ const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, e
               <InputGroupText>💰</InputGroupText>
               <input
                 className="form-control"
-                defaultValue={formData?.paymentName}
+                value={formData.paymentName ? formData.paymentName : ''}
                 name="paymentName"
                 type="text"
                 onChange={(e) => {handleInputChanges(e)}}
@@ -92,12 +119,13 @@ const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, e
               <InputGroupText>&#x1F511;</InputGroupText>
               <input
                 className="form-control"
-                defaultValue={formData?.paymentKeyId}
+                value={formData?.paymentKeyId}
                 name="paymentKeyId"
                 type="text"
                 onChange={(e) => {handleInputChanges(e)}}
                 placeholder={`Payment KeyId`}
                 required={true}
+                disabled={formData?.paymentType === 'cash_on_delivery'}
               />
               <div className="valid-feedback">{"Looks good!"}</div>
             </InputGroup>
@@ -112,12 +140,13 @@ const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, e
               <InputGroupText>&#x1F511;</InputGroupText>
               <input
                 className="form-control"
-                defaultValue={`${formData?.paymentKeySecret}`}
+                value={`${formData?.paymentKeySecret}`}
                 name="paymentKeySecret"
                 type="text"
                 onChange={(e) => {handleInputChanges(e)}}
                 placeholder="Payment Key Secret"
                 required={true}
+                disabled={formData?.paymentType === 'cash_on_delivery'}
               />
               <span className="text-danger">
               </span>
@@ -131,12 +160,13 @@ const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, e
               <InputGroupText>&#x1F511;</InputGroupText>
               <input
                 className="form-control"
-                defaultValue={formData?.paymentBase64Key}
+                value={formData?.paymentBase64Key}
                 name="paymentBase64Key"
                 type="text"
                 onChange={(e) => {handleInputChanges(e)}}
                 placeholder={`Payment Base64Key`}
                 required={true}
+                disabled={formData?.paymentType === 'cash_on_delivery'}
               />
               <span className="text-danger">
               </span>
@@ -151,12 +181,13 @@ const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, e
               <input
                 className="form-control"
                 id="validationCustom04"
-                defaultValue={`${formData?.paymentApiKey}`}
+                value={`${formData?.paymentApiKey}`}
                 name="paymentApiKey"
                 type="text"
                 onChange={(e) => {handleInputChanges(e)}}
                 placeholder="Payment ApiKey"
                 required={true}
+                disabled={formData?.paymentType === 'cash_on_delivery'}
               />
               <span className="text-danger">
               </span>

@@ -73,7 +73,6 @@ const PaymentModesList = () => {
       });
       const responseData = await response.json();
       if (response.ok) {
-        console.log("responseData ", responseData);
         if (responseData) {
           setPaymentModes([...responseData]);
         }
@@ -89,7 +88,6 @@ const PaymentModesList = () => {
   const updatePaymentMode = async (payload, checkChange) => {
     setbtnLoading(true);
     try {
-      console.log("payload ", payload);
       const response = await fetch(
         `${PaymentModesAPI}/${payload?._id}/update`,
         {
@@ -117,7 +115,6 @@ const PaymentModesList = () => {
 
   useEffect(() => {
     getPaymentModes();
-    console.log(paymentModes?.length > 0);
   }, []);
 
   return (
@@ -162,12 +159,6 @@ const PaymentModesList = () => {
             <Spinner attrSpinner={{ className: "loader-3" }} />
           </div>  :
           <div className="w-100 mt-2 d-flex flex-column gap-2  mx-2">
-          <div className="checkbox mb-2">
-            <Input name="COD"  id="checkbox1" type="checkbox" checked={true} />
-            <Label style={{ fontWeight: "600" }} for="checkbox1">
-              {"Cash On Delivery"}
-            </Label>
-          </div>
           {paymentModes?.length > 0
             ? paymentModes?.map((ele, ind) => {
                 let uniqCode = uuid();
@@ -178,7 +169,6 @@ const PaymentModesList = () => {
                       id={uniqCode}
                       type="checkbox"
                       onChange={(e) => {
-                        console.log("yes");
                         let payLoad = {
                           ...ele,
                           paymentEnabled: e?.target?.checked,
