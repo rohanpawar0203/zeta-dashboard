@@ -20,12 +20,10 @@ import {
   BoxSvg1,
   CancelledSvg,
   CancelledSvg1,
-  DollerSvg,
   MessageSvg,
   NewUsersSvg,
   PendingSvg,
   PendingSvg1,
-  ProductSvg,
   TruckSvg,
   TruckSvg1,
 } from "../Widgets/SvgIcons";
@@ -36,6 +34,7 @@ import { Bar } from "react-chartjs-2";
 import Chart from "react-apexcharts";
 import configDB from "../../Config/Theme-Config";
 import { apiCall } from "./chartData";
+import {ProductSvg, DollerSvg} from './Elements/svgs/Product'
 import {
   apexBarChart,
   apexColumnChartsone,
@@ -470,10 +469,9 @@ const DashboardContent = () => {
               <Card className="o-hidden">
                 <CardBody>
                   <Media className="static-widget">
-                    <Media body><H3 attrH3={{ className: 'font-roboto' }}>{"Total Orders"}</H3>
-                      <H4 attrH4={{ className: 'mb-0 counter' }}><CountUp end={orderInfo?.noOfOrders} /></H4>
+                    <Media body><H6 attrH6={{ className: 'font-roboto' }}>{"Total Orders"}</H6>
+                      <H4 attrH4={{ className: 'mb-0 counter mt-4 text-center' }}><CountUp end={orderInfo?.noOfOrders} /></H4>
                     </Media>
-                    {<ProductSvg />}
                   </Media>
                   {/* <div className="progress-widget">
                     <div className="progress sm-progress-bar progress-animate">
@@ -487,10 +485,9 @@ const DashboardContent = () => {
               <Card className="o-hidden">
                 <CardBody>
                   <Media className="static-widget">
-                    <Media body><H3 attrH3={{ className: 'font-roboto' }}>{"Total Order Value"}</H3>
-                      <H4 attrH4={{ className: 'mb-0 counter' }}><CountUp end={orderInfo?.totalOrderValue} /></H4>
+                    <Media body><H6 attrH6={{ className: 'font-roboto' }}>{"Total Order Value"}</H6>
+                      <H4 attrH4={{ className: 'mb-0 counter  mt-4 text-center' }}><CountUp end={orderInfo?.totalOrderValue} /></H4>
                     </Media>
-                    {<DollerSvg />}
                   </Media>
                   {/* <div className="progress-widget">
                     <div className="progress sm-progress-bar progress-animate">
@@ -504,10 +501,9 @@ const DashboardContent = () => {
               <Card className="o-hidden">
                 <CardBody>
                   <Media className="static-widget">
-                    <Media body><H3 attrH3={{ className: 'font-roboto' }}>{"Avg Ordered Value"}</H3>
-                      <H4 attrH4={{ className: 'mb-0 counter' }}><CountUp end={orderInfo?.averageOrderValue} /></H4>
+                    <Media body><H6 attrH6={{ className: 'font-roboto' }}>{"Avg Ordered Value"}</H6>
+                      <H4 attrH4={{ className: 'mb-0 counter mt-4 text-center' }}><CountUp end={orderInfo?.averageOrderValue} /></H4>
                     </Media>
-                    {<DollerSvg />}
                   </Media>
                   {/* <div className="progress-widget">
                     <div className="progress sm-progress-bar progress-animate">
@@ -598,7 +594,7 @@ const DashboardContent = () => {
                 <H4 attrH6={{ className: "font-roboto" }}>
                   Messages <br /> Delivered
                 </H4>
-                <H5 attrH4={{ className: "mb-0 counter" }}>
+                <H5 attrH4={{ className: "mb-0  mt-2 text-center" }}>
                   <CountUp end={whatsAppAnalytics?.whatsappDeliveredCount} />
                 </H5>
               </Media>
@@ -629,7 +625,7 @@ const DashboardContent = () => {
                 <H4 attrH6={{ className: "font-roboto" }}>
                   Messages <br /> Read
                 </H4>
-                <H5 attrH4={{ className: "mb-0 counter" }}>
+                <H5 attrH4={{ className: "mb-0  mt-2 text-center" }}>
                   <CountUp end={whatsAppAnalytics?.whatsappReadCount} />
                 </H5>
               </Media>
