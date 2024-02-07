@@ -7,7 +7,7 @@ import { Media } from "reactstrap";
 import UserProfile from "../../../assets/images/user/userProfile.png";
 import appStore from "../Client/AppStore";
 
-const ChatStatus = ({ checkValid , isFetchLiveConversation}) => {
+const ChatStatus = ({ checkValid, isFetchLiveConversation }) => {
   const { liveUser, setliveUser } = useContext(ChatAppContext);
   const { liveConversation, setLiveConversation } = appStore();
   function calculateTimePassed(timestamp) {
@@ -43,8 +43,8 @@ const ChatStatus = ({ checkValid , isFetchLiveConversation}) => {
   };
 
   useEffect(() => {
-    // console.log("LiveConversation", liveConversation);
-    if(!isFetchLiveConversation){
+    console.log("LiveConversation", liveConversation);
+    if (!isFetchLiveConversation) {
       checkValid(liveConversation[0]);
       setliveUser(liveConversation[0]);
     }
@@ -57,78 +57,85 @@ const ChatStatus = ({ checkValid , isFetchLiveConversation}) => {
           {/* <CurrentUser /> */}
           <h5>Your Inbox</h5>
           <div className="people-list" id="people-list">
-          {isFetchLiveConversation ?  
-          <div className="loader-box">
-          <Spinner attrSpinner={{ className: "loader-3" }} />
-          </div>
-          :
-            <>
-            <SearchChatList />
-            {liveConversation && liveConversation.length > 0 ? (
-              <UL attrUL={{ className: "simple-list list custom-scrollbar" }}>
-                {liveConversation?.map((item, i) => {
-                  return (
-                    <LI
-                      attrLI={{
-                        className: `clearfix border border-white ${
-                          activeChat === item?._id && "bg-light border-primary"
-                        }`,
-                        style: { cursor: "pointer" },
-                        onClick: (e) => {
-                          activeChat = item._id;
-                          checkValid(item);
-                          setliveUser(item);
-                        },
-                      }}
-                      key={i}
-                    >
-                      <Media className="d-flex align-items-center">
-                        <Image
-                          attrImage={{
-                            src: `${UserProfile}`,
-                            className: "rounded-circle user-image",
-                            alt: "",
-                          }}
-                        />
-                        {/* <div className={`status-circle ${item.online === true ? 'online' : 'offline'}`}
-                        ></div> */}
-                        <Media body>
-                          <div className="w-100 about">
-                            <div className="name">
-                              {item?.customer?.firstName && item?.customer?.firstName !== ""
-                                ? `${
-                                    item?.customer?.firstName +
-                                    " " +
-                                    item?.customer?.lastName
-                                  }`
-                                : item?.phoneNumber}
-                            </div>
-                            <div className="w-100 d-flex justify-content-between align-items-center pe-1">
-                              <div className="status">
-                                {checkMessageType(
-                                  item?.chat[item?.chat.length - 1]?.message
-                                )}
-                              </div>
-                              <div className="status fw-bolder">
-                                {calculateTimePassed(
-                                  item?.chat[item?.chat.length - 1].time
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </Media>
-                      </Media>
-                    </LI>
-                  );
-                })}
-              </UL>
+            {isFetchLiveConversation ? (
+              <div className="loader-box">
+                <Spinner attrSpinner={{ className: "loader-3" }} />
+              </div>
             ) : (
-              <div style={{border: '1px solid none'}} className="mw-100 mh-100 d-flex align-items-center justify-content-center">
-            <H6>No Live Chats Available</H6>
-             </div>
+              <>
+                <SearchChatList />
+                {liveConversation && liveConversation.length > 0 ? (
+                  <UL
+                    attrUL={{ className: "simple-list list custom-scrollbar" }}
+                  >
+                    {liveConversation?.map((item, i) => {
+                      return (
+                        <LI
+                          attrLI={{
+                            className: `clearfix border border-white ${
+                              activeChat === item?._id &&
+                              "bg-light border-primary"
+                            }`,
+                            style: { cursor: "pointer" },
+                            onClick: (e) => {
+                              activeChat = item._id;
+                              checkValid(item);
+                              setliveUser(item);
+                            },
+                          }}
+                          key={i}
+                        >
+                          <Media className="d-flex align-items-center">
+                            <Image
+                              attrImage={{
+                                src: `${UserProfile}`,
+                                className: "rounded-circle user-image",
+                                alt: "",
+                              }}
+                            />
+                            {/* <div className={`status-circle ${item.online === true ? 'online' : 'offline'}`}
+                        ></div> */}
+                            <Media body>
+                              <div className="w-100 about">
+                                <div className="name">
+                                  {item?.customer?.firstName &&
+                                  item?.customer?.firstName !== ""
+                                    ? `${
+                                        item?.customer?.firstName +
+                                        " " +
+                                        item?.customer?.lastName
+                                      }`
+                                    : item?.phoneNumber}
+                                </div>
+                                <div className="w-100 d-flex justify-content-between align-items-center pe-1">
+                                  <div className="status">
+                                    {checkMessageType(
+                                      item?.chat[item?.chat.length - 1]?.message
+                                    )}
+                                  </div>
+                                  <div className="status fw-bolder">
+                                    {calculateTimePassed(
+                                      item?.chat[item?.chat.length - 1].time
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            </Media>
+                          </Media>
+                        </LI>
+                      );
+                    })}
+                  </UL>
+                ) : (
+                  <div
+                    style={{ border: "1px solid none" }}
+                    className="mw-100 mh-100 d-flex align-items-center justify-content-center"
+                  >
+                    <H6>No Live Chats Available</H6>
+                  </div>
+                )}
+              </>
             )}
-            </> 
-           }
           </div>
         </div>
       </div>

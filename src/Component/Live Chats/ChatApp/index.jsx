@@ -14,21 +14,25 @@ const ChatAppContain = () => {
     setCurrentLocationPathName,
     viewConversation,
     setViewConversation,
-    isFetchLiveConversation
+    isFetchLiveConversation,
   } = appStore();
   const [isFetchingLiveConvers, setisFetchingLiveConvers] = useState(false);
   const [error, setError] = useState(false);
 
   const checkValid = async (el) => {
     try {
-      const resp = await getRoomExists(el.chatSessionId);
-      if (resp.roomExists) {
-        setViewConversation(el);
-      } else {
-        setError(true);
+      console.log("checkValid", el);
+      if (el) {
+        const resp = await getRoomExists(el.chatSessionId);
+        console.log("roomExists");
+        if (resp.roomExists) {
+          setViewConversation(el);
+        } else {
+          setError(true);
+        }
       }
     } catch (error) {
-      toast.error("Please try in a while !");
+      // toast.error("Please try in a while !");
       console.log(error);
     }
   };
@@ -36,8 +40,7 @@ const ChatAppContain = () => {
   useEffect(() => {
     // console.log("First useEffect triggered");
     setCurrentLocationPathName(window.location.pathname);
-    if(liveConversation?.length){
-
+    if (liveConversation?.length) {
     }
     (async () => {
       try {
@@ -61,9 +64,10 @@ const ChatAppContain = () => {
       <Container fluid={true}>
         <Row>
           <Col className="call-chat-sidebar">
-            <Card style={{ height: "90%", overflowY: 'hidden'}}>
+            <Card style={{ height: "90%", overflowY: "hidden" }}>
               <CardBody className="chat-body">
-                <ChatStatus isFetchLiveConversation={isFetchLiveConversation}
+                <ChatStatus
+                  isFetchLiveConversation={isFetchLiveConversation}
                   checkValid={checkValid}
                   viewConversation={viewConversation}
                   setViewConversation={setViewConversation}
@@ -72,9 +76,10 @@ const ChatAppContain = () => {
             </Card>
           </Col>
           <Col className="call-chat-body">
-            <Card style={{ height: "90%"}}>
+            <Card style={{ height: "90%" }}>
               <CardBody className="p-0 h-100">
-                <Chatting isFetchLiveConversation={isFetchLiveConversation}
+                <Chatting
+                  isFetchLiveConversation={isFetchLiveConversation}
                   viewConversation={viewConversation}
                   showKeyboard={true}
                   setViewConversation={setViewConversation}
