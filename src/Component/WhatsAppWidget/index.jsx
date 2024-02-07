@@ -1,12 +1,144 @@
-import React, { Fragment } from "react";
-import { Card, Col, Container, Row } from "reactstrap";
-import CreateTicketContent from "./CreateTicketContent";
+import React, { Fragment, useState, useEffect } from "react";
+import axios from "axios";
+import CountUp from "react-countup";
+import {
+  Card,
+  CardBody,
+  Col,
+  Media,
+  Container,
+  Row,
+  CardHeader,
+  Nav,
+  NavItem,
+  NavLink,
+  TabContent,
+  TabPane,
+} from "reactstrap";
+import { toast } from "react-toastify";
+import { PlusSquare, Upload, card } from "react-feather";
+import {
+  H4,
+  H6,
+  LI,
+  P,
+  UL,
+  Image,
+  H5,
+  H3,
+  H1,
+  Spinner,
+  Breadcrumbs,
+} from "../../AbstractElements";
+import errorImg from "../../assets/images/search-not-found.png";
+import TurnoverChart from "../Widgets/ChartsWidgets/TurnoverChart";
+import {
+  AddNew,
+  AllFiles,
+  Files,
+  Folders,
+  RecentlyOpenedFiles,
+} from "../../Constant";
+import {
+  BoxSvg,
+  BoxSvg1,
+  CancelledSvg,
+  CancelledSvg1,
+  DollerSvg,
+  MessageSvg,
+  NewUsersSvg,
+  PendingSvg,
+  PendingSvg1,
+  ProductSvg,
+  TruckSvg,
+  TruckSvg1,
+} from "../Widgets/SvgIcons";
+import { BsCheckCircle } from "react-icons/bs";
+import appStore from "../Live Chats/Client/AppStore";
+import ScrollBar from "react-perfect-scrollbar";
+import Customization from "./Customization";
+import EmbedWidget from "./EmbedWidget";
 
-const CreateTicketContain = () => {
+const WebSdkInfoContent = () => {
+  const { setBotDetails, userData } = appStore.getState();
+  const [pillTab, setpillTab] = useState("1");
+  const [loading, setLoading] = useState(false);
+
   return (
     <Fragment>
-          <CreateTicketContent />
+      <Breadcrumbs title="Web sdk" />
+      <Container fluid={true}>
+        <Row>
+          <Col sm="12 bot-info-card">
+            <Card>
+              <div
+                style={{
+                  height: "72vh",
+                  paddingBottom: "2rem",
+                }}
+              >
+                <CardBody className="h-100">
+                  <Nav className="nav-pills">
+                    <div className="w-100  d-flex justify-content-center align-items-center">
+                      <div
+                        style={{ background: "whitesmoke" }}
+                        className="d-flex border border-lightgray p-1 rounded"
+                      >
+                        <NavItem style={{ cursor: "pointer" }}>
+                          <NavLink
+                            className={
+                              pillTab === "1"
+                                ? "active cursor-pointer"
+                                : "cursor-pointer"
+                            }
+                            onClick={() => setpillTab("1")}
+                          >
+                            {"Settings"}
+                          </NavLink>
+                        </NavItem>
+                        <NavItem style={{ cursor: "pointer" }}>
+                          <NavLink
+                            className={
+                              pillTab === "2"
+                                ? "active cursor-pointer"
+                                : "cursor-pointer"
+                            }
+                            onClick={() => setpillTab("2")}
+                          >
+                            {"Share"}
+                          </NavLink>
+                        </NavItem>
+                      </div>
+                    </div>
+                  </Nav>
+                  <div style={{ height: "95%" }}>
+                    {loading ? (
+                      <div className="vh-75 loader-box">
+                        <Spinner attrSpinner={{ className: "loader-3" }} />
+                      </div>
+                    ) : (
+                      <>
+                        <TabContent
+                          activeTab={pillTab}
+                          className="position-relative h-100"
+                        >
+                          <TabPane className="fade show h-100" tabId="1">
+                            <Customization />
+                          </TabPane>
+                          <TabPane tabId="2" className="vh-75">
+                          <EmbedWidget />
+                          </TabPane>
+                        </TabContent>
+                      </>
+                    )}
+                  </div>
+                </CardBody>
+              </div>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </Fragment>
   );
 };
-export default CreateTicketContain;
+export default WebSdkInfoContent;

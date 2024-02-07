@@ -144,7 +144,7 @@ import LiveChatPanel from "../Pages/Live Chats/ChatApp";
 import PaymentModesList from "../Pages/PaymentModeList";
 import DashBoard from "../Pages/Dash-board";
 import Store from "../Pages/Store";
-import WhatsAppWidget from "../Pages/WhatsAppWidget";
+import WhatsAppWidget from "../Component/WhatsAppWidget";
 import WebSdkInfoContent from "../Component/BotDetails/webSdkInfo";
 import appStore from "../Component/Live Chats/Client/AppStore";
 
