@@ -1,9 +1,59 @@
-import React, { Fragment } from 'react'
-import { Card, CardBody, Col, Container, Form, Label, Row } from 'reactstrap';
+import React, { Fragment, useState } from 'react'
+import { Card, CardBody, Col, Container, Form, Input, Label, Row } from 'reactstrap';
 import { Btn, H4 } from '../../AbstractElements';
 import ScrollBar from "react-perfect-scrollbar";
+import appStore from '../Live Chats/Client/AppStore';
+import axios from 'axios';
+import { TicketsAPI } from '../../api';
 
 const Customization = () => {
+  const [formData, setformData] = useState({});
+  const {userData, token} = appStore();
+  const [loading, setLoading] = useState(false);
+
+  const getWidgetDetails = async() => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${TicketsAPI}/${userData._id}/organization`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.data;
+      // console.log('tickets ', data);
+    } catch (error) {
+      console.log('getWidgetDetails -> error ->', error);
+    }
+    setLoading(false);
+  }
+
+  const handleChanges = (e) => {
+    const {name, value} = e.target;
+    setformData((pre) => ({...pre, [name]: value}));
+  }
+
+  const rawFormData = {
+    "chatButtonSetting": {
+        "backgroundColor": "",
+        "ctaText": "",
+        "borderRadius": "",
+        "marginLeft": "",
+        "marginRight": "",
+        "marginBottom": "",
+        "ctaIconWATI": false
+    },
+    "brandSetting": {
+        "brandName": "",
+        "brandSubTitle": "",
+        "brandImg": "",
+        "welcomeText": "",
+        "messageText": "",
+        "backgroundColor": "",
+        "ctaText": "",
+        "autoShow": false
+    }
+}
   return (
     <Fragment className="h-100">
     <Container className="h-100" fluid={true}>
@@ -106,15 +156,17 @@ const Customization = () => {
                 </Row>
                 <Row>
                   <Col md="4 mb-3" xl='3' sm='6'>
-                    <Label htmlFor="validationCustom01">{"Icon Presence"}</Label>
-                    <input
-                      className="form-control"
+                    <div className="checkbox mb-2" style={{paddingLeft: '5px'}}>
+                    <Input style={{border: '1px solid skyblue'}}
                       name="ctaIconWATI"
-                      type="text"
-                      placeholder="Bot Name"
+                      id={"checkboxIcon"}
+                      type="checkbox"
                       required={true}
                     />
-                    <span></span>
+                    <Label style={{ fontWeight: "600", fontSize: '16px'}} for={"checkboxIcon"}>
+                      {"Icon"}
+                    </Label>
+                  </div>
                     <div className="valid-feedback">{"Looks good!"}</div>
                   </Col>
                 </Row>
@@ -218,18 +270,20 @@ const Customization = () => {
                     <div className="valid-feedback">{"Looks good!"}</div>
                   </Col>
                   <Col md="4 mb-3" xl='3' sm='6'>
-                    <Label htmlFor="validationCustom02">
-                      {"Autoshow"}
-                    </Label>
-                    <input
-                      className="form-control"
+                    <div className="d-flex w-100 h-100 align-items-end">
+                  <div className="checkbox" style={{paddingLeft: '5px'}}>
+                    <Input style={{border: '1px solid skyblue'}}
                       name="autoShow"
-                      type="text"
-                      placeholder="Autoshow..."
+                      id={"checkboxAutoShow"}
+                      type="checkbox"
                       required={true}
                     />
-                    <span></span>
+                    <Label style={{ fontWeight: "600", fontSize: '16px'}} for={"checkboxAutoShow"}>
+                      {"Autoshow"}
+                    </Label>
+                  </div>
                     <div className="valid-feedback">{"Looks good!"}</div>
+                    </div>
                   </Col>
                 </Row>
                 <Btn attrBtn={{ color: "primary" }}>{"Submit"}</Btn>
