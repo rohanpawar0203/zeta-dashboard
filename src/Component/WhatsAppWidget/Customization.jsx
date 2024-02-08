@@ -1,15 +1,66 @@
 import React, { Fragment, useState } from 'react'
 import { Card, CardBody, Col, Container, Form, Input, Label, Row } from 'reactstrap';
-import { Btn, H4 } from '../../AbstractElements';
+import { Btn, H4, Image } from '../../AbstractElements';
 import ScrollBar from "react-perfect-scrollbar";
 import appStore from '../Live Chats/Client/AppStore';
 import axios from 'axios';
 import { TicketsAPI } from '../../api';
+import { FaRegEdit } from 'react-icons/fa';
+import { MdCancel } from 'react-icons/md';
+import {v4 as uuid4} from 'uuid';
+
+const styles={
+  colorPicker: {width: '75px', height: '35px', padding: '5px', cursor: 'pointer'},
+}
 
 const Customization = () => {
-  const [formData, setformData] = useState({});
+  const [formData, setformData] = useState({
+    "chatButtonSetting": {
+      "backgroundColor": "",
+      "ctaText": "",
+      "borderRadius": "",
+      "marginLeft": "",
+      "marginRight": "",
+      "marginBottom": "",
+      "ctaIconWATI": false
+  },
+  "brandSetting": {
+      "brandName": "",
+      "brandSubTitle": "",
+      "brandImg": "https://ulai.in/file-server/uploadClientBotLogos/undefined/bot_icon_05.png",
+      "welcomeText": "",
+      "messageText": "",
+      "backgroundColor": "",
+      "ctaText": "",
+      "autoShow": false
+  }
+  });
   const {userData, token} = appStore();
   const [loading, setLoading] = useState(false);
+  const [chatIcon, setchatIcon] = useState('');
+
+  const rawFormData = {
+    "chatButtonSetting": {
+        "backgroundColor": "",
+        "ctaText": "",
+        "borderRadius": "",
+        "marginLeft": "",
+        "marginRight": "",
+        "marginBottom": "",
+        "ctaIconWATI": false,
+        "position": "right"
+    },
+    "brandSetting": {
+        "brandName": "",
+        "brandSubTitle": "",
+        "brandImg": "",
+        "welcomeText": "",
+        "messageText": "",
+        "backgroundColor": "",
+        "ctaText": "",
+        "autoShow": false
+    }
+}
 
   const getWidgetDetails = async() => {
     setLoading(true);
@@ -28,32 +79,15 @@ const Customization = () => {
     setLoading(false);
   }
 
-  const handleChanges = (e) => {
-    const {name, value} = e.target;
-    setformData((pre) => ({...pre, [name]: value}));
+  const handleChanges = ({section, name, value}) => {
+    setformData((pre) => ({...pre, [section]: {...pre[section], [name]: value}}));
   }
 
-  const rawFormData = {
-    "chatButtonSetting": {
-        "backgroundColor": "",
-        "ctaText": "",
-        "borderRadius": "",
-        "marginLeft": "",
-        "marginRight": "",
-        "marginBottom": "",
-        "ctaIconWATI": false
-    },
-    "brandSetting": {
-        "brandName": "",
-        "brandSubTitle": "",
-        "brandImg": "",
-        "welcomeText": "",
-        "messageText": "",
-        "backgroundColor": "",
-        "ctaText": "",
-        "autoShow": false
-    }
-}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('formData', formData);
+  }
+  
   return (
     <Fragment className="h-100">
     <Container className="h-100" fluid={true}>
@@ -65,18 +99,24 @@ const Customization = () => {
           </CardHeader> */}
           <CardBody className="p-0 m-0 pt-2 h-100">
             <Fragment className="h-100"> 
-              <Form
+              <Form onSubmit={(e) => {handleSubmit(e)}}
                 className="needs-validation "
                 noValidate="" style={{height: '100%'}}>
                 <ScrollBar>
                 <H4>Chat Button Settings</H4>
                 <Row>
-                  <Col md="4 mb-3" xl='3' sm='6'>
+                  <Col md="4 mb-3" xl='2' sm='6'>
                     <Label htmlFor="validationCustom01">{"Background Color"}</Label>
-                    <input
+                    <input 
                       className="form-control"
                       name="backgroundColor"
-                      type="text"
+                      style={styles['colorPicker']}
+                      type="color"
+                      defaultValue={formData?.chatButtonSetting?.backgroundColor || "#e66465"}
+                      onChange={(e)=> {
+                        const {name, value} = e.target;
+                        handleChanges('chatButtonSetting', name, value)
+                      }}
                       placeholder="background color..."
                       required={true}
                     />
@@ -85,12 +125,17 @@ const Customization = () => {
                   </Col>
                   <Col md="4 mb-3" xl='3' sm='6'>
                     <Label htmlFor="validationCustom02">
-                      {"Introduction text"}
+                      {"Text"}
                     </Label>
-                    <input
+                    <input 
                       className="form-control"
                       name="ctaText"
                       type="text"
+                      defaultValue={formData?.chatButtonSetting?.ctaText}
+                      onChange={(e)=> {
+                        const {name, value} = e.target;
+                        handleChanges('chatButtonSetting', name, value)
+                      }}
                       placeholder="Introduction text..."
                       required={true}
                     />
@@ -99,78 +144,24 @@ const Customization = () => {
                   </Col>
                   <Col md="4 mb-3" xl='3' sm='6'>
                     <Label htmlFor="validationCustom02">
-                      {"Border Radius"}
+                      {"Position"}
                     </Label>
-                    <input
-                      className="form-control"
-                      name="borderRadius"
-                      type="text"
-                      placeholder="Border Radius..."
-                      required={true}
-                    />
-                    <span></span>
+                    <select className="form-control"
+                      name="position"
+                      defaultValue={formData?.chatButtonSetting?.position}
+                      placeholder="Position..."
+                      onChange={(e)=> {
+                        const {name, value} = e.target;
+                        handleChanges('chatButtonSetting', name, value)
+                      }}
+                      required={true}>
+                      {/* <option key={uuid4()} value="">Select Position</option> */}
+                        <option key={uuid4()} value={'left'}>{'Left'}</option>
+                        <option key={uuid4()} value={'right'}>{'Right'}</option>
+                    </select>
                     <div className="valid-feedback">{"Looks good!"}</div>
                   </Col>
                 </Row>
-                <Row>
-                  <Col md="4 mb-3" xl='3' sm='6'>
-                    <Label htmlFor="validationCustom01">{"Left-side Spacing"}</Label>
-                    <input
-                      className="form-control"
-                      name="marginLeft"
-                      type="text"
-                      placeholder="Left-side spacing..."
-                      required={true}
-                    />
-                    <span></span>
-                    <div className="valid-feedback">{"Looks good!"}</div>
-                  </Col>
-                  <Col md="4 mb-3" xl='3' sm='6'>
-                    <Label htmlFor="validationCustom02">
-                      {"Right-side Spacing"}
-                    </Label>
-                    <input
-                      className="form-control"
-                      name="marginRight"
-                      type="text"
-                      placeholder="Right-side spacing..."
-                      required={true}
-                    />
-                    <span></span>
-                    <div className="valid-feedback">{"Looks good!"}</div>
-                  </Col>
-                  <Col md="4 mb-3" xl='3' sm='6'>
-                    <Label htmlFor="validationCustom02">
-                      {"Bottom-side Spacing"}
-                    </Label>
-                    <input
-                      className="form-control"
-                      name="marginBottom"
-                      type="text"
-                      placeholder="Bottom-side spacing..."
-                      required={true}
-                    />
-                    <span></span>
-                    <div className="valid-feedback">{"Looks good!"}</div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md="4 mb-3" xl='3' sm='6'>
-                    <div className="checkbox mb-2" style={{paddingLeft: '5px'}}>
-                    <Input style={{border: '1px solid skyblue'}}
-                      name="ctaIconWATI"
-                      id={"checkboxIcon"}
-                      type="checkbox"
-                      required={true}
-                    />
-                    <Label style={{ fontWeight: "600", fontSize: '16px'}} for={"checkboxIcon"}>
-                      {"Icon"}
-                    </Label>
-                  </div>
-                    <div className="valid-feedback">{"Looks good!"}</div>
-                  </Col>
-                </Row>
-                
                 <H4>Brand Settings</H4>
                 <Row>
                   <Col md="4 mb-3" xl='3' sm='6'>
@@ -179,6 +170,11 @@ const Customization = () => {
                       className="form-control"
                       name="brandName"
                       type="text"
+                      defaultValue={formData?.brandSetting?.brandName}
+                      onChange={(e)=> {
+                        const {name, value} = e.target;
+                        handleChanges('brandSetting', name, value)
+                      }}
                       placeholder="Name..."
                       required={true}
                     />
@@ -192,6 +188,11 @@ const Customization = () => {
                     <input
                       className="form-control"
                       name="brandSubTitle"
+                      onChange={(e)=> {
+                        const {name, value} = e.target;
+                        handleChanges('brandSetting', name, value)
+                      }}
+                      defaultValue={formData?.brandSetting?.brandSubTitle}
                       type="text"
                       placeholder="Sub title..."
                       required={true}
@@ -200,14 +201,17 @@ const Customization = () => {
                     <div className="valid-feedback">{"Looks good!"}</div>
                   </Col>
                   <Col md="4 mb-3" xl='3' sm='6'>
-                    <Label htmlFor="validationCustom02">
-                      {"Image"}
-                    </Label>
-                    <input
+                    <Label htmlFor="validationCustom01">{"Welcome Text"}</Label>
+                    <input 
                       className="form-control"
-                      name="brandImg"
-                      type="file"
-                      placeholder="Image"
+                      name="welcomeText"
+                      type="text"
+                      onChange={(e)=> {
+                        const {name, value} = e.target;
+                        handleChanges('brandSetting', name, value)
+                      }}
+                      defaultValue={formData?.brandSetting?.welcomeText}
+                      placeholder="Welcome text..."
                       required={true}
                     />
                     <span></span>
@@ -216,25 +220,18 @@ const Customization = () => {
                 </Row>
                 <Row>
                   <Col md="4 mb-3" xl='3' sm='6'>
-                    <Label htmlFor="validationCustom01">{"Welcome Text"}</Label>
-                    <input
-                      className="form-control"
-                      name="welcomeText"
-                      type="text"
-                      placeholder="Welcome text..."
-                      required={true}
-                    />
-                    <span></span>
-                    <div className="valid-feedback">{"Looks good!"}</div>
-                  </Col>
-                  <Col md="4 mb-3" xl='3' sm='6'>
                     <Label htmlFor="validationCustom02">
                       {"Message Text"}
                     </Label>
                     <input
                       className="form-control"
-                      name="companyName"
+                      name="messageText"
                       type="text"
+                      onChange={(e)=> {
+                        const {name, value} = e.target;
+                        handleChanges('brandSetting', name, value)
+                      }}
+                      defaultValue={formData?.brandSetting?.messageText}
                       placeholder="Message text..."
                       required={true}
                     />
@@ -245,11 +242,34 @@ const Customization = () => {
                     <Label htmlFor="validationCustom02">
                       {"Background Color"}
                     </Label>
-                    <input
+                    <input 
                       className="form-control"
                       name="backgroundColor"
-                      type="text"
+                      style={styles['colorPicker']}
+                      type="color"
+                      onChange={(e)=> {
+                        const {name, value} = e.target;
+                        handleChanges('brandSetting', name, value)
+                      }}
+                      defaultValue={formData?.brandSetting?.backgroundColor || "#f6b73c"}
                       placeholder="Background color..."
+                      required={true}
+                    />
+                    <span></span>
+                    <div className="valid-feedback">{"Looks good!"}</div>
+                  </Col>
+                  <Col md="4 mb-3" xl='3' sm='6'>
+                    <Label htmlFor="validationCustom01">{"Text Info"}</Label>
+                    <input 
+                      className="form-control"
+                      name="ctaText"
+                      onChange={(e)=> {
+                        const {name, value} = e.target;
+                        handleChanges('brandSetting', name, value)
+                      }}
+                      type="text"
+                      defaultValue={formData?.brandSetting?.ctaText}
+                      placeholder="Text info..."
                       required={true}
                     />
                     <span></span>
@@ -258,24 +278,17 @@ const Customization = () => {
                 </Row>
                 <Row>
                   <Col md="4 mb-3" xl='3' sm='6'>
-                    <Label htmlFor="validationCustom01">{"Text Info"}</Label>
-                    <input
-                      className="form-control"
-                      name="ctaText"
-                      type="text"
-                      placeholder="Text info..."
-                      required={true}
-                    />
-                    <span></span>
-                    <div className="valid-feedback">{"Looks good!"}</div>
-                  </Col>
-                  <Col md="4 mb-3" xl='3' sm='6'>
                     <div className="d-flex w-100 h-100 align-items-end">
                   <div className="checkbox" style={{paddingLeft: '5px'}}>
-                    <Input style={{border: '1px solid skyblue'}}
+                    <Input style={{border: '1px solid skyblue'}} 
                       name="autoShow"
                       id={"checkboxAutoShow"}
                       type="checkbox"
+                      onChange={(e)=> {
+                        const {name, value} = e.target;
+                        handleChanges('brandSetting', name, value)
+                      }}
+                      defaultChecked={formData?.brandSetting?.autoShow}
                       required={true}
                     />
                     <Label style={{ fontWeight: "600", fontSize: '16px'}} for={"checkboxAutoShow"}>
