@@ -149,7 +149,7 @@ const Customization = () => {
             <Form onSubmit={(e) => {handleSubmit(e)}}
               className="needs-validation "
               noValidate="" style={{height: '100%'}}>
-              {/* <ScrollBar> */}
+              
               <H4>Brand Settings</H4>
               <Row>
                 <Col md="4 mb-3" xl='3' sm='6'>
@@ -348,7 +348,6 @@ const Customization = () => {
                 <Btn attrBtn={{ color: "primary" }}>
                 {btnLoading ? <CustomSpinner /> : "Submit"}
                 </Btn>
-                {/* </ScrollBar> */}
               </Form>
             </Fragment>
             }

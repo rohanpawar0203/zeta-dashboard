@@ -79,6 +79,7 @@ const WebSdkInfoContent = () => {
                 }}
               >
                 <CardBody className="h-100">
+                <ScrollBar>
                   <Nav className="nav-pills">
                     <div className="w-100  d-flex justify-content-center align-items-center">
                       <div
@@ -148,6 +149,7 @@ const WebSdkInfoContent = () => {
                       </>
                     )}
                   </div>
+                  </ScrollBar>
                 </CardBody>
               </div>
             </Card>
