@@ -13,26 +13,6 @@ export const apiCall = async (userId, params) => {
     };
     const response = await axios.request(config);
     return response.data.data;
-    // if (newData.length !== 0) {
-    //   const newOptions = newData.map((element) =>
-    //     new Date(element._id).getDate()
-    //   );
-    //   setChatOptions((prevOptions) => ({
-    //     ...prevOptions,
-    //     xaxis: {
-    //       ...prevOptions.xaxis,
-    //       categories: [...prevOptions.xaxis.categories, ...newOptions],
-    //     },
-    //   }));
-
-    //   const newSeries = newData.map((element) => element.count);
-    //   setChatSeries((prevSeries) => [
-    //     {
-    //       ...prevSeries[0],
-    //       data: [...prevSeries[0].data, ...newSeries],
-    //     },
-    //   ]);
-    // }
   } catch (error) {
     console.log("chat-session api", error);
     return error;

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import CountUp from "react-countup";
 import { Card, CardBody, Col, Media, Container, Row } from "reactstrap";
@@ -34,7 +34,7 @@ import { Bar } from "react-chartjs-2";
 import Chart from "react-apexcharts";
 import configDB from "../../Config/Theme-Config";
 import { apiCall } from "./chartData";
-import {ProductSvg, DollerSvg} from './Elements/svgs/Product'
+import { ProductSvg, DollerSvg } from "./Elements/svgs/Product";
 import {
   apexBarChart,
   apexColumnChartsone,
@@ -43,40 +43,52 @@ import {
 const DashboardContent = () => {
   const { userData, token } = appStore();
   const [orderInfo, setorderInfo] = useState({});
-  // const userDataToken = JSON.parse(appStore);
+
   const [chatSeries, setChatSeries] = useState([]);
   const [chatOptions, setChatOptions] = useState({});
+  const chatBar = useMemo(() => barChat(chatOptions, chatSeries), [chatSeries]);
 
   const [cartSeries, setCartSeries] = useState([]);
   const [cartOptions, setCartOptions] = useState({});
+  const cartBar = useMemo(() => barCart(cartOptions, cartSeries), [cartSeries]);
 
   const [orderSeries, setOrderSeries] = useState([]);
   const [orderOptions, setOrderOptions] = useState({});
+  const orderBar = useMemo(
+    () => barOrder(orderOptions, orderSeries),
+    [orderSeries]
+  );
 
   const [chatHourSeries, setChatHourSeries] = useState([]);
   const [chatHourOptions, setChatHourOptions] = useState({});
 
   const [trendingSeries, setTrendingSeries] = useState([]);
   const [trendingOptions, setTrendingOptions] = useState({});
+  const trendingBar = useMemo(
+    () => barTrendingProducts(trendingOptions, trendingSeries),
+    [trendingSeries]
+  );
 
-  
-  const getTotalOrdersCount = async() => {
+  const getTotalOrdersCount = async () => {
     try {
-      const res = await axios.get(`${TotalOrdersCountAPI}/${userData?._id}/orders-till-now/data`,{
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if(res?.status ===  "200" ||res?.status ===  200){
+      const res = await axios.get(
+        `${TotalOrdersCountAPI}/${userData?._id}/orders-till-now/data`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res?.status === "200" || res?.status === 200) {
         let result = res?.data?.data[0];
         setorderInfo(result);
       }
     } catch (error) {
-      console.log('cancelled', error);
+      console.log("cancelled", error);
     }
-  }
-  
-  useEffect(() =>{
+  };
+
+  useEffect(() => {
     getTotalOrdersCount();
   }, []);
 
@@ -289,7 +301,6 @@ const DashboardContent = () => {
     }
 
     let getChatHourData = await apiCall(userData._id, "no-chats-for-each-hour");
-    // getChatHourData.sort((a, b) => new Date(a._id) - new Date(b._id));
     if (getChatHourData.length !== 0) {
       getChatHourData.forEach((dayData) => {
         const newSeries = [];
@@ -394,7 +405,6 @@ const DashboardContent = () => {
     getTrendingProductData
       .sort((a, b) => new Date(a.count) - new Date(b.count))
       .reverse();
-    // getTrendingProductData.reverse();
     if (getOrderData.length !== 0) {
       const newOptions = getTrendingProductData.map(
         (element) => element._id.productName
@@ -464,67 +474,73 @@ const DashboardContent = () => {
 
   return (
     <Fragment>
-       <Row style={{justifyContent: 'space-evenly'}}>
+      <Row style={{ justifyContent: "space-evenly" }}>
         <Col sm="6" xl="3" lg="6" key={2}>
-              <Card className="o-hidden">
-                <CardBody>
-                  <Media className="static-widget">
-                    <Media body><H6 attrH6={{ className: 'font-roboto' }}>{"Total Orders"}</H6>
-                      <H4 attrH4={{ className: 'mb-0 counter mt-4 text-center' }}><CountUp end={orderInfo?.noOfOrders} /></H4>
-                    </Media>
-                  </Media>
-                  {/* <div className="progress-widget">
+          <Card className="o-hidden">
+            <CardBody>
+              <Media className="static-widget">
+                <Media body>
+                  <H6 attrH6={{ className: "font-roboto" }}>
+                    {"Total Orders"}
+                  </H6>
+                  <H4 attrH4={{ className: "mb-0 counter mt-4 text-center" }}>
+                    <CountUp end={orderInfo?.noOfOrders} />
+                  </H4>
+                </Media>
+              </Media>
+            </CardBody>
+          </Card>
+        </Col>
+        <Col sm="6" xl="3" lg="6" key={2}>
+          <Card className="o-hidden">
+            <CardBody>
+              <Media className="static-widget">
+                <Media body>
+                  <H6 attrH6={{ className: "font-roboto" }}>
+                    {"Total Order Value"}
+                  </H6>
+                  <H4 attrH4={{ className: "mb-0 counter  mt-4 text-center" }}>
+                    <CountUp end={orderInfo?.totalOrderValue} />
+                  </H4>
+                </Media>
+              </Media>
+            </CardBody>
+          </Card>
+        </Col>
+        <Col sm="6" xl="3" lg="6" key={2}>
+          <Card className="o-hidden">
+            <CardBody>
+              <Media className="static-widget">
+                <Media body>
+                  <H6 attrH6={{ className: "font-roboto" }}>
+                    {"Avg Order Value"}
+                  </H6>
+                  <H4 attrH4={{ className: "mb-0 counter mt-4 text-center" }}>
+                    <CountUp end={orderInfo?.averageOrderValue} />
+                  </H4>
+                </Media>
+              </Media>
+              {/* <div className="progress-widget">
                     <div className="progress sm-progress-bar progress-animate">
                       <div className={"progress-gradient-success"} role="progressbar" style={{ width: '75%' }} aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><span className="animate-circle"></span></div>
                     </div>
                   </div> */}
-                </CardBody>
-              </Card>
-          </Col>
-        <Col sm="6" xl="3" lg="6" key={2}>
-              <Card className="o-hidden">
-                <CardBody>
-                  <Media className="static-widget">
-                    <Media body><H6 attrH6={{ className: 'font-roboto' }}>{"Total Order Value"}</H6>
-                      <H4 attrH4={{ className: 'mb-0 counter  mt-4 text-center' }}><CountUp end={orderInfo?.totalOrderValue} /></H4>
-                    </Media>
-                  </Media>
-                  {/* <div className="progress-widget">
-                    <div className="progress sm-progress-bar progress-animate">
-                      <div className={"progress-gradient-success"} role="progressbar" style={{ width: '75%' }} aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><span className="animate-circle"></span></div>
-                    </div>
-                  </div> */}
-                </CardBody>
-              </Card>
-          </Col>
-        <Col sm="6" xl="3" lg="6" key={2}>
-              <Card className="o-hidden">
-                <CardBody>
-                  <Media className="static-widget">
-                    <Media body><H6 attrH6={{ className: 'font-roboto' }}>{"Avg Order Value"}</H6>
-                      <H4 attrH4={{ className: 'mb-0 counter mt-4 text-center' }}><CountUp end={orderInfo?.averageOrderValue} /></H4>
-                    </Media>
-                  </Media>
-                  {/* <div className="progress-widget">
-                    <div className="progress sm-progress-bar progress-animate">
-                      <div className={"progress-gradient-success"} role="progressbar" style={{ width: '75%' }} aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><span className="animate-circle"></span></div>
-                    </div>
-                  </div> */}
-                </CardBody>
-              </Card>
-          </Col>
-        </Row>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
       <Col sm="6" xl="5" lg="10" style={{ marginBottom: "10px" }}>
         <Card className="o-hidden">
           <CardBody>
             <div id="column-chart">
-              <Chart
+              {chatBar}
+              {/* <Chart
                 options={chatOptions}
                 series={chatSeries}
                 type="bar"
                 width={"100%"}
                 height={380}
-              />
+              /> */}
             </div>
           </CardBody>
         </Card>
@@ -532,14 +548,15 @@ const DashboardContent = () => {
       <Col sm="6" xl="5" lg="10">
         <Card className="o-hidden">
           <CardBody>
-            <Chart
+            {orderBar}
+            {/* <Chart
               key="order"
               options={orderOptions}
               series={orderSeries}
               type="bar"
               width={"100%"}
               height={380}
-            />
+            /> */}
           </CardBody>
         </Card>
       </Col>
@@ -575,7 +592,6 @@ const DashboardContent = () => {
         <Card className="o-hidden">
           <CardBody>
             <Chart
-              key="cart"
               options={trendingOptions}
               series={trendingSeries}
               type="bar"
@@ -585,101 +601,55 @@ const DashboardContent = () => {
           </CardBody>
         </Card>
       </Col>
-
-      {/* <Col sm="6" xl="3" lg="10">
-        <Card className="o-hidden">
-          <CardBody>
-            <Media className="static-widget">
-              <Media body>
-                <H4 attrH6={{ className: "font-roboto" }}>
-                  Messages <br /> Delivered
-                </H4>
-                <H5 attrH4={{ className: "mb-0  mt-2 text-center" }}>
-                  <CountUp end={whatsAppAnalytics?.whatsappDeliveredCount} />
-                </H5>
-              </Media>
-              <MessageSvg />
-            </Media>
-            <div className="progress-widget">
-              <div className="progress sm-progress-bar progress-animate">
-                <div
-                  className={"progress-gradient-success"}
-                  role="progressbar"
-                  style={{ width: "75%" }}
-                  aria-valuenow="75"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                >
-                  <span className="animate-circle"></span>
-                </div>
-              </div>
-            </div>
-          </CardBody>
-        </Card>
-      </Col>
-      <Col sm="6" xl="3" lg="10">
-        <Card className="o-hidden">
-          <CardBody>
-            <Media className="static-widget">
-              <Media body>
-                <H4 attrH6={{ className: "font-roboto" }}>
-                  Messages <br /> Read
-                </H4>
-                <H5 attrH4={{ className: "mb-0  mt-2 text-center" }}>
-                  <CountUp end={whatsAppAnalytics?.whatsappReadCount} />
-                </H5>
-              </Media>
-              <MessageSvg />
-            </Media>
-            <div className="progress-widget">
-              <div className="progress sm-progress-bar progress-animate">
-                <div
-                  className={"progress-gradient-primary"}
-                  role="progressbar"
-                  style={{ width: "75%" }}
-                  aria-valuenow="75"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                >
-                  <span className="animate-circle"></span>
-                </div>
-              </div>
-            </div>
-          </CardBody>
-        </Card>
-      </Col>
-      <Col sm="6" xl="3" lg="10">
-        <Card className="o-hidden">
-          <CardBody>
-            <Media className="static-widget">
-              <Media body>
-                <H4 attrH6={{ className: "font-roboto" }}>
-                  Messages <br /> Sent
-                </H4>
-                <H5 attrH4={{ className: "mb-0 counter" }}>
-                  <CountUp end={whatsAppAnalytics?.whatsappSentCount} />
-                </H5>
-              </Media>
-              <MessageSvg />
-            </Media>
-            <div className="progress-widget">
-              <div className="progress sm-progress-bar progress-animate">
-                <div
-                  className={"progress-gradient-success"}
-                  role="progressbar"
-                  style={{ width: "75%" }}
-                  aria-valuenow="75"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                >
-                  <span className="animate-circle"></span>
-                </div>
-              </div>
-            </div>
-          </CardBody>
-        </Card>
-      </Col> */}
     </Fragment>
+  );
+};
+
+const barChat = (chatOptions, chatSeries) => {
+  return (
+    <Chart
+      options={chatOptions}
+      series={chatSeries}
+      type="bar"
+      width={"100%"}
+      height={380}
+    />
+  );
+};
+
+const barOrder = (orderOptions, orderSeries) => {
+  return (
+    <Chart
+      options={orderOptions}
+      series={orderSeries}
+      type="bar"
+      width={"100%"}
+      height={380}
+    />
+  );
+};
+
+const barCart = (cartOptions, cartSeries) => {
+  return (
+    <Chart
+      options={cartOptions}
+      series={cartSeries}
+      type="bar"
+      width={"100%"}
+      height={380}
+    />
+  );
+};
+
+const barTrendingProducts = (trendingOptions, trendingSeries) => {
+  return (
+    <Chart
+      options={trendingOptions}
+      series={trendingSeries}
+      type="bar"
+      width={"100%"}
+      height={380}
+    />
   );
 };
 export default DashboardContent;
