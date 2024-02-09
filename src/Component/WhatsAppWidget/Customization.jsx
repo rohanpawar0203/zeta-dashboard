@@ -1,22 +1,15 @@
-import React, { Fragment, useState } from "react";
-import {
-  Card,
-  CardBody,
-  Col,
-  Container,
-  Form,
-  Input,
-  Label,
-  Row,
-} from "reactstrap";
-import { Btn, H4, Image } from "../../AbstractElements";
+import React, { Fragment, useEffect, useState } from 'react'
+import { Card, CardBody, Col, Container, Form, Input, Label, Row } from 'reactstrap';
+import { Btn, H4, Image, Spinner } from '../../AbstractElements';
 import ScrollBar from "react-perfect-scrollbar";
-import appStore from "../Live Chats/Client/AppStore";
-import axios from "axios";
-import { TicketsAPI } from "../../api";
-import { FaRegEdit } from "react-icons/fa";
-import { MdCancel } from "react-icons/md";
-import { v4 as uuid4 } from "uuid";
+import appStore from '../Live Chats/Client/AppStore';
+import axios from 'axios';
+import { TicketsAPI, WidgetCustomizationAPI } from '../../api';
+import { FaRegEdit } from 'react-icons/fa';
+import { MdCancel } from 'react-icons/md';
+import {v4 as uuid4} from 'uuid';
+import CustomSpinner from '../../CommonElements/CustomSpinner/CustomSpinner';
+import { toast } from 'react-toastify';
 
 const styles = {
   colorPicker: {
@@ -50,7 +43,8 @@ const Customization = () => {
     },
   });
   const { userData, token } = appStore();
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [btnLoading, setbtnLoading] = useState(false);
   const [chatIcon, setchatIcon] = useState("");
 
   const rawFormData = {
@@ -79,17 +73,16 @@ const Customization = () => {
   const getWidgetDetails = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(
-        `${TicketsAPI}/${userData._id}/organization`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await axios.get(`${WidgetCustomizationAPI}/${userData?._id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = await res.data;
-      // console.log('tickets ', data);
+      if(data.status){
+        setformData({...data?.data});
+      }
     } catch (error) {
       console.log("getWidgetDetails -> error ->", error);
     }
@@ -97,24 +90,27 @@ const Customization = () => {
   };
 
   const updateWidget = async () => {
-    setLoading(true);
+    setbtnLoading(true);
     try {
-      const res = await axios.patch(
-        `${TicketsAPI}/${userData._id}/organization`,
-        {
-          body: {},
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      const res = await axios.patch(`${WidgetCustomizationAPI}/${formData?._id}`,
+        formData,
+        {headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },}
       );
       const data = await res.data;
-      // console.log('tickets ', data);
+      if(data.status){
+        toast.success(`${data?.msg}`);
+        await getWidgetDetails();
+      }else{
+        toast.error(`${data?.msg}`);
+      }
     } catch (error) {
       console.log("getWidgetDetails -> error ->", error);
+      toast.error(`${error?.message}`);
     }
-    setLoading(false);
+    setbtnLoading(false);
   };
 
   const handleChanges = (section, name, value) => {
@@ -125,11 +121,15 @@ const Customization = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("formData", formData);
-  };
-
+    await updateWidget();
+  }
+  
+  useEffect(() => {
+    getWidgetDetails();
+  }, [])
+  
   return (
     <Fragment>
       <Container className="h-100" fluid={true}>
@@ -139,233 +139,219 @@ const Customization = () => {
             {/* <CardHeader className="p-0 m-0 mt-2">
             <H5 attrH5={{ className: "my-0 mt-2" }}>{"Customize Bot"}</H5>
           </CardHeader> */}
-            <CardBody>
-              <Fragment>
-                <Form
-                  onSubmit={(e) => {
-                    handleSubmit(e);
-                  }}
-                  className="needs-validation "
-                  noValidate=""
-                  style={{ height: "100%" }}
-                >
-                  <H4>Brand Settings</H4>
-                  <Row>
-                    <Col md="4 mb-3" xl="3" sm="6">
-                      <Label htmlFor="validationCustom01">{"Name"}</Label>
-                      <input
-                        className="form-control"
-                        name="brandName"
-                        type="text"
-                        defaultValue={formData?.brandSetting?.brandName}
-                        onChange={(e) => {
-                          const { name, value } = e.target;
-                          handleChanges("brandSetting", name, value);
-                        }}
-                        placeholder="Name..."
-                        required={true}
-                      />
-                      <span></span>
-                      <div className="valid-feedback">{"Looks good!"}</div>
-                    </Col>
-                    <Col md="4 mb-3" xl="3" sm="6">
-                      <Label htmlFor="validationCustom02">{"Sub Title"}</Label>
-                      <input
-                        className="form-control"
-                        name="brandSubTitle"
-                        onChange={(e) => {
-                          const { name, value } = e.target;
-                          handleChanges("brandSetting", name, value);
-                        }}
-                        defaultValue={formData?.brandSetting?.brandSubTitle}
-                        type="text"
-                        placeholder="Sub title..."
-                        required={true}
-                      />
-                      <span></span>
-                      <div className="valid-feedback">{"Looks good!"}</div>
-                    </Col>
-                    <Col md="4 mb-3" xl="3" sm="6">
-                      <Label htmlFor="validationCustom01">
-                        {"Welcome Text"}
-                      </Label>
-                      <input
-                        className="form-control"
-                        name="welcomeText"
-                        type="text"
-                        onChange={(e) => {
-                          const { name, value } = e.target;
-                          handleChanges("brandSetting", name, value);
-                        }}
-                        defaultValue={formData?.brandSetting?.welcomeText}
-                        placeholder="Welcome text..."
-                        required={true}
-                      />
-                      <span></span>
-                      <div className="valid-feedback">{"Looks good!"}</div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="4 mb-3" xl="3" sm="6">
-                      <Label htmlFor="validationCustom02">
-                        {"Message Text"}
-                      </Label>
-                      <input
-                        className="form-control"
-                        name="messageText"
-                        type="text"
-                        onChange={(e) => {
-                          const { name, value } = e.target;
-                          handleChanges("brandSetting", name, value);
-                        }}
-                        defaultValue={formData?.brandSetting?.messageText}
-                        placeholder="Message text..."
-                        required={true}
-                      />
-                      <span></span>
-                      <div className="valid-feedback">{"Looks good!"}</div>
-                    </Col>
-                    <Col md="4 mb-3" xl="3" sm="6">
-                      <Label htmlFor="validationCustom01">{"Text Info"}</Label>
-                      <input
-                        className="form-control"
-                        name="ctaText"
-                        onChange={(e) => {
-                          const { name, value } = e.target;
-                          handleChanges("brandSetting", name, value);
-                        }}
-                        type="text"
-                        defaultValue={formData?.brandSetting?.ctaText}
-                        placeholder="Text info..."
-                        required={true}
-                      />
-                      <span></span>
-                      <div className="valid-feedback">{"Looks good!"}</div>
-                    </Col>
-                    <Col md="4 mb-3" xl="3" sm="6">
-                      <Label htmlFor="validationCustom02">
-                        {"Background Color"}
-                      </Label>
-                      <input
-                        className="form-control"
-                        name="backgroundColor"
-                        style={styles["colorPicker"]}
-                        type="color"
-                        onChange={(e) => {
-                          const { name, value } = e.target;
-                          handleChanges("brandSetting", name, value);
-                        }}
-                        defaultValue={
-                          formData?.brandSetting?.backgroundColor || "#f6b73c"
-                        }
-                        placeholder="Background color..."
-                        required={true}
-                      />
-                      <span></span>
-                      <div className="valid-feedback">{"Looks good!"}</div>
-                    </Col>
-                    <Col md="4 mb-3" xl="1" sm="6"></Col>
-                  </Row>
-                  <Row>
-                    <div className="d-flex w-100 h-100 align-items-end">
-                      <div className="checkbox" style={{ paddingLeft: "5px" }}>
-                        <Input
-                          style={{ border: "1px solid skyblue" }}
-                          name="autoShow"
-                          id={"checkboxAutoShow"}
-                          type="checkbox"
-                          onChange={(e) => {
-                            const { name, checked } = e.target;
-                            handleChanges("brandSetting", name, checked);
-                          }}
-                          defaultChecked={formData?.brandSetting?.autoShow}
-                          required={true}
-                        />
-                        <Label
-                          style={{ fontWeight: "600", fontSize: "16px" }}
-                          for={"checkboxAutoShow"}
-                        >
-                          {"Autoshow"}
-                        </Label>
-                      </div>
-                      <div className="valid-feedback">{"Looks good!"}</div>
-                    </div>
-                  </Row>
-                  <div style={{ marginTop: "10px" }}>
-                    <H4>Chat Button Settings</H4>
-                    <Row>
-                      <Col md="4 mb-3" xl="3" sm="6">
-                        <Label htmlFor="validationCustom02">{"Text"}</Label>
-                        <input
-                          className="form-control"
-                          name="ctaText"
-                          type="text"
-                          defaultValue={formData?.chatButtonSetting?.ctaText}
-                          onChange={(e) => {
-                            const { name, value } = e.target;
-                            handleChanges("chatButtonSetting", name, value);
-                          }}
-                          placeholder="Introduction text..."
-                          required={true}
-                        />
-                        <span></span>
-                        <div className="valid-feedback">{"Looks good!"}</div>
-                      </Col>
-                      <Col md="4 mb-3" xl="3" sm="6">
-                        <Label htmlFor="validationCustom02">{"Position"}</Label>
-                        <select
-                          className="form-control"
-                          name="position"
-                          value={formData?.chatButtonSetting?.position}
-                          placeholder="Position..."
-                          onChange={(e) => {
-                            const { name, value } = e.target;
-                            handleChanges("chatButtonSetting", name, value);
-                          }}
-                          required={true}
-                        >
-                          <option key={uuid4()} value="">
-                            Select Position
-                          </option>
-                          <option key={uuid4()} value={"left"}>
-                            {"Left"}
-                          </option>
-                          <option key={uuid4()} value={"right"}>
-                            {"Right"}
-                          </option>
-                        </select>
-                        <div className="valid-feedback">{"Looks good!"}</div>
-                      </Col>
-                      <Col md="4 mb-3" xl="2" sm="6">
-                        <Label htmlFor="validationCustom01">
-                          {"Background Color"}
-                        </Label>
-                        <input
-                          className="form-control"
-                          name="backgroundColor"
-                          style={styles["colorPicker"]}
-                          type="color"
-                          defaultValue={
-                            formData?.chatButtonSetting?.backgroundColor ||
-                            "#e66465"
-                          }
-                          onChange={(e) => {
-                            const { name, value } = e.target;
-                            handleChanges("chatButtonSetting", name, value);
-                          }}
-                          placeholder="background color..."
-                          required={true}
-                        />
-                        <span></span>
-                        <div className="valid-feedback">{"Looks good!"}</div>
-                      </Col>
-                    </Row>
+          <CardBody>
+            {
+              isLoading ? 
+              <div className="loader-box">
+              <Spinner attrSpinner={{ className: "loader-3" }} />
+            </div>  :
+            <Fragment> 
+            <Form onSubmit={(e) => {handleSubmit(e)}}
+              className="needs-validation "
+              noValidate="" style={{height: '100%'}}>
+              {/* <ScrollBar> */}
+              <H4>Brand Settings</H4>
+              <Row>
+                <Col md="4 mb-3" xl='3' sm='6'>
+                  <Label htmlFor="validationCustom01">{"Name"}</Label>
+                  <input
+                    className="form-control"
+                    name="brandName"
+                    type="text"
+                    defaultValue={formData?.brandSetting?.brandName}
+                    onChange={(e)=> {
+                      const {name, value} = e.target;
+                      handleChanges('brandSetting', name, value)
+                    }}
+                    placeholder="Name..."
+                    required={true}
+                  />
+                  <span></span>
+                  <div className="valid-feedback">{"Looks good!"}</div>
+                </Col>
+                <Col md="4 mb-3" xl='3' sm='6'>
+                  <Label htmlFor="validationCustom02">
+                    {"Sub Title"}
+                  </Label>
+                  <input
+                    className="form-control"
+                    name="brandSubTitle"
+                    onChange={(e)=> {
+                      const {name, value} = e.target;
+                      handleChanges('brandSetting', name, value)
+                    }}
+                    defaultValue={formData?.brandSetting?.brandSubTitle}
+                    type="text"
+                    placeholder="Sub title..."
+                    required={true}
+                  />
+                  <span></span>
+                  <div className="valid-feedback">{"Looks good!"}</div>
+                </Col>
+                <Col md="4 mb-3" xl='3' sm='6'>
+                  <Label htmlFor="validationCustom01">{"Welcome Text"}</Label>
+                  <input 
+                    className="form-control"
+                    name="welcomeText"
+                    type="text"
+                    onChange={(e)=> {
+                      const {name, value} = e.target;
+                      handleChanges('brandSetting', name, value)
+                    }}
+                    defaultValue={formData?.brandSetting?.welcomeText}
+                    placeholder="Welcome text..."
+                    required={true}
+                  />
+                  <span></span>
+                  <div className="valid-feedback">{"Looks good!"}</div>
+                </Col>
+              </Row>
+              <Row>
+                <Col md="4 mb-3" xl='3' sm='6'>
+                  <Label htmlFor="validationCustom02">
+                    {"Message Text"}
+                  </Label>
+                  <input
+                    className="form-control"
+                    name="messageText"
+                    type="text"
+                    onChange={(e)=> {
+                      const {name, value} = e.target;
+                      handleChanges('brandSetting', name, value)
+                    }}
+                    defaultValue={formData?.brandSetting?.messageText}
+                    placeholder="Message text..."
+                    required={true}
+                  />
+                  <span></span>
+                  <div className="valid-feedback">{"Looks good!"}</div>
+                </Col>
+                <Col md="4 mb-3" xl='3' sm='6'>
+                  <Label htmlFor="validationCustom01">{"Text Info"}</Label>
+                  <input 
+                    className="form-control"
+                    name="ctaText"
+                    onChange={(e)=> {
+                      const {name, value} = e.target;
+                      handleChanges('brandSetting', name, value)
+                    }}
+                    type="text"
+                    defaultValue={formData?.brandSetting?.ctaText}
+                    placeholder="Text info..."
+                    required={true}
+                  />
+                  <span></span>
+                  <div className="valid-feedback">{"Looks good!"}</div>
+                </Col>
+                <Col md="4 mb-3" xl='3' sm='6'>
+                  <Label htmlFor="validationCustom02">
+                    {"Background Color"}
+                  </Label>
+                  <input 
+                    className="form-control"
+                    name="backgroundColor"
+                    style={styles['colorPicker']}
+                    type="color"
+                    onChange={(e)=> {
+                      const {name, value} = e.target;
+                      handleChanges('brandSetting', name, value)
+                    }}
+                    defaultValue={formData?.brandSetting?.backgroundColor || "#f6b73c"}
+                    placeholder="Background color..."
+                    required={true}
+                  />
+                  <span></span>
+                  <div className="valid-feedback">{"Looks good!"}</div>
+                </Col>
+                <Col md="4 mb-3" xl='1' sm='6'>
+                </Col>
+              </Row>
+              <Row>
+              <div className="d-flex w-100 h-100 align-items-end">
+                <div className="checkbox" style={{paddingLeft: '5px'}}>
+                  <Input style={{border: '1px solid skyblue'}} 
+                    name="autoShow"
+                    id={"checkboxAutoShow"}
+                    type="checkbox"
+                    onChange={(e)=> {
+                      const {name, checked} = e.target;
+                      handleChanges('brandSetting', name, checked)
+                    }}
+                    defaultChecked={formData?.brandSetting?.autoShow}
+                  />
+                  <Label style={{ fontWeight: "600", fontSize: '16px'}} for={"checkboxAutoShow"}>
+                    {"Autoshow"}
+                  </Label>
+                </div>
+                  <div className="valid-feedback">{"Looks good!"}</div>
                   </div>
-
-                  <Btn attrBtn={{ color: "primary" }}>{"Submit"}</Btn>
-                  {/* </ScrollBar> */}
-                </Form>
-              </Fragment>
+                </Row>
+                <H4>Chat Button Settings</H4>
+              <Row>
+                <Col md="4 mb-3" xl='3' sm='6'>
+                  <Label htmlFor="validationCustom02">
+                    {"Text"}
+                  </Label>
+                  <input 
+                    className="form-control"
+                    name="ctaText"
+                    type="text"
+                    value={formData?.chatButtonSetting?.ctaText}
+                    onChange={(e)=> {
+                      const {name, value} = e.target;
+                      handleChanges('chatButtonSetting', name, value)
+                    }}
+                    placeholder="Introduction text..."
+                    required={true}
+                  />
+                  <span></span>
+                  <div className="valid-feedback">{"Looks good!"}</div>
+                </Col>
+                <Col md="4 mb-3" xl='3' sm='6'>
+                  <Label htmlFor="validationCustom02">
+                    {"Position"}
+                  </Label>
+                  <select className="form-control"
+                    name="position"
+                    value={formData?.chatButtonSetting?.position}
+                    placeholder="Position..."
+                    onChange={(e)=> {
+                      const {name, value} = e.target;
+                      handleChanges('chatButtonSetting', name, value)
+                    }}
+                    required={true}>
+                    <option key={uuid4()} value="">Select Position</option>
+                      <option key={uuid4()} value={'left'}>{'Left'}</option>
+                      <option key={uuid4()} value={'right'}>{'Right'}</option>
+                  </select>
+                  <div className="valid-feedback">{"Looks good!"}</div>
+                </Col>
+                <Col md="4 mb-3" xl='2' sm='6'>
+                  <Label htmlFor="validationCustom01">{"Background Color"}</Label>
+                  <input 
+                    className="form-control"
+                    name="backgroundColor"
+                    style={styles['colorPicker']}
+                    type="color"
+                    defaultValue={formData?.chatButtonSetting?.backgroundColor || "#e66465"}
+                    onChange={(e)=> {
+                      const {name, value} = e.target;
+                      handleChanges('chatButtonSetting', name, value)
+                    }}
+                    placeholder="background color..."
+                    required={true}
+                  />
+                  <span></span>
+                  <div className="valid-feedback">{"Looks good!"}</div>
+                </Col>
+              </Row>
+                <Btn attrBtn={{ color: "primary" }}>
+                {btnLoading ? <CustomSpinner /> : "Submit"}
+                </Btn>
+                {/* </ScrollBar> */}
+              </Form>
+            </Fragment>
+            }
             </CardBody>
           </Card>
         </Col>
