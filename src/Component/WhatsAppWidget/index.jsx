@@ -58,6 +58,7 @@ import appStore from "../Live Chats/Client/AppStore";
 import ScrollBar from "react-perfect-scrollbar";
 import Customization from "./Customization";
 import EmbedWidget from "./EmbedWidget";
+import Integrations from "./Integrations";
 
 const WebSdkInfoContent = () => {
   const { setBotDetails, userData } = appStore.getState();
@@ -108,6 +109,18 @@ const WebSdkInfoContent = () => {
                             {"Share"}
                           </NavLink>
                         </NavItem>
+                        <NavItem style={{ cursor: "pointer" }}>
+                          <NavLink
+                            className={
+                              pillTab === "3"
+                                ? "active cursor-pointer"
+                                : "cursor-pointer"
+                            }
+                            onClick={() => setpillTab("3")}
+                          >
+                            {"Integration"}
+                          </NavLink>
+                        </NavItem>
                       </div>
                     </div>
                   </Nav>
@@ -126,7 +139,10 @@ const WebSdkInfoContent = () => {
                             <Customization />
                           </TabPane>
                           <TabPane tabId="2" className="vh-75">
-                          <EmbedWidget />
+                            <EmbedWidget />
+                          </TabPane>
+                          <TabPane tabId="3" className="vh-75">
+                            <Integrations />
                           </TabPane>
                         </TabContent>
                       </>
