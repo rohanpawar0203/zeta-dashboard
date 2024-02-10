@@ -34,13 +34,13 @@ const Share = ({ myBot }) => {
         <Row>
           <Col sm="12 h-100">
             <Card className="shadow-none h-100">
-              <CardHeader className="p-0 m-0 mt-2">
+              {/* <CardHeader className="p-0 m-0 mt-2">
                 <h5 className="my-2 mx-0">Share</h5>
-              </CardHeader>
+              </CardHeader> */}
               <CardBody className="p-0 m-0 pt-2 h-100">
                 <Col sm="10" className=" h-100">
                   <Fragment className="h-100">
-                    <div
+                    {/* <div
                       style={{
                         background: "whitesmoke",
                         borderRadius: "8px",
@@ -74,17 +74,9 @@ const Share = ({ myBot }) => {
                           {ele}
                         </div>
                       ))}
-                    </div>
+                    </div> */}
                     <div>
-                      {selectedTab === "Embed the bot" ? (
-                        <EmbedBot myBot={myBot} />
-                      ) : selectedTab === "Embed Iframe" ? (
-                        <EmbedIframe />
-                      ) : selectedTab === "Get Rest API" ? (
-                        <GetRestAPI />
-                      ) : selectedTab === "Integrations" ? (
-                        <Integrations />
-                      ) : null}
+                      <EmbedBot myBot={myBot} />
                     </div>
                   </Fragment>
                 </Col>
@@ -98,3 +90,12 @@ const Share = ({ myBot }) => {
 };
 
 export default Share;
+
+// {selectedTab === "Embed the bot" ? (
+// ) : selectedTab === "Embed Iframe" ? (
+//   <EmbedIframe />
+// ) : selectedTab === "Get Rest API" ? (
+//   <GetRestAPI />
+// ) : selectedTab === "Integrations" ? (
+//   <Integrations />
+// ) : null}
