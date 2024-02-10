@@ -146,7 +146,11 @@ const AgentsTable = () => {
               <>
                 {agents.length > 0 ? (
                   <div className="h-100 table-responsive">
-                    <Table>
+                    <Table
+                      style={{
+                        width: "100%",
+                      }}
+                    >
                       <thead>
                         <tr className="table-primary">
                           <th scope="col">{"Name"}</th>
@@ -157,110 +161,120 @@ const AgentsTable = () => {
                           <th scope="col">{"Actions"}</th>
                         </tr>
                       </thead>
-                      <tbody style={{ height: "60vh", overflowY: "scroll" }}>
-                        {agents?.map((item, ind) => (
-                          <tr key={ind}>
-                            <th scope="row">{item.name}</th>
-                            <td>{item.email}</td>
-                            <td>{item.mobile}</td>
-                            <td>
-                              <Input
-                                type="checkbox"
-                                checked={item?.notification_enabled}
-                                onChange={(e) => {
-                                  handleNotification({
-                                    notification_enabled: e?.target?.checked,
-                                    user_id: item._id,
-                                  });
-                                }}
-                                style={{ transform: "scale(1.5)" }}
-                              />
-                            </td>
-                            <td></td>
-                            <td>
-                              <Dropdown
-                                isOpen={dropdownOpenId === item?._id}
-                                toggle={() => {
-                                  toggleDropDownId((pre) => {
-                                    if (!pre) {
-                                      return item?._id;
-                                    } else {
-                                      return pre?._id
-                                        ?.split("")
-                                        .reverse()
-                                        .join("");
-                                    }
-                                  });
-                                }}
-                              >
-                                <DropdownToggle
-                                  aria-expanded
-                                  data-toggle="dropdown"
-                                  tag="span"
+                      <tbody
+                        style={{
+                          height: "60vh",
+                          overflowY: "scroll",
+                          width: "100%",
+                          display: "contents",
+                        }}
+                      >
+                        {agents?.map((item, ind) => {
+                          return (
+                            <tr>
+                              <th scope="col">{item.name}</th>
+                              {/* <tr key={ind}> */}
+                              <td scope="col">{item.email}</td>
+                              <td scope="col">{item.mobile}</td>
+                              <td scope="col">
+                                <Input
+                                  type="checkbox"
+                                  checked={item?.notification_enabled}
+                                  onChange={(e) => {
+                                    handleNotification({
+                                      notification_enabled: e?.target?.checked,
+                                      user_id: item._id,
+                                    });
+                                  }}
+                                  style={{ transform: "scale(1.5)" }}
+                                />
+                              </td>
+                              <td scope="col"></td>
+                              <td scope="col">
+                                <Dropdown
+                                  isOpen={dropdownOpenId === item?._id}
+                                  toggle={() => {
+                                    toggleDropDownId((pre) => {
+                                      if (!pre) {
+                                        return item?._id;
+                                      } else {
+                                        return pre?._id
+                                          ?.split("")
+                                          .reverse()
+                                          .join("");
+                                      }
+                                    });
+                                  }}
                                 >
-                                  <div
-                                    style={{
-                                      width: "30px",
-                                      height: "30px",
-                                      border: "1px solid lightgray",
-                                      ...(HoveredAgent === item?._id &&
-                                        hoverStyle),
-                                    }}
-                                    className="d-flex justify-content-center align-items-center rounded"
-                                    onMouseEnter={() => {
-                                      setHoveredAgent(item?._id);
-                                    }}
-                                    onMouseLeave={() => {
-                                      setHoveredAgent("");
-                                    }}
+                                  <DropdownToggle
+                                    aria-expanded
+                                    data-toggle="dropdown"
+                                    tag="span"
                                   >
-                                    <HiOutlineDotsVertical
+                                    <div
                                       style={{
-                                        height: "17px",
-                                        width: "17px",
-                                        color: "gray",
+                                        width: "30px",
+                                        height: "30px",
+                                        border: "1px solid lightgray",
+                                        ...(HoveredAgent === item?._id &&
+                                          hoverStyle),
                                       }}
-                                    />
-                                  </div>
-                                </DropdownToggle>
-                                <DropdownMenu>
-                                  <DropdownItem
-                                    onClick={() => {
-                                      setagentID(item?._id);
-                                      setagentUpdatePayload({
-                                        name: item?.name,
-                                        email: item?.email,
-                                      });
-                                      toggle();
-                                    }}
-                                  >
-                                    <H5
-                                      attrH5={{
-                                        className: "my-0 ms-2 fw-bolder mb-1",
+                                      className="d-flex justify-content-center align-items-center rounded"
+                                      onMouseEnter={() => {
+                                        setHoveredAgent(item?._id);
+                                      }}
+                                      onMouseLeave={() => {
+                                        setHoveredAgent("");
                                       }}
                                     >
-                                      Edit Agent
-                                    </H5>
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    onClick={() => {
-                                      setagentID(item?._id);
-                                      toggleDeleteModal();
-                                    }}
-                                  >
-                                    <H5
-                                      attrH5={{
-                                        className: "my-0 ms-2 fw-bolder mb-1",
+                                      <HiOutlineDotsVertical
+                                        style={{
+                                          height: "17px",
+                                          width: "17px",
+                                          color: "gray",
+                                        }}
+                                      />
+                                    </div>
+                                  </DropdownToggle>
+                                  <DropdownMenu>
+                                    <DropdownItem
+                                      onClick={() => {
+                                        setagentID(item?._id);
+                                        setagentUpdatePayload({
+                                          name: item?.name,
+                                          email: item?.email,
+                                        });
+                                        toggle();
                                       }}
                                     >
-                                      Delete Agent
-                                    </H5>
-                                  </DropdownItem>
-                                </DropdownMenu>
-                              </Dropdown>
-                            </td>
-                          </tr>
-                        ))}
+                                      <H5
+                                        attrH5={{
+                                          className: "my-0 ms-2 fw-bolder mb-1",
+                                        }}
+                                      >
+                                        Edit Agent
+                                      </H5>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      onClick={() => {
+                                        setagentID(item?._id);
+                                        toggleDeleteModal();
+                                      }}
+                                    >
+                                      <H5
+                                        attrH5={{
+                                          className: "my-0 ms-2 fw-bolder mb-1",
+                                        }}
+                                      >
+                                        Delete Agent
+                                      </H5>
+                                    </DropdownItem>
+                                  </DropdownMenu>
+                                </Dropdown>
+                              </td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </Table>
                     <UpdateAgentFormModal
