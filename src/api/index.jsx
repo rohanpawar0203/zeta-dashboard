@@ -59,4 +59,5 @@ export const WidgetsAPI = `${process.env.REACT_APP_API_BASE_URL}/widgets`;
 export const WidgetContentAPI = `${process.env.REACT_APP_API_BASE_URL}/widget-content`;
 export const PaymentModesAPI = `${process.env.REACT_APP_API_BASE_URL}/paymentModes`;
 export const TotalOrdersCountAPI = `${process.env.REACT_APP_API_BASE_URL}/analytics/`
+export const WidgetCustomizationAPI = `${process.env.REACT_APP_API_BASE_URL}/widget-customization`
 
