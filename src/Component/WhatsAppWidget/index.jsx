@@ -67,7 +67,7 @@ const WebSdkInfoContent = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs title="Web sdk" />
+      <Breadcrumbs title="whatsApp Widget" />
       <Container fluid={true}>
         <Row>
           <Col sm="12 bot-info-card">
@@ -78,77 +78,77 @@ const WebSdkInfoContent = () => {
                   paddingBottom: "2rem",
                 }}
               >
-                <CardBody className="h-100">
-                <ScrollBar>
-                  <Nav className="nav-pills">
-                    <div className="w-100  d-flex justify-content-center align-items-center">
-                      <div
-                        style={{ background: "whitesmoke" }}
-                        className="d-flex border border-lightgray p-1 rounded"
-                      >
-                        <NavItem style={{ cursor: "pointer" }}>
-                          <NavLink
-                            className={
-                              pillTab === "1"
-                                ? "active cursor-pointer"
-                                : "cursor-pointer"
-                            }
-                            onClick={() => setpillTab("1")}
-                          >
-                            {"Settings"}
-                          </NavLink>
-                        </NavItem>
-                        <NavItem style={{ cursor: "pointer" }}>
-                          <NavLink
-                            className={
-                              pillTab === "2"
-                                ? "active cursor-pointer"
-                                : "cursor-pointer"
-                            }
-                            onClick={() => setpillTab("2")}
-                          >
-                            {"Share"}
-                          </NavLink>
-                        </NavItem>
-                        <NavItem style={{ cursor: "pointer" }}>
-                          <NavLink
-                            className={
-                              pillTab === "3"
-                                ? "active cursor-pointer"
-                                : "cursor-pointer"
-                            }
-                            onClick={() => setpillTab("3")}
-                          >
-                            {"Integration"}
-                          </NavLink>
-                        </NavItem>
-                      </div>
-                    </div>
-                  </Nav>
-                  <div style={{ height: "95%" }}>
-                    {loading ? (
-                      <div className="vh-75 loader-box">
-                        <Spinner attrSpinner={{ className: "loader-3" }} />
-                      </div>
-                    ) : (
-                      <>
-                        <TabContent
-                          activeTab={pillTab}
-                          className="position-relative h-100"
+                <CardBody>
+                  <ScrollBar>
+                    <Nav className="nav-pills">
+                      <div className="w-100  d-flex justify-content-center align-items-center">
+                        <div
+                          style={{ background: "whitesmoke" }}
+                          className="d-flex border border-lightgray p-1 rounded"
                         >
-                          <TabPane className="fade show h-100" tabId="1">
-                            <Customization />
-                          </TabPane>
-                          <TabPane tabId="2" className="vh-75">
-                            <EmbedWidget />
-                          </TabPane>
-                          <TabPane tabId="3" className="vh-75">
-                            <Integrations />
-                          </TabPane>
-                        </TabContent>
-                      </>
-                    )}
-                  </div>
+                          <NavItem style={{ cursor: "pointer" }}>
+                            <NavLink
+                              className={
+                                pillTab === "1"
+                                  ? "active cursor-pointer"
+                                  : "cursor-pointer"
+                              }
+                              onClick={() => setpillTab("1")}
+                            >
+                              {"Settings"}
+                            </NavLink>
+                          </NavItem>
+                          <NavItem style={{ cursor: "pointer" }}>
+                            <NavLink
+                              className={
+                                pillTab === "2"
+                                  ? "active cursor-pointer"
+                                  : "cursor-pointer"
+                              }
+                              onClick={() => setpillTab("2")}
+                            >
+                              {"Share"}
+                            </NavLink>
+                          </NavItem>
+                          <NavItem style={{ cursor: "pointer" }}>
+                            <NavLink
+                              className={
+                                pillTab === "3"
+                                  ? "active cursor-pointer"
+                                  : "cursor-pointer"
+                              }
+                              onClick={() => setpillTab("3")}
+                            >
+                              {"Integration"}
+                            </NavLink>
+                          </NavItem>
+                        </div>
+                      </div>
+                    </Nav>
+                    <div style={{ height: "95%" }}>
+                      {loading ? (
+                        <div className="vh-75 loader-box">
+                          <Spinner attrSpinner={{ className: "loader-3" }} />
+                        </div>
+                      ) : (
+                        <>
+                          <TabContent
+                            activeTab={pillTab}
+                            className="position-relative h-100"
+                          >
+                            <TabPane className="fade show h-100" tabId="1">
+                              <Customization />
+                            </TabPane>
+                            <TabPane tabId="2" className="vh-75">
+                              <EmbedWidget />
+                            </TabPane>
+                            <TabPane tabId="3" className="vh-75">
+                              <Integrations />
+                            </TabPane>
+                          </TabContent>
+                        </>
+                      )}
+                    </div>
                   </ScrollBar>
                 </CardBody>
               </div>

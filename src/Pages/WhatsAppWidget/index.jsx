@@ -7,7 +7,6 @@ const WhatsAppWidget = () => {
   return (
     <Fragment>
       <Breadcrumbs parent="" title="Whatsapp widget" />
-
       <WhatsAppWidgetContent />
     </Fragment>
   );
