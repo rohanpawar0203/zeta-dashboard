@@ -6,7 +6,7 @@ export const apiCall = async (userId, params) => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `https://ulai.in/backend/analytics/${userId}/${params}/data?days=30`,
+      url: `${process.env.REACT_APP_API_BASE_URL}/analytics/${userId}/${params}/data?days=30`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
