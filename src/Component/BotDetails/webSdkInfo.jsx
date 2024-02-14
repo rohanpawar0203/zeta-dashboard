@@ -107,12 +107,11 @@ const WebSdkInfoContent = () => {
             <Card>
               <div
                 style={{
-                  height: "70vh",
+                  height: "65vh",
                   marginBottom: "5vh",
-                  overflow: "hidden",
-                  paddingBottom: "10vh",
                 }}
               >
+                
                 <CardBody className="h-100">
                   <Nav className="nav-pills">
                     <div className="w-100  d-flex justify-content-center align-items-center">
@@ -147,7 +146,8 @@ const WebSdkInfoContent = () => {
                       </div>
                     </div>
                   </Nav>
-                  <div style={{ height: "95%" }}>
+                  <div style={{ height: "100%" }}>
+                  
                     {loading ? (
                       <div className="vh-75 loader-box">
                         <Spinner attrSpinner={{ className: "loader-3" }} />
@@ -173,6 +173,7 @@ const WebSdkInfoContent = () => {
                         <ChatBot myBot={myBot} setMyBot={setMyBot} />
                       </>
                     )}
+                    
                   </div>
                 </CardBody>
               </div>

@@ -148,7 +148,7 @@ const BotsContent = () => {
     <Fragment>
       <div
         style={{
-          height: "73vh",
+          height: "70vh",
           background: "white",
           padding: "15px",
           borderRadius: "12px",

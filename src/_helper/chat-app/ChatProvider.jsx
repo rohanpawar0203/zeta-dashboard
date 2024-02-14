@@ -52,7 +52,7 @@ export const ChatProvider = (props) => {
   const setIsConnected = (data) => setappStore((pre) => ({...pre, isConnected: data }));
   const setAllAgents = (data) => setappStore((pre) => ({...pre, allAgents: data }));
 
-  const getChatMembersData = async () => {
+  const getChatMembersData = async (page) => {
     setisFetching(true);
     try {
       const orgId = userData?.userId ? userData?.userId : userData?._id;

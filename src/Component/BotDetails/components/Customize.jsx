@@ -163,8 +163,9 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                   className="needs-validation "
                   noValidate=""
                   onSubmit={handleBotEdit}
-                  style={{ height: "60vh", overflowY: "scroll" }}
+                  style={{ height: "100%"}}
                 >
+                  <ScrollBar>
                   <Row>
                     <Col md="4 mb-3">
                       <Label htmlFor="validationCustom01">{"Bot Name"}</Label>
@@ -348,6 +349,7 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                     </Col>
                   </Row>
                   <Btn attrBtn={{ color: "primary" }}>{"Submit form"}</Btn>
+                  </ScrollBar>
                 </Form>
               </Fragment>
             </CardBody>

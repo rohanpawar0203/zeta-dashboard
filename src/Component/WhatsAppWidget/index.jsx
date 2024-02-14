@@ -74,7 +74,7 @@ const WebSdkInfoContent = () => {
             <Card>
               <div
                 style={{
-                  height: "72vh",
+                  height: "70vh",
                   paddingBottom: "2rem",
                 }}
               >
