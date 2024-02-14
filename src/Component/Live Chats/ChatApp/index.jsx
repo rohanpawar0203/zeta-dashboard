@@ -21,10 +21,9 @@ const ChatAppContain = () => {
 
   const checkValid = async (el) => {
     try {
-      console.log("checkValid", el);
       if (el) {
         const resp = await getRoomExists(el.chatSessionId);
-        console.log("roomExists");
+        // console.log("roomExists");
         if (resp.roomExists) {
           setViewConversation(el);
         } else {

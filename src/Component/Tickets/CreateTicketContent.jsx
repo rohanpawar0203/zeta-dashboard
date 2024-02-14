@@ -36,6 +36,7 @@ import { useNavigate } from "react-router";
 import { AgentAPI, TicketsAPI } from "../../api";
 import AutomaiteBackend from "../Agents/components/automaiteBackend";
 import TicketsList from "./TicketsList";
+import ScrollBar from "react-perfect-scrollbar";
 
 
 
@@ -147,7 +148,7 @@ const CreateTicketContent = () => {
       <Container fluid={true} className="mt-2 d-flex justify-content-center">
         { mode === 'create' ?
         <Col sm='6'>
-        <Card style={{width: '100%', margin: '0 auto'}} className="mt-2">
+        <Card style={{width: '100%'}} className="mt-2">
         <CardHeader className='w-100 pb-0'>
             <H5>{'Create Ticket'}</H5>
           </CardHeader>
@@ -156,7 +157,8 @@ const CreateTicketContent = () => {
             <div className="loader-box">
             <Spinner attrSpinner={{ className: 'loader-3' }} /> 
             </div> :
-            <CardBody>
+              <ScrollBar>
+            <CardBody style={{height: '60vh', padding: '15px 35px 20px'}}>
             <Row>
               <Form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}>
               <FormGroup >
@@ -192,6 +194,7 @@ const CreateTicketContent = () => {
           </Form>
             </Row>
             </CardBody>
+            </ScrollBar>
           }
         
         </Card>

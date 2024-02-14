@@ -43,7 +43,7 @@ const ChatStatus = ({ checkValid, isFetchLiveConversation }) => {
   };
 
   useEffect(() => {
-    console.log("LiveConversation", liveConversation);
+    // console.log("LiveConversation", liveConversation);
     if (!isFetchLiveConversation) {
       checkValid(liveConversation[0]);
       setliveUser(liveConversation[0]);

@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { ProductsListAPI } from "../../../api";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import ProductFormModal from "./ProductFormModal";
+import ScrollBar from "react-perfect-scrollbar";
 
 const ProductsTable = () => {
   const [products, setProducts] = useState([]);
@@ -120,6 +121,7 @@ const ProductsTable = () => {
               </div>
             ) : products.length > 0 ? (
               <div className="h-100 table-responsive">
+                    <ScrollBar>
                 <Table>
                   <thead>
                     <tr className="table-primary">
@@ -217,6 +219,7 @@ const ProductsTable = () => {
                     ))}
                   </tbody>
                 </Table>
+                </ScrollBar>
               </div>
             ) : (
               <div className="w-100 h-75 d-flex justify-content-center align-items-center">

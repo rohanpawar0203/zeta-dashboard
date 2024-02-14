@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { AgentAPI, TicketsAPI } from "../../api";
 import axios from "axios";
+import ScrollBar from "react-perfect-scrollbar";
 
 const TicketsList = ({ setMode }) => {
   const [products, setProducts] = useState([]);
@@ -122,7 +123,10 @@ const TicketsList = ({ setMode }) => {
               </div>
             ) : products.length > 0 ? (
               <div className="h-100 table-responsive">
-                <Table>
+                <ScrollBar>
+                <Table style={{
+                        width: "100%",
+                      }}>
                   <thead>
                     <tr className="table-primary">
                       <th scope="col">{"Email ID"}</th>
@@ -132,7 +136,10 @@ const TicketsList = ({ setMode }) => {
                       <th scope="col">{"Created By"}</th>
                     </tr>
                   </thead>
-                  <tbody style={{ height: "60vh", overflowY: "scroll" }}>
+                  <tbody style={{ height: "60vh",
+                          overflowY: "scroll",
+                          width: "100%",
+                          display: "contents"}}>
                     {products.length > 0 &&
                       products.map((ele, ind) => (
                         <tr>
@@ -145,6 +152,7 @@ const TicketsList = ({ setMode }) => {
                       ))}
                   </tbody>
                 </Table>
+                </ScrollBar>
               </div>
             ) : (
               <div className="h-75 w-100 d-flex flex-column justify-content-center align-items-center gap-2">

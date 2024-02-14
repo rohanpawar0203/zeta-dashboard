@@ -20,6 +20,7 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import axios from "axios";
 import AgentDeleteModal from "./AgentDeleteModal";
 import AddAgentModal from "./AddAgentModal";
+import ScrollBar from "react-perfect-scrollbar";
 
 const AgentsTable = () => {
   const [agents, setAgents] = useState([]);
@@ -112,7 +113,7 @@ const AgentsTable = () => {
       <Col sm="12">
         <Card
           style={{
-            height: "70vh",
+            height: "68vh",
             marginBottom: "5vh",
             overflow: "hidden",
             paddingBottom: "10vh",
@@ -146,6 +147,7 @@ const AgentsTable = () => {
               <>
                 {agents.length > 0 ? (
                   <div className="h-100 table-responsive">
+                    <ScrollBar>
                     <Table
                       style={{
                         width: "100%",
@@ -172,11 +174,11 @@ const AgentsTable = () => {
                         {agents?.map((item, ind) => {
                           return (
                             <tr>
-                              <th scope="col">{item.name}</th>
+                              <td>{item.name}</td>
                               {/* <tr key={ind}> */}
-                              <td scope="col">{item.email}</td>
-                              <td scope="col">{item.mobile}</td>
-                              <td scope="col">
+                              <td>{item.email}</td>
+                              <td>{item.mobile}</td>
+                              <td>
                                 <Input
                                   type="checkbox"
                                   checked={item?.notification_enabled}
@@ -189,8 +191,8 @@ const AgentsTable = () => {
                                   style={{ transform: "scale(1.5)" }}
                                 />
                               </td>
-                              <td scope="col"></td>
-                              <td scope="col">
+                              <td></td>
+                              <td>
                                 <Dropdown
                                   isOpen={dropdownOpenId === item?._id}
                                   toggle={() => {
@@ -277,6 +279,7 @@ const AgentsTable = () => {
                         })}
                       </tbody>
                     </Table>
+                    </ScrollBar>
                     <UpdateAgentFormModal
                       modal={modal}
                       NewMessage={"Update Agent"}
