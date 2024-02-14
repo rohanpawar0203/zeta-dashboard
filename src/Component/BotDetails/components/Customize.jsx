@@ -32,6 +32,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { getUserDetails } from "../../../Services/UsersServices";
 import ScrollBar from "react-perfect-scrollbar";
+import { styles } from "../../WhatsAppWidget/Customization";
 
 const userData = JSON.parse(sessionStorage.getItem("currentUser"));
 const token = sessionStorage.getItem("token");
@@ -215,19 +216,24 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                     </div>
                   </Row>
                   <Row>
+                  <Col md="4 mb-3">
                     <Label htmlFor="validationCustom03">
                       {"Accent colour"}
                     </Label>
-                    <div className="w-100 d-flex flex-wrap mb-2 ">
-                      <IconColors
-                        colorOptions={colorOptions}
-                        setMyBot={setMyBot}
-                        myBot={myBot}
-                      />
-                    </div>
-                  </Row>
-                  <Row>
-                    <Col md="4 mb-3">
+                      <input 
+                    className="form-control"
+                    name="backgroundColor"
+                    style={styles['colorPicker']}
+                    type="color"
+                    onChange={(e)=> {
+                      setMyBot((pre) => ({...pre, accentColor: e?.target?.value}));
+                    }}
+                    defaultValue={myBot?.accentColor || "#f6b73c"}
+                    placeholder="Background color..."
+                    required={true}
+                  />
+                  </Col>
+                  <Col md="4 mb-3">
                       <Label htmlFor="validationCustom01">{"Subheading"}</Label>
                       <input
                         className="form-control"
@@ -241,6 +247,8 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                         required={true}
                       />
                     </Col>
+                  </Row>
+                  <Row>
                     <Col md="4 mb-3">
                       <Label htmlFor="validationCustom01">
                         {"Input Box Placeholder"}
@@ -256,8 +264,6 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                         }}
                       />
                     </Col>
-                  </Row>
-                  <Row>
                     <Col md="4 mb-3">
                       <Label htmlFor="validationCustom01">
                         {"Welcome Message"}
@@ -274,6 +280,8 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                         required={true}
                       />
                     </Col>
+                  </Row>
+                  <Row>
                     <Col md="4 mb-3">
                       {myBot?.companyLogo && companyLogoMode === "logo" ? (
                         <span>

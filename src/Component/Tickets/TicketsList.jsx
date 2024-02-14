@@ -93,7 +93,7 @@ const TicketsList = ({ setMode }) => {
       <Col sm="12">
         <Card
           style={{
-            height: "70vh",
+            height: "68vh",
             marginBottom: "5vh",
             overflow: "hidden",
             paddingBottom: "10vh",

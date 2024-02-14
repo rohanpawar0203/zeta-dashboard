@@ -11,7 +11,7 @@ import {v4 as uuid4} from 'uuid';
 import CustomSpinner from '../../CommonElements/CustomSpinner/CustomSpinner';
 import { toast } from 'react-toastify';
 
-const styles = {
+export const styles = {
   colorPicker: {
     width: "75px",
     height: "35px",

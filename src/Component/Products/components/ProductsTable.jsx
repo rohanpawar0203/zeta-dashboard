@@ -91,7 +91,7 @@ const ProductsTable = () => {
         <Card>
           <div
             style={{
-              height: "70vh",
+              height: "65vh",
               marginBottom: "5vh",
               overflow: "hidden",
               paddingBottom: "10vh",
