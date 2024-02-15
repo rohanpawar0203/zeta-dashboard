@@ -16,6 +16,7 @@ import { ProductsListAPI } from "../../../api";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import ProductFormModal from "./ProductFormModal";
 import ScrollBar from "react-perfect-scrollbar";
+import DynPagination from "../../../CommonElements/DynamicPagination/DynPagination";
 
 const ProductsTable = () => {
   const [products, setProducts] = useState([]);
@@ -41,10 +42,11 @@ const ProductsTable = () => {
 
   const toggleDropDownId = (id) => setDropdownOpenId(id);
 
-  const fetchProductData = async () => {
+  const fetchProductData = async (pageNo, lmt) => {
     setLoading(true);
     try {
-      const res = await fetch(`${ProductsListAPI}/${user._id}/user`, {
+      let page = pageNo || 1, limit = lmt || 25;
+      const res = await fetch(`${ProductsListAPI}/${user._id}/user?page=${page}&limit=${limit}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -92,12 +94,15 @@ const ProductsTable = () => {
         <Card>
           <div
             style={{
-              height: "65vh",
+              height: "68vh",
               marginBottom: "5vh",
-              overflow: "hidden",
+              overflow: "auto",
               paddingBottom: "10vh",
+              // border: '1px solid black'
+              display: 'contents'
             }}
           >
+            
             <CardHeader className="w-100 d-flex justify-content-end">
               {/* <div>
               <H5>{"Products"}</H5>
@@ -120,8 +125,9 @@ const ProductsTable = () => {
                 <Spinner attrSpinner={{ className: "loader-3" }} />
               </div>
             ) : products.length > 0 ? (
-              <div className="h-100 table-responsive">
-                  <ScrollBar>
+              <div>
+                <div style={{height:'45vh'}} className="table-responsive">
+                <ScrollBar>
                 <Table>
                   <thead>
                     <tr className="table-primary">
@@ -133,7 +139,7 @@ const ProductsTable = () => {
                       <th scope="col"> </th>
                     </tr>
                   </thead>
-                  <tbody style={{ height: "60vh", overflowY: "scroll" }}>
+                  <tbody>
                     {products?.map((item, ind) => (
                       <tr key={ind}>
                         <th scope="row">{item.productId}</th>
@@ -219,7 +225,9 @@ const ProductsTable = () => {
                     ))}
                   </tbody>
                 </Table>
-                </ScrollBar>
+              </ScrollBar>
+              </div>
+              <DynPagination data={products} switchPage={fetchProductData}/>
               </div>
             ) : (
               <div className="w-100 h-75 d-flex justify-content-center align-items-center">
