@@ -121,7 +121,7 @@ const ProductsTable = () => {
               </div>
             ) : products.length > 0 ? (
               <div className="h-100 table-responsive">
-                    <ScrollBar>
+                  <ScrollBar>
                 <Table>
                   <thead>
                     <tr className="table-primary">
