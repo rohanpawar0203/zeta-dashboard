@@ -59,15 +59,16 @@ import ScrollBar from "react-perfect-scrollbar";
 import Customization from "./Customization";
 import EmbedWidget from "./EmbedWidget";
 import Integrations from "./Integrations";
+import Broadcasting from "./Broadcasting";
 
 const WebSdkInfoContent = () => {
   const { setBotDetails, userData } = appStore.getState();
-  const [pillTab, setpillTab] = useState("1");
+  const [pillTab, setpillTab] = useState("4");
   const [loading, setLoading] = useState(false);
 
   return (
     <Fragment>
-      <Breadcrumbs title="whatsApp Widget" />
+      <Breadcrumbs title="whatsApp" />
       <Container fluid={true}>
         <Row>
           <Col sm="12 bot-info-card">
@@ -122,6 +123,18 @@ const WebSdkInfoContent = () => {
                               {"Integration"}
                             </NavLink>
                           </NavItem>
+                          <NavItem style={{ cursor: "pointer" }}>
+                            <NavLink
+                              className={
+                                pillTab === "4"
+                                  ? "active cursor-pointer"
+                                  : "cursor-pointer"
+                              }
+                              onClick={() => setpillTab("4")}
+                            >
+                              {"Broadcasting"}
+                            </NavLink>
+                          </NavItem>
                         </div>
                       </div>
                     </Nav>
@@ -144,6 +157,9 @@ const WebSdkInfoContent = () => {
                             </TabPane>
                             <TabPane tabId="3" className="vh-75">
                               <Integrations />
+                            </TabPane>
+                            <TabPane tabId="4" className="vh-75">
+                              <Broadcasting />
                             </TabPane>
                           </TabContent>
                         </>

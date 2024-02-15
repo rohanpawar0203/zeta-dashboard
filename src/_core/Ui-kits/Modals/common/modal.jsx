@@ -5,19 +5,20 @@ import { Close, Submit, NewBot } from "../../../../Constant/index";
 import CustomSpinner from "../../../../CommonElements/CustomSpinner/CustomSpinner";
 
 const CommonModal = (props) => {
-  
+  console.log("CommonModal---->", props);
   return (
     <Modal
       isOpen={props.isOpen}
       toggle={props.toggler}
       size={props.size}
-      position="top-start"
+      // position="top-start"
+      centered
     >
       <ModalHeader toggle={props.toggler} className="fw-bolder">
         {props.title}
       </ModalHeader>
       <ModalBody className={props.bodyClass}>{props.children}</ModalBody>
-      <ModalFooter>
+      {/* <ModalFooter>
         {props?.event && (
           <>
             <Btn attrBtn={{ color: "secondary", onClick: props.toggler }}>
@@ -29,16 +30,19 @@ const CommonModal = (props) => {
                 onClick: props?.event,
               }}
             >
-              {props?.submitLoader ? <CustomSpinner/> :
-              props?.delete
-                ? props?.delete
-                : props?.submitTxt
-                ? props?.submitTxt
-                : Submit}
+              {props?.submitLoader ? (
+                <CustomSpinner />
+              ) : props?.delete ? (
+                props?.delete
+              ) : props?.submitTxt ? (
+                props?.submitTxt
+              ) : (
+                Submit
+              )}
             </Btn>
           </>
         )}
-      </ModalFooter>
+      </ModalFooter> */}
     </Modal>
   );
 };
