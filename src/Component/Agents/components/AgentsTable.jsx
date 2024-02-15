@@ -126,9 +126,11 @@ const AgentsTable = () => {
                 <button
                   type="button"
                   class="btn btn-success"
+                  style={{...{cursor: agents?.length === 2 ? 'not-allowed': 'pointer'}}}
                   onClick={() => {
                     toggleagentAddModal();
                   }}
+                  disabled={agents?.length === 2}
                 >
                   Create New Agent
                 </button>

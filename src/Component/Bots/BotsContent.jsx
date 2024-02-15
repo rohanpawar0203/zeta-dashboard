@@ -189,8 +189,9 @@ const BotsContent = () => {
                   </H6>
                   <button
                     type="button"
-                    className="btn btn-primary btn-md"
+                    className={`btn btn-primary btn-md`}
                     onClick={toggle}
+                    disabled={myBots?.length === 1}
                   >
                     Create new bot
                   </button>
