@@ -45,13 +45,13 @@ const DynPagination = ({ data, switchPage }) => {
     if (page && limit) {
       setRecords((pre) => ({
         str: (page - 1) * limit + 1,
-        las: (page - 1) * limit + limit,
+        las: (data?.length <= ((page - 1) * limit + limit)) ? data?.length : ((page - 1) * limit + limit)
       }));
     }
   }, [page, limit]);
 
   return (
-    <div style={{margin:'10px 0px', padding: '0 15px'}} className="w-100 d-flex align-items-center flex-wrap justify-content-between">
+    <div style={{margin:'10px 0px', padding: '0 15px'}} className="w-100 d-flex gap-2 align-items-center flex-wrap justify-content-between">
       <div style={{height: '32px'}} className="d-flex gap-3 align-items-center">
         {data?.length >= 1 && (
           <Input style={{fontSize: '13px', color: 'teal', width:'100px'}}

@@ -52,12 +52,13 @@ export const ChatProvider = (props) => {
   const setIsConnected = (data) => setappStore((pre) => ({...pre, isConnected: data }));
   const setAllAgents = (data) => setappStore((pre) => ({...pre, allAgents: data }));
 
-  const getChatMembersData = async (page) => {
+  const getChatMembersData = async (page, limit, order) => {
     setisFetching(true);
     try {
+      let pageNo = page || 1, limitValue = limit || 25, orderValue = order || 'desc';
       const orgId = userData?.userId ? userData?.userId : userData?._id;
       const resp = await axios.get(
-        `${GetConversationsAPI}/${orgId}`,
+        `${GetConversationsAPI}/${orgId}?page=${pageNo}&limit=${limitValue}&order=${orderValue}`,
         {
           headers: {
             Authorization: `Bearer ${token}`, 
