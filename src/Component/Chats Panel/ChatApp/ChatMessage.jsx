@@ -48,10 +48,7 @@ const ChatMessage = () => {
   return (
     <Fragment>
       {allMemberss && chatss && selectedUserr ? (
-        <div
-          className="chat-history chat-msg-box custom-scrollbar"
-          style={{ margin: 0 }}
-        >
+        <div className="chat-history chat-msg-box custom-scrollbar">
           {selectedChat && selectedChat.length > 0
             ? selectedChat.map((item, index) => {
                 return (

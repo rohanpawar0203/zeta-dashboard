@@ -73,8 +73,9 @@
     }
     .people-list {
       ul {
-        max-height: 450px;
-        overflow: auto;
+        max-height: 80vh;
+        /* overflow: scroll; */
+        padding: 0;
       }
     }
   }
@@ -86,8 +87,8 @@
           overflow: auto;
         }
       }
-      overflow: hidden;
-      height: 625px;
+      overflow: scroll;
+      max-height: 75vh;
     }
   }
   .caller-img {
@@ -621,6 +622,13 @@
   .chat-body {
     padding: 10px;
   }
+
+  .call-chat-sidebar .card .card-body,
+  .chat-body .card .card-body {
+    @media screen and (max-width: 700px) {
+      height: auto !important;
+    }
+  }
   .chat-box {
     .chat-history {
       .call-content {
@@ -688,8 +696,8 @@
     .people-list {
       height: 420px;
       ul {
-        max-height: 376px;
-        overflow-y: auto;
+        // max-height: 376px;
+        // overflow-y: auto;
       }
     }
     .status-circle {
@@ -797,8 +805,8 @@
     .people-list {
       height: 490px;
       ul {
-        max-height: 434px;
-        overflow-y: auto;
+        // max-height: 434px;
+        // overflow-y: auto;
       }
     }
   }
@@ -1089,8 +1097,8 @@
     .people-list {
       height: 490px;
       ul {
-        max-height: 434px;
-        overflow-y: auto;
+        // max-height: 434px;
+        // overflow-y: auto;
       }
     }
   }

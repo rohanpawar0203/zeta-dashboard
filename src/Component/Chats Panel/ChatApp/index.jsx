@@ -16,15 +16,21 @@ const ChatAppContain = () => {
       <Container fluid={true}>
         <Row>
           <Col className="call-chat-sidebar">
-            <Card style={{ height: "90%", overflowY: "hidden" }}>
-              <CardBody className="chat-body">
+            <Card>
+              <CardBody
+                className="chat-body"
+                style={{ height: "75vh", overflowY: "hidden" }}
+              >
                 <ChatStatus isFetching={isFetching} />
               </CardBody>
             </Card>
           </Col>
           <Col className="call-chat-body">
             <Card>
-              <CardBody className="p-0">
+              <CardBody
+                className="p-0"
+                style={{ height: "75vh", overflowY: "hidden" }}
+              >
                 <Chatting isFetching={isFetching} />
               </CardBody>
             </Card>
