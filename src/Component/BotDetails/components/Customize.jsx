@@ -60,7 +60,10 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
     { code: "COD", text: "Cash On Delivery" },
     { code: "ONLINE", text: "Online" },
   ];
-  const online_payment_modes = [{ code: "JUSPAY", text: "JusPay" }, { code: "JUSPAY", text: "JusPay" }];
+  const online_payment_modes = [
+    { code: "JUSPAY", text: "JusPay" },
+    { code: "JUSPAY", text: "JusPay" },
+  ];
 
   const colorOptions = [
     "#705CF6",
@@ -164,9 +167,9 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                   className="needs-validation "
                   noValidate=""
                   onSubmit={handleBotEdit}
-                  style={{ height: "100%"}}
+                  style={{ height: "100%" }}
                 >
-                  <ScrollBar>
+                  {/* <ScrollBar> */}
                   <Row>
                     <Col md="4 mb-3">
                       <Label htmlFor="validationCustom01">{"Bot Name"}</Label>
@@ -216,24 +219,27 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                     </div>
                   </Row>
                   <Row>
-                  <Col md="4 mb-3">
-                    <Label htmlFor="validationCustom03">
-                      {"Accent colour"}
-                    </Label>
-                      <input 
-                    className="form-control"
-                    name="backgroundColor"
-                    style={styles['colorPicker']}
-                    type="color"
-                    onChange={(e)=> {
-                      setMyBot((pre) => ({...pre, accentColor: e?.target?.value}));
-                    }}
-                    defaultValue={myBot?.accentColor || "#f6b73c"}
-                    placeholder="Background color..."
-                    required={true}
-                  />
-                  </Col>
-                  <Col md="4 mb-3">
+                    <Col md="4 mb-3">
+                      <Label htmlFor="validationCustom03">
+                        {"Accent colour"}
+                      </Label>
+                      <input
+                        className="form-control"
+                        name="backgroundColor"
+                        style={styles["colorPicker"]}
+                        type="color"
+                        onChange={(e) => {
+                          setMyBot((pre) => ({
+                            ...pre,
+                            accentColor: e?.target?.value,
+                          }));
+                        }}
+                        defaultValue={myBot?.accentColor || "#f6b73c"}
+                        placeholder="Background color..."
+                        required={true}
+                      />
+                    </Col>
+                    <Col md="4 mb-3">
                       <Label htmlFor="validationCustom01">{"Subheading"}</Label>
                       <input
                         className="form-control"
@@ -357,7 +363,7 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                     </Col>
                   </Row>
                   <Btn attrBtn={{ color: "primary" }}>{"Submit form"}</Btn>
-                  </ScrollBar>
+                  {/* </ScrollBar> */}
                 </Form>
               </Fragment>
             </CardBody>
@@ -370,15 +376,16 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
 };
 
 export const DynamicSwitch = ({ title, code }) => {
-  return (<Media>
-        <Label className="col-form-label m-r-10">{`${title}`}</Label>
-        <Media body className="text-evenly icon-state">
-          <Label className="switch">
-            <Input type="checkbox" />
-            <span className="switch-state"></span>
-          </Label>
-        </Media>
+  return (
+    <Media>
+      <Label className="col-form-label m-r-10">{`${title}`}</Label>
+      <Media body className="text-evenly icon-state">
+        <Label className="switch">
+          <Input type="checkbox" />
+          <span className="switch-state"></span>
+        </Label>
       </Media>
+    </Media>
   );
 };
 export default Customize;

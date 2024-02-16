@@ -96,8 +96,8 @@
         // height: 95%;
         // margin-bottom: 90px;
         padding: 20px;
-        overflow-x: scroll;
-        height: 50vh !important;
+        overflow-y: scroll;
+        max-height: 50vh !important;
 
         @media screen and (max-height: 700px) {
           height: 50vh !important;
@@ -448,7 +448,7 @@
 }
 .call-chat-sidebar {
   max-width: 320px;
-  height: 77vh;
+  // height: 77vh;
 
   @media screen and (max-height: 700px) {
     height: 65vh;

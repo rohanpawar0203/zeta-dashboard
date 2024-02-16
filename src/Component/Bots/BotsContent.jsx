@@ -187,20 +187,25 @@ const BotsContent = () => {
                   <H6 className="mb-2 fw-bolder text-gray">
                     {myBots.length ? myBots.length : ""} live bots
                   </H6>
-                  <button
-                    type="button"
-                    className={`btn btn-primary btn-md`}
-                    onClick={toggle}
-                    disabled={myBots?.length === 1}
-                  >
-                    Create new bot
-                  </button>
-                  <CreateBotFormModal
-                    modal={modal}
-                    NewMessage={"New Bot"}
-                    toggle={toggle}
-                    getAllBot={getAllBot}
-                  ></CreateBotFormModal>
+                  {myBots?.length < 1 ? (
+                    <>
+                      <button
+                        type="button"
+                        className={`btn btn-primary btn-md`}
+                        onClick={toggle}
+                      >
+                        Create new bot
+                      </button>
+                      <CreateBotFormModal
+                        modal={modal}
+                        NewMessage={"New Bot"}
+                        toggle={toggle}
+                        getAllBot={getAllBot}
+                      ></CreateBotFormModal>
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 {myBots.map((myBot, i) => (
                   <div

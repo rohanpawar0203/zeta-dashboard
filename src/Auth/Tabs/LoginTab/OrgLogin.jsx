@@ -42,15 +42,20 @@ const OrgLogin = ({ selected, showToast }) => {
   const inputRef = useRef();
   const { setUserData, setToken, userData } = appStore();
   const [apiError, setApiError] = useState("");
+  const [clientIP, setClientIP] = useState("");
 
   const userLogin = async (e) => {
-    
     setLoading(true);
 
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, type: "organization" }),
+      body: JSON.stringify({
+        ipAddress: clientIP,
+        email,
+        password,
+        type: "organization",
+      }),
     };
     try {
       const res = await fetch(
@@ -106,6 +111,21 @@ const OrgLogin = ({ selected, showToast }) => {
       setErrors(errorsObj);
     }
   };
+
+  useEffect(() => {
+    const getIpAddress = async () => {
+      await axios
+        .get("https://api.ipify.org/?format=json")
+        .then((resp) => {
+          console.log("GET IP ADDRESS:::", resp.data, resp.data.ip);
+          setClientIP(resp.data.ip);
+        })
+        .catch((error) => console.log("GET IP ERROR", error));
+    };
+
+    getIpAddress();
+    console.log("clientIP", clientIP);
+  }, [!clientIP]);
 
   return (
     <Fragment>
