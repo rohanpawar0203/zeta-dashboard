@@ -68,6 +68,7 @@
       .chat {
         .chat-msg-box {
           height: 440px;
+          overflow: scroll;
         }
       }
     }
@@ -843,6 +844,7 @@
       .chat {
         .chat-msg-box {
           height: 410px;
+          overflow: scroll;
           .chat-user-img {
             margin-top: -30px;
           }
@@ -1779,8 +1781,7 @@
   }
   .call-chat-body {
     .chat-box {
-      overflow: auto;
-      height: auto;
+      // overflow: scroll;
     }
   }
   // icons
@@ -2912,6 +2913,7 @@
       .chat {
         .chat-msg-box {
           margin-bottom: 50px;
+          overflow: scroll;
         }
       }
     }
@@ -3489,7 +3491,8 @@
     .chat-right-aside {
       .chat {
         .chat-msg-box {
-          height: auto;
+          // height: auto;
+          overflow: scroll;
         }
       }
     }
@@ -6919,3 +6922,14 @@
 /**=====================
     71. Responsive CSS Ends
 ==========================**/
+
+// pagination styles
+.pagination{
+  display: flex;
+}
+
+@media only screen and (max-width: 871px){
+  .pagination{
+      display: none;
+  }
+}

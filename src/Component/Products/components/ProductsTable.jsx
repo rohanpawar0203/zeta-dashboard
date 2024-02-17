@@ -124,7 +124,7 @@ const ProductsTable = () => {
               <div className="loader-box">
                 <Spinner attrSpinner={{ className: "loader-3" }} />
               </div>
-            ) : products.length > 0 ? (
+            ) : products['data']?.length > 0 ? (
               <div>
                 <div style={{height:'45vh'}} className="table-responsive">
                 <ScrollBar>
@@ -140,7 +140,7 @@ const ProductsTable = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {products?.map((item, ind) => (
+                    {products['data'].map((item, ind) => (
                       <tr key={ind}>
                         <th scope="row">{item.productId}</th>
                         <td>{item.productName}</td>
@@ -227,7 +227,7 @@ const ProductsTable = () => {
                 </Table>
               </ScrollBar>
               </div>
-              <DynPagination data={products} switchPage={fetchProductData}/>
+              <DynPagination totalCount={products['total_count']} switchPage={fetchProductData}/>
               </div>
             ) : (
               <div className="w-100 h-75 d-flex justify-content-center align-items-center">

@@ -65,7 +65,7 @@ export const ChatProvider = (props) => {
           },
         }
       );
-      setChatPanelMsgs(resp.data.reverse());
+      setChatPanelMsgs({...resp['data'], data: resp['data']['data']?.reverse()});
     } catch (error) {
       console.log('error', error);
     }
@@ -207,7 +207,7 @@ export const ChatProvider = (props) => {
   };
 
   const changeChat = (userID) => {
-    setSelectedUser(chatPanelMsgs.find((x) => x._id === userID));
+    setSelectedUser(chatPanelMsgs?.data?.find((x) => x._id === userID));
   };
 
   const searchMember = (keywords) => {

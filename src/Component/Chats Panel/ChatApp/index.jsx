@@ -18,58 +18,48 @@ const ChatAppContain = () => {
   useEffect(() => {
     getChatMembersData();
   }, []);
-
+  
   return (
     <Fragment>
       <Container fluid={true}>
-        {/* <div
-          style={{
-            width: "100%",
-            height: "63vh",
-            border: "1px solid black",
-            overflow: "hidden",
-          }}
-        > */}
-        {/* <ScrollBar options={scrollbarOptions}> */}
-        {/* <div style={{ height: "80%" }}> */}
+        {/* <div style={{height: '63vh'}}> */}
         <Row>
-          <Col className="call-chat-sidebar">
+          <Col className="call-chat-sidebar" style={{height: "63vh"}}>
             <Card>
-              <CardBody
-                className="chat-body"
-                style={{ height: "75vh", overflowY: "hidden" }}
-              >
+              <CardBody className="chat-body" style={{height: '63vh',border: '1px solid none'}}>
                 <ChatStatus isFetching={isFetching} />
               </CardBody>
             </Card>
           </Col>
-          <Col className="call-chat-body">
+          <Col className="call-chat-body"  style={{height: "63vh"}}>
             <Card>
-              <CardBody
-                className="p-0"
-                style={{ height: "75vh", overflowY: "hidden" }}
-              >
+              <CardBody className="p-0" style={{height: '63vh',border: '1px solid none'}}>
                 <Chatting isFetching={isFetching} />
               </CardBody>
             </Card>
           </Col>
         </Row>
         {/* </div> */}
-        {/* </ScrollBar> */}
-        {/* </div> */}
+        { 
+        chatPanelMsgs['total_count'] && (
+          <div className="pagination">
+          <div
+          style={{
+            borderRadius: "6px",
+            marginTop: "4px",
+            height: "auto",
+            border: "1px solid none",
+            backgroundColor: "white",
+          }}
+          className="w-100 d-flex align-items-center justify-content-center"
+        >
+          <DynPagination totalCount={chatPanelMsgs['total_count']} switchPage={getChatMembersData} />
+        </div>
+        </div>
+
+        )
+        }
       </Container>
-      {/* <div
-        style={{
-          borderRadius: "6px",
-          marginTop: "8px",
-          height: "35px",
-          border: "1px solid yellow",
-          backgroundColor: "white",
-        }}
-        className="p-1 w-100 d-flex align-items-center justify-content-center"
-      >
-        <DynPagination data={chatPanelMsgs} switchPage={getChatMembersData} />
-      </div> */}
     </Fragment>
   );
 };

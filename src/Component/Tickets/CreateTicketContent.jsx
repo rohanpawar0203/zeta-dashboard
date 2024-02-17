@@ -37,6 +37,7 @@ import { AgentAPI, TicketsAPI } from "../../api";
 import AutomaiteBackend from "../Agents/components/automaiteBackend";
 import TicketsList from "./TicketsList";
 import ScrollBar from "react-perfect-scrollbar";
+import DynPagination from "../../CommonElements/DynamicPagination/DynPagination";
 
 
 
@@ -199,7 +200,10 @@ const CreateTicketContent = () => {
         
         </Card>
         </Col> :
+        <>
         <TicketsList setMode={setMode}/>
+        </>
+        
       }
       </Container>
     </Fragment>

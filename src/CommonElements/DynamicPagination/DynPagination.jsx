@@ -12,7 +12,7 @@ import {
 import { Previous, Next } from "../../Constant";
 import { v4 as uuid } from "uuid";
 
-const DynPagination = ({ data, switchPage }) => {
+const DynPagination = ({ totalCount, switchPage }) => {
   const [page, setPage] = useState(1);
   const [totalPages, settotalPages] = useState(0);
   const [limit, setlimit] = useState(25);
@@ -37,15 +37,18 @@ const DynPagination = ({ data, switchPage }) => {
   };
 
   useEffect(() => {
-    let pages = Math.ceil(data?.length / 10);
+    let pages = Math.ceil(totalCount / limit);
     pages && settotalPages(pages);
-  }, [data]);
+  }, [totalCount, limit]);
 
   useEffect(() => {
     if (page && limit) {
-      setRecords((pre) => ({
-        str: (page - 1) * limit + 1,
-        las: (data?.length <= ((page - 1) * limit + limit)) ? data?.length : ((page - 1) * limit + limit)
+      let limitVal = Number(limit);
+      let init = (page - 1) * limitVal + 1;
+      let end = (totalCount < ((page - 1) * limitVal + limitVal)) ? totalCount : ((page - 1) * limitVal + limitVal);
+      (init && end ) && setRecords((pre) => ({
+        str: init,
+        las: end
       }));
     }
   }, [page, limit]);
@@ -53,15 +56,17 @@ const DynPagination = ({ data, switchPage }) => {
   return (
     <div style={{margin:'10px 0px', padding: '0 15px'}} className="w-100 d-flex gap-2 align-items-center flex-wrap justify-content-between">
       <div style={{height: '32px'}} className="d-flex gap-3 align-items-center">
-        {data?.length >= 1 && (
+        {totalCount > 25 && (
           <Input style={{fontSize: '13px', color: 'teal', width:'100px'}}
             onChange={(e) => {
               setlimit(e?.target?.value);
+              setPage(1);
               executeSwitchChange();
             }}
             className="form-control form-control-primary-fill btn-square"
             name="select"
             type="select"
+            value={limit}
           >
             <option
               style={{ fontSize: "12px", fontWeight: "500" }}
@@ -76,7 +81,6 @@ const DynPagination = ({ data, switchPage }) => {
             >
               25
             </option>
-            {data?.length >= 50 && (
               <option
                 style={{ fontSize: "12px", fontWeight: "500" }}
                 key={uuid()}
@@ -84,8 +88,7 @@ const DynPagination = ({ data, switchPage }) => {
               >
                 50
               </option>
-            )}
-            {data?.length >= 75 && (
+            {totalCount > 50 && (
               <option
                 style={{ fontSize: "12px", fontWeight: "500" }}
                 key={uuid()}
@@ -94,7 +97,7 @@ const DynPagination = ({ data, switchPage }) => {
                 75
               </option>
             )}
-            {data?.length >= 100 && (
+            {totalCount > 75 && (
               <option
                 style={{ fontSize: "12px", fontWeight: "500" }}
                 key={uuid()}
@@ -108,7 +111,7 @@ const DynPagination = ({ data, switchPage }) => {
         <div style={{width: '150px', height: '100%'}}
           className="ml-1  d-flex align-items-center"
         >
-          <p style={{ fontSize: "14px", fontWeight: "600", color: 'teal', margin:'0'}}>{`${records["str"]}-${records["las"]}  of  ${data?.length}`}</p>
+          <p style={{ fontSize: "14px", fontWeight: "600", color: 'teal', margin:'0'}}>{`${records["str"]}-${records["las"]}  of  ${totalCount}`}</p>
         </div>
       </div>
       <Pagination aria-label="Page navigation example">
@@ -120,6 +123,7 @@ const DynPagination = ({ data, switchPage }) => {
                 onClick={() => {
                   handlePageChange("PREVIOUS");
                 }}
+                style={{cursor: (page === 1) ? 'not-allowed': 'pointer'}}
               >
                 <span aria-hidden="true">«</span>
               </PaginationLink>
@@ -134,6 +138,7 @@ const DynPagination = ({ data, switchPage }) => {
                   href="#javascript"
                   onClick={() => {
                     setPage(ind + 1);
+                    executeSwitchChange();
                   }}
                 >{`${ind + 1}`}</PaginationLink>
               </PaginationItem>
@@ -146,6 +151,7 @@ const DynPagination = ({ data, switchPage }) => {
                 onClick={() => {
                   handlePageChange("NEXT");
                 }}
+                style={{cursor: (page === totalPages) ? 'not-allowed': 'pointer'}}
               >
                 <span aria-hidden="true">»</span>
               </PaginationLink>

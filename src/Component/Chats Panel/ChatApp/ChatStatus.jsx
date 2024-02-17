@@ -46,7 +46,7 @@ const ChatStatus = ({ isFetching }) => {
 
   useEffect(() => {
     if (!isFetching) {
-      let chatMsgs = chatPanelMsgs?.filter((x) => x._id !== userData._id);
+      let chatMsgs = chatPanelMsgs?.data?.filter((x) => x._id !== userData._id);
       chatMsgs?.length && changeChat(chatMsgs[0]?._id);
     }
   }, [isFetching]);
@@ -78,7 +78,7 @@ const ChatStatus = ({ isFetching }) => {
 
   return (
     <Fragment>
-      <div className="chat-box" style={{ height: "100%", overflowY: "scroll" }}>
+      <div className="chat-box" style={{ height: "100%", overflowY: "hidden" }}>
         <div className="chat-left-aside">
           {/* <CurrentUser /> */}
           <h5>All Chats</h5>
@@ -90,12 +90,11 @@ const ChatStatus = ({ isFetching }) => {
             ) : (
               <>
                 <SearchChatList />
-                {chatPanelMsgs && chatPanelMsgs.length > 0 ? (
+                {chatPanelMsgs && chatPanelMsgs['data']?.length > 0 ? (
                   <UL
                     attrUL={{ className: "simple-list list custom-scrollbar" }}
                   >
-                    {chatPanelMsgs
-                      .filter((x) => x._id !== userData._id)
+                    {chatPanelMsgs?.data?.filter((x) => x._id !== userData._id)
                       .map((item, i) => {
                         return (
                           <LI

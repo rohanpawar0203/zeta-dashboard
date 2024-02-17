@@ -16,6 +16,7 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { AgentAPI, TicketsAPI } from "../../api";
 import axios from "axios";
 import ScrollBar from "react-perfect-scrollbar";
+import DynPagination from "../../CommonElements/DynamicPagination/DynPagination";
 
 const TicketsList = ({ setMode }) => {
   const [products, setProducts] = useState([]);
@@ -41,18 +42,22 @@ const TicketsList = ({ setMode }) => {
 
   const toggleDropDownId = (id) => setDropdownOpenId(id);
 
-  const fetchTicketsData = async () => {
+  const fetchTicketsData = async (page, limit) => {
     setLoading(true);
     try {
-      const res = await axios.get(`${TicketsAPI}/${user._id}/organization`, {
+      let pageNo = page || 1, limitValue = limit || 25;
+      const res = await axios.get(`${TicketsAPI}/${user._id}/organization?page=${pageNo}&limit=${limitValue}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
-      const data = await res.data;
-      // console.log('tickets ', data);
-      setProducts(data);
+      const data =  res.data;
+      console.log('res?.status ', typeof res?.status, data);
+      if(res?.status === 200 && data){
+        console.log('resres ', data);
+        setProducts(data)
+      }
     } catch (error) {
       toast(error);
     }
@@ -93,12 +98,12 @@ const TicketsList = ({ setMode }) => {
     <Fragment>
       <Col sm="12">
         <Card
-          style={{
-            height: "68vh",
-            marginBottom: "5vh",
-            overflow: "hidden",
-            paddingBottom: "10vh",
-          }}
+          // style={{
+          //   height: "68vh",
+          //   marginBottom: "5vh",
+          //   overflow: "hidden",
+          //   paddingBottom: "10vh",
+          // }}
         >
           <div>
             <CardHeader className="w-100 d-flex justify-content-end">
@@ -121,7 +126,8 @@ const TicketsList = ({ setMode }) => {
               <div className="loader-box">
                 <Spinner attrSpinner={{ className: "loader-3" }} />
               </div>
-            ) : products.length > 0 ? (
+            ) : products['data']?.length > 0 ? (
+              <>
               <div className="h-100 table-responsive">
                 <ScrollBar>
                 <Table style={{
@@ -140,8 +146,8 @@ const TicketsList = ({ setMode }) => {
                           overflowY: "scroll",
                           width: "100%",
                           display: "contents"}}>
-                    {products.length > 0 &&
-                      products.map((ele, ind) => (
+                    {products['data'].length > 0 &&
+                      products['data'].map((ele, ind) => (
                         <tr>
                           <td>{ele?.email}</td>
                           <td>{ele?.query}</td>
@@ -154,6 +160,8 @@ const TicketsList = ({ setMode }) => {
                 </Table>
                 </ScrollBar>
               </div>
+               <DynPagination totalCount={products['total_count']} switchPage={fetchTicketsData}/>
+              </>
             ) : (
               <div className="h-75 w-100 d-flex flex-column justify-content-center align-items-center gap-2">
                 <H6 className="fw-bolder">{"No Tickets Exist"}</H6>
