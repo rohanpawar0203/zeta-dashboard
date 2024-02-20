@@ -15,9 +15,14 @@ import {
 import DataTable from "react-data-table-component";
 import CommonModal from "../../_core/Ui-kits/Modals/common/modal";
 import Dropzone from "react-dropzone-uploader";
+import { WhatsappTemplateAPI } from "../../api";
+import axios from "axios";
+import appStore from "../Live Chats/Client/AppStore";
 
 const Broadcasting = () => {
+  const { userData, token } = appStore();
   const headerTypes = ["text", "media"];
+  const variableList = ["{{1}}"];
   const [initialValues, setInitialValues] = useState({
     contacts: [],
     scheduleDateTime: new Date(
@@ -38,6 +43,7 @@ const Broadcasting = () => {
   const [modal, setModal] = useState(true);
   const [selectedType, setSelectedType] = useState(headerTypes[0]);
   const [uploadedImage, setUploadedImage] = useState({});
+  const [showAddVariable, setShowAddVariable] = useState(true);
 
   const toggle = () => setModal(!modal);
 
@@ -52,18 +58,70 @@ const Broadcasting = () => {
       ...initialValues,
       scheduleDateTime: timeInMilliseconds,
     });
-
-    // Now you can use timeInMilliseconds as needed, for example, send it to your API
   };
 
-  // const handleTemplateChange = (e) => {
-  //   setInitialTemplateValues((prevProps) => ({
-  //     ...prevProps,
-  //     [name]: value,
+  // const addVariable = () => {
+  //   const currentText = templateBody.text;
+  //   let newText = currentText;
+  //   let variableFound = false;
+
+  //   variableList.forEach((variable) => {
+  //     if (newText.includes(variable)) {
+  //       const indexOfVariable = variableList.indexOf(variable);
+  //       const nextVariableIndex = (indexOfVariable + 1) % variableList.length;
+  //       const nextVariable = variableList[nextVariableIndex];
+
+  //       console.log(`Adding variable: ${nextVariable}`);
+
+  //       newText = newText.replace(variable, nextVariable);
+  //       variableFound = true;
+  //     }
+  //   });
+
+  //   if (!variableFound) {
+  //     console.log(`Adding first variable: ${variableList[0]}`);
+  //     newText = newText.concat(variableList[0]);
+  //   }
+
+  //   setTemplateBody((prevValues) => ({
+  //     ...prevValues,
+  //     text: newText,
   //   }));
   // };
 
-  const onTemplateCreate = (e) => {
+  const addVariable = (clicked) => {
+    if (templateBody.text.includes(variableList[0])) {
+      setShowAddVariable(false);
+    } else {
+      // console.log("addVariable else", showAddVariable);
+      setShowAddVariable(true);
+      if (clicked) {
+        setTemplateBody((prevValues) => ({
+          ...prevValues,
+          text: templateBody.text.concat(variableList[0]),
+        }));
+      }
+    }
+  };
+
+  const getTemplates = async () => {
+    try {
+      const resp = await axios(`${WhatsappTemplateAPI}/${userData._id}/user`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (resp.status === 200) {
+        setTemplateList(resp.data);
+      }
+    } catch (error) {
+      console.log("getTemplates", error);
+    }
+  };
+
+  const onTemplateCreate = async (e) => {
     e.preventDefault();
     let json = {
       templateName: templateName,
@@ -77,7 +135,6 @@ const Broadcasting = () => {
         text: templateBody.text,
       },
     };
-
     // Conditionally add the example block
     if (json?.header?.type === "TEXT") {
       json.header.example = {
@@ -85,12 +142,45 @@ const Broadcasting = () => {
       };
     }
 
-    console.log("JSON", json);
+    try {
+      const resp = await axios(`${WhatsappTemplateAPI}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        data: JSON.stringify({
+          userId: userData._id,
+          ...json,
+        }),
+      });
+      if (resp.status === 200) {
+        setModal(false);
+        setTemplateBody({
+          type: "BODY",
+          text: "",
+        });
+        setTemplateHeader({
+          type: "HEADER",
+          text: "",
+        });
+        setTemplateName("");
+      } else {
+      }
+      console.log("resp", resp);
+    } catch (error) {
+      console.log("Error", error);
+    }
   };
 
   useEffect(() => {
-    // onTemplateCreate();
-  }, []);
+    addVariable();
+  }, [templateBody.text, showAddVariable]);
+
+  useEffect(() => {
+    getTemplates();
+  }, [modal]);
+
   return (
     <section>
       <CommonModal
@@ -114,6 +204,7 @@ const Broadcasting = () => {
                   className="form-control"
                   type="text"
                   placeholder="Name"
+                  value={templateName}
                   required={true}
                   onChange={(e) => {
                     setTemplateName(e.target.value);
@@ -153,6 +244,7 @@ const Broadcasting = () => {
                     className="form-control"
                     type="text"
                     placeholder="Message Title"
+                    value={templateHeader.text}
                     onChange={(e) =>
                       setTemplateHeader((prevValues) => ({
                         ...prevValues,
@@ -180,13 +272,14 @@ const Broadcasting = () => {
             )}
             <H4>Body</H4>
             <Col>
-              <FormGroup>
-                <input
+              <FormGroup style={{ position: "relative", marginBottom: 0 }}>
+                <textarea
                   type="textarea"
                   className="form-control"
                   name="description"
                   rows="3"
-                  style={{ height: "80px" }}
+                  // style={{ height: "80px" }}
+                  value={templateBody.text}
                   required={true}
                   placeholder="Message Body"
                   onChange={(e) =>
@@ -195,7 +288,22 @@ const Broadcasting = () => {
                       text: e.target.value,
                     }))
                   }
-                />
+                ></textarea>
+                <i
+                  class="fa fa-plus-square"
+                  title="Add Variable"
+                  style={{
+                    position: "absolute",
+                    bottom: "-1px",
+                    right: 0,
+                    fontSize: "24px",
+                    opacity: showAddVariable ? 1 : 0.5,
+                    cursor: showAddVariable ? "pointer" : "no-drop",
+                  }}
+                  onClick={() => {
+                    addVariable(true);
+                  }}
+                ></i>
               </FormGroup>
             </Col>
           </Row>
@@ -238,7 +346,9 @@ const Broadcasting = () => {
                         alignItems: "center",
                       }}
                     >
-                      Select Template
+                      {templateList.length !== 0
+                        ? "Please select Template"
+                        : "Please create template"}
                       <Btn
                         attrBtn={{
                           color: "primary",
@@ -250,12 +360,35 @@ const Broadcasting = () => {
                         Add Template
                       </Btn>
                     </Label>
-                    <div
-                      style={{ display: "flex", justifyContent: "center" }}
-                    ></div>
                   </FormGroup>
                 </Col>
               </Row>
+              {templateList !== 0 ? (
+                <Row>
+                  <Col>
+                    <FormGroup>
+                      <Input
+                        type="select"
+                        name="select"
+                        className="form-control digits"
+                        defaultValue={selectedType}
+                        onChange={(e) => setSelectedType(e.target.value)}
+                        required={true}
+                      >
+                        {templateList.map((template, idx) => {
+                          return (
+                            <option id={idx} value={template._id}>
+                              {template.templateName}
+                            </option>
+                          );
+                        })}
+                      </Input>
+                    </FormGroup>
+                  </Col>
+                </Row>
+              ) : (
+                ""
+              )}
               <Row
                 style={{
                   display: "flex",
