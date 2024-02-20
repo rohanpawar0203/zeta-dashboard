@@ -24,7 +24,7 @@ const Broadcasting = () => {
   const headerTypes = ["text", "media"];
   const variableList = ["{{1}}"];
   const [initialValues, setInitialValues] = useState({
-    contacts: [],
+    contacts: "",
     scheduleDateTime: new Date(
       new Date().getTime() - new Date().getTimezoneOffset() * 60000
     ).getTime(),
@@ -40,10 +40,17 @@ const Broadcasting = () => {
     text: "",
   });
   const [templateList, setTemplateList] = useState([]);
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
   const [selectedType, setSelectedType] = useState(headerTypes[0]);
   const [uploadedImage, setUploadedImage] = useState({});
+  const [BroadcastingFile, setBroadcastingFile] = useState({});
   const [showAddVariable, setShowAddVariable] = useState(true);
+  const getUploadParams = ({ meta }) => {
+    console.log("Meta", meta);
+    return {
+      url: "https://httpbin.org/post",
+    };
+  };
 
   const toggle = () => setModal(!modal);
 
@@ -171,6 +178,16 @@ const Broadcasting = () => {
     } catch (error) {
       console.log("Error", error);
     }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("userId", userData._id);
+      formData.append("sendNow", initialValues.sendNow);
+      formData.append("scheduleDateTime", initialValues.scheduleDateTime);
+      formData.append("file", BroadcastingFile.setBroadcastingFile);
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -444,14 +461,27 @@ const Broadcasting = () => {
                 </Col>
               </Row>
               <FormGroup>
-                <Input
-                  className="form-control"
-                  type="text"
-                  placeholder="Password"
+                <Dropzone
+                  className="dropzone"
+                  onChangeStatus={(val) => {
+                    setBroadcastingFile(val);
+                    console.log(JSON.stringify(val));
+                  }}
+                  accept=".csv, .xlsx"
+                  maxFiles={1}
+                  multiple={false}
+                  canCancel={true}
+                  inputContent="Please upload your file of contacts list"
+                />
+                <input
+                  type="file"
+                  onChange={(e) => console.log("input", e)}
+                  name=""
+                  id=""
                 />
               </FormGroup>
             </CardBody>
-            <CardFooter>
+            <CardFooter style={{ display: "flex", justifyContent: "center" }}>
               <Btn
                 attrBtn={{
                   color: "primary",
