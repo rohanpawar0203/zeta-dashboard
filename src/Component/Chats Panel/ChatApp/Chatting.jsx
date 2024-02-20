@@ -20,9 +20,9 @@ const Chatting = ({ isFetching }) => {
 
   return (
     <Fragment>
-      <Row className="chat-box" style={{height: '100%', overflow: 'hidden'}}>
-        <Col className="chat-right-aside">
-          <div className="chat">
+      <Row className="chat-box" style={{ height: "100%", overflow: "hidden" }}>
+        <Col className="chat-right-aside h-100">
+          <div className="chat h-100">
             {isFetching ? (
               <div className="loader-box mt-5">
                 <Spinner attrSpinner={{ className: "loader-3" }} />

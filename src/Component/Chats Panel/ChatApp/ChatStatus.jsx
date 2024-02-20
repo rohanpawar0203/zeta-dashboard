@@ -22,7 +22,10 @@ const ChatStatus = ({ isFetching }) => {
   const { chatPanelMsgs, userData } = appStore();
   const changeChatClick = (e, selectedUserId) => {
     // const currentUserId = currentUserr.id;
-    const currentChat = chatPanelMsgs.find((x) => x._id === selectedUserId);
+    console.log("chatPanelMsgs -----> ", chatPanelMsgs);
+    const currentChat = chatPanelMsgs.data.find(
+      (x) => x._id === selectedUserId
+    );
     if (currentChat) {
       changeChat(selectedUserId);
     }
@@ -79,7 +82,7 @@ const ChatStatus = ({ isFetching }) => {
   return (
     <Fragment>
       <div className="chat-box" style={{ height: "100%", overflowY: "hidden" }}>
-        <div className="chat-left-aside">
+        <div className="chat-left-aside h-100">
           {/* <CurrentUser /> */}
           <h5>All Chats</h5>
           <div className="people-list" id="people-list">
@@ -90,11 +93,12 @@ const ChatStatus = ({ isFetching }) => {
             ) : (
               <>
                 <SearchChatList />
-                {chatPanelMsgs && chatPanelMsgs['data']?.length > 0 ? (
+                {chatPanelMsgs && chatPanelMsgs["data"]?.length > 0 ? (
                   <UL
                     attrUL={{ className: "simple-list list custom-scrollbar" }}
                   >
-                    {chatPanelMsgs?.data?.filter((x) => x._id !== userData._id)
+                    {chatPanelMsgs?.data
+                      ?.filter((x) => x._id !== userData._id)
                       .map((item, i) => {
                         return (
                           <LI

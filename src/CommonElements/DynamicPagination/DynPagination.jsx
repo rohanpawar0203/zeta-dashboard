@@ -45,19 +45,31 @@ const DynPagination = ({ totalCount, switchPage }) => {
     if (page && limit) {
       let limitVal = Number(limit);
       let init = (page - 1) * limitVal + 1;
-      let end = (totalCount < ((page - 1) * limitVal + limitVal)) ? totalCount : ((page - 1) * limitVal + limitVal);
-      (init && end ) && setRecords((pre) => ({
-        str: init,
-        las: end
-      }));
+      let end =
+        totalCount < (page - 1) * limitVal + limitVal
+          ? totalCount
+          : (page - 1) * limitVal + limitVal;
+      init &&
+        end &&
+        setRecords((pre) => ({
+          str: init,
+          las: end,
+        }));
     }
   }, [page, limit]);
 
   return (
-    <div style={{margin:'10px 0px', padding: '0 15px'}} className="w-100 d-flex gap-2 align-items-center flex-wrap justify-content-between">
-      <div style={{height: '32px'}} className="d-flex gap-3 align-items-center">
+    <div
+      style={{ margin: "10px 0px", padding: "0 15px" }}
+      className="w-100 d-flex gap-2 align-items-center flex-wrap justify-content-between"
+    >
+      <div
+        style={{ height: "32px" }}
+        className="d-flex gap-3 align-items-center"
+      >
         {totalCount > 25 && (
-          <Input style={{fontSize: '13px', color: 'teal', width:'100px'}}
+          <Input
+            style={{ fontSize: "13px", color: "teal", width: "100px" }}
             onChange={(e) => {
               setlimit(e?.target?.value);
               setPage(1);
@@ -81,13 +93,13 @@ const DynPagination = ({ totalCount, switchPage }) => {
             >
               25
             </option>
-              <option
-                style={{ fontSize: "12px", fontWeight: "500" }}
-                key={uuid()}
-                value={50}
-              >
-                50
-              </option>
+            <option
+              style={{ fontSize: "12px", fontWeight: "500" }}
+              key={uuid()}
+              value={50}
+            >
+              50
+            </option>
             {totalCount > 50 && (
               <option
                 style={{ fontSize: "12px", fontWeight: "500" }}
@@ -108,14 +120,25 @@ const DynPagination = ({ totalCount, switchPage }) => {
             )}
           </Input>
         )}
-        <div style={{width: '150px', height: '100%'}}
+        <div
+          style={{ width: "150px", height: "100%" }}
           className="ml-1  d-flex align-items-center"
         >
-          <p style={{ fontSize: "14px", fontWeight: "600", color: 'teal', margin:'0'}}>{`${records["str"]}-${records["las"]}  of  ${totalCount}`}</p>
+          <p
+            style={{
+              fontSize: "14px",
+              fontWeight: "600",
+              color: "teal",
+              margin: "0",
+            }}
+          >{`${records["str"]}-${records["las"]}  of  ${totalCount}`}</p>
         </div>
       </div>
       <Pagination aria-label="Page navigation example">
-        <ul className="pagination pagination-sm pagination-primary">
+        <ul
+          style={{ display: "flex" }}
+          className="pagination-sm pagination-primary"
+        >
           {totalPages > 1 && (
             <PaginationItem>
               <PaginationLink
@@ -123,7 +146,7 @@ const DynPagination = ({ totalCount, switchPage }) => {
                 onClick={() => {
                   handlePageChange("PREVIOUS");
                 }}
-                style={{cursor: (page === 1) ? 'not-allowed': 'pointer'}}
+                style={{ cursor: page === 1 ? "not-allowed" : "pointer" }}
               >
                 <span aria-hidden="true">«</span>
               </PaginationLink>
@@ -151,7 +174,9 @@ const DynPagination = ({ totalCount, switchPage }) => {
                 onClick={() => {
                   handlePageChange("NEXT");
                 }}
-                style={{cursor: (page === totalPages) ? 'not-allowed': 'pointer'}}
+                style={{
+                  cursor: page === totalPages ? "not-allowed" : "pointer",
+                }}
               >
                 <span aria-hidden="true">»</span>
               </PaginationLink>

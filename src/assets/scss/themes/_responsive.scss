@@ -67,7 +67,7 @@
     .chat-right-aside {
       .chat {
         .chat-msg-box {
-          height: 440px;
+          // height: 440px;
           overflow: scroll;
         }
       }
@@ -6924,12 +6924,12 @@
 ==========================**/
 
 // pagination styles
-.pagination{
+.pagination {
   display: flex;
 }
 
-@media only screen and (max-width: 871px){
-  .pagination{
-      display: none;
+@media only screen and (max-width: 871px) {
+  .pagination {
+    display: none;
   }
 }
