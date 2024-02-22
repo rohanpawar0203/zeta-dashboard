@@ -69,6 +69,7 @@ const PaymentModesList = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
       });
       const responseData = await response.json();
@@ -95,6 +96,7 @@ const PaymentModesList = () => {
           body: JSON.stringify(payload),
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
           },
         }
       );
@@ -142,6 +144,7 @@ const PaymentModesList = () => {
             resetFormValues={resetFormValues}
             getPaymentModes={getPaymentModes}
             updatePaymentMode={updatePaymentMode}
+            paymentModes={paymentModes}
             title={
               eventMode === "create_payment_mode"
                 ? "Create Payment Mode"
