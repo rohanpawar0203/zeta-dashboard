@@ -77,7 +77,7 @@ const Broadcasting = () => {
   });
   const [isformDisabled, setIsFormDisabled] = useState(true);
 
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
   const [selectedType, setSelectedType] = useState(headerTypes[0]);
   const [uploadedImage, setUploadedImage] = useState({});
   const [broadcastingFile, setBroadcastingFile] = useState({});
@@ -177,54 +177,55 @@ const Broadcasting = () => {
       };
     }
 
-    try {
-      const resp = await axios(`${WhatsappTemplateAPI}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        data: JSON.stringify({
-          userId: userData._id,
-          ...json,
-        }),
-      });
-      if (resp.status === 200) {
-        setModal(false);
-        setTemplateBody({
-          type: "BODY",
-          text: "",
-        });
-        setTemplateHeader({
-          type: "HEADER",
-          text: "",
-          image: "",
-        });
-        setButtonList({
-          type: "BUTTONS",
-          buttons: [
-            {
-              type: "PHONE_NUMBER",
-              text: "",
-              phone_number: "",
-            },
-            {
-              type: "URL",
-              text: "",
-              url: "",
-            },
-          ],
-        });
-        setTemplateName("");
-        setTemplatCategory("");
-        toast.success(resp.data.message);
-        getTemplates();
-      } else {
-        toast.error(resp.data);
-      }
-    } catch (error) {
-      toast.error(error);
-    }
+    // try {
+    //   const resp = await axios(`${WhatsappTemplateAPI}`, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //     data: JSON.stringify({
+    //       userId: userData._id,
+    //       ...json,
+    //     }),
+    //   });
+    //   if (resp.status === 200) {
+    //     setModal(false);
+    //     setTemplateBody({
+    //       type: "BODY",
+    //       text: "",
+    //     });
+    //     setTemplateHeader({
+    //       type: "HEADER",
+    //       text: "",
+    //       image: "",
+    //     });
+    //     setButtonList({
+    //       type: "BUTTONS",
+    //       buttons: [
+    //         {
+    //           type: "PHONE_NUMBER",
+    //           text: "",
+    //           phone_number: "",
+    //         },
+    //         {
+    //           type: "URL",
+    //           text: "",
+    //           url: "",
+    //         },
+    //       ],
+    //     });
+    //     setTemplateName("");
+    //     setTemplatCategory("");
+    //     templatedropzoneRef.current.files = [];
+    //     toast.success(resp.data.message);
+    //     getTemplates();
+    //   } else {
+    //     toast.error(resp.data);
+    //   }
+    // } catch (error) {
+    //   toast.error(error);
+    // }
 
     console.log(json);
   };
@@ -240,13 +241,6 @@ const Broadcasting = () => {
         formData.append("sendNow", initialValues.sendNow);
         formData.append("scheduleDateTime", initialValues.scheduleDateTime);
         formData.append("file", broadcastingFile);
-
-        console.log(
-          "formData",
-          formData.forEach((d) => {
-            console.log("formData", JSON.stringify(d));
-          })
-        );
 
         const res = await axios.post(MessageSchedularAPI, formData, {
           headers: {
@@ -296,28 +290,40 @@ const Broadcasting = () => {
 
   const handleHeaderImageUpload = async ({ meta, file }, status) => {
     if (status === "done") {
-      console.log("handleHeaderImageUpload", meta);
       let data = new FormData();
       data.append("companyName", userData.companyName);
-      // data.append("file", meta.previewUrl);
+      data.append("file", file);
       data.forEach((e) => {
         console.log("handleHeaderImageUpload", e);
       });
       let config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: "https://stg.ulai.in/file-server/uploads",
+        url: process.env.REACT_APP_API_BASE_URL + "/upload-files",
         data: data,
       };
 
       await axios
         .request(config)
         .then((response) => {
-          console.log(JSON.stringify(response.data));
+          if (response.status === 200) {
+            setTemplateHeader((prevValues) => ({
+              ...prevValues,
+              image: response.data.message,
+            }));
+          } else {
+            toast.error("Error while uploading...");
+            templatedropzoneRef.current.files = [];
+          }
         })
         .catch((error) => {
-          console.log(error);
+          toast.error("Error while uploading...");
         });
+    } else if (status === "removed") {
+      setTemplateHeader((prevValues) => ({
+        ...prevValues,
+        image: "",
+      }));
     }
   };
 
@@ -562,6 +568,7 @@ const Broadcasting = () => {
                   <FormGroup>
                     <Dropzone
                       ref={templatedropzoneRef}
+                      accept=".png,.jpg.jpeg"
                       className="dropzone"
                       getUploadParams={getUploadParams}
                       onChangeStatus={handleHeaderImageUpload}
@@ -866,13 +873,8 @@ const Broadcasting = () => {
                 </Col>
               </Row>
               {templateList.length !== 0 ? (
-                <Row
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(3, 80% 10% 10%)",
-                  }}
-                >
-                  <Col>
+                <Row>
+                  <Col xl="10">
                     <FormGroup>
                       <Input
                         type="select"
@@ -897,12 +899,9 @@ const Broadcasting = () => {
                       </Input>
                     </FormGroup>
                   </Col>
-                  <Col style={{ width: "100%" }}>
-                    <Button style={{ padding: "10% 25%" }}>Edit</Button>
-                  </Col>
-                  <Col style={{ width: "100%" }} color="--bs-red">
+                  <Col xl="2" color="--bs-red">
                     <Button
-                      style={{ padding: "10% 15%" }}
+                      style={{ width: "100%" }}
                       color="danger"
                       onClick={() => handleDeleteTemplate()}
                     >
@@ -920,25 +919,7 @@ const Broadcasting = () => {
                   justifyContent: "space-between",
                 }}
               >
-                {!initialValues.sendNow ? (
-                  <Col xl="8">
-                    <FormGroup>
-                      <Label className="col-form-label pt-0">Schedule at</Label>
-                      <Input
-                        className="form-control"
-                        type="datetime-local"
-                        min={getCurrentDateTime()}
-                        defaultValue={new Date(initialValues.scheduleDateTime)
-                          .toISOString()
-                          .slice(0, 16)}
-                        onChange={(e) => handleDateChange(e)}
-                      />
-                    </FormGroup>
-                  </Col>
-                ) : (
-                  ""
-                )}
-                <Col xl="4">
+                <Col xl="1">
                   <FormGroup>
                     <Label htmlFor="exampleInputPassword1">Send Now</Label>
                     <Media>
@@ -966,6 +947,24 @@ const Broadcasting = () => {
                     </Media>
                   </FormGroup>
                 </Col>
+                {!initialValues.sendNow ? (
+                  <Col xl="11">
+                    <FormGroup>
+                      <Label className="col-form-label pt-0">Schedule at</Label>
+                      <Input
+                        className="form-control"
+                        type="datetime-local"
+                        min={getCurrentDateTime()}
+                        defaultValue={new Date(initialValues.scheduleDateTime)
+                          .toISOString()
+                          .slice(0, 16)}
+                        onChange={(e) => handleDateChange(e)}
+                      />
+                    </FormGroup>
+                  </Col>
+                ) : (
+                  ""
+                )}
               </Row>
               <FormGroup>
                 <Dropzone
