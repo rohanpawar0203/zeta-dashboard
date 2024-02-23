@@ -66,7 +66,7 @@ const OrgLogin = ({ selected, showToast }) => {
       if (res.status.toString() === "200") {
         setEmail("");
         setPassword("");
-        const { user, token } = resBody;
+        const { user, access_token:token } = resBody;
         sessionStorage.setItem("token", token);
         sessionStorage.setItem("currentUser", JSON.stringify(user));
         setUserData(user);

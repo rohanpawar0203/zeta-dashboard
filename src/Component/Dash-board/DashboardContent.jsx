@@ -87,12 +87,12 @@ const DashboardContent = () => {
       userData._id,
       "no-of-chat-session-each-day"
     );
-    getChatData.sort((a, b) => new Date(a._id) - new Date(b._id));
+    getChatData?.sort((a, b) => new Date(a._id) - new Date(b._id));
     if (getChatData.length !== 0) {
-      const newOptions = getChatData.map((element) =>
+      const newOptions = getChatData?.map((element) =>
         new Date(element._id).getDate()
       );
-      const newSeriesData = getChatData.map((element) => element.count);
+      const newSeriesData = getChatData?.map((element) => element.count);
 
       setChatOptions({
         chart: {

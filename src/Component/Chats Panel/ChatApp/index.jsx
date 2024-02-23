@@ -37,7 +37,7 @@ const ChatAppContain = () => {
               </CardBody>
             </Card>
           </Col>
-          <Col className="call-chat-body body" style={{ height: "63vh" }}>
+          <Col className="call-chat-body" style={{ height: "63vh" }}>
             <Card>
               <CardBody
                 className="p-0"
@@ -53,6 +53,7 @@ const ChatAppContain = () => {
           <Row
             style={{
               marginTop: "4px",
+              marginBottom: "100px"
             }}
           >
             <div>
@@ -63,7 +64,7 @@ const ChatAppContain = () => {
                   border: "1px solid none",
                   backgroundColor: "white",
                 }}
-                className="w-100 d-flex align-items-center justify-content-center"
+                className="w-100"
               >
                 <DynPagination
                   totalCount={chatPanelMsgs["total_count"]}

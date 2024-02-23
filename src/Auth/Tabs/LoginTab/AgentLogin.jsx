@@ -57,7 +57,7 @@ const AgentLogin = ({ selected }) => {
       if (res.status.toString() === "200") {
         setEmail("");
         setPassword("");
-        let { agent: user, token } = resBody;
+        let { agent: user, access_token:token } = resBody;
         // Agent AutoLogout trigger
         user = {...user, logIn_sessionID: token};
         handleStorageNRoutes(user, token);

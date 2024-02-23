@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 import { Previous, Next } from "../../Constant";
 import { v4 as uuid } from "uuid";
+import ScrollBar from "react-perfect-scrollbar";
 
 const DynPagination = ({ totalCount, switchPage }) => {
   const [page, setPage] = useState(1);
@@ -25,16 +26,14 @@ const DynPagination = ({ totalCount, switchPage }) => {
     if (eventType === "PREVIOUS" && page > 1) {
       setPage((pre) => pre - 1);
     }
-    executeSwitchChange();
+    executeSwitchChange({page , limit});
   };
 
-  const executeSwitchChange = () => {
-    setTimeout(() => {
+  const executeSwitchChange = ({page, limit}) => {
       if (page && limit) {
         switchPage(page, limit);
-      }
-    }, 500);
-  };
+  }
+};
 
   useEffect(() => {
     let pages = Math.ceil(totalCount / limit);
@@ -58,22 +57,25 @@ const DynPagination = ({ totalCount, switchPage }) => {
     }
   }, [page, limit]);
 
+  useEffect(() => {
+    setPage(1);
+  }, [limit])
+  
+
   return (
-    <div
-      style={{ margin: "10px 0px", padding: "0 15px" }}
-      className="w-100 d-flex gap-2 align-items-center flex-wrap justify-content-between"
-    >
+    <ScrollBar style={{height: 'auto',  zIndex: '3', padding: "10px"}}
+      className="w-100 d-flex align-items-center justify-content-between flex-wrap">
       <div
         style={{ height: "32px" }}
-        className="d-flex gap-3 align-items-center"
+        className="d-flex gap-3 align-items-center mb-1"
       >
         {totalCount > 25 && (
           <Input
             style={{ fontSize: "13px", color: "teal", width: "100px" }}
             onChange={(e) => {
-              setlimit(e?.target?.value);
-              setPage(1);
-              executeSwitchChange();
+              let val = +e?.target?.value;
+              setlimit(pre => (val));
+              executeSwitchChange({page: 1, limit: val});
             }}
             className="form-control form-control-primary-fill btn-square"
             name="select"
@@ -134,6 +136,7 @@ const DynPagination = ({ totalCount, switchPage }) => {
           >{`${records["str"]}-${records["las"]}  of  ${totalCount}`}</p>
         </div>
       </div>
+
       <Pagination aria-label="Page navigation example">
         <ul
           style={{ display: "flex" }}
@@ -161,7 +164,7 @@ const DynPagination = ({ totalCount, switchPage }) => {
                   href="#javascript"
                   onClick={() => {
                     setPage(ind + 1);
-                    executeSwitchChange();
+                    executeSwitchChange({page: (ind+1), limit});
                   }}
                 >{`${ind + 1}`}</PaginationLink>
               </PaginationItem>
@@ -184,7 +187,7 @@ const DynPagination = ({ totalCount, switchPage }) => {
           )}
         </ul>
       </Pagination>
-    </div>
+      </ScrollBar>
   );
 };
 

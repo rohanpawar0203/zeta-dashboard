@@ -6922,14 +6922,3 @@
 /**=====================
     71. Responsive CSS Ends
 ==========================**/
-
-// pagination styles
-.pagination {
-  display: flex;
-}
-
-@media only screen and (max-width: 871px) {
-  .pagination {
-    display: none;
-  }
-}

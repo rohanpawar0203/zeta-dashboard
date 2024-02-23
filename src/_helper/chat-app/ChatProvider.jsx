@@ -13,9 +13,9 @@ export const ChatProvider = (props) => {
   const [liveUser, setliveUser] = useState();
   const [sidebarToggle, setSidebarToggle] = useState(false);
 
-  const {userData, setChatPanelMsgs, chatPanelMsgs} = AppStore();
+  const {userData, setChatPanelMsgs, chatPanelMsgs, token} = AppStore();
+  console.log('token ==>', token);
   const [isFetching, setisFetching] = useState(false);
-  const token = sessionStorage.getItem('token');
   const [appStore, setappStore] = useState({
   isConnected: false,
   userData: JSON.parse(sessionStorage.getItem('currentUser')) || {},
@@ -61,7 +61,7 @@ export const ChatProvider = (props) => {
         `${GetConversationsAPI}/${orgId}?page=${pageNo}&limit=${limitValue}&order=${orderValue}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`, 
+            "Authorization": `Bearer ${token}`, 
           },
         }
       );
