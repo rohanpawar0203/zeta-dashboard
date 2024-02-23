@@ -106,10 +106,10 @@ const BotsContent = () => {
       } else {
         setMyBots([]);
         // setMyBots([]);
-        toast.error(responseData.message);
+        console.log('getAllBot res error : ',responseData.message);
       }
     } catch (error) {
-      toast.error(error);
+      console.log('getAllBot  error : ',error);
     }
     setLoading(false);
   };
@@ -132,7 +132,7 @@ const BotsContent = () => {
         toast.error(responseData.message);
       }
     } catch (error) {
-      toast.error(error);
+      console.log('deleteBot error: ', error);
     }
     setLoading(false);
   };
@@ -287,7 +287,7 @@ const BotsContent = () => {
                               Rename Bot
                             </H5>
                           </DropdownItem>
-                          <DropdownItem
+                          {/* <DropdownItem
                             onClick={() => {
                               deleteBot(myBot._id);
                             }}
@@ -297,7 +297,7 @@ const BotsContent = () => {
                             >
                               Delete Bot
                             </H5>
-                          </DropdownItem>
+                          </DropdownItem> */}
                         </DropdownMenu>
                       </Dropdown>
                       <UpdateBotFormModal

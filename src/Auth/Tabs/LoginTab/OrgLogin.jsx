@@ -66,19 +66,21 @@ const OrgLogin = ({ selected, showToast }) => {
       if (res.status.toString() === "200") {
         setEmail("");
         setPassword("");
-        const { user, access_token:token } = resBody;
+        const { user, token } = resBody;
         sessionStorage.setItem("token", token);
         sessionStorage.setItem("currentUser", JSON.stringify(user));
         setUserData(user);
         setToken(token);
-        toast.success("User Logged In successfully");
         if (user.userId) {
           history(`${process.env.PUBLIC_URL}/live-chat`);
         } else if (!user.store && !user.userId) {
           history(`${process.env.PUBLIC_URL}/store`);
+        }else if ( !user.userId && !user['bots']?.length) {
+          history(`${process.env.PUBLIC_URL}/bots`);
         } else if (user.store && !user.userId) {
           history(`${process.env.PUBLIC_URL}/dashboard`);
-        } else {
+        } 
+         else {
           // console.log("adasd");
         }
       } else {
@@ -89,6 +91,7 @@ const OrgLogin = ({ selected, showToast }) => {
     } catch (err) {
       setApiError(err.message);
       // toast.error(`${err.message}`);
+      console.log('Organization Login Error : ', err);
     }
     setLoading(false);
   };

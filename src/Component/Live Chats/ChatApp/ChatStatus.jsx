@@ -48,6 +48,7 @@ const ChatStatus = ({ checkValid, isFetchLiveConversation }) => {
       checkValid(liveConversation[0]);
       setliveUser(liveConversation[0]);
     }
+    // console.log('liveConversation -->', liveConversation);
   }, [isFetchLiveConversation]);
 
   return (

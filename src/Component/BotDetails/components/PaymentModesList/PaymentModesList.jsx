@@ -194,11 +194,13 @@ const PaymentModesList = () => {
                       }}
                     />
                   </div>
-                ) : (
-                  ""
-                );
+                ) : ("")
               })
-            : ""}
+            : (
+              <div style={{marginTop: '10vh'}} className="w-100  d-flex justify-content-center align-items-center">
+              <H6 className="my-2 mx-0">No Payment modes exist</H6>
+              </div>
+            )}
         </div>
         }
       </Col>

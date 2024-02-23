@@ -13,7 +13,7 @@ export const MenuItemsContextProvider = ({ children }) => {
 
     const {userData} = appStore();
 
-    const handleFilterForStorePresent = () => {
+    const handleFilterForFinalAccess = () => {
         let filteredItems = menuItemsRef.current.filter((ele) => (ele.menutitle !== 'Store'))
         setData([...filteredItems]);
 
@@ -36,22 +36,36 @@ export const MenuItemsContextProvider = ({ children }) => {
         let filteredRoutes = routeItemsRef.current.filter((ele) => (ele.path === `${process.env.PUBLIC_URL}/live-chat`))
         setRoutesData([...filteredRoutes]);
     }
+
+    const handleFilterForNoBots = () => {
+      let replacedItems = menuItemsRef.current.filter((ele) => (ele.menutitle === 'Bots'));
+      setData(replacedItems);
+
+      let filteredRoutes = routeItemsRef.current.filter((ele) => (ele.path === `${process.env.PUBLIC_URL}/bots`));
+      setRoutesData([...filteredRoutes]);
+    }
+
     
     useEffect(() => {
       if(userData?.userId){
         handleFilterForAgent();
       }
-      if(userData?.store && !userData.userId){
-        handleFilterForStorePresent();
-      }
       if(!userData.store && !userData.userId){
         handleFilterForStoreAbsence();
       }
+      if(userData?.store && !userData.userId){
+        if(!userData['bots']?.length){
+          handleFilterForNoBots();
+        }else{
+          handleFilterForFinalAccess();
+        }
+      }
+      
     }, [userData]);
     
 
     return (
-      <MenuItemsContext.Provider value={{ data, setData, handleFilterForStorePresent, routesData}}>
+      <MenuItemsContext.Provider value={{ data, setData, handleFilterForFinalAccess, routesData}}>
         {children}
       </MenuItemsContext.Provider>
     );

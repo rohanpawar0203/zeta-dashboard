@@ -1,5 +1,6 @@
 import axios from "axios"
 import { UsersAPI } from "../api"
+import appStore from "../Component/Live Chats/Client/AppStore";
 
 
 export const getUserDetails = async(id) => {
@@ -25,3 +26,15 @@ export const getUserDetails = async(id) => {
     })
     
 }
+
+export const updateUserDetails = async (userId) => {
+    const {setUserData} = appStore.getState();
+    try {
+      let newUserDeatils = await getUserDetails(userId);
+      setUserData(newUserDeatils);
+      sessionStorage.setItem("currentUser", JSON.stringify(newUserDeatils));
+    } catch (error) {
+      console.log('updateUserDetails error : ',error);
+    }
+  };
+

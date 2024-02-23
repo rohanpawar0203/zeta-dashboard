@@ -50,7 +50,7 @@ const ChatAppContain = () => {
         console.log("Error", error);
       }
     })();
-  }, [liveConversation]);
+  }, []);
 
   useEffect(() => {
     // console.log("Second useEffect triggered");

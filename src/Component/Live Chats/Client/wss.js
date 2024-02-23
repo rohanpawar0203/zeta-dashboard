@@ -91,7 +91,7 @@ export const connectWithSocketIOServer = () => {
   });
   socket.on("user-wants-to-chat-agent", function (data) {
     // let roomId = JSON.parse(data);
-    // console.log('user want to chat with agent');
+    console.log('user want to chat with agent : data', data);
     toast.success("New Live Chat for Agent !");
     getLiveRooms();
   });
@@ -163,6 +163,7 @@ export const getLiveRooms = async () => {
     organization_id: user?.userId ? user?.userId : user?._id,
     //handle for agent
   });
+  // console.log('getLIve rooms : response ==>', response);
   appStore.getState().setLiveConversationNewEntry(response.data.rooms);
   setLiveConversations();
 };
@@ -229,6 +230,9 @@ const setLiveConversations = async () => {
             return el;
           }
         });
+        // console.log('filterArray ==>', filterArray)
+        // console.log('liveConversationNewEntry ==>', liveConversationNewEntry);
+        // console.log('conversations ==>', resp?.data);
         appStore.getState().setLiveConversation(filterArray.reverse());
         appStore.getState().setConversation(resp.data);
       } catch (error) {

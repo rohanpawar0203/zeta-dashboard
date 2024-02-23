@@ -57,7 +57,7 @@ const AgentLogin = ({ selected }) => {
       if (res.status.toString() === "200") {
         setEmail("");
         setPassword("");
-        let { agent: user, access_token:token } = resBody;
+        let { agent: user, token } = resBody;
         // Agent AutoLogout trigger
         user = {...user, logIn_sessionID: token};
         handleStorageNRoutes(user, token);
@@ -68,7 +68,7 @@ const AgentLogin = ({ selected }) => {
       }
     } catch (err) {
       setApiError(err);
-
+      console.log('Agent Login Error : ', err);
       // toast.error(`${err.message}`);
     }
     setLoading(false);
@@ -79,7 +79,6 @@ const AgentLogin = ({ selected }) => {
         sessionStorage.setItem("currentUser", JSON.stringify(user));
         setUserData(user);
         setToken(token);
-        toast.success("User Logged In successfully");
         if (user.userId) {
           history(`${process.env.PUBLIC_URL}/live-chat`);
         } else if (!user.store && !user.userId) {

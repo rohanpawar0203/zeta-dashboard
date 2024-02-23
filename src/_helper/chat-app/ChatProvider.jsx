@@ -14,7 +14,6 @@ export const ChatProvider = (props) => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
 
   const {userData, setChatPanelMsgs, chatPanelMsgs, token} = AppStore();
-  console.log('token ==>', token);
   const [isFetching, setisFetching] = useState(false);
   const [appStore, setappStore] = useState({
   isConnected: false,
