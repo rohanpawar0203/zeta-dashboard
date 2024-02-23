@@ -61,3 +61,5 @@ export const PaymentModesAPI = `${process.env.REACT_APP_API_BASE_URL}/paymentMod
 export const TotalOrdersCountAPI = `${process.env.REACT_APP_API_BASE_URL}/analytics/`;
 export const WidgetCustomizationAPI = `${process.env.REACT_APP_API_BASE_URL}/widget-customization`;
 export const WhatsappTemplateAPI = `${process.env.REACT_APP_API_BASE_URL}/whatsapp-broadcast-template`;
+export const MessageSchedularAPI = `${process.env.REACT_APP_API_BASE_URL}/message-schedule`;
+export const fileUploaderAPI = `${process.env.REACT_APP_API_BASE_URL}/file-server`;

@@ -5,7 +5,6 @@ import { Close, Submit, NewBot } from "../../../../Constant/index";
 import CustomSpinner from "../../../../CommonElements/CustomSpinner/CustomSpinner";
 
 const CommonModal = (props) => {
-  console.log("CommonModal---->", props);
   return (
     <Modal
       isOpen={props.isOpen}

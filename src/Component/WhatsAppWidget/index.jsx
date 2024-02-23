@@ -77,6 +77,7 @@ const WebSdkInfoContent = () => {
                 style={{
                   height: "72vh",
                   paddingBottom: "2rem",
+                  overflowY: "scroll",
                 }}
               >
                 <CardBody>
