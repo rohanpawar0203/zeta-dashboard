@@ -10,6 +10,13 @@ const ChatHeader = ({ viewConversation }) => {
   const { liveUser, setliveUser, checkValid } = useContext(ChatAppContext);
   const { userData } = appStore();
 
+  const endingConversation = async () => {
+    await envConversationToServer(
+      viewConversation?.chatSessionId,
+      liveUser?.customer?.firstName
+    );
+    setliveUser(null);
+  };
   return (
     <Fragment>
       {liveUser && (
@@ -42,23 +49,26 @@ const ChatHeader = ({ viewConversation }) => {
                 {/* <div className="status digits">{selectedUserr ? (new Date(selectedUserr.updatedAt)).toLocaleString() : '5 May, 5:30 PM'}
             </div> */}
               </div>
-              <Btn
-                attrBtn={{
-                  className: "btn-danger",
-                  onClick: () => {
-                    envConversationToServer(
-                      viewConversation?.chatSessionId,
-                      liveUser?.customer?.firstName
-                    );
-                    setliveUser(null);
-                    setTimeout(() => {
-                      window.location.reload();
-                    }, 1000);
-                  },
-                }}
-              >
-                {"End Conversation"}
-              </Btn>
+              {
+                <Btn
+                  attrBtn={{
+                    className: "btn-danger",
+                    onClick: () => {
+                      endingConversation();
+                      //  envConversationToServer(
+                      //    viewConversation?.chatSessionId,
+                      //    liveUser?.customer?.firstName
+                      //  );
+                      //  setliveUser(null);
+                      //  setTimeout(() => {
+                      //    window.location.reload();
+                      //  }, 1000);
+                    },
+                  }}
+                >
+                  {"End Conversation"}
+                </Btn>
+              }
             </div>
           </Media>
         </Media>

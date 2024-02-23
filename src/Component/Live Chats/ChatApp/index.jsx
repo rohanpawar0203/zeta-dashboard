@@ -22,20 +22,15 @@ const ChatAppContain = () => {
   const checkValid = async (el) => {
     try {
       if (el) {
+        console.log('checkValid  item ', el);
         const resp = await getRoomExists(el.chatSessionId);
-        // console.log("roomExists");
-        if (resp.roomExists) {
-          setViewConversation(el);
-        } else {
-          setError(true);
-        }
+        setViewConversation(el);
       }
     } catch (error) {
       // toast.error("Please try in a while !");
       console.log(error);
     }
   };
-
   useEffect(() => {
     // console.log("First useEffect triggered");
     setCurrentLocationPathName(window.location.pathname);

@@ -9,7 +9,7 @@ import appStore from "../Client/AppStore";
 
 const ChatStatus = ({ checkValid, isFetchLiveConversation }) => {
   const { liveUser, setliveUser } = useContext(ChatAppContext);
-  const { liveConversation, setLiveConversation } = appStore();
+  const { liveConversation, setLiveConversation } = appStore.getState();
   function calculateTimePassed(timestamp) {
     const currentTime = new Date().getTime();
     timestamp = new Date(timestamp).getTime();
@@ -43,13 +43,20 @@ const ChatStatus = ({ checkValid, isFetchLiveConversation }) => {
   };
 
   useEffect(() => {
-    // console.log("LiveConversation", liveConversation);
-    if (!isFetchLiveConversation) {
-      checkValid(liveConversation[0]);
+    if (!isFetchLiveConversation && liveConversation.length) {
       setliveUser(liveConversation[0]);
+      checkValid(liveConversation[0]);
     }
     // console.log('liveConversation -->', liveConversation);
   }, [isFetchLiveConversation]);
+
+  // useEffect(() => {
+  //   console.log('liveConversation[0] ==>', liveConversation);
+  //   if(liveConversation.length){
+      
+  //   }
+  // }, [])
+  
 
   return (
     <Fragment>
@@ -78,9 +85,10 @@ const ChatStatus = ({ checkValid, isFetchLiveConversation }) => {
                               "bg-light border-primary"
                             }`,
                             style: { cursor: "pointer" },
-                            onClick: (e) => {
+                            onClick: () => {
                               activeChat = item._id;
                               checkValid(item);
+                              console.log('click hit');
                               setliveUser(item);
                             },
                           }}

@@ -48,6 +48,7 @@ const BigBot = ({ myBot }) => {
       identity: "USER",
       message: userMessage,
       domain: user?.websiteLink,
+      bot_id: myBot?._id,
       company_name: user?.companyName,
       roomId: getSessionId(sessionStorage.getItem("sessionUUID")),
       organization_id: user?._id,   // 

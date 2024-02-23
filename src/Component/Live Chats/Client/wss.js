@@ -169,11 +169,15 @@ export const getLiveRooms = async () => {
 };
 
 export const envConversationToServer = async (roomId, name) => {
+  console.log('roomId, name', roomId, name);
+
   // const serverApi = `http://localhost:${process.env.REACT_APP_API_AGENT_BACKEND_LOCAL_HOST_PORT}`;
   const serverApi = `${LiveChatsAPI}`;
   const response = await axios.post(`${serverApi}/endConversation`, {
     roomId: roomId,
   });
+
+  console.log("envConversationToServer", response);
   if (response.status === "200" || response.status === 200) {
     getLiveRooms();
     appStore.getState().setViewConversation({});
@@ -230,7 +234,7 @@ const setLiveConversations = async () => {
             return el;
           }
         });
-        // console.log('filterArray ==>', filterArray)
+        console.log('filterArray ==>', filterArray)
         // console.log('liveConversationNewEntry ==>', liveConversationNewEntry);
         // console.log('conversations ==>', resp?.data);
         appStore.getState().setLiveConversation(filterArray.reverse());
@@ -257,6 +261,7 @@ const setLiveConversations = async () => {
     // }
   }
   appStore.getState().setisFetchLiveConversation(false);
+  console.log('appStore.getState() ==>', appStore.getState().liveConversation)
 };
 
 export const sendLoggedAgentInfo = (agent_data) => {
