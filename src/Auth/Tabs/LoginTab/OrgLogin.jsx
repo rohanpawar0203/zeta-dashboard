@@ -40,7 +40,7 @@ const OrgLogin = ({ selected, showToast }) => {
   const [togglePassword, setTogglePassword] = useState(false);
   const history = useNavigate();
   const inputRef = useRef();
-  const { setUserData, setToken, userData } = appStore();
+  const { setUserData, setToken, userData:userInfo, token: tokenInfo } = appStore.getState();
   const [apiError, setApiError] = useState("");
   const [clientIP, setClientIP] = useState("");
 
@@ -71,6 +71,7 @@ const OrgLogin = ({ selected, showToast }) => {
         sessionStorage.setItem("currentUser", JSON.stringify(user));
         setUserData(user);
         setToken(token);
+        connectSocketToServer();
         if (user.userId) {
           history(`${process.env.PUBLIC_URL}/live-chat`);
         } else if (!user.store && !user.userId) {
@@ -114,6 +115,10 @@ const OrgLogin = ({ selected, showToast }) => {
       setErrors(errorsObj);
     }
   };
+
+  const connectSocketToServer = () => {
+    connectWithSocketIOServer();
+  }
 
   useEffect(() => {
     const getIpAddress = async () => {

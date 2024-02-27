@@ -11,6 +11,8 @@ const ChatHeader = ({ viewConversation }) => {
   const { userData } = appStore();
 
   const endingConversation = async () => {
+     console.log('chatSessionId, firstName',  viewConversation?.chatSessionId
+     ,liveUser?.customer?.firstName);
     await envConversationToServer(
       viewConversation?.chatSessionId,
       liveUser?.customer?.firstName

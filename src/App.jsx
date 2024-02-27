@@ -37,7 +37,6 @@ function App() {
       sessionStorage.setItem("sessionUUID", uuidv4().toString());
     }
     getSessionId(sessionStorage.getItem("sessionUUID"));
-    connectWithSocketIOServer();
   }, []);
   return (
     <Fragment>

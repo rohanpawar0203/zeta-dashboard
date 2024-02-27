@@ -42,7 +42,10 @@ const ChatMessage = ({ viewConversation, showKeyboard }) => {
   useEffect(() => {
     // console.log("showKeyboard", showKeyboard);
     if (showKeyboard === true) {
-      joinSession(viewConversation.roomId);
+      console.log('viewConversation ===>', viewConversation.roomId)
+      if(viewConversation.roomId){
+        joinSession(viewConversation.roomId);
+      }
     }
   }, [showKeyboard]);
 

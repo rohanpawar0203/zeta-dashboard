@@ -29,6 +29,7 @@ import { PlanDetails } from "../../../api";
 import CustomSpinner from "../../../CommonElements/CustomSpinner/CustomSpinner";
 import isUrl from "is-url";
 import OtpInput from "react-otp-input";
+import { connectWithSocketIOServer } from "../../../Component/Live Chats/Client/wss";
 
 const pattern = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}([\/?].*)?$/;
 
@@ -67,7 +68,8 @@ const SignupTab = ({ selected }) => {
   const [orgID, setOrgID] = useState("");
   const isErrors = useRef(false);
   const history = useNavigate();
-  const { setToken, setUserData: setUser } = appStore();
+  const { setToken, setUserData: setUser, userData: userInfo, token: tokenInfo } = appStore.getState();
+
   const handleFormChange = (e) => {
     const { value, name } = e.target;
     setUserData((pre) => ({
@@ -194,8 +196,11 @@ const SignupTab = ({ selected }) => {
         if (token && user) {
           setToken(resBody.token);
           setUser(resBody.user);
+          
           sessionStorage.setItem("token", resBody.token);
           sessionStorage.setItem("currentUser", JSON.stringify(resBody.user));
+
+
           history(`${process.env.PUBLIC_URL}/store`);
         }
         toast.success("User signedup successfully");
@@ -236,6 +241,10 @@ const SignupTab = ({ selected }) => {
       console.log("err ", error);
     }
   };
+
+  const connectSocketToServer = () => {
+    connectWithSocketIOServer();
+  }
 
   useEffect(() => {
     getPlanIds();

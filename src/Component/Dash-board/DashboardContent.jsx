@@ -81,7 +81,7 @@ const DashboardContent = () => {
   }, []);
 
   useEffect(async () => {
-    connectWithSocketIOServer();
+    // connectWithSocketIOServer();
 
     let getChatData = await apiCall(
       userData._id,

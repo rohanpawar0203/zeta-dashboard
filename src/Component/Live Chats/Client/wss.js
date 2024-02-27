@@ -13,14 +13,15 @@ const { v4: uuidv4 } = require("uuid");
 
 // import { setLiveConversation } from "../components/dashboard/liveChat/liveChat";
 const SERVER = process.env.REACT_APP_API_SERVER;
-const user = JSON.parse(sessionStorage.getItem("currentUser"));
-const token = sessionStorage.getItem("token");
+// const user = JSON.parse(sessionStorage.getItem("currentUser"));
+// const token = sessionStorage.getItem("token");
 // const SERVER = `http://localhost:${process.env.REACT_APP_API_AGENT_BACKEND_LOCAL_HOST_PORT}`;
 
 var socket = null;
-const { setLiveConversation, liveConversation } = appStore.getState();
+const { setLiveConversation, liveConversation, userData: user, token } = appStore.getState();
 
 export const connectWithSocketIOServer = () => {
+  console.log('userData, token ', user, token);
   socket = io(SERVER, {
     path: "/agent-live-chat-socket/",
   });

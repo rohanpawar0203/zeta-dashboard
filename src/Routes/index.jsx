@@ -19,12 +19,6 @@ const Routers = () => {
   const {userData} = appStore();
   const [currentUser, setCurrentUser] = useState(localStorage.getItem('currentUser') || null);
   const [token, settoken] = useState((localStorage.getItem('token')) || null)
-  useEffect(() => {
-    // console.log(token, currentUser);
-    if(token && currentUser){
-      connectWithSocketIOServer();
-    }
-  }, []);
 
   return (
     <Fragment>

@@ -37,7 +37,7 @@ const AgentLogin = ({ selected }) => {
   const [togglePassword, setTogglePassword] = useState(false);
   const history = useNavigate();
   const inputRef = useRef();
-  const { setUserData, setToken, userData } = appStore();
+  const { setUserData, setToken, userData:userInfo, token: tokenInfo } = appStore.getState();
   const [apiError, setApiError] = useState("");
 
   const userLogin = async (e) => {
@@ -79,6 +79,7 @@ const AgentLogin = ({ selected }) => {
         sessionStorage.setItem("currentUser", JSON.stringify(user));
         setUserData(user);
         setToken(token);
+        connectSocketToServer();
         if (user.userId) {
           history(`${process.env.PUBLIC_URL}/live-chat`);
         } else if (!user.store && !user.userId) {
@@ -107,6 +108,10 @@ const AgentLogin = ({ selected }) => {
       setErrors(errorsObj);
     }
   };
+
+  const connectSocketToServer = () => {
+    connectWithSocketIOServer();
+  }
 
   return (
     <Fragment>

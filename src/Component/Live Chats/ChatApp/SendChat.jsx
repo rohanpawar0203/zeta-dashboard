@@ -31,16 +31,19 @@ const SendChat = ({ viewConversation, showKeyboard, setViewConversation }) => {
     return currentTimeMs;
   }
   const sendMsg = () => {
-    sendDataToConnectedUser({
-      message: msg,
-      phoneNumber: viewConversation.phoneNumber,
-      time: getCustomTimestamp(),
-      // chatSessionId: viewConversation.chatSessionId,
-      roomId: viewConversation.chatSessionId,
-      identity: "AGENT",
-      productList: [],
-      productData: [],
-    });
+    console.log('viewConversation ==>', viewConversation);
+    if(viewConversation){
+      sendDataToConnectedUser({
+        message: msg,
+        phoneNumber: viewConversation.phoneNumber,
+        time: getCustomTimestamp(),
+        // chatSessionId: viewConversation.chatSessionId,
+        roomId: viewConversation.chatSessionId,
+        identity: "AGENT",
+        productList: [],
+        productData: [],
+      });
+    }
     const newArray = liveConversation.map((el) => {
       if (el.chatSessionId === viewConversation.chatSessionId) {
         el.chat = [
