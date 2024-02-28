@@ -40,7 +40,12 @@ const OrgLogin = ({ selected, showToast }) => {
   const [togglePassword, setTogglePassword] = useState(false);
   const history = useNavigate();
   const inputRef = useRef();
-  const { setUserData, setToken, userData:userInfo, token: tokenInfo } = appStore.getState();
+  const {
+    setUserData,
+    setToken,
+    userData: userInfo,
+    token: tokenInfo,
+  } = appStore.getState();
   const [apiError, setApiError] = useState("");
   const [clientIP, setClientIP] = useState("");
 
@@ -71,17 +76,17 @@ const OrgLogin = ({ selected, showToast }) => {
         sessionStorage.setItem("currentUser", JSON.stringify(user));
         setUserData(user);
         setToken(token);
-        connectSocketToServer();
+        // connectWithSocketIOServer();
+
         if (user.userId) {
           history(`${process.env.PUBLIC_URL}/live-chat`);
         } else if (!user.store && !user.userId) {
           history(`${process.env.PUBLIC_URL}/store`);
-        }else if ( !user.userId && !user['bots']?.length) {
+        } else if (!user.userId && !user["bots"]?.length) {
           history(`${process.env.PUBLIC_URL}/bots`);
         } else if (user.store && !user.userId) {
           history(`${process.env.PUBLIC_URL}/dashboard`);
-        } 
-         else {
+        } else {
           // console.log("adasd");
         }
       } else {
@@ -92,7 +97,7 @@ const OrgLogin = ({ selected, showToast }) => {
     } catch (err) {
       setApiError(err.message);
       // toast.error(`${err.message}`);
-      console.log('Organization Login Error : ', err);
+      console.log("Organization Login Error : ", err);
     }
     setLoading(false);
   };
@@ -115,10 +120,6 @@ const OrgLogin = ({ selected, showToast }) => {
       setErrors(errorsObj);
     }
   };
-
-  const connectSocketToServer = () => {
-    connectWithSocketIOServer();
-  }
 
   useEffect(() => {
     const getIpAddress = async () => {

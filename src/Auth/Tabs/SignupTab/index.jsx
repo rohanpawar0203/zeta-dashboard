@@ -68,7 +68,12 @@ const SignupTab = ({ selected }) => {
   const [orgID, setOrgID] = useState("");
   const isErrors = useRef(false);
   const history = useNavigate();
-  const { setToken, setUserData: setUser, userData: userInfo, token: tokenInfo } = appStore.getState();
+  const {
+    setToken,
+    setUserData: setUser,
+    userData: userInfo,
+    token: tokenInfo,
+  } = appStore.getState();
 
   const handleFormChange = (e) => {
     const { value, name } = e.target;
@@ -196,10 +201,9 @@ const SignupTab = ({ selected }) => {
         if (token && user) {
           setToken(resBody.token);
           setUser(resBody.user);
-          
+
           sessionStorage.setItem("token", resBody.token);
           sessionStorage.setItem("currentUser", JSON.stringify(resBody.user));
-
 
           history(`${process.env.PUBLIC_URL}/store`);
         }
@@ -243,8 +247,8 @@ const SignupTab = ({ selected }) => {
   };
 
   const connectSocketToServer = () => {
-    connectWithSocketIOServer();
-  }
+    // connectWithSocketIOServer();
+  };
 
   useEffect(() => {
     getPlanIds();

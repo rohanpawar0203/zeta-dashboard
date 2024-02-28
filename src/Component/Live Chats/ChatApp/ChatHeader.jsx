@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Media } from "reactstrap";
 import ChatAppContext from "../../../_helper/chat-app/index";
 import { Btn, Image, LI, UL } from "../../../AbstractElements";
@@ -9,16 +9,21 @@ import { envConversationToServer } from "../Client/wss";
 const ChatHeader = ({ viewConversation }) => {
   const { liveUser, setliveUser, checkValid } = useContext(ChatAppContext);
   const { userData } = appStore();
+  const [conversationEnded, setConversationEnded] = useState(false);
 
   const endingConversation = async () => {
-     console.log('chatSessionId, firstName',  viewConversation?.chatSessionId
-     ,liveUser?.customer?.firstName);
+    console.log(
+      "chatSessionId, firstName",
+      viewConversation?.chatSessionId,
+      liveUser?.customer?.firstName
+    );
     await envConversationToServer(
       viewConversation?.chatSessionId,
       liveUser?.customer?.firstName
     );
     setliveUser(null);
   };
+
   return (
     <Fragment>
       {liveUser && (
@@ -56,15 +61,15 @@ const ChatHeader = ({ viewConversation }) => {
                   attrBtn={{
                     className: "btn-danger",
                     onClick: () => {
-                      endingConversation();
-                      //  envConversationToServer(
-                      //    viewConversation?.chatSessionId,
-                      //    liveUser?.customer?.firstName
-                      //  );
-                      //  setliveUser(null);
-                      //  setTimeout(() => {
-                      //    window.location.reload();
-                      //  }, 1000);
+                      // endingConversation();
+                      envConversationToServer(
+                        viewConversation?.chatSessionId,
+                        liveUser?.customer?.firstName
+                      );
+                      setliveUser(null);
+                      setTimeout(() => {
+                        window.location.reload();
+                      }, 1000);
                     },
                   }}
                 >

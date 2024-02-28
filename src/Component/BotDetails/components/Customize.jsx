@@ -153,18 +153,15 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
   };
 
   return (
-    <Fragment className="h-100">
+    <Fragment>
       <Container className="h-100" fluid={true}>
         {/* <Row> */}
         <Col sm="12 h-100">
           <Card className="shadow-none h-100">
-            {/* <CardHeader className="p-0 m-0 mt-2">
-              <H5 attrH5={{ className: "my-0 mt-2" }}>{"Customize Bot"}</H5>
-            </CardHeader> */}
             <CardBody className="p-0 m-0 pt-2 h-100">
-              <Fragment className="h-100">
+              <Fragment>
                 <Form
-                  className="needs-validation "
+                  className="needs-validation"
                   noValidate=""
                   onSubmit={handleBotEdit}
                   style={{ height: "100%" }}

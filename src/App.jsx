@@ -25,9 +25,8 @@ import AnimationThemeProvider from "./_helper/AnimationTheme/AnimationThemeProvi
 import CustomizerProvider from "./_helper/customizer/CustomizerProvider";
 import { MenuItemsContextProvider } from "./_helper/MenuItems/MenuItemsProvider";
 import { getSessionId } from "./Component/Bots/sessionSetup";
-import { connectWithSocketIOServer } from "./Component/Live Chats/Client/wss";
 import { v4 as uuidv4 } from "uuid";
-import appStore from "./Component/Live Chats/Client/AppStore";
+import SocketContextProvider from "./Component/Live Chats/Context/socketContext";
 import { toast } from "react-toastify";
 import { PlanDetails } from "./api";
 
@@ -64,7 +63,9 @@ function App() {
                                                 <AnimationThemeProvider>
                                                   <MenuItemsContextProvider>
                                                     {" "}
-                                                    <Routers />
+                                                    <SocketContextProvider>
+                                                      <Routers />
+                                                    </SocketContextProvider>
                                                   </MenuItemsContextProvider>
                                                 </AnimationThemeProvider>{" "}
                                               </ProjectProvider>
