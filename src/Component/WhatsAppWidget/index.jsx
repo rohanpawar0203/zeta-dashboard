@@ -63,7 +63,7 @@ import Broadcasting from "./Broadcasting";
 
 const WebSdkInfoContent = () => {
   const { setBotDetails, userData } = appStore.getState();
-  const [pillTab, setpillTab] = useState("4");
+  const [pillTab, setpillTab] = useState("1");
   const [loading, setLoading] = useState(false);
 
   return (

@@ -19,7 +19,7 @@ const EmbedWidget = () => {
     input.value = copyContent;
     document.body.appendChild(input);
 
-    // Select the text and copy it
+    // Select the text and copy it˙
     input.select();
     document.execCommand("copy");
 
