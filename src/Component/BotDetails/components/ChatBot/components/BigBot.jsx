@@ -1,47 +1,57 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, {
+  Fragment,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Col, Input, InputGroup, InputGroupText, Row } from "reactstrap";
 import { VscSend } from "react-icons/vsc";
 import ChatHeader from "./ChatHeader";
 import ScrollBar from "react-perfect-scrollbar";
 import { toast } from "react-toastify";
 import { BotCreate } from "../../../../../api";
-import Lottie from 'react-lottie';
+import Lottie from "react-lottie";
 import { Player, Controls } from "@lottiefiles/react-lottie-player";
-import animationData from '../../../../../assets/json/lotties/Animation - 1701895887722.json';
+import animationData from "../../../../../assets/json/lotties/Animation - 1701895887722.json";
 import {
   createOrConnectRoom,
   sendDataToConnectedUser,
 } from "../../../../Live Chats/Client/wss";
 import appStore from "../../../../Live Chats/Client/AppStore";
 import { getSessionId } from "../../../../Bots/sessionSetup";
+import SocketContextProvider, {
+  SocketContext,
+} from "../../../../Live Chats/Context/socketContext";
 const BigBot = ({ myBot }) => {
   const {
     messages,
     setMessages,
     setBotDetails,
     botDetails,
-    roomId,
+    // roomId,
     showTyping,
     liveConversation,
-    setShowTyping
+    setShowTyping,
   } = appStore();
   // const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState("");
   const chatContainerRef = useRef();
   const token = sessionStorage.getItem("token");
   const user = JSON.parse(sessionStorage.getItem("currentUser"));
-  const userAvatar = require('../../../../../assets/images/avtar/boy.png');
+  const { roomId } = useContext(SocketContext);
+  const userAvatar = require("../../../../../assets/images/avtar/boy.png");
   const botAvatar =
     "https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75";
 
-    const defaultOptions = {
-      loop: true,
-      autoplay: true,
-      animationData: animationData,
-      rendererSettings: {
-        preserveAspectRatio: "xMidYMid slice"
-      }
-    };
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
   const sendMessageToBot = async () => {
     const sendData = {
@@ -50,20 +60,20 @@ const BigBot = ({ myBot }) => {
       domain: user?.websiteLink,
       bot_id: myBot?._id,
       company_name: user?.companyName,
-      roomId: getSessionId(sessionStorage.getItem("sessionUUID")),
-      organization_id: user?._id,   // 
+      roomId: roomId,
+      organization_id: user?._id, //
       type: "csv",
       time: "",
     };
     sendDataToConnectedUser(sendData);
     setMessages(userMessage, true);
-    setUserMessage('');
+    setUserMessage("");
   };
 
   useEffect(() => {
     createOrConnectRoom();
   }, [myBot]);
-  
+
   useEffect(() => {
     // Scroll to the bottom whenever messages change
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
@@ -84,22 +94,18 @@ const BigBot = ({ myBot }) => {
       >
         <ChatHeader myBot={myBot} />
         <ScrollBar>
-          <div ref={chatContainerRef}
+          <div
+            ref={chatContainerRef}
             style={{
               height: "250px",
               padding: "15px",
               border: "1px solid none",
-              overflowY: 'scroll'
+              overflowY: "scroll",
             }}
             className="w-100"
           >
             <div className="d-flex jusify-content-end align-items-center mb-1">
-              <img
-                src={myBot?.companyLogo}
-                alt=""
-                width="30px"
-                height="30px"
-              />
+              <img src={myBot?.companyLogo} alt="" width="30px" height="30px" />
               <p
                 style={{ background: "whitesmoke" }}
                 className="mx-2 p-2 rounded"
@@ -128,22 +134,20 @@ const BigBot = ({ myBot }) => {
                 </p>
               </div>
             ))}
-            {showTyping && 
-            <div style={{width: '100px', height: '50px'}}
-            className={`d-flex align-items-center mb-2  flex-row`}
-          >
-            <img
-              src={`${myBot?.companyLogo}`}
-              alt={`bot avatar`}
-              width="30px"
-              height="30px"
-            />
-             <Lottie options={defaultOptions}
-             height={20}
-             width={70}
-             />
-          </div>
-          }
+            {showTyping && (
+              <div
+                style={{ width: "100px", height: "50px" }}
+                className={`d-flex align-items-center mb-2  flex-row`}
+              >
+                <img
+                  src={`${myBot?.companyLogo}`}
+                  alt={`bot avatar`}
+                  width="30px"
+                  height="30px"
+                />
+                <Lottie options={defaultOptions} height={20} width={70} />
+              </div>
+            )}
           </div>
         </ScrollBar>
 
@@ -163,16 +167,17 @@ const BigBot = ({ myBot }) => {
             }}
             className="d-flex"
           >
-            <input value={userMessage}
-                style={{ border: "none", borderRadius: "25px" }}
-                className="form-control"
-                type="text"
-                aria-label="Amount (to the nearest dollar)"
-                placeholder="Send Message..."
-                onChange={(e) => {
+            <input
+              value={userMessage}
+              style={{ border: "none", borderRadius: "25px" }}
+              className="form-control"
+              type="text"
+              aria-label="Amount (to the nearest dollar)"
+              placeholder="Send Message..."
+              onChange={(e) => {
                 setUserMessage(e.target.value);
-                }}
-                onKeyDown={(e) => {
+              }}
+              onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   if (!userMessage) {
                     toast.error("Please enter message to send!");

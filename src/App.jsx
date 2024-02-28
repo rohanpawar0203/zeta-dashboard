@@ -25,26 +25,21 @@ import AnimationThemeProvider from "./_helper/AnimationTheme/AnimationThemeProvi
 import CustomizerProvider from "./_helper/customizer/CustomizerProvider";
 import { MenuItemsContextProvider } from "./_helper/MenuItems/MenuItemsProvider";
 import { getSessionId } from "./Component/Bots/sessionSetup";
+import { connectWithSocketIOServer } from "./Component/Live Chats/Client/wss";
 import { v4 as uuidv4 } from "uuid";
-import SocketContextProvider from "./Component/Live Chats/Context/socketContext";
+import appStore from "./Component/Live Chats/Client/AppStore";
 import { toast } from "react-toastify";
 import { PlanDetails } from "./api";
 
 function App() {
   useEffect(() => {
-    console.log(
-      "Entered",
-      !sessionStorage.getItem("sessionUUID"),
-      sessionStorage.getItem("sessionUUID")
-    );
     if (!sessionStorage.getItem("sessionUUID")) {
-      let sessionUUID = uuidv4().toString();
-      sessionStorage.setItem("sessionUUID", sessionUUID);
-      getSessionId(JSON.stringify(sessionStorage.getItem("sessionUUID")));
-    } else {
-      getSessionId(JSON.stringify(sessionStorage.getItem("sessionUUID")));
+      sessionStorage.setItem("sessionUUID", uuidv4().toString());
     }
-    // console.log(sessionStorage.getItem("sessionUUID"));
+    if (sessionStorage.getItem("sessionUUID")) {
+      getSessionId(sessionStorage.getItem("sessionUUID"));
+    }
+    connectWithSocketIOServer();
   }, []);
   return (
     <Fragment>
@@ -72,9 +67,7 @@ function App() {
                                                 <AnimationThemeProvider>
                                                   <MenuItemsContextProvider>
                                                     {" "}
-                                                    <SocketContextProvider>
-                                                      <Routers />
-                                                    </SocketContextProvider>
+                                                    <Routers />
                                                   </MenuItemsContextProvider>
                                                 </AnimationThemeProvider>{" "}
                                               </ProjectProvider>

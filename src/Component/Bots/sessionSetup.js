@@ -54,7 +54,7 @@ export const getSessionId = (parameter) => {
     localSession = [
       {
         [sessionId]: {
-          parameter: sessionId,
+          parameter: parameter,
           lastUsed: Date.now(),
         },
       },

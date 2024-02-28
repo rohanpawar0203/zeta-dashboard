@@ -17,10 +17,7 @@ const SocketContextProvider = ({ children }) => {
   useEffect(() => {
     // if (socket !== null) socketConnetionURL();
     if (userData) {
-      if (
-        sessionStorage.getItem("sessions") &&
-        JSON.parse(sessionStorage.getItem("sessions")).length === 0
-      ) {
+      if (roomId === "") {
         setRoomId(getSessionId(sessionStorage.getItem("sessionUUID")));
       }
       connectWithSocketIOServer();
