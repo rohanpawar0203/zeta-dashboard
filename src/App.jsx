@@ -32,10 +32,19 @@ import { PlanDetails } from "./api";
 
 function App() {
   useEffect(() => {
+    console.log(
+      "Entered",
+      !sessionStorage.getItem("sessionUUID"),
+      sessionStorage.getItem("sessionUUID")
+    );
     if (!sessionStorage.getItem("sessionUUID")) {
-      sessionStorage.setItem("sessionUUID", uuidv4().toString());
+      let sessionUUID = uuidv4().toString();
+      sessionStorage.setItem("sessionUUID", sessionUUID);
+      getSessionId(JSON.stringify(sessionStorage.getItem("sessionUUID")));
+    } else {
+      getSessionId(JSON.stringify(sessionStorage.getItem("sessionUUID")));
     }
-    getSessionId(sessionStorage.getItem("sessionUUID"));
+    // console.log(sessionStorage.getItem("sessionUUID"));
   }, []);
   return (
     <Fragment>

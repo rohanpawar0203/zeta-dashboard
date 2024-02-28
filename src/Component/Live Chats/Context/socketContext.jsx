@@ -12,13 +12,17 @@ export const SocketContext = createContext();
 
 const SocketContextProvider = ({ children }) => {
   const { userData, token } = appStore();
-  const [roomId, setRoomId] = useState(
-    getSessionId(sessionStorage.getItem("sessionUUID"))
-  );
+  const [roomId, setRoomId] = useState("");
 
   useEffect(() => {
     // if (socket !== null) socketConnetionURL();
     if (userData) {
+      if (
+        sessionStorage.getItem("sessions") &&
+        JSON.parse(sessionStorage.getItem("sessions")).length === 0
+      ) {
+        setRoomId(getSessionId(sessionStorage.getItem("sessionUUID")));
+      }
       connectWithSocketIOServer();
     }
   }, [userData]);
