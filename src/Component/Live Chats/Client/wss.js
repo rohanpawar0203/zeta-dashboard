@@ -233,11 +233,14 @@ const setLiveConversations = async () => {
   if (liveConversationNewEntry.length !== 0) {
     if (conversation.length === 0) {
       try {
-        const resp = await axios.get(`${GetConversationsAPI}/${orgId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const resp = await axios.get(
+          `${GetConversationsAPI}/${orgId}/liveConversation`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         const filterArray = resp.data.filter((el) => {
           let flag = false;
           liveConversationNewEntry.forEach((element) => {
