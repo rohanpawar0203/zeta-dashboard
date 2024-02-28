@@ -7,11 +7,12 @@ import {
   InputGroup,
   InputGroupText,
   Label,
+  Modal,
   Row,
 } from "reactstrap";
 import { Btn, H5, P, UL } from "../../../AbstractElements";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding, faAddressBook } from "@fortawesome/free-solid-svg-icons";
@@ -31,7 +32,7 @@ import isUrl from "is-url";
 
 const pattern = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}([\/?].*)?$/;
 
-const SignupTab = ({ selected }) => {
+const SignupTab = ({ selected, setShowModal }) => {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -42,6 +43,7 @@ const SignupTab = ({ selected }) => {
     store: "",
     productList: "",
   });
+  const [termsChecked, setTermsChecked] = useState(true);
   const [planIds, setPlanIds] = useState([]);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -154,6 +156,7 @@ const SignupTab = ({ selected }) => {
 
   return (
     <Fragment>
+      <Modal>sadasdasd</Modal>
       <Form className="theme-form login-form">
         <FormHeader selected={selected} />
         <Row>
@@ -352,6 +355,43 @@ const SignupTab = ({ selected }) => {
               )}
             </FormGroup>
           </Col>
+          <Col xl="12">
+            <FormGroup>
+              <label
+                htmlFor="t&c"
+                style={{
+                  marginTop: "20px",
+                  display: "flex",
+                  gap: "20px",
+                  alignItems: "center",
+                }}
+              >
+                <input
+                  style={{
+                    width: "15px",
+                    height: "15px",
+                    accentColor: "var(--theme-default)",
+                  }}
+                  type="checkbox"
+                  name=""
+                  id="t&c"
+                  checked={termsChecked}
+                  onChange={() => setTermsChecked(!termsChecked)}
+                />
+                <p>
+                  I have read the{" "}
+                  <Link
+                    onClick={() => {
+                      setShowModal(true);
+                    }}
+                  >
+                    Terms & Conditions
+                  </Link>{" "}
+                  and consent to process.
+                </p>
+              </label>
+            </FormGroup>
+          </Col>
         </Row>
 
         <div class="w-100 my-4 d-flex justify-content-center align-items-center">
@@ -364,6 +404,7 @@ const SignupTab = ({ selected }) => {
             }}
             className="w-100 btn btn-primary"
             type="button"
+            disabled={termsChecked === false}
           >
             {loading ? <CustomSpinner /> : SignUp}
           </button>
