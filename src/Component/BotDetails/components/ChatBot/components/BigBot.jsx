@@ -39,7 +39,7 @@ const BigBot = ({ myBot }) => {
   const chatContainerRef = useRef();
   const token = sessionStorage.getItem("token");
   const user = JSON.parse(sessionStorage.getItem("currentUser"));
-  const { roomId } = useContext(SocketContext);
+  const {roomId} = useContext(SocketContext);
   const userAvatar = require("../../../../../assets/images/avtar/boy.png");
   const botAvatar =
     "https://bot.writesonic.com/_next/image?url=https%3A%2F%2Fwritesonic-frontend.s3.us-east-1.amazonaws.com%2Ffrontend-assets%2Ftemplates-new%2FBotsonicNew.png&w=96&q=75";
@@ -65,6 +65,7 @@ const BigBot = ({ myBot }) => {
       type: "csv",
       time: "",
     };
+    console.log('sendData', sendData);
     sendDataToConnectedUser(sendData);
     setMessages(userMessage, true);
     setUserMessage("");

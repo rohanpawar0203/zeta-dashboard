@@ -34,17 +34,6 @@ const ChatAppContain = () => {
   useEffect(() => {
     // console.log("First useEffect triggered");
     setCurrentLocationPathName(window.location.pathname);
-    if (liveConversation?.length) {
-    }
-    (async () => {
-      try {
-        if (liveConversation.length === 0) {
-          getLiveRooms();
-        }
-      } catch (error) {
-        console.log("Error", error);
-      }
-    })();
   }, []);
 
   useEffect(() => {
