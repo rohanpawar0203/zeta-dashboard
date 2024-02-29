@@ -169,7 +169,7 @@ export const sendDataToConnectedUser = (data) => {
   socket.emit("mssg-sent", JSON.stringify(data));
 };
 export const getLiveRooms = async () => {
-  console.log("getLiveRooms");
+  // console.log("getLiveRooms");
   // const serverApi = `http://localhost:${process.env.REACT_APP_API_AGENT_BACKEND_LOCAL_HOST_PORT}`;
   const serverApi = `${LiveChatsAPI}`;
   const response = await axios.post(`${serverApi}/getChatsForAgent`, {
@@ -182,8 +182,6 @@ export const getLiveRooms = async () => {
 };
 
 export const envConversationToServer = async (roomId, name) => {
-  console.log("roomId, name", roomId, name);
-
   // const serverApi = `http://localhost:${process.env.REACT_APP_API_AGENT_BACKEND_LOCAL_HOST_PORT}`;
   const serverApi = `${LiveChatsAPI}`;
   const response = await axios.post(`${serverApi}/endConversation`, {
@@ -192,10 +190,12 @@ export const envConversationToServer = async (roomId, name) => {
 
   console.log("envConversationToServer", response);
   if (response.status === "200" || response.status === 200) {
+    // setliveUser(null);
     getLiveRooms();
     appStore.getState().setViewConversation({});
     toast.success("Conversation got closed");
     informAiBackend(roomId, name);
+    return true;
   }
 };
 
