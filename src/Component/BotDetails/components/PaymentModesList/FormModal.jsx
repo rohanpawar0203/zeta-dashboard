@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CommonModal from "../../../../_core/Ui-kits/Modals/common/modal";
 import { Btn } from "../../../../AbstractElements";
 import CustomSpinner from "../../../../CommonElements/CustomSpinner/CustomSpinner";
@@ -8,9 +8,9 @@ import { toast } from "react-toastify";
 import { PaymentModesAPI } from "../../../../api";
 import appStore from "../../../Live Chats/Client/AppStore";
 
-const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, eventMode, setFormData, getPaymentModes, resetFormValues, updatePaymentMode}) => {
+const FormModal = ({setbtnLoading, paymentModes, btnLoading, modal, title, toggle, formData, eventMode, setFormData, getPaymentModes, resetFormValues, updatePaymentMode}) => {
   const { userData, setUserData, token } = appStore();
-  
+  const [paymentTypeOptions, setpaymentTypeOptions] = useState([{code: 'Online', txt: 'Online'}, {code: 'cash_on_delivery', txt: 'Cash On Delivery'}])
 
   const handleSubmit = () => {
       let payload =  {...formData, userId: userData?._id};
@@ -30,6 +30,7 @@ const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, e
           body: JSON.stringify([payload]),
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
           },
         });
         const responseData = await response.json();
@@ -65,6 +66,14 @@ const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, e
     }
     Object.values(uploadObj)?.length && setFormData({...uploadObj});
   }
+
+  useEffect(() => {
+    let codExist = paymentModes?.find((item) => (item['paymentType'] === "cash_on_delivery"));
+    if(codExist){
+      setpaymentTypeOptions((pre) => ([...pre]?.filter((item) => (item['code'] !== 'cash_on_delivery'))));
+    }
+  }, [paymentModes])
+  
   return (
     <CommonModal
       isOpen={modal}
@@ -88,9 +97,10 @@ const FormModal = ({setbtnLoading, btnLoading, modal, title, toggle, formData, e
                 placeholder={`Payment Type`}
                 required={true}>
                   <option value={''}>{"Select Payment Type"}</option>
-                  {[{code: 'Online', txt: 'Online'}, {code: 'cash_on_delivery', txt: 'Cash On Delivery'}]?.map((ele, ind) => (
-                    <option value={ele['code']}>{ele['txt']}</option>
-                  ))}
+                  {paymentTypeOptions?.map((ele, ind) => {
+                    return <option value={ele['code']}>{ele['txt']}</option>
+                  }
+              )}
               </select>
             </InputGroup>
             </FormGroup>
