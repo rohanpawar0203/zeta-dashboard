@@ -35,7 +35,7 @@ import PaymentModesList from "./PaymentModesList/PaymentModesList";
 import {useNavigate} from 'react-router-dom'
 import ScrollBar from "react-perfect-scrollbar";
 
-const token = sessionStorage.getItem("token");
+const {token} = appStore.getState();
 
 const Knowledge = ({ myBot }) => {
   const [loading, setLoading] = useState(false);
@@ -204,6 +204,7 @@ const AddCSVForm = ({
 
   const uploadCSVFile = async (formData) => {
     try {
+      console.log('formData : ', formData);
       const res = await axios.post(`${FAQFilesAPI}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
