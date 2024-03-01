@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 const EmbedBot = ({ myBot }) => {
   const scriptRef = useRef(null);
 
-  const copyContent = `<script defer="defer" src="https://www.ulai.in/file-server/web-sdk/web-sdk-init.js"></script> <div id="chatBot" data-value=${myBot?._id}></div>`;
+  const copyContent = `<script defer="defer" src="https://www.ulai.in/file-server/uploads/Ulai/web-sdk-init.js"></script> <div id="chatBot" data-value=${myBot?._id}></div>`;
 
   const handleCopyScript = () => {
     const input = document.createElement("input");
