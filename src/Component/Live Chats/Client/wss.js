@@ -70,7 +70,7 @@ export const connectWithSocketIOServer = () => {
   });
 
   socket.on("message-recieved", (data) => {
-    // console.log("message-recieved", data);
+    console.log("message-recieved", data);
     appStore.getState().setShowTyping(false);
     let newMessage = JSON.parse(data);
     console.log("message-recieved", appStore.getState().liveConversation);
@@ -221,7 +221,10 @@ const informAiBackend = async (roomId, name) => {
 };
 
 const setLiveConversations = async () => {
-  console.log("setLiveConversations");
+  console.log(
+    "setLiveConversations",
+    appStore.getState().liveConversationNewEntry
+  );
 
   appStore.getState().setisFetchLiveConversation(true);
   appStore.getState().setConversation([]);
@@ -259,7 +262,9 @@ const setLiveConversations = async () => {
           "setLiveConversation---filterArray--->",
           filterArray.reverse()
         );
-        appStore.getState().setLiveConversation(filterArray.reverse());
+        appStore
+          .getState()
+          .setLiveConversation(filterArray.sort((a, b) => b.time - a.time));
         appStore.getState().setConversation(resp.data);
       } catch (error) {
         console.log("Error", error);

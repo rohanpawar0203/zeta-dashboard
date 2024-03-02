@@ -22,7 +22,7 @@ const ChatAppContain = () => {
   const checkValid = async (el) => {
     try {
       if (el) {
-        console.log('checkValid  item ', el);
+        console.log("checkValid  item ", el);
         const resp = await getRoomExists(el.chatSessionId);
         setViewConversation(el);
       }
@@ -37,7 +37,8 @@ const ChatAppContain = () => {
   }, []);
 
   useEffect(() => {
-    // console.log("Second useEffect triggered");
+    getLiveRooms();
+    console.log("Second useEffect triggered", liveConversation);
 
     setViewConversation({});
     // console.log("notified");

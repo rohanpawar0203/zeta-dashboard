@@ -25,7 +25,7 @@ const ChatHeader = ({ viewConversation }) => {
     // );
     // setliveUser(null);
 
-    console.log("RoomID", roomId);
+    console.log("RoomID", viewConversation?.chatSessionId);
     // setRoomId((roomId) => {
     //   console.log("Room", roomId);
     // });
