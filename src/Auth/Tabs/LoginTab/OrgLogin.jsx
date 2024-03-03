@@ -42,9 +42,9 @@ const OrgLogin = ({ selected, showToast }) => {
   const inputRef = useRef();
   const { setUserData, setToken, userData } = appStore();
   const [apiError, setApiError] = useState("");
+  const [ipAddress, setIpAddress] = useState("");
 
   const userLogin = async (e) => {
-    
     setLoading(true);
 
     const requestOptions = {
@@ -106,6 +106,13 @@ const OrgLogin = ({ selected, showToast }) => {
       setErrors(errorsObj);
     }
   };
+
+  useEffect(() => {
+    axios.get("https://geolocation-db.com/json/").then((res) => {
+      // console.log(res);
+      setIpAddress(res.data.IPv4);
+    });
+  }, []);
 
   return (
     <Fragment>
