@@ -34,6 +34,7 @@ import ProductTableData from "../../Ecommerce/ProductList/ProductTableData";
 import PaymentModesList from "./PaymentModesList/PaymentModesList";
 import {useNavigate} from 'react-router-dom'
 import ScrollBar from "react-perfect-scrollbar";
+import { MdCancel } from "react-icons/md";
 
 const {token} = appStore.getState();
 
@@ -397,7 +398,7 @@ const CSVFileInfoList = ({
                         handleCSVFileDelete(ele?.id);
                       }}
                     >
-                      Delete CSV
+                      Delete
                     </button>
                   </td>
                 </tr>
