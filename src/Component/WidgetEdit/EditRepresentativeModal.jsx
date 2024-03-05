@@ -217,7 +217,7 @@ useEffect(() => {
                           name="avatardescription"
                           type="text"
                           value={template?.popup?.persons?.find((ele) => (ele?.id === avatarID))?.text?.description}
-						  placeholder="Avatar description"
+						              placeholder="Avatar description"
                           onChange={(e) => {handleTemplateChange(e, e.target.value, 'text', 'description')}}
                           required={true}
                         >

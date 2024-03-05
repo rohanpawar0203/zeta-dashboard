@@ -33,6 +33,7 @@ import axios from "axios";
 import { getUserDetails } from "../../../Services/UsersServices";
 import ScrollBar from "react-perfect-scrollbar";
 import { styles } from "../../WhatsAppWidget/Customization";
+import { UploadFiles } from "../../../Services/Custom_Hooks/fileUpload";
 
 const userData = JSON.parse(sessionStorage.getItem("currentUser"));
 const token = sessionStorage.getItem("token");
@@ -117,22 +118,16 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
         "companyName",
         userData?.companyName?.replaceAll(" ", "-")
       );
-      const modifiedFileName = companyLogoFile.name.replaceAll(" ", "-");
-      formData.append("companyLogo", companyLogoFile, modifiedFileName);
-      const res = await axios.post(`${UploadCompanyLogoAPI}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      const responseUrl = await res?.data?.filenames[0];
-      if (responseUrl) {
-        setcompanyLogoURL(responseUrl);
+      formData.append("file", companyLogoFile);
+      const {status, url} = await UploadFiles(formData);
+      if (status && url) {
+        setcompanyLogoURL(url);
         getUserDetails(userData?._id);
-        return responseUrl;
+        return url;
       }
     } catch (error) {
       toast.error("File Upload Failed");
-      console.log("csv upload error ", error);
+      console.log("uploadCompanyLogo error ", error);
     }
   };
 
@@ -142,8 +137,7 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
       if (companyLogoFile) {
         const logoUrl = await uploadCompanyLogo();
         if (logoUrl) {
-          let urlString = FileServerAPI + "/" + logoUrl;
-          myBot.companyLogo = urlString;
+          myBot.companyLogo = logoUrl;
         }
       }
       updateBotInfo();
@@ -359,7 +353,7 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                       )}
                     </Col>
                   </Row>
-                  <Btn attrBtn={{ color: "primary" }}>{"Submit form"}</Btn>
+                  <Btn attrBtn={{ color: "primary", type: 'submit' }}>{"Submit"}</Btn>
                   {/* </ScrollBar> */}
                 </Form>
               </Fragment>

@@ -356,7 +356,6 @@ const CSVFileInfoList = ({
   const updateUser = async (filteredList) => {
     setLoading(true);
     try {
-      console.log('token ==>', token);
       const response = await fetch(`${User}/${userData._id}`, {
         method: "PATCH",
         headers: {
