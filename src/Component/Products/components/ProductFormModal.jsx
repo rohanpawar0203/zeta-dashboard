@@ -30,6 +30,7 @@ const ProductFormModal = ({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     values: {
@@ -66,9 +67,12 @@ const ProductFormModal = ({
         const response = await res.json();
         if (res.ok) {
           fetchProductData();
-          toast.success(response.message);
           toggle();
+          reset();
+          toast.success(response.message);
         } else {
+          toggle();
+          reset();
           toast.error(response.message);
         }
       } else {
@@ -88,13 +92,18 @@ const ProductFormModal = ({
         const response = await res.json();
         if (res.ok) {
           fetchProductData();
-          toast.success(response.message);
           toggle();
+          reset();
+          toast.success(response.message);
         } else {
+          toggle();
+          reset();
           toast.error(response.message);
         }
       }
     } catch (err) {
+      toggle();
+      reset();
       toast.error(err);
     }
     setLoading(false);

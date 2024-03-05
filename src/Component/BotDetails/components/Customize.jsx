@@ -34,6 +34,7 @@ import { getUserDetails } from "../../../Services/UsersServices";
 import ScrollBar from "react-perfect-scrollbar";
 import { styles } from "../../WhatsAppWidget/Customization";
 import { UploadFiles } from "../../../Services/Custom_Hooks/fileUpload";
+import CustomSpinner from "../../../CommonElements/CustomSpinner/CustomSpinner";
 
 const userData = JSON.parse(sessionStorage.getItem("currentUser"));
 const token = sessionStorage.getItem("token");
@@ -56,6 +57,7 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
   //  const [isBotChaged, setisBotChaged] = useState(false);
   const [companyLogoMode, setCompanyLogoMode] = useState("logo");
   const [paymentMethod, setpaymentMethod] = useState("");
+  const [btnLoading, setbtnLoading] = useState(false);
   const payment_methods = [
     { code: "default", text: "Select Payment Mode" },
     { code: "COD", text: "Cash On Delivery" },
@@ -133,6 +135,7 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
 
   const handleBotEdit = async (e) => {
     e.preventDefault();
+    setbtnLoading(true);
     try {
       if (companyLogoFile) {
         const logoUrl = await uploadCompanyLogo();
@@ -140,7 +143,10 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
           myBot.companyLogo = logoUrl;
         }
       }
+      setTimeout(() => {
+      setbtnLoading(false);
       updateBotInfo();
+      },  500);
     } catch (error) {
       console.log("Error at bot update ", error);
     }
@@ -353,7 +359,9 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                       )}
                     </Col>
                   </Row>
-                  <Btn attrBtn={{ color: "primary", type: 'submit' }}>{"Submit"}</Btn>
+                  <Btn attrBtn={{ color: "primary", type: 'submit' }}>{
+                    btnLoading ? <CustomSpinner /> : "Submit"
+                  }</Btn>
                   {/* </ScrollBar> */}
                 </Form>
               </Fragment>
