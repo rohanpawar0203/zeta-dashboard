@@ -35,6 +35,7 @@ import PaymentModesList from "./PaymentModesList/PaymentModesList";
 import {useNavigate} from 'react-router-dom'
 import ScrollBar from "react-perfect-scrollbar";
 import { MdCancel } from "react-icons/md";
+import { UploadFiles } from "../../../Services/Custom_Hooks/fileUpload";
 
 const {token} = appStore.getState();
 
@@ -133,6 +134,7 @@ const Knowledge = ({ myBot }) => {
                           faqList={faqList}
                           setFaqList={setFaqList}
                           setLoading={setLoading}
+                          loading={loading}
                         />
                       ) : (
                         <div className="w-100 h-100 d-flex justify-content-center align-items-center">
@@ -170,6 +172,7 @@ const AddCSVForm = ({
   const [csvValidation, setcsvValidation] = useState(false);
   const [csvError, setCsvError] = useState("");
   const { fileName } = getValues();
+  const [btnLoading, setbtnLoading] = useState(false);
 
   const onSubmit = (data) => {
     if (!csvFile) {
@@ -181,6 +184,7 @@ const AddCSVForm = ({
       formData.append("companyName", userData?.companyName);
       formData.append("file", csvFile);
       uploadCSVFile(formData);
+      
     } else {
       errors.showMessages();
     }
@@ -204,22 +208,17 @@ const AddCSVForm = ({
   };
 
   const uploadCSVFile = async (formData) => {
+    setbtnLoading(true);
     try {
-      console.log('formData : ', formData);
-      const res = await axios.post(`${FilesUploadAPI}`, formData, {
-        headers: {
-         ...formData.getHeaders(),
-         "Authorization": `Bearer ${token}`
-        },
-      });
-      console.log('csv upload res : ', res);
-      const responseUrl = await res?.data?.filenames[0];
-      if (responseUrl) {
-        updateUser(responseUrl, fileName);
+      const {status, url} = await UploadFiles(formData);
+      if(status && url){
+        setbtnLoading(false);
+        updateUser(url, fileName);
       }
     } catch (error) {
       toast.error("File Upload Failed");
-      console.log("csv upload error ", error);
+      console.log("uploadCSVFile error :", error);
+      setbtnLoading(false);
     }
   };
 
@@ -312,7 +311,10 @@ const AddCSVForm = ({
           <span className="text-danger fw-bolder">{csvError && csvError}</span>
         </FormGroup>
         <div className="d-flex gap-4 align-items-center justify-content-start">
-          <Btn attrBtn={{ color: "primary", type: "submit" }}>{"Add CSV"}</Btn>
+          <Btn attrBtn={{ color: "primary", type: "submit" }}>{ btnLoading ? 
+         <CustomSpinner /> :   
+         "Add CSV"
+         }</Btn>
           <Btn
             attrBtn={{
               color: "danger",
@@ -336,20 +338,30 @@ const CSVFileInfoList = ({
   setLoading,
   userData,
   setUserData,
+  loading
 }) => {
+  const [btnLoading, setbtnLoading] = useState({status: false, itemId: ''});
+
   const handleCSVFileDelete = (id) => {
+    setbtnLoading((pre) => ({...pre, status: true, itemId: id}));
     let filteredList = faqList?.filter((item) => item.id !== id);
-    updateUser(filteredList);
+    if(filteredList?.length){
+      setTimeout(() => {
+        setbtnLoading((pre) => ({...pre, status: false}));
+        updateUser(filteredList);
+      }, 500);
+    }
   };
 
   const updateUser = async (filteredList) => {
     setLoading(true);
     try {
+      console.log('token ==>', token);
       const response = await fetch(`${User}/${userData._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           ...userData,
@@ -384,7 +396,7 @@ const CSVFileInfoList = ({
                 {"File Name"}
               </th>
               <th scope="col" style={{ textAlign: "center" }}>
-                {"Delete"}
+                "Delete"
               </th>
             </tr>
           </thead>
@@ -400,7 +412,9 @@ const CSVFileInfoList = ({
                         handleCSVFileDelete(ele?.id);
                       }}
                     >
-                      Delete
+                      {
+                      (btnLoading?.status && btnLoading?.itemId === ele?.id)  ? <CustomSpinner /> : "Delete"
+                    }
                     </button>
                   </td>
                 </tr>
