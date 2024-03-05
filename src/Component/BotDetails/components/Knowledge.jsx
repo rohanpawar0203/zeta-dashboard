@@ -24,7 +24,7 @@ import Integrations from "./Integrations";
 import { useForm } from "react-hook-form";
 import Dropzone from "react-dropzone-uploader";
 import axios from "axios";
-import { FAQFilesAPI, PaymentModesAPI, User } from "../../../api";
+import { FAQFilesAPI, FilesUploadAPI, PaymentModesAPI, User } from "../../../api";
 import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
 import appStore from "../../Live Chats/Client/AppStore";
@@ -179,7 +179,7 @@ const AddCSVForm = ({
       // createTicket({...payload, ...data, userId: user?._id});
       const formData = new FormData();
       formData.append("companyName", userData?.companyName);
-      formData.append("", csvFile);
+      formData.append("file", csvFile);
       uploadCSVFile(formData);
     } else {
       errors.showMessages();
@@ -206,11 +206,13 @@ const AddCSVForm = ({
   const uploadCSVFile = async (formData) => {
     try {
       console.log('formData : ', formData);
-      const res = await axios.post(`${FAQFilesAPI}`, formData, {
+      const res = await axios.post(`${FilesUploadAPI}`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+         ...formData.getHeaders(),
+         "Authorization": `Bearer ${token}`
         },
       });
+      console.log('csv upload res : ', res);
       const responseUrl = await res?.data?.filenames[0];
       if (responseUrl) {
         updateUser(responseUrl, fileName);
