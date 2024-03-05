@@ -53,10 +53,9 @@ const ChatStatus = ({ checkValid, isFetchLiveConversation }) => {
   // useEffect(() => {
   //   console.log('liveConversation[0] ==>', liveConversation);
   //   if(liveConversation.length){
-      
+
   //   }
   // }, [])
-  
 
   return (
     <Fragment>
@@ -88,7 +87,7 @@ const ChatStatus = ({ checkValid, isFetchLiveConversation }) => {
                             onClick: () => {
                               activeChat = item._id;
                               checkValid(item);
-                              console.log('click hit');
+                              console.log("click hit");
                               setliveUser(item);
                             },
                           }}
