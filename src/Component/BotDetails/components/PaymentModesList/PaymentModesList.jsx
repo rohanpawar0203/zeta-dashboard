@@ -22,6 +22,7 @@ import {
 import CustomSpinner from "../../../../CommonElements/CustomSpinner/CustomSpinner";
 import FormModal from "./FormModal";
 import { MdEdit, MdOutlineEdit } from "react-icons/md";
+import ScrollBar from "react-perfect-scrollbar";
 
 const style = {
   width: 40,
@@ -161,7 +162,8 @@ const PaymentModesList = () => {
           <div className="loader-box">
             <Spinner attrSpinner={{ className: "loader-3" }} />
           </div>  :
-          <div className="w-100 mt-2 d-flex flex-column gap-2  mx-2">
+          <ScrollBar options={{suppressScrollX: true}}>
+          <div style={{height: '350px', overflowY: 'auto'}} className="w-100 ps-2 mt-2 d-flex flex-column gap-2  mx-2">
           {paymentModes?.length > 0
             ? paymentModes?.map((ele, ind) => {
                 let uniqCode = uuid();
@@ -204,7 +206,8 @@ const PaymentModesList = () => {
               <H6 className="my-2 mx-0">No Payment modes exist</H6>
               </div>
             )}
-        </div>
+         </div>
+        </ScrollBar>
         }
       </Col>
       </Row>

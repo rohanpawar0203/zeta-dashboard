@@ -104,7 +104,6 @@ const BotInfoContent = ({ boatId }) => {
           <Col sm="12">
             <Card>
                 <CardBody>
-                <ScrollBar className="vertical-scroll">
                   <Nav className="nav-pills mb-2">
                     <div className="w-100  d-flex justify-content-center align-items-center">
                       <div
@@ -150,7 +149,6 @@ const BotInfoContent = ({ boatId }) => {
                       <PaymentModesList />
                     </TabPane>
                   </TabContent>
-                  </ScrollBar>
                 </CardBody>
             </Card>
             </Col>
