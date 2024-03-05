@@ -93,3 +93,30 @@
 @import "layout/sidebar";
 @import "layout/rtl";
 @import "layout/box-layout";
+
+.otp-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  .otp-input-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+
+    .otp-input {
+      width: 5% !important;
+      height: 100%;
+      font-size: 24px;
+      font-weight: 700;
+      color: #000;
+
+      @media screen and (max-width: 700px) {
+        width: 15% !important;
+      }
+
+      @media screen and (min-width: 701px) and (max-width: 1000px) {
+        width: 20% !important;
+      }
+    }
+  }
+}
