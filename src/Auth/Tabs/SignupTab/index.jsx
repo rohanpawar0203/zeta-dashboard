@@ -14,7 +14,11 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBuilding, faAddressBook } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBuilding,
+  faAddressBook,
+  faL,
+} from "@fortawesome/free-solid-svg-icons";
 
 import {
   EmailAddress,
@@ -29,52 +33,32 @@ import { PlanDetails } from "../../../api";
 import CustomSpinner from "../../../CommonElements/CustomSpinner/CustomSpinner";
 import isUrl from "is-url";
 import OtpInput from "react-otp-input";
-import { connectWithSocketIOServer } from "../../../Component/Live Chats/Client/wss";
 
 const pattern = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}([\/?].*)?$/;
 
 const SignupTab = ({ selected }) => {
-  // const [userData, setUserData] = useState({
-  //   email: "",
-  //   password: "",
-  //   companyName: "",
-  //   contact: "",
-  //   websiteLink: "",
-  //   planId: "",
-  //   store: "",
-  //   productList: "",
-  // });
+  const [otp, setOtp] = useState("");
+  const [otpTokenId, setOtpTokenId] = useState("");
+  const [showOtp, setShowOtp] = useState(false);
+  const [otpError, setOtpError] = useState("");
   const [userData, setUserData] = useState({
-    email: "rohan.pawar@paraslabs.com",
-    password: "12345",
-    companyName: "Paras labs",
-    contact: "8210880518",
-    websiteLink: "https://developer.mozilla.org/",
-    planId: "659e86c3a16b8e1e2307e950",
+    email: "",
+    password: "",
+    companyName: "",
+    contact: "",
+    websiteLink: "",
+    planId: "",
     store: "",
     productList: "",
-    firstName: "asddasd",
-    lastName: "dsadasd",
+    ipAddress: "",
   });
-  const [otp, setOtp] = useState("");
-  const [otpError, setOtpError] = useState("");
-  const [clientIP, setClientIP] = useState("");
   const [planIds, setPlanIds] = useState([]);
-  const [resendTrigger, setResendTrigger] = useState(false);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [showOTPModal, setShowOTPModal] = useState(false);
   const [togglePassword, setTogglePassword] = useState(false);
-  const [orgID, setOrgID] = useState("");
   const isErrors = useRef(false);
   const history = useNavigate();
-  const {
-    setToken,
-    setUserData: setUser,
-    userData: userInfo,
-    token: tokenInfo,
-  } = appStore.getState();
-
+  const { setToken, setUserData: setUser } = appStore();
   const handleFormChange = (e) => {
     const { value, name } = e.target;
     setUserData((pre) => ({
@@ -82,41 +66,71 @@ const SignupTab = ({ selected }) => {
       [name]: value,
     }));
   };
-  const userSignup = async (e) => {
-    e.preventDefault();
+
+  const verifyEmail = async () => {
+    try {
+      setLoading(true);
+      await axios(`${process.env.REACT_APP_API_BASE_URL}/auth/sendOtp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: JSON.stringify({ email: userData.email }),
+      })
+        .then((resp) => {
+          setLoading(false);
+          setShowOtp(true);
+          setOtpTokenId(resp.data.id);
+        })
+        .catch((error) => {
+          console.log("verifyEmail", error);
+          toast.error(error);
+        });
+    } catch (error) {
+      console.log("verifyEmail", error);
+      toast.error(error);
+    }
+  };
+  const userSignup = async () => {
     setLoading(true);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: userData.email,
-      }),
+      body: JSON.stringify({ id: otpTokenId, otpTokenId, ...userData }),
     };
-
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/sendOtp`,
+        // `${process.env.REACT_APP_API_BASE_URL}/auth/register`,
+        `${process.env.REACT_APP_API_BASE_URL}/auth/verifyOtp`,
         requestOptions
       );
-
       const resBody = await res.json();
+      const { token, user } = resBody;
       if (`${res.status}` === "200") {
-        toast.success("OTP send successfully");
-        setOrgID(resBody.id);
-        setShowOTPModal(true);
         setLoading(false);
+        setUserData((pre) => {
+          for (let key in pre) {
+            pre[key] = "";
+          }
+          return pre;
+        });
+        if (token && user) {
+          setToken(resBody.token);
+          setUser(resBody.user);
+          sessionStorage.setItem("token", resBody.token);
+          sessionStorage.setItem("currentUser", JSON.stringify(resBody.user));
+          history(`${process.env.PUBLIC_URL}/store`);
+        }
+        toast.success("User registerd");
       } else {
-        // toast.error(resBody?.error);
-        console.log("err ", resBody?.error);
+        toast.error(resBody?.error);
       }
-    } catch (error) {
-      // toast.error(error);
-      console.log("err ", error);
+    } catch (err) {
+      console.log("err ", err);
+      setOtpError(err);
+      // toast.error(err);
     }
+    setLoading(false);
   };
-
-  const formValidate = (e) => {
-    e.preventDefault();
+  const formValidate = () => {
     // console.log("Website check -->", isUrl(userData?.websiteLink));
 
     isErrors.current = false;
@@ -169,170 +183,46 @@ const SignupTab = ({ selected }) => {
       console.log("planIds fetch error", error);
     }
   };
-
-  const verifyOTP = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...userData,
-        otp: otp,
-        id: orgID,
-        ipAddress: clientIP,
-      }),
-    };
-    try {
-      const res = await fetch(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/verifyOtp`,
-        requestOptions
-      );
-      const resBody = await res.json();
-      if (`${res.status}` === "201") {
-        setLoading(false);
-        setUserData((pre) => {
-          for (let key in pre) {
-            pre[key] = "";
-          }
-          return pre;
-        });
-        const { token, user } = resBody;
-        if (token && user) {
-          setToken(resBody.token);
-          setUser(resBody.user);
-
-          sessionStorage.setItem("token", resBody.token);
-          sessionStorage.setItem("currentUser", JSON.stringify(resBody.user));
-
-          history(`${process.env.PUBLIC_URL}/store`);
-        }
-        toast.success("User signedup successfully");
-      } else if (res.status === 400) {
-        setOtpError(resBody?.msg);
-      } else {
-        // toast.error(resBody?.error);
-      }
-    } catch (err) {
-      console.log("err ", err);
-      // toast.error(err);
-    }
-    setLoading(false);
-  };
-
-  const resendOTP = async () => {
-    setResendTrigger(true);
-    setOtp("");
-    setOtpError(false);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id: orgID,
-      }),
-    };
-    try {
-      const res = await fetch(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/resendOtp`,
-        requestOptions
-      );
-
-      const resBody = await res.json();
-      if (`${res.status}` === "200") {
-        setResendTrigger(false);
-      }
-    } catch (error) {
-      console.log("err ", error);
-    }
-  };
-
-  const connectSocketToServer = () => {
-    // connectWithSocketIOServer();
-  };
-
   useEffect(() => {
     getPlanIds();
+    axios.get("https://geolocation-db.com/json/").then((res) => {
+      // console.log(res);
+      setUserData((prevValues) => ({
+        ...prevValues,
+        ipAddress: res.data.IPv4,
+      }));
+    });
   }, []);
-
-  useEffect(() => {
-    const getIpAddress = async () => {
-      await axios
-        .get("https://api.ipify.org/?format=json")
-        .then((resp) => {
-          // console.log("GET IP ADDRESS:::", resp.data, resp.data.ip);
-          setClientIP(resp.data.ip);
-        })
-        .catch((error) => console.log("GET IP ERROR", error));
-    };
-
-    getIpAddress();
-    // console.log("clientIP", clientIP);
-  }, [!clientIP]);
 
   return (
     <Fragment>
-      {showOTPModal ? (
-        <Col sm="10">
-          <i
-            class="icofont icofont-circled-left"
-            style={{
-              fontSize: "30px",
-              cursor: "pointer",
-              color: "var(--theme-default)",
-            }}
-            onClick={() => setShowOTPModal(false)}
-          ></i>
-        </Col>
-      ) : (
-        ""
-      )}
-      <Form
-        className="theme-form login-form"
-        onSubmit={(e) => {
-          if (!showOTPModal) {
-            formValidate(e);
-            if (!isErrors.current) {
-              userSignup(e);
-            }
-          } else {
-            verifyOTP(e);
-          }
-        }}
-      >
+      <Form className="theme-form login-form">
         <FormHeader
           selected={selected}
-          text={
-            showOTPModal
-              ? "Please check your email for OTP"
+          content={
+            showOtp
+              ? `Please enter the otp send on ${userData.email}`
               : "Welcome! crete a new account."
           }
-          showOTPModal={showOTPModal}
         />
-        {showOTPModal ? (
-          <Row style={{ display: "flex", justifyContent: "center" }}>
-            <Col sm="12">
-              <OtpInput
-                value={otp}
-                onChange={(e) => {
-                  setOtp(e);
-                  setOtpError(false);
-                }}
-                numInputs={4}
-                renderSeparator={<span>-</span>}
-                inputType="number"
-                renderInput={(props) => (
-                  <input id="otp" type="number" required {...props} />
-                )}
-                containerStyle={"otp-container"}
-                inputStyle={"otp-input"}
-              />
-              {otpError ? (
-                <p style={{ color: "red", fontSize: "12px" }}>{otpError}</p>
-              ) : (
-                ""
+        {showOtp ? (
+          <div className="otp-section">
+            <OtpInput
+              value={otp}
+              onChange={setOtp}
+              numInputs={4}
+              shouldAutoFocus={true}
+              // renderSeparator={<span>&nbsp&nbsp</span>}
+              renderInput={(props) => (
+                <input name="otp" required={true} {...props} />
               )}
-            </Col>
-          </Row>
+              containerStyle="otp-input-container"
+              inputStyle="otp-input"
+            />
+            {otpError !== "" && (
+              <Label className="fw-bolder mt-2 errTxt">{otpError}</Label>
+            )}
+          </div>
         ) : (
           <Row>
             <Col sm="12" className="registration-form">
@@ -427,7 +317,6 @@ const SignupTab = ({ selected }) => {
                 <Label className="p-0 mb-1 mt-2">Company Name</Label>
                 <InputGroup>
                   <InputGroupText>
-                    {/* <i class="icon-home"></i> */}
                     <FontAwesomeIcon
                       className="common-icons"
                       icon={faBuilding}
@@ -496,8 +385,6 @@ const SignupTab = ({ selected }) => {
                   </Label>
                 )}
               </FormGroup>
-              {/* </Col>
-            <Col sm="6" md="6"> */}
               <FormGroup className="m-0">
                 <Label className="p-0 mb-1 mt-2">Plan ID</Label>
                 <InputGroup>
@@ -538,23 +425,26 @@ const SignupTab = ({ selected }) => {
           </Row>
         )}
 
-        <div class="w-60 my-4 d-flex justify-content-center align-items-center">
+        <div class="w-100 my-4 d-flex justify-content-center align-items-center">
           <button
+            onClick={(e) => {
+              if (!showOtp) {
+                formValidate();
+                if (!isErrors.current) {
+                  verifyEmail();
+                }
+              } else {
+                userSignup();
+              }
+            }}
             className="w-100 btn btn-primary"
-            type="submit"
-            disabled={loading}
+            type="button"
+            disabled={showOtp ? (otp.length != 4 ? true : false) : false}
           >
-            {loading ? <CustomSpinner /> : showOTPModal ? "Confirm" : SignUp}
+            {loading ? <CustomSpinner /> : showOtp ? "Confirm" : "Register"}
           </button>
         </div>
-        {showOTPModal && !resendTrigger ? (
-          <ResendCounter resendOTP={resendOTP} />
-        ) : (
-          ""
-        )}
-
-        {/* <FormPassword /> */}
-        {/* <SignupWith /> */}
+        <SignupWith />
       </Form>
       <Copyright />
     </Fragment>
@@ -566,18 +456,6 @@ const Copyright = () => {
     <P attrPara={{ className: "my-3 copyright-signup" }}>
       Copyright 2023 © Ulai.in{" "}
     </P>
-  );
-};
-
-const ResendCounter = ({ resendOTP }) => {
-  return (
-    <p
-      className="my-3 copyright-signup"
-      style={{ cursor: "pointer", marginTop: "20px" }}
-      onClick={() => resendOTP()}
-    >
-      Resend OTP
-    </p>
   );
 };
 

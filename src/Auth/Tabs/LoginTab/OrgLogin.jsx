@@ -40,14 +40,9 @@ const OrgLogin = ({ selected, showToast }) => {
   const [togglePassword, setTogglePassword] = useState(false);
   const history = useNavigate();
   const inputRef = useRef();
-  const {
-    setUserData,
-    setToken,
-    userData: userInfo,
-    token: tokenInfo,
-  } = appStore.getState();
+  const { setUserData, setToken, userData } = appStore();
   const [apiError, setApiError] = useState("");
-  const [clientIP, setClientIP] = useState("");
+  const [ipAddress, setIpAddress] = useState("");
 
   const userLogin = async (e) => {
     setLoading(true);
@@ -55,12 +50,7 @@ const OrgLogin = ({ selected, showToast }) => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ipAddress: clientIP,
-        email,
-        password,
-        type: "organization",
-      }),
+      body: JSON.stringify({ email, password, type: "organization" }),
     };
     try {
       const res = await fetch(
@@ -76,14 +66,11 @@ const OrgLogin = ({ selected, showToast }) => {
         sessionStorage.setItem("currentUser", JSON.stringify(user));
         setUserData(user);
         setToken(token);
-        // connectWithSocketIOServer();
-
+        toast.success("User Logged In successfully");
         if (user.userId) {
           history(`${process.env.PUBLIC_URL}/live-chat`);
         } else if (!user.store && !user.userId) {
           history(`${process.env.PUBLIC_URL}/store`);
-        } else if (!user.userId && !user["bots"]?.length) {
-          history(`${process.env.PUBLIC_URL}/bots`);
         } else if (user.store && !user.userId) {
           history(`${process.env.PUBLIC_URL}/dashboard`);
         } else {
@@ -97,7 +84,6 @@ const OrgLogin = ({ selected, showToast }) => {
     } catch (err) {
       setApiError(err.message);
       // toast.error(`${err.message}`);
-      console.log("Organization Login Error : ", err);
     }
     setLoading(false);
   };
@@ -122,19 +108,11 @@ const OrgLogin = ({ selected, showToast }) => {
   };
 
   useEffect(() => {
-    const getIpAddress = async () => {
-      await axios
-        .get("https://api.ipify.org/?format=json")
-        .then((resp) => {
-          console.log("GET IP ADDRESS:::", resp.data, resp.data.ip);
-          setClientIP(resp.data.ip);
-        })
-        .catch((error) => console.log("GET IP ERROR", error));
-    };
-
-    getIpAddress();
-    console.log("clientIP", clientIP);
-  }, [!clientIP]);
+    axios.get("https://geolocation-db.com/json/").then((res) => {
+      // console.log(res);
+      setIpAddress(res.data.IPv4);
+    });
+  }, []);
 
   return (
     <Fragment>
