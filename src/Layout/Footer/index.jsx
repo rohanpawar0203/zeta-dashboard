@@ -13,6 +13,7 @@ const Footer = () => {
           width: "100%",
           textAlign: "center",
           marginLeft: 0,
+          zIndex: '3'
         }}
       >
         <Container fluid={true}>
