@@ -130,6 +130,24 @@ const SignupTab = ({ selected }) => {
     }
     setLoading(false);
   };
+
+  const resendOTP = async () => {
+    try {
+      const payload = JSON.stringify({
+        id: otpTokenId,
+      });
+      await axios(`${process.env.REACT_APP_API_BASE_URL}/auth/resendOtp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: payload,
+      }).then((resp) => {
+        console.log("resendOTP", resp);
+      });
+    } catch (error) {
+      console.log("resendOTP", error);
+    }
+  };
+
   const formValidate = () => {
     // console.log("Website check -->", isUrl(userData?.websiteLink));
 
@@ -196,6 +214,14 @@ const SignupTab = ({ selected }) => {
 
   return (
     <Fragment>
+      {showOtp && (
+        <i
+          className="fa fa-chevron-circle-left"
+          style={{ fontSize: "30px", cursor: "pointer" }}
+          onClick={() => setShowOtp(false)}
+        ></i>
+      )}
+
       <Form className="theme-form login-form">
         <FormHeader
           selected={selected}
@@ -445,6 +471,11 @@ const SignupTab = ({ selected }) => {
           </button>
         </div>
         <SignupWith />
+        {showOtp && (
+          <p>
+            Didn't received otp? <a onClick={() => resendOTP()}>Resend OTP</a>
+          </p>
+        )}
       </Form>
       <Copyright />
     </Fragment>
