@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Col,
   Card,
@@ -14,9 +14,9 @@ import { v4 as uuid } from "uuid";
 import ScrollBar from "react-perfect-scrollbar";
 
 const DynPagination = ({ totalCount, switchPage }) => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState('');
   const [totalPages, settotalPages] = useState(0);
-  const [limit, setlimit] = useState(25);
+  const [limit, setlimit] = useState('');
   const [records, setRecords] = useState({ str: 1, las: 1 });
 
   const handlePageChange = (eventType) => {
@@ -36,8 +36,10 @@ const DynPagination = ({ totalCount, switchPage }) => {
 };
 
   useEffect(() => {
+    if(totalCount && limit){
     let pages = Math.ceil(totalCount / limit);
     pages && settotalPages(pages);
+    }
   }, [totalCount, limit]);
 
   useEffect(() => {
@@ -58,8 +60,12 @@ const DynPagination = ({ totalCount, switchPage }) => {
   }, [page, limit]);
 
   useEffect(() => {
-    setPage(1);
-  }, [limit])
+    if(!page && !limit){
+      setlimit(25);
+      setPage(1);
+    }
+  }, [])
+  
   
 
   return (
@@ -75,7 +81,8 @@ const DynPagination = ({ totalCount, switchPage }) => {
             onChange={(e) => {
               let val = +e?.target?.value;
               setlimit(pre => (val));
-              executeSwitchChange({page: 1, limit: val});
+              setPage(1);
+              executeSwitchChange({page: page, limit: val});
             }}
             className="form-control form-control-primary-fill btn-square"
             name="select"
@@ -145,7 +152,6 @@ const DynPagination = ({ totalCount, switchPage }) => {
           {totalPages > 1 && (
             <PaginationItem>
               <PaginationLink
-                href="#javascript"
                 onClick={() => {
                   handlePageChange("PREVIOUS");
                 }}
@@ -159,11 +165,10 @@ const DynPagination = ({ totalCount, switchPage }) => {
           {totalPages &&
             totalPages > 0 &&
             new Array(totalPages)?.fill("0")?.map((item, ind) => (
-              <PaginationItem key={uuid()} active={page === ind + 1}>
+              <PaginationItem key={uuid()} active={page === (ind + 1)}>
                 <PaginationLink
-                  href="#javascript"
                   onClick={() => {
-                    setPage(ind + 1);
+                    setPage(pre => (ind + 1));
                     executeSwitchChange({page: (ind+1), limit});
                   }}
                 >{`${ind + 1}`}</PaginationLink>
@@ -173,7 +178,6 @@ const DynPagination = ({ totalCount, switchPage }) => {
           {totalPages > 1 && (
             <PaginationItem>
               <PaginationLink
-                href="#javascript"
                 onClick={() => {
                   handlePageChange("NEXT");
                 }}

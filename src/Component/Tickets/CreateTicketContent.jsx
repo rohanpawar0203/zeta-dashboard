@@ -148,7 +148,7 @@ const CreateTicketContent = () => {
     <Fragment>
       <Container fluid={true} className="mt-2 d-flex justify-content-center">
         { mode === 'create' ?
-        <Col sm='6'>
+        <Col sm='8' md='6' lg='6'>
         <Card style={{width: '100%'}} className="mt-2">
         <CardHeader className='w-100 pb-0'>
             <H5>{'Create Ticket'}</H5>

@@ -42,6 +42,7 @@ import {
 
 const DashboardContent = () => {
   const { userData, token } = appStore();
+  const [user_id, setUser_id] = useState(userData?.userId ? userData?.userId :  userData?._id);
   const [orderInfo, setorderInfo] = useState({});
   // const userDataToken = JSON.parse(appStore);
   const [chatSeries, setChatSeries] = useState([]);
@@ -62,7 +63,7 @@ const DashboardContent = () => {
   const getTotalOrdersCount = async () => {
     try {
       const res = await axios.get(
-        `${TotalOrdersCountAPI}/${userData?._id}/orders-till-now/data`,
+        `${TotalOrdersCountAPI}/${user_id}/orders-till-now/data`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -86,7 +87,7 @@ const DashboardContent = () => {
     // connectWithSocketIOServer();
 
     let getChatData = await apiCall(
-      userData._id,
+      user_id,
       "no-of-chat-session-each-day"
     );
     getChatData?.sort((a, b) => new Date(a._id) - new Date(b._id));
@@ -156,7 +157,7 @@ const DashboardContent = () => {
       ]);
     }
 
-    let getCartData = await apiCall(userData._id, "no-of-carts-each-day");
+    let getCartData = await apiCall(user_id, "no-of-carts-each-day");
     getCartData.sort((a, b) => new Date(a._id) - new Date(b._id));
     if (getCartData.length !== 0) {
       const newOptions = getCartData.map((element) =>
@@ -223,7 +224,7 @@ const DashboardContent = () => {
       ]);
     }
 
-    let getOrderData = await apiCall(userData._id, "no-orders-for-each-day");
+    let getOrderData = await apiCall(user_id, "no-orders-for-each-day");
     getOrderData.sort((a, b) => new Date(a._id) - new Date(b._id));
     if (getOrderData.length !== 0) {
       const newOptions = getOrderData.map((element) =>
@@ -290,7 +291,7 @@ const DashboardContent = () => {
       ]);
     }
 
-    let getChatHourData = await apiCall(userData._id, "no-chats-for-each-hour");
+    let getChatHourData = await apiCall(user_id, "no-chats-for-each-hour");
     // getChatHourData.sort((a, b) => new Date(a._id) - new Date(b._id));
     if (getChatHourData.length !== 0) {
       getChatHourData.forEach((dayData) => {
@@ -390,7 +391,7 @@ const DashboardContent = () => {
     }
 
     let getTrendingProductData = await apiCall(
-      userData._id,
+      user_id,
       "products-searched-for-each-day"
     );
     getTrendingProductData

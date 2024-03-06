@@ -46,7 +46,8 @@ const TicketsList = ({ setMode }) => {
     setLoading(true);
     try {
       let pageNo = page || 1, limitValue = limit || 25;
-      const res = await axios.get(`${TicketsAPI}/${user._id}/organization?page=${pageNo}&limit=${limitValue}`, {
+      let orgId = user?.userId ? user?.userId : user?._id; 
+      const res = await axios.get(`${TicketsAPI}/${orgId}/organization?page=${pageNo}&limit=${limitValue}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -163,7 +164,7 @@ const TicketsList = ({ setMode }) => {
                <DynPagination totalCount={products['total_count']} switchPage={fetchTicketsData}/>
               </>
             ) : (
-              <div className="h-75 w-100 d-flex flex-column justify-content-center align-items-center gap-2">
+              <div style={{height: '200px'}} className="w-100 d-flex flex-column justify-content-center align-items-center gap-2">
                 <H6 className="fw-bolder">{"No Tickets Exist"}</H6>
               </div>
             )}

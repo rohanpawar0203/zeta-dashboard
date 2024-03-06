@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect, useRef } from "react";
 import { Card, CardBody, Col, Container, Row } from "reactstrap";
 import ChatStatus from "./ChatStatus";
 import Chatting from "./Chatting";
@@ -11,12 +11,13 @@ const ChatAppContain = () => {
   const { getChatMembersData, isFetching } = useContext(ChatAppContext);
   const { chatPanelMsgs, userData } = appStore();
 
+
   const scrollbarOptions = {
     suppressScrollX: true, // Set this to true to disable horizontal scrolling
   };
 
   useEffect(() => {
-    getChatMembersData();
+      getChatMembersData();
   }, []);
 
   return (
@@ -49,7 +50,7 @@ const ChatAppContain = () => {
           </Col>
         </Row>
         {/* </div> */}
-        {chatPanelMsgs["total_count"] && (
+        {(chatPanelMsgs["total_count"] && chatPanelMsgs["total_count"] > 0) && (
           <Row
             style={{
               marginTop: "4px",
