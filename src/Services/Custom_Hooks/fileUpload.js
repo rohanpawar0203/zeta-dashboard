@@ -2,16 +2,16 @@ import axios from "axios";
 import appStore from "../../Component/Live Chats/Client/AppStore"
 import { FilesUploadAPI } from "../../api";
 
-const {token} = appStore.getState();
 
-export const UploadFiles = (formData) => {
+export const UploadFiles = (formData, token) => {
+  const {token: tokenInfo} = appStore.getState();
+  
     return new Promise(async(resolve, reject) => {
         try {
-            console.log('formData : ', token);
             const res = await axios.post(`${FilesUploadAPI}`, formData, {
               headers: {
                'Content-Type': 'multipart/form-data',
-               "Authorization": `Bearer ${token}`
+               "Authorization": `Bearer ${tokenInfo}`
               },
             });
             const responseUrl = await res?.data?.file;

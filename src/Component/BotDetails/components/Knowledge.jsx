@@ -210,7 +210,7 @@ const AddCSVForm = ({
   const uploadCSVFile = async (formData) => {
     setbtnLoading(true);
     try {
-      const {status, url} = await UploadFiles(formData);
+      const {status, url} = await UploadFiles(formData, token);
       if(status && url){
         setbtnLoading(false);
         updateUser(url, fileName);
