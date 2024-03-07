@@ -7,7 +7,7 @@ const {token} = appStore.getState();
 export const UploadFiles = (formData) => {
     return new Promise(async(resolve, reject) => {
         try {
-            console.log('formData : ', formData);
+            console.log('formData : ', token);
             const res = await axios.post(`${FilesUploadAPI}`, formData, {
               headers: {
                'Content-Type': 'multipart/form-data',
