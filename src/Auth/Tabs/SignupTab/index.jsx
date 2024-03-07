@@ -94,7 +94,7 @@ const SignupTab = ({ selected }) => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: otpTokenId, otpTokenId, ...userData }),
+      body: JSON.stringify({ id: otpTokenId, otp, ...userData }),
     };
     try {
       const res = await fetch(
