@@ -121,7 +121,7 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
         userData?.companyName?.replaceAll(" ", "-")
       );
       formData.append("file", companyLogoFile);
-      const {status, url} = await UploadFiles(formData);
+      const { status, url } = await UploadFiles(formData);
       if (status && url) {
         setcompanyLogoURL(url);
         getUserDetails(userData?._id);
@@ -144,9 +144,9 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
         }
       }
       setTimeout(() => {
-      setbtnLoading(false);
-      updateBotInfo();
-      },  500);
+        setbtnLoading(false);
+        updateBotInfo();
+      }, 500);
     } catch (error) {
       console.log("Error at bot update ", error);
     }
@@ -359,9 +359,9 @@ const Customize = ({ myBot, setMyBot, setLoading, fetchBotData }) => {
                       )}
                     </Col>
                   </Row>
-                  <Btn attrBtn={{ color: "primary", type: 'submit' }}>{
-                    btnLoading ? <CustomSpinner /> : "Submit"
-                  }</Btn>
+                  <Btn attrBtn={{ color: "primary", type: "submit" }}>
+                    {btnLoading ? <CustomSpinner /> : "Submit"}
+                  </Btn>
                   {/* </ScrollBar> */}
                 </Form>
               </Fragment>
