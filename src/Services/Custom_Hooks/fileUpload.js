@@ -2,9 +2,9 @@ import axios from "axios";
 import appStore from "../../Component/Live Chats/Client/AppStore";
 import { FilesUploadAPI } from "../../api";
 
-const { token } = appStore.getState();
-
 export const UploadFiles = (formData) => {
+  const { token } = appStore.getState();
+
   return new Promise(async (resolve, reject) => {
     try {
       console.log("formData : ", formData);
