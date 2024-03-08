@@ -147,7 +147,7 @@ const ProductsTable = () => {
                         <td>{item.productSku}</td>
                         <td>{item.productType}</td>
                         <td>{item.price}</td>
-                        <td>
+                        {/* <td>
                           <Dropdown
                             isOpen={dropdownOpenId === item?.productId}
                             toggle={() => {
@@ -220,7 +220,7 @@ const ProductsTable = () => {
                               </DropdownItem>
                             </DropdownMenu>
                           </Dropdown>
-                        </td>
+                        </td> */}
                       </tr>
                     ))}
                   </tbody>

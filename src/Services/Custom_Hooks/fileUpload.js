@@ -3,16 +3,12 @@ import appStore from "../../Component/Live Chats/Client/AppStore";
 import { FilesUploadAPI } from "../../api";
 
 export const UploadFiles = (formData) => {
-  const { token } = appStore.getState();
+  const token = appStore.getState()?.token || sessionStorage.getItem("token");
 
   return new Promise(async (resolve, reject) => {
     try {
-      console.log("formData : ", formData);
-      Object.keys(formData).map((key) => {
-        console.log(key, formData[key]);
-      });
       // const res = await axios(`${FilesUploadAPI}`, {
-      const res = await axios("http://localhost:8080/file-upload-product-csv", {
+      const res = await axios("http://localhost:8085/file-upload-product-csv", {
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",

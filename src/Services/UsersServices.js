@@ -4,7 +4,7 @@ import appStore from "../Component/Live Chats/Client/AppStore";
 
 
 export const getUserDetails = async(id) => {
-    const token = sessionStorage.getItem('token');
+    const token = appStore.getState()?.token || sessionStorage.getItem('token');
     // console.log('user id got ', id);
     
     return new Promise(async(resolve, reject) => {
