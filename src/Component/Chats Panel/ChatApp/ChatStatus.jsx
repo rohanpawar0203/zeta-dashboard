@@ -141,7 +141,7 @@ const ChatStatus = ({ isFetching }) => {
                                     <br />
                                     <div className="w-100 d-flex justify-content-between align-items-center">
                                       <div>
-                                      {item?.chatSessionId ? <HiMiniComputerDesktop style={{height: '14px', width: '14px'}}/> : <FaWhatsapp style={{height: '14px', width: '14px'}}/>}
+                                      {item?.chatSessionId ? <HiMiniComputerDesktop style={{height: '12px', width: '12px'}}/> : <FaWhatsapp style={{height: '12px', width: '12px'}}/>}
                                       </div>
                                       <div>
                                       <p
