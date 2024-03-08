@@ -11,7 +11,8 @@ export const UploadFiles = (formData) => {
       Object.keys(formData).map((key) => {
         console.log(key, formData[key]);
       });
-      const res = await axios(`${FilesUploadAPI}`, {
+      // const res = await axios(`${FilesUploadAPI}`, {
+      const res = await axios("http://localhost:8080/file-upload-product-csv", {
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",
