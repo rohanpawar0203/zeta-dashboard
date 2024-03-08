@@ -11,6 +11,8 @@ import UserProfile from "../../../assets/images/user/userProfile.png";
 import appStore from "../../Live Chats/Client/AppStore";
 import axios from "axios";
 
+const localTimeFormatOption = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+
 const ChatStatus = ({ isFetching }) => {
   const {
     selectedUserr,
@@ -162,7 +164,7 @@ const ChatStatus = ({ isFetching }) => {
                                         lineHeight: 1,
                                       }}
                                     >
-                                      {`${(new Date(`${item?.updatedAt}`)).toLocaleString()?.slice(0, -6 )}${(new Date(`${item?.updatedAt}`)).toLocaleString()?.slice(-2)}`}
+                                      {`${new Date(`${item?.updatedAt}`).toLocaleString('en-IN', localTimeFormatOption)}`}
                                     </p>
                                       </div>
                                     </div>

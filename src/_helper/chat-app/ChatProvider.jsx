@@ -64,7 +64,7 @@ export const ChatProvider = (props) => {
           },
         }
       );
-      setChatPanelMsgs({...resp['data'], data: resp['data']['data']?.reverse()});
+      setChatPanelMsgs({...resp['data'], data: resp['data']['data']});
     } catch (error) {
       console.log('error', error);
     }
