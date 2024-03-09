@@ -54,9 +54,9 @@ const TicketsList = ({ setMode }) => {
         },
       });
       const data =  res.data;
-      console.log('res?.status ', typeof res?.status, data);
+      // console.log('res?.status ', typeof res?.status, data);
       if(res?.status === 200 && data){
-        console.log('resres ', data);
+        // console.log('resres ', data);
         setProducts(data)
       }
     } catch (error) {

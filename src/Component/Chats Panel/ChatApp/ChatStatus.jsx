@@ -11,7 +11,20 @@ import UserProfile from "../../../assets/images/user/userProfile.png";
 import appStore from "../../Live Chats/Client/AppStore";
 import axios from "axios";
 
-const localTimeFormatOption = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+
+export const customStyles = { listItem: { cursor: "pointer", paddingBottom: '5px'},
+mediaContainer: {border: '1px solid lightgray', borderRadius: "4px",  paddingBottom: '5px'},
+selectedMsg: "bg-light border-lightgreen",
+iconStyles: {height: '12px', width: '12px'},
+chatInfoTxt: {fontSize: "12px", color: "gray",lineHeight: 1},
+msgLineTxt: { fontSize: "13px", color: "gray", marginTop: '2px'},
+aboutStyle: {width: '100%', paddingTop: '5px'}
+}
+
+export const getLocaleTimeFormat = (date) => {
+  const timeFormOption = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+  return `${new Date(`${date}`).toLocaleString('en-IN', timeFormOption)}`
+} 
 
 const ChatStatus = ({ isFetching }) => {
   const {
@@ -25,7 +38,7 @@ const ChatStatus = ({ isFetching }) => {
   const { chatPanelMsgs, userData } = appStore();
   const changeChatClick = (e, selectedUserId) => {
     // const currentUserId = currentUserr.id;
-    console.log("chatPanelMsgs -----> ", chatPanelMsgs);
+    // console.log("chatPanelMsgs -----> ", chatPanelMsgs);
     const currentChat = chatPanelMsgs.data.find(
       (x) => x._id === selectedUserId
     );
@@ -54,7 +67,7 @@ const ChatStatus = ({ isFetching }) => {
     if (!isFetching) {
       let chatMsgs = chatPanelMsgs?.data?.filter((x) => x._id !== userData._id);
       chatMsgs?.length && changeChat(chatMsgs[0]?._id);
-      console.log('chatPanelMsgs["data"] ==>', chatPanelMsgs["data"]);
+      // console.log('chatPanelMsgs["data"] ==>', chatPanelMsgs["data"]);
     }
   }, [isFetching]);
 
@@ -108,7 +121,7 @@ const ChatStatus = ({ isFetching }) => {
                           <LI
                             attrLI={{
                               className: `clearfix border border-white`,
-                              style: { cursor: "pointer", paddingBottom: '5px'},
+                              style: customStyles?.listItem,
                               onClick: (e) => {
                                 activeChat = item._id;
                                 changeChatClick(e, item._id);
@@ -116,9 +129,9 @@ const ChatStatus = ({ isFetching }) => {
                             }}
                             key={i}
                           >
-                            <Media style={{border: '1px solid lightgray', borderRadius: "4px",  paddingBottom: '5px'}} className={`d-flex align-items-center ${
+                            <Media style={customStyles?.mediaContainer} className={`d-flex align-items-center ${
                                 activeChat === item?._id &&
-                                "bg-light border-lightgreen"
+                                `${customStyles?.selectedMsg}`
                               }`}>
                               {/* <Image
                                 attrImage={{
@@ -130,7 +143,7 @@ const ChatStatus = ({ isFetching }) => {
                               {/* <div className={`status-circle ${item.online === true ? 'online' : 'offline'}`}
                         ></div> */}
                               <Media body>
-                                <div style={{width: '100%', paddingTop: '5px'}} className="about">
+                                <div style={customStyles?.aboutStyle} className="about">
                                   <div className="name">
                                     {item?.customer?.firstName &&
                                     item?.customer?.firstName !== ""
@@ -143,37 +156,25 @@ const ChatStatus = ({ isFetching }) => {
                                     <br />
                                     <div className="w-100 d-flex justify-content-between align-items-center">
                                       <div>
-                                      {item?.chatSessionId ? <HiMiniComputerDesktop style={{height: '12px', width: '12px'}}/> : <FaWhatsapp style={{height: '12px', width: '12px'}}/>}
+                                      {item?.chatSessionId ? <HiMiniComputerDesktop style={customStyles?.iconStyles}/> : <FaWhatsapp style={customStyles?.iconStyles}/>}
                                       </div>
                                       <div>
                                       <p
-                                      style={{
-                                        fontSize: "12px",
-                                        color: "gray",
-                                        lineHeight: 1,
-                                      }}
+                                      style={customStyles?.chatInfoTxt}
                                     >
                                       {`#${item?.chat?.length}`}
                                     </p>
                                       </div>
                                       <div>
                                       <p
-                                      style={{
-                                        fontSize: "12px",
-                                        color: "gray",
-                                        lineHeight: 1,
-                                      }}
+                                      style={customStyles?.chatInfoTxt}
                                     >
-                                      {`${new Date(`${item?.updatedAt}`).toLocaleString('en-IN', localTimeFormatOption)}`}
+                                      {getLocaleTimeFormat(`${item?.updatedAt}`)}
                                     </p>
                                       </div>
                                     </div>
                                   </div>
-                                  <div style={{
-                                        fontSize: "13px",
-                                        color: "gray",
-                                        marginTop: '2px'
-                                      }} className="status">
+                                  <div style={customStyles?.msgLineTxt} className="status">
                                     {checkMessageType(
                                       item?.chat[item?.chat.length - 1]?.message
                                     )}

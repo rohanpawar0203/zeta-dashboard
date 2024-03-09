@@ -50,7 +50,7 @@ const ChatAppContain = () => {
           </Col>
         </Row>
         {/* </div> */}
-        {(chatPanelMsgs["total_count"] && chatPanelMsgs["total_count"] > 0) && (
+        {(chatPanelMsgs["total_count"] && chatPanelMsgs["total_count"] > 0) ? (
           <Row
             style={{
               marginTop: "4px",
@@ -74,7 +74,7 @@ const ChatAppContain = () => {
               </div>
             </div>
           </Row>
-        )}
+        ) : ''}
       </Container>
     </Fragment>
   );

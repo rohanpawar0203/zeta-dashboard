@@ -7,11 +7,12 @@ import moment from "moment-timezone";
 import customerService from "../../../assets/images/dashboard/icons8-customer-support-100.png";
 
 const ChatMessage = () => {
-  // const chatContainerRef = useRef();
+  const chatContainerRef = useRef();
   const {
     allMemberss,
     chatss,
     selectedUserr,
+    chatPanelMsgs,
     currentUserr,
     fetchChatMemberAsyn,
     fetchChatAsyn,
@@ -45,10 +46,15 @@ const ChatMessage = () => {
       return data;
     }
   };
+
+  useEffect(() => {
+    // Scroll to the bottom whenever messages change
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }, [selectedChat, chatPanelMsgs]);
   return (
     <Fragment>
       {allMemberss && chatss && selectedUserr ? (
-        <div className="chat-history chat-msg-box custom-scrollbar" style={{ maxHeight: "85%" }}>
+        <div ref={chatContainerRef} className="chat-history chat-msg-box custom-scrollbar" style={{ maxHeight: "85%" }}>
           {selectedChat && selectedChat.length > 0
             ? selectedChat.map((item, index) => {
                 return (

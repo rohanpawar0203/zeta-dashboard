@@ -211,7 +211,7 @@ const AddCSVForm = ({
   };
 
   const uploadCSVFile = async (formData) => {
-    console.log("firuploadCSVFilest", formData);
+    // console.log("firuploadCSVFilest", formData);
     setbtnLoading(true);
     try {
       const { status, url } = await UploadFiles(formData);

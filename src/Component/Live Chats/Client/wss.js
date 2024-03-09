@@ -28,7 +28,7 @@ const {
 } = appStore.getState();
 
 export const socketConnetionURL = () => {
-  console.log("Socket Called");
+  // console.log("Socket Called");
   socket = io(SERVER, {
     path: "/agent-live-chat-socket/",
   });
@@ -70,10 +70,10 @@ export const connectWithSocketIOServer = () => {
   });
 
   socket.on("message-recieved", (data) => {
-    console.log("message-recieved", data);
+    // console.log("message-recieved", data);
     appStore.getState().setShowTyping(false);
     let newMessage = JSON.parse(data);
-    console.log("message-recieved", appStore.getState().liveConversation);
+    // console.log("message-recieved", appStore.getState().liveConversation);
     const newArray = appStore.getState().liveConversation.map((el) => {
       if (el.chatSessionId === newMessage.roomId) {
         el.chat = [
@@ -103,7 +103,7 @@ export const connectWithSocketIOServer = () => {
   });
   socket.on("user-wants-to-chat-agent", function (data) {
     // let roomId = JSON.parse(data);
-    console.log("user want to chat with agent : data", data);
+    // console.log("user want to chat with agent : data", data);
     toast.success("New Live Chat for Agent !");
     getLiveRooms();
   });
@@ -117,7 +117,7 @@ export const getRoomExists = async (roomId) => {
   // const serverApi = `http://localhost:${process.env.REACT_APP_API_AGENT_BACKEND_LOCAL_HOST_PORT}`;
   const serverApi = `${AgentLiveChatAPI}`;
   const response = await axios.get(`${serverApi}/room-exists/${roomId}`);
-  console.log("getRoomExists", response.data);
+  // console.log("getRoomExists", response.data);
   return response.data;
 };
 export const agentConnected = async () => {
@@ -188,7 +188,7 @@ export const envConversationToServer = async (roomId, name) => {
     roomId: roomId,
   });
 
-  console.log("envConversationToServer", response);
+  // console.log("envConversationToServer", response);
   if (response.status === "200" || response.status === 200) {
     // setliveUser(null);
     getLiveRooms();
@@ -221,10 +221,10 @@ const informAiBackend = async (roomId, name) => {
 };
 
 const setLiveConversations = async () => {
-  console.log(
-    "setLiveConversations",
-    appStore.getState().liveConversationNewEntry
-  );
+  // console.log(
+  //   "setLiveConversations",
+  //   appStore.getState().liveConversationNewEntry
+  // );
 
   appStore.getState().setisFetchLiveConversation(true);
   appStore.getState().setConversation([]);
@@ -255,13 +255,13 @@ const setLiveConversations = async () => {
             return el;
           }
         });
-        console.log("filterArray ==>", filterArray);
+        // console.log("filterArray ==>", filterArray);
         // console.log('liveConversationNewEntry ==>', liveConversationNewEntry);
         // console.log('conversations ==>', resp?.data);
-        console.log(
-          "setLiveConversation---filterArray--->",
-          filterArray.reverse()
-        );
+        // console.log(
+        //   "setLiveConversation---filterArray--->",
+        //   filterArray.reverse()
+        // );
         appStore
           .getState()
           .setLiveConversation(filterArray.sort((a, b) => b.time - a.time));
@@ -288,7 +288,7 @@ const setLiveConversations = async () => {
     // }
   }
   appStore.getState().setisFetchLiveConversation(false);
-  console.log("appStore.getState() ==>", appStore.getState().liveConversation);
+  // console.log("appStore.getState() ==>", appStore.getState().liveConversation);
 };
 
 export const sendLoggedAgentInfo = (agent_data) => {

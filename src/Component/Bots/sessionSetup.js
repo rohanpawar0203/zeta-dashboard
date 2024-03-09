@@ -33,13 +33,13 @@ export const getSessionId = (parameter) => {
       // If session exists and is valid
 
       existingSession.lastUsed = Date.now();
-      console.log(
-        "ExistingSession",
-        Object.keys(sessions[0]).find((key) => {
-          //sessions[key] === existingSession;
-          console.log("sessions[key]:", key);
-        })
-      );
+      // console.log(
+      //   "ExistingSession",
+      //   Object.keys(sessions[0]).find((key) => {
+      //     //sessions[key] === existingSession;
+      //     console.log("sessions[key]:", key);
+      //   })
+      // );
       return Object.keys(sessions[0]).find(
         (key) => sessions[0][key] === existingSession
       );

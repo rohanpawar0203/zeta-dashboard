@@ -36,7 +36,7 @@ function App() {
   const {setRoomId} = useContext(SocketContext);
   useEffect(() => {
     if (!sessionStorage.getItem("sessionUUID")) {
-      console.log('sessionUUID create =.')
+      // console.log('sessionUUID create =.')
       sessionStorage.setItem("sessionUUID", uuidv4().toString());
     }
     if (sessionStorage.getItem("sessionUUID")) {

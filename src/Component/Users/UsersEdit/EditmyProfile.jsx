@@ -59,7 +59,7 @@ const EditMyProfile = () => {
 
 
   const onEditSubmit = async (data) => {
-    console.log('data', data);
+    // console.log('data', data);
     setLoading(true);
     try {
       const response = await fetch(`${User}/${userDetails._id}`, {
@@ -121,7 +121,7 @@ const EditMyProfile = () => {
     };
 
     getPlans();
-    console.log('plans =>', plans);
+    // console.log('plans =>', plans);
   }, []);
 
   // console.log("Plans", plans);

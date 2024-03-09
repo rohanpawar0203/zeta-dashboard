@@ -31,7 +31,7 @@ const SendChat = ({ viewConversation, showKeyboard, setViewConversation }) => {
     return currentTimeMs;
   }
   const sendMsg = () => {
-    console.log('viewConversation ==>', viewConversation);
+    // console.log('viewConversation ==>', viewConversation);
     if(viewConversation){
       sendDataToConnectedUser({
         message: msg,
@@ -53,11 +53,11 @@ const SendChat = ({ viewConversation, showKeyboard, setViewConversation }) => {
       }
       return el;
     });
-    console.log('newArray ', newArray)
+    // console.log('newArray ', newArray)
     setLiveConversation(newArray);
     setMsg("");
     setTimeout(() => {
-      console.log('liveConversation ', liveConversation)
+      // console.log('liveConversation ', liveConversation)
     }, 1000)
     // setLoading(false);
   };

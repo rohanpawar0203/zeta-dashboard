@@ -114,7 +114,7 @@ const Customization = () => {
   };
 
   const handleChanges = (section, name, value) => {
-    console.log("formdata -->", formData);
+    // console.log("formdata -->", formData);
     setformData((pre) => ({
       ...pre,
       [section]: { ...pre[section], [name]: value },

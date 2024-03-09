@@ -8,7 +8,7 @@ export const UploadFiles = (formData) => {
   return new Promise(async (resolve, reject) => {
     try {
       // const res = await axios(`${FilesUploadAPI}`, {
-      const res = await axios("http://localhost:8085/file-upload-product-csv", {
+      const res = await axios(FilesUploadAPI, {
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",
@@ -17,7 +17,7 @@ export const UploadFiles = (formData) => {
         data: formData,
       });
       const response = await res?.data;
-      console.log("UploadFiles", response);
+      // console.log("UploadFiles", response);
       const responseUrl = await res?.data?.file;
       if (responseUrl) {
         resolve({ status: true, url: responseUrl });

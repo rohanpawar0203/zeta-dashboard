@@ -67,7 +67,7 @@ const ChatMessage = ({ viewConversation, showKeyboard }) => {
   }, [viewConversation, liveConversation]);
   return (
     <Fragment>
-      <div
+      <div style={{height: '55vh'}}
         ref={chatContainerRef}
         className="chat-history chat-msg-box custom-scrollbar"
       >

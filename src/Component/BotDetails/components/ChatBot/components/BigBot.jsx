@@ -65,7 +65,7 @@ const BigBot = ({ myBot }) => {
       type: "csv",
       time: "",
     };
-    console.log('sendData', sendData);
+    // console.log('sendData', sendData);
     sendDataToConnectedUser(sendData);
     setMessages(userMessage, true);
     setUserMessage("");
