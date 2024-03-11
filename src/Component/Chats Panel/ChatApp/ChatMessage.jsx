@@ -7,11 +7,12 @@ import moment from "moment-timezone";
 import customerService from "../../../assets/images/dashboard/icons8-customer-support-100.png";
 
 const ChatMessage = () => {
-  // const chatContainerRef = useRef();
+  const chatContainerRef = useRef();
   const {
     allMemberss,
     chatss,
     selectedUserr,
+    chatPanelMsgs,
     currentUserr,
     fetchChatMemberAsyn,
     fetchChatAsyn,
@@ -45,62 +46,67 @@ const ChatMessage = () => {
       return data;
     }
   };
+
+  useEffect(() => {
+    // Scroll to the bottom whenever messages change
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }, [selectedChat, chatPanelMsgs]);
   return (
     <Fragment>
       {allMemberss && chatss && selectedUserr ? (
-        <div className="chat-history chat-msg-box custom-scrollbar">
-          {selectedChat && selectedChat.length > 0 ? (
-            selectedChat.map((item, index) => {
-              return (
-                <UL attrUL={{ className: "simple-list" }} key={index}>
-                  <LI attrLI={{ className: "clearfix" }}>
-                    <div
-                      style={{
-                        backgroundColor: `${
-                          item?.from === "BOT"
-                            ? "#64FFDA"
-                            : item?.from === "USER"
-                            ? "#FAFAFA"
-                            : "#E0F7FA"
-                        }`,
-                        color: "black",
-                      }}
-                      className={`message my-message  ${
-                        item?.from === "USER" ? "" : "pull-right other-message"
-                      }`}
-                    >
-                      <Image
-                        attrImage={{
-                          src: `${
+        <div ref={chatContainerRef} className="chat-history chat-msg-box custom-scrollbar" style={{ maxHeight: "85%" }}>
+          {selectedChat && selectedChat.length > 0
+            ? selectedChat.map((item, index) => {
+                return (
+                  <UL attrUL={{ className: "simple-list" }} key={index}>
+                    <LI attrLI={{ className: "clearfix" }}>
+                      <div
+                        style={{
+                          backgroundColor: `${
                             item?.from === "BOT"
-                              ? botImgSrc
-                              : item?.from === "AGENT"
-                              ? customerService
-                              : UserProfile
+                              ? "#64FFDA"
+                              : item?.from === "USER"
+                              ? "#FAFAFA"
+                              : "#E0F7FA"
                           }`,
-                          className: `rounded-circle ${
-                            item?.from === "USER"
-                              ? "float-start "
-                              : "float-end "
-                          }chat-user-img img-30`,
-                          alt: "",
+                          color: "black",
                         }}
-                      />
-                      <div className="message-data text-end">
-                        <span className="message-data-time">
-                          {`${item?.from}`} {getLocaleTime(item.time)}
-                        </span>
+                        className={`message my-message  ${
+                          item?.from === "USER"
+                            ? ""
+                            : "pull-right other-message"
+                        }`}
+                      >
+                        <Image
+                          attrImage={{
+                            src: `${
+                              item?.from === "BOT"
+                                ? botImgSrc
+                                : item?.from === "AGENT"
+                                ? customerService
+                                : UserProfile
+                            }`,
+                            className: `rounded-circle ${
+                              item?.from === "USER"
+                                ? "float-start "
+                                : "float-end "
+                            }chat-user-img img-30`,
+                            alt: "",
+                          }}
+                        />
+                        <div className="message-data text-end">
+                          <span className="message-data-time">
+                            {`${item?.from}`} {getLocaleTime(item.time)}
+                          </span>
+                        </div>
+                        {`${checkMessageType(item?.message)}`}
+                        {/* {console.log("message", item?.message)} */}
                       </div>
-                      {`${checkMessageType(item?.message)}`}
-                      {/* {console.log("message", item?.message)} */}
-                    </div>
-                  </LI>
-                </UL>
-              );
-            })
-          ) : (
-            ''
-          )}
+                    </LI>
+                  </UL>
+                );
+              })
+            : ""}
         </div>
       ) : (
         <div className="loading"></div>

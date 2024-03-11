@@ -4,6 +4,33 @@
   align-items: center !important;
 } */
 
+/* .footer-copyright {
+  position: fixed !important;
+  width: 100%;
+  bottom: 0;
+  padding: 0;
+} */
+
+.page-body {
+  /* height: 100% !important; */
+  /* padding-bottom: 100px !important; */
+}
+
+.otp-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000 !important;
+}
+
+.otp-input {
+  width: 20% !important;
+  font-size: 24px !important;
+  z-index: 1000 !important;
+  font-weight: 600;
+}
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -34,4 +61,19 @@ td {
   font-size: 12px !important;
   width: 20% !important;
   text-align: center;
+  .login-form {
+    padding-left: 10% !important;
+    padding-right: 10% !important;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .login-form {
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+  }
+}
+
+.chat-panel-scroll-bar {
+  height: 80% !important;
 }

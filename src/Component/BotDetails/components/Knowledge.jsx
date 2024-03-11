@@ -24,7 +24,12 @@ import Integrations from "./Integrations";
 import { useForm } from "react-hook-form";
 import Dropzone from "react-dropzone-uploader";
 import axios from "axios";
-import { FAQFilesAPI, PaymentModesAPI, User } from "../../../api";
+import {
+  FAQFilesAPI,
+  FilesUploadAPI,
+  PaymentModesAPI,
+  User,
+} from "../../../api";
 import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
 import appStore from "../../Live Chats/Client/AppStore";
@@ -32,17 +37,18 @@ import PaymentModesForm from "./PaymentModesList/PaymentModesList";
 import CustomSpinner from "../../../CommonElements/CustomSpinner/CustomSpinner";
 import ProductTableData from "../../Ecommerce/ProductList/ProductTableData";
 import PaymentModesList from "./PaymentModesList/PaymentModesList";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import ScrollBar from "react-perfect-scrollbar";
+import { MdCancel } from "react-icons/md";
+import { UploadFiles } from "../../../Services/Custom_Hooks/fileUpload";
 
-const token = sessionStorage.getItem("token");
+const { token } = appStore.getState();
 
 const Knowledge = ({ myBot }) => {
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState("");
   const [faqList, setFaqList] = useState([]);
   const { userData, setUserData, token } = appStore();
-
 
   useEffect(() => {
     setFaqList([...userData?.faqListURL]);
@@ -54,42 +60,42 @@ const Knowledge = ({ myBot }) => {
       <Container fluid={true}>
         <Row>
           <Col sm="12">
-              <Row>
-                <Col md="4 mb-3"> 
-                  <Label htmlFor="validationCustom01">{"Bot Name"}</Label>
-                  <input
-                    className="form-control"
-                    name="botName"
-                    type="text"
-                    defaultValue={myBot?.botName}
-                    // onChange={(e) => {
-                    //   handleChange(e);
-                    // }}
-                    disabled
-                    placeholder="Bot Name"
-                    required={true}
-                  />
-                  <span></span>
-                  <div className="valid-feedback">{"Looks good!"}</div>
-                </Col>
-                <Col md="4 mb-3">
-                  <Label htmlFor="validationCustom02">{"Company Name"}</Label>
-                  <input
-                    className="form-control"
-                    name="companyName"
-                    type="text"
-                    defaultValue={myBot?.companyName}
-                    // onChange={(e) => {
-                    //   handleChange(e);
-                    // }}
-                    disabled
-                    placeholder="Company Name"
-                    required={true}
-                  />
-                  <span></span>
-                  <div className="valid-feedback">{"Looks good!"}</div>
-                </Col>
-              </Row>
+            <Row>
+              <Col md="4 mb-3">
+                <Label htmlFor="validationCustom01">{"Bot Name"}</Label>
+                <input
+                  className="form-control"
+                  name="botName"
+                  type="text"
+                  defaultValue={myBot?.botName}
+                  // onChange={(e) => {
+                  //   handleChange(e);
+                  // }}
+                  disabled
+                  placeholder="Bot Name"
+                  required={true}
+                />
+                <span></span>
+                <div className="valid-feedback">{"Looks good!"}</div>
+              </Col>
+              <Col md="4 mb-3">
+                <Label htmlFor="validationCustom02">{"Company Name"}</Label>
+                <input
+                  className="form-control"
+                  name="companyName"
+                  type="text"
+                  defaultValue={myBot?.companyName}
+                  // onChange={(e) => {
+                  //   handleChange(e);
+                  // }}
+                  disabled
+                  placeholder="Company Name"
+                  required={true}
+                />
+                <span></span>
+                <div className="valid-feedback">{"Looks good!"}</div>
+              </Col>
+            </Row>
           </Col>
           <Col sm="12">
             <h2>Knowledge</h2>
@@ -108,38 +114,39 @@ const Knowledge = ({ myBot }) => {
                   {"Add CSV"}
                 </Btn>
               </CardHeader>
-                  <Fragment>
-                    <div>
-                      {loading ? (
-                        <div className="loader-box">
-                          <Spinner attrSpinner={{ className: "loader-3" }} />
-                        </div>
-                      ) : mode === "create" ? (
-                        <AddCSVForm
-                          userData={userData}
-                          setUserData={setUserData}
-                          setMode={setMode}
-                          mode={mode}
-                          loading={loading}
-                          setLoading={setLoading}
-                          faqList={faqList}
-                          setFaqList={setFaqList}
-                        />
-                      ) : faqList && faqList.length > 0 ? (
-                        <CSVFileInfoList
-                          userData={userData}
-                          setUserData={setUserData}
-                          faqList={faqList}
-                          setFaqList={setFaqList}
-                          setLoading={setLoading}
-                        />
-                      ) : (
-                        <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-                          <H6 className="my-2 mx-0">No Files Uploaded</H6>
-                        </div>
-                      )}
+              <Fragment>
+                <div>
+                  {loading ? (
+                    <div className="loader-box">
+                      <Spinner attrSpinner={{ className: "loader-3" }} />
                     </div>
-                  </Fragment>
+                  ) : mode === "create" ? (
+                    <AddCSVForm
+                      userData={userData}
+                      setUserData={setUserData}
+                      setMode={setMode}
+                      mode={mode}
+                      loading={loading}
+                      setLoading={setLoading}
+                      faqList={faqList}
+                      setFaqList={setFaqList}
+                    />
+                  ) : faqList && faqList.length > 0 ? (
+                    <CSVFileInfoList
+                      userData={userData}
+                      setUserData={setUserData}
+                      faqList={faqList}
+                      setFaqList={setFaqList}
+                      setLoading={setLoading}
+                      loading={loading}
+                    />
+                  ) : (
+                    <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+                      <H6 className="my-2 mx-0">No Files Uploaded</H6>
+                    </div>
+                  )}
+                </div>
+              </Fragment>
             </Card>
           </Col>
         </Row>
@@ -169,6 +176,7 @@ const AddCSVForm = ({
   const [csvValidation, setcsvValidation] = useState(false);
   const [csvError, setCsvError] = useState("");
   const { fileName } = getValues();
+  const [btnLoading, setbtnLoading] = useState(false);
 
   const onSubmit = (data) => {
     if (!csvFile) {
@@ -178,7 +186,7 @@ const AddCSVForm = ({
       // createTicket({...payload, ...data, userId: user?._id});
       const formData = new FormData();
       formData.append("companyName", userData?.companyName);
-      formData.append("", csvFile);
+      formData.append("file", csvFile);
       uploadCSVFile(formData);
     } else {
       errors.showMessages();
@@ -203,19 +211,18 @@ const AddCSVForm = ({
   };
 
   const uploadCSVFile = async (formData) => {
+    // console.log("firuploadCSVFilest", formData);
+    setbtnLoading(true);
     try {
-      const res = await axios.post(`${FAQFilesAPI}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      const responseUrl = await res?.data?.filenames[0];
-      if (responseUrl) {
-        updateUser(responseUrl, fileName);
+      const { status, url } = await UploadFiles(formData);
+      if (status && url) {
+        setbtnLoading(false);
+        updateUser(url, fileName);
       }
     } catch (error) {
       toast.error("File Upload Failed");
-      console.log("csv upload error ", error);
+      console.log("uploadCSVFile error :", error);
+      setbtnLoading(false);
     }
   };
 
@@ -308,7 +315,9 @@ const AddCSVForm = ({
           <span className="text-danger fw-bolder">{csvError && csvError}</span>
         </FormGroup>
         <div className="d-flex gap-4 align-items-center justify-content-start">
-          <Btn attrBtn={{ color: "primary", type: "submit" }}>{"Add CSV"}</Btn>
+          <Btn attrBtn={{ color: "primary", type: "submit" }}>
+            {btnLoading ? <CustomSpinner /> : "Add CSV"}
+          </Btn>
           <Btn
             attrBtn={{
               color: "danger",
@@ -332,10 +341,19 @@ const CSVFileInfoList = ({
   setLoading,
   userData,
   setUserData,
+  loading,
 }) => {
+  const [btnLoading, setbtnLoading] = useState({ status: false, itemId: "" });
+
   const handleCSVFileDelete = (id) => {
+    setbtnLoading((pre) => ({ ...pre, status: true, itemId: id }));
     let filteredList = faqList?.filter((item) => item.id !== id);
-    updateUser(filteredList);
+    if (filteredList?.length) {
+      setTimeout(() => {
+        setbtnLoading((pre) => ({ ...pre, status: false }));
+        updateUser(filteredList);
+      }, 500);
+    }
   };
 
   const updateUser = async (filteredList) => {
@@ -372,7 +390,7 @@ const CSVFileInfoList = ({
 
   return (
     <Container style={{ margin: "0", padding: "0", maxWidth: "100%" }}>
-      <div className="h-100" style={{ width: "100%"}}>
+      <div className="h-100" style={{ width: "100%" }}>
         <Table style={{ maxWidth: "100%" }}>
           <thead>
             <tr className="table-primary">
@@ -380,7 +398,7 @@ const CSVFileInfoList = ({
                 {"File Name"}
               </th>
               <th scope="col" style={{ textAlign: "center" }}>
-                {"Delete"}
+                "Delete"
               </th>
             </tr>
           </thead>
@@ -396,7 +414,11 @@ const CSVFileInfoList = ({
                         handleCSVFileDelete(ele?.id);
                       }}
                     >
-                      Delete CSV
+                      {btnLoading?.status && btnLoading?.itemId === ele?.id ? (
+                        <CustomSpinner />
+                      ) : (
+                        "Delete"
+                      )}
                     </button>
                   </td>
                 </tr>

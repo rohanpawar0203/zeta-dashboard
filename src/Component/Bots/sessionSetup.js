@@ -6,6 +6,8 @@ const generateSessionId = () => {
 
 export const getSessionId = (parameter) => {
   // Check if a session exists for the parameter
+  console.log("getSessionId", parameter);
+
   const sessions = JSON.parse(sessionStorage.getItem("sessions")) || null;
   if (sessions !== null) {
     const existingSession = Object.values(sessions[0]).find(
@@ -43,11 +45,11 @@ export const getSessionId = (parameter) => {
       );
     }
   } else {
-    // console.log("Existing Sesson False");
-
+    console.log("Existing Sesson False");
+    console.log(parameter);
     // Create a new session linked to the parameter
     const sessionId = generateSessionId();
-    // console.log("generatedsessionID", sessionId);
+    console.log("generatedsessionID", sessionId);
     let localSession = [];
     localSession = [
       {

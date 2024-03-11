@@ -1,16 +1,32 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import ChatAppContext from "../../../_helper/chat-app/index";
-import { Image, LI, UL, Spinner, H6} from "../../../AbstractElements";
+import { Image, LI, UL, Spinner, H6 } from "../../../AbstractElements";
 import errorImg from "../../../assets/images/search-not-found.png";
 import SearchChatList from "./SearchChatList";
 import CurrentUser from "./CurrentUser";
 import { Media } from "reactstrap";
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUser, FaWhatsapp  } from "react-icons/fa";
+import { HiMiniComputerDesktop } from "react-icons/hi2";
 import UserProfile from "../../../assets/images/user/userProfile.png";
 import appStore from "../../Live Chats/Client/AppStore";
 import axios from "axios";
 
-const ChatStatus = ({isFetching}) => {
+
+export const customStyles = { listItem: { cursor: "pointer", paddingBottom: '5px'},
+mediaContainer: {border: '1px solid lightgray', borderRadius: "4px",  paddingBottom: '5px'},
+selectedMsg: "bg-light border-lightgreen",
+iconStyles: {height: '12px', width: '12px'},
+chatInfoTxt: {fontSize: "12px", color: "gray",lineHeight: 1},
+msgLineTxt: { fontSize: "13px", color: "gray", marginTop: '2px'},
+aboutStyle: {width: '100%', paddingTop: '5px'}
+}
+
+export const getLocaleTimeFormat = (date) => {
+  const timeFormOption = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+  return `${new Date(`${date}`).toLocaleString('en-IN', timeFormOption)}`
+} 
+
+const ChatStatus = ({ isFetching }) => {
   const {
     selectedUserr,
     currentUserr,
@@ -19,10 +35,13 @@ const ChatStatus = ({isFetching}) => {
     createNewChatAsyn,
     setCurrentLocationPathName,
   } = useContext(ChatAppContext);
-  const {chatPanelMsgs, userData} = appStore();
+  const { chatPanelMsgs, userData } = appStore();
   const changeChatClick = (e, selectedUserId) => {
     // const currentUserId = currentUserr.id;
-    const currentChat = chatPanelMsgs.find((x) => x._id === selectedUserId);
+    // console.log("chatPanelMsgs -----> ", chatPanelMsgs);
+    const currentChat = chatPanelMsgs.data.find(
+      (x) => x._id === selectedUserId
+    );
     if (currentChat) {
       changeChat(selectedUserId);
     }
@@ -45,12 +64,12 @@ const ChatStatus = ({isFetching}) => {
   if (selectedUserr != null) activeChat = selectedUserr._id;
 
   useEffect(() => {
-    if(!isFetching){
-      let chatMsgs = chatPanelMsgs?.filter((x) => x._id !== userData._id);
+    if (!isFetching) {
+      let chatMsgs = chatPanelMsgs?.data?.filter((x) => x._id !== userData._id);
       chatMsgs?.length && changeChat(chatMsgs[0]?._id);
+      // console.log('chatPanelMsgs["data"] ==>', chatPanelMsgs["data"]);
     }
-  }, [isFetching])
-  
+  }, [isFetching]);
 
   // const getName = async (data) => {
   //   console.log("Get Name", data);
@@ -76,90 +95,107 @@ const ChatStatus = ({isFetching}) => {
 
   //   await getName();
   // }, []);
- 
+
   return (
     <Fragment>
-      <div className="chat-box">
-        <div className="chat-left-aside">
+      <div className="chat-box" style={{ height: "100%", overflowY: "hidden" }}>
+        <div className="chat-left-aside h-100">
           {/* <CurrentUser /> */}
           <h5>All Chats</h5>
           <div className="people-list" id="people-list">
-            {isFetching ? 
-            <div className="loader-box">
-            <Spinner attrSpinner={{ className: "loader-3" }} />
-          </div> :
-            <>
-            <SearchChatList />
-            {chatPanelMsgs && chatPanelMsgs.length > 0 ? (
-              <UL attrUL={{ className: "simple-list list custom-scrollbar" }}>
-                {chatPanelMsgs
-                  .filter((x) => x._id !== userData._id)
-                  .map((item, i) => {
-                    return (
-                      <LI
-                        attrLI={{
-                          className: `clearfix border border-white ${
-                            activeChat === item?._id &&
-                            "bg-light border-primary"
-                          }`,
-                          style: { cursor: "pointer" },
-                          onClick: (e) => {
-                            activeChat = item._id;
-                            changeChatClick(e, item._id);
-                          },
-                        }}
-                        key={i}
-                      >
-                        <Media className="d-flex align-items-center">
-                          <Image
-                            attrImage={{
-                              src: `${UserProfile}`,
-                              className: "rounded-circle user-image",
-                              alt: "",
-                            }}
-                          />
-                          {/* <div className={`status-circle ${item.online === true ? 'online' : 'offline'}`}
-                        ></div> */}
-                          <Media body>
-                            <div className="about">
-                              <div className="name">
-                                {item?.customer?.firstName && item?.customer?.firstName !== "" 
-                                  ? `${
-                                      item?.customer?.firstName +
-                                      " " +
-                                      item?.customer?.lastName
-                                    }`
-                                  : item?.phoneNumber}
-                                <br />
-                                <p
-                                  style={{
-                                    fontSize: "10px",
-                                    color: "gray",
-                                    lineHeight: 1,
-                                  }}
-                                >
-                                  {item?.chatSessionId}
-                                </p>
-                              </div>
-                              <div className="status">
-                                {checkMessageType(
-                                  item?.chat[item?.chat.length - 1]?.message
-                                )}
-                              </div>
-                            </div>
-                          </Media>
-                        </Media>
-                      </LI>
-                    );
-                  })}
-              </UL>
+            {isFetching ? (
+              <div className="loader-box">
+                <Spinner attrSpinner={{ className: "loader-3" }} />
+              </div>
             ) : (
-              <div style={{border: '1px solid none'}} className="mw-100 mh-100 d-flex align-items-center justify-content-center">
-            <H6>No Chats Available</H6>
-             </div>
+              <>
+                <SearchChatList />
+                {chatPanelMsgs && chatPanelMsgs["data"]?.length > 0 ? (
+                  <UL
+                    attrUL={{ className: "simple-list list custom-scrollbar" }}
+                  >
+                    {chatPanelMsgs?.data
+                      ?.filter((x) => x._id !== userData._id)
+                      .map((item, i) => {
+                        return (
+                          <LI
+                            attrLI={{
+                              className: `clearfix border border-white`,
+                              style: customStyles?.listItem,
+                              onClick: (e) => {
+                                activeChat = item._id;
+                                changeChatClick(e, item._id);
+                              },
+                            }}
+                            key={i}
+                          >
+                            <Media style={customStyles?.mediaContainer} className={`d-flex align-items-center ${
+                                activeChat === item?._id &&
+                                `${customStyles?.selectedMsg}`
+                              }`}>
+                              {/* <Image
+                                attrImage={{
+                                  src: `${UserProfile}`,
+                                  className: "rounded-circle user-image",
+                                  alt: "",
+                                }}
+                              /> */}
+                              {/* <div className={`status-circle ${item.online === true ? 'online' : 'offline'}`}
+                        ></div> */}
+                              <Media body>
+                                <div style={customStyles?.aboutStyle} className="about">
+                                  <div className="name">
+                                    {item?.customer?.firstName &&
+                                    item?.customer?.firstName !== ""
+                                      ? `${
+                                          item?.customer?.firstName +
+                                          " " +
+                                          item?.customer?.lastName
+                                        }`
+                                      : item?.chatSessionId ? `Web User-${item?.chatSessionId?.slice(-4)}` : item?.phoneNumber}
+                                    <br />
+                                    <div className="w-100 d-flex justify-content-between align-items-center">
+                                      <div>
+                                      {item?.chatSessionId ? <HiMiniComputerDesktop style={customStyles?.iconStyles}/> : <FaWhatsapp style={customStyles?.iconStyles}/>}
+                                      </div>
+                                      <div>
+                                      <p
+                                      style={customStyles?.chatInfoTxt}
+                                    >
+                                      {`#${item?.chat?.length}`}
+                                    </p>
+                                      </div>
+                                      <div>
+                                      <p
+                                      style={customStyles?.chatInfoTxt}
+                                    >
+                                      {getLocaleTimeFormat(`${item?.updatedAt}`)}
+                                    </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div style={customStyles?.msgLineTxt} className="status">
+                                    {checkMessageType(
+                                      item?.chat[item?.chat.length - 1]?.message
+                                    )}
+                                  </div>
+                                </div>
+                              </Media>
+                            </Media>
+                          </LI>
+                        );
+                      })}
+                  </UL>
+                ) : (
+                  <div
+                    style={{ border: "1px solid none" }}
+                    className="mw-100 mh-100 d-flex align-items-center justify-content-center"
+                  >
+                    <H6>No Chats Available</H6>
+                  </div>
+                )}
+              </>
             )}
-            </>
-            }
           </div>
         </div>
       </div>

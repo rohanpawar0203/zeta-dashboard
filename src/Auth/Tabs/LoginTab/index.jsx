@@ -48,60 +48,62 @@ const LoginTab = ({ selected }) => {
   const [pillTab, setpillTab] = useState("1");
 
   return (
-    <Fragment>
-      <FormHeader selected={selected} />
-      <div className="mb-4">
-        <Nav className="nav-pills">
-          <div className="w-100  d-flex justify-content-center align-items-center">
-            <div
-              style={{ background: "whitesmoke" }}
-              className="d-flex border border-lightgray p-1 rounded"
-            >
-              <NavItem style={{ cusror: "pointer" }}>
-                <span style={{ cursor: "pointer" }}>
-                  <NavLink
-                    className={
-                      pillTab === "1"
-                        ? "active cursor-pointer"
-                        : "cursor-pointer"
-                    }
-                    onClick={() => setpillTab("1")}
-                  >
-                    {"Organization"}
-                  </NavLink>
-                </span>
-              </NavItem>
-              <NavItem>
-                <span style={{ cursor: "pointer" }}>
-                  <NavLink
-                    className={
-                      pillTab === "2"
-                        ? "active cursor-pointer"
-                        : "cursor-pointer"
-                    }
-                    onClick={() => setpillTab("2")}
-                  >
-                    {"Agent"}
-                  </NavLink>
-                </span>
-              </NavItem>
-              <NavItem></NavItem>
+    <>
+      <Fragment>
+        <FormHeader selected={selected} />
+        <div className="mb-4">
+          <Nav className="nav-pills">
+            <div className="w-100  d-flex justify-content-center align-items-center">
+              <div
+                style={{ background: "whitesmoke" }}
+                className="d-flex border border-lightgray p-1 rounded"
+              >
+                <NavItem style={{ cusror: "pointer" }}>
+                  <span style={{ cursor: "pointer" }}>
+                    <NavLink
+                      className={
+                        pillTab === "1"
+                          ? "active cursor-pointer"
+                          : "cursor-pointer"
+                      }
+                      onClick={() => setpillTab("1")}
+                    >
+                      {"Organization"}
+                    </NavLink>
+                  </span>
+                </NavItem>
+                <NavItem>
+                  <span style={{ cursor: "pointer" }}>
+                    <NavLink
+                      className={
+                        pillTab === "2"
+                          ? "active cursor-pointer"
+                          : "cursor-pointer"
+                      }
+                      onClick={() => setpillTab("2")}
+                    >
+                      {"Agent"}
+                    </NavLink>
+                  </span>
+                </NavItem>
+                <NavItem></NavItem>
+              </div>
             </div>
-          </div>
-        </Nav>
-      </div>
-      <TabContent activeTab={pillTab} className="position-relative">
-        <TabPane className="fade show vh-50" tabId="1">
-          <OrgLogin />
-          <SignInWith />
-        </TabPane>
-        <TabPane tabId="2" className="vh-50">
-          <AgentLogin />
-          <SignInWith />
-        </TabPane>
-      </TabContent>
+          </Nav>
+        </div>
+        <TabContent activeTab={pillTab} className="position-relative">
+          <TabPane className="fade show vh-50" tabId="1">
+            <OrgLogin />
+            <SignInWith />
+          </TabPane>
+          <TabPane tabId="2" className="vh-50">
+            <AgentLogin />
+            <SignInWith />
+          </TabPane>
+        </TabContent>
+      </Fragment>
       <CopyRight />
-    </Fragment>
+    </>
   );
 };
 

@@ -9,7 +9,7 @@ import appStore from "../Client/AppStore";
 import { toast } from "react-toastify";
 
 const SendChat = ({ viewConversation, showKeyboard, setViewConversation }) => {
-  const { liveConversation, setLiveConversation } = appStore();
+  const { liveConversation, setLiveConversation } = appStore.getState();
 
   const [msg, setMsg] = useState("");
 
@@ -31,16 +31,19 @@ const SendChat = ({ viewConversation, showKeyboard, setViewConversation }) => {
     return currentTimeMs;
   }
   const sendMsg = () => {
-    sendDataToConnectedUser({
-      message: msg,
-      phoneNumber: viewConversation.phoneNumber,
-      time: getCustomTimestamp(),
-      // chatSessionId: viewConversation.chatSessionId,
-      roomId: viewConversation.chatSessionId,
-      identity: "AGENT",
-      productList: [],
-      productData: [],
-    });
+    // console.log('viewConversation ==>', viewConversation);
+    if(viewConversation){
+      sendDataToConnectedUser({
+        message: msg,
+        phoneNumber: viewConversation.phoneNumber,
+        time: getCustomTimestamp(),
+        // chatSessionId: viewConversation.chatSessionId,
+        roomId: viewConversation.chatSessionId,
+        identity: "AGENT",
+        productList: [],
+        productData: [],
+      });
+    }
     const newArray = liveConversation.map((el) => {
       if (el.chatSessionId === viewConversation.chatSessionId) {
         el.chat = [
@@ -50,12 +53,16 @@ const SendChat = ({ viewConversation, showKeyboard, setViewConversation }) => {
       }
       return el;
     });
+    // console.log('newArray ', newArray)
     setLiveConversation(newArray);
     setMsg("");
+    setTimeout(() => {
+      // console.log('liveConversation ', liveConversation)
+    }, 1000)
     // setLoading(false);
   };
   return (
-    <div className="chat-message clearfix">
+    <div style={{backgroundColor: 'white'}} className="chat-message clearfix">
       <Row style={{ marginLeft: 0, marginRight: 0 }}>
         <div></div>
         <Col xl="12" className="d-flex">

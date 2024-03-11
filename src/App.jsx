@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import "./App.css";
 import Routers from "./Routes";
 import BookmarkProvider from "./_helper/bookmark/BookmarkProvider";
@@ -30,13 +30,19 @@ import { v4 as uuidv4 } from "uuid";
 import appStore from "./Component/Live Chats/Client/AppStore";
 import { toast } from "react-toastify";
 import { PlanDetails } from "./api";
+import { SocketContext } from "./Component/Live Chats/Context/socketContext";
 
 function App() {
+  const {setRoomId} = useContext(SocketContext);
   useEffect(() => {
     if (!sessionStorage.getItem("sessionUUID")) {
+      // console.log('sessionUUID create =.')
       sessionStorage.setItem("sessionUUID", uuidv4().toString());
     }
-    getSessionId(sessionStorage.getItem("sessionUUID"));
+    if (sessionStorage.getItem("sessionUUID")) {
+      setRoomId(getSessionId(sessionStorage.getItem("sessionUUID")));
+      // getSessionId(sessionStorage.getItem("sessionUUID"));
+    }
     connectWithSocketIOServer();
   }, []);
   return (

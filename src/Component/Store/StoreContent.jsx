@@ -55,7 +55,7 @@ import {
   crawlerUrl,
 } from "../../api";
 import appStore from "../Live Chats/Client/AppStore";
-import { getUserDetails } from "../../Services/UsersServices";
+import { updateUserDetails } from "../../Services/UsersServices";
 import BigCommerceForm from "./components/BigCommerceForm";
 import CustomSpinner from "../../CommonElements/CustomSpinner/CustomSpinner";
 
@@ -211,15 +211,6 @@ const StoreContent = () => {
     }, 1000);
   };
 
-  const updateUserDetails = async (userId) => {
-    try {
-      let newUserDeatils = await getUserDetails(userId);
-      setUserData(newUserDeatils);
-      sessionStorage.setItem("currentUser", JSON.stringify(newUserDeatils));
-    } catch (error) {
-      toast.error(error);
-    }
-  };
   return (
     <Fragment>
       <Fragment>
@@ -323,4 +314,5 @@ const StoreContent = () => {
     </Fragment>
   );
 };
+
 export default StoreContent;

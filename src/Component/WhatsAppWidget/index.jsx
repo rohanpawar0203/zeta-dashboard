@@ -74,11 +74,13 @@ const WebSdkInfoContent = () => {
           <Col sm="12 bot-info-card">
             <Card>
               <div
-                style={{
-                  height: "72vh",
-                  paddingBottom: "2rem",
-                  overflowY: "scroll",
-                }}
+                style={
+                  {
+                    // height: "70vh",
+                    // overflowY: "scroll",
+                    // paddingBottom: "2rem",
+                  }
+                }
               >
                 <CardBody>
                   <ScrollBar>
@@ -139,7 +141,7 @@ const WebSdkInfoContent = () => {
                         </div>
                       </div>
                     </Nav>
-                    <div style={{ height: "95%" }}>
+                    <div>
                       {loading ? (
                         <div className="vh-75 loader-box">
                           <Spinner attrSpinner={{ className: "loader-3" }} />

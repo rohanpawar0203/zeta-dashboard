@@ -7,6 +7,7 @@ body {
   overflow-x: hidden;
   font-family: $font-roboto;
   color: $dark;
+  background-color: #f4f6fd;
 }
 ul {
   padding-left: $ul-padding-left;
@@ -32,7 +33,7 @@ a {
 .btn {
   font-size: 14px;
   font-weight: 500;
-  font-family: 'Roboto', 'sans-serif';
+  font-family: "Roboto", "sans-serif";
 }
 *.btn:focus {
   box-shadow: $btn-focus-box-shadow !important;
@@ -94,11 +95,11 @@ code {
 blockquote {
   border-left: $blockquote-border;
   padding: $blockquote-padding;
-  &.text-end{
+  &.text-end {
     border-right: $blockquote-border;
     border-left: unset;
   }
-  &.text-center{
+  &.text-center {
     border: 0;
   }
 }
@@ -143,11 +144,11 @@ label {
     margin-bottom: 30px;
   }
 }
-ol.simple-list{
-  .list-group-item{
+ol.simple-list {
+  .list-group-item {
     display: list-item;
   }
-} 
+}
 //Custom css End
 //Typography css start
 .typography {
@@ -204,9 +205,9 @@ pre {
 }
 // modal page
 .modal {
-  .modal-dialog{
-    .modal-header{
-      button.btn-close{
+  .modal-dialog {
+    .modal-header {
+      button.btn-close {
         font-size: 14px;
         z-index: 2;
       }

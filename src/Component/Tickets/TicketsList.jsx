@@ -15,6 +15,8 @@ import { toast } from "react-toastify";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { AgentAPI, TicketsAPI } from "../../api";
 import axios from "axios";
+import ScrollBar from "react-perfect-scrollbar";
+import DynPagination from "../../CommonElements/DynamicPagination/DynPagination";
 
 const TicketsList = ({ setMode }) => {
   const [products, setProducts] = useState([]);
@@ -40,18 +42,23 @@ const TicketsList = ({ setMode }) => {
 
   const toggleDropDownId = (id) => setDropdownOpenId(id);
 
-  const fetchTicketsData = async () => {
+  const fetchTicketsData = async (page, limit) => {
     setLoading(true);
     try {
-      const res = await axios.get(`${TicketsAPI}/${user._id}/organization`, {
+      let pageNo = page || 1, limitValue = limit || 25;
+      let orgId = user?.userId ? user?.userId : user?._id; 
+      const res = await axios.get(`${TicketsAPI}/${orgId}/organization?page=${pageNo}&limit=${limitValue}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
-      const data = await res.data;
-      // console.log('tickets ', data);
-      setProducts(data);
+      const data =  res.data;
+      // console.log('res?.status ', typeof res?.status, data);
+      if(res?.status === 200 && data){
+        // console.log('resres ', data);
+        setProducts(data)
+      }
     } catch (error) {
       toast(error);
     }
@@ -92,12 +99,12 @@ const TicketsList = ({ setMode }) => {
     <Fragment>
       <Col sm="12">
         <Card
-          style={{
-            height: "70vh",
-            marginBottom: "5vh",
-            overflow: "hidden",
-            paddingBottom: "10vh",
-          }}
+          // style={{
+          //   height: "68vh",
+          //   marginBottom: "5vh",
+          //   overflow: "hidden",
+          //   paddingBottom: "10vh",
+          // }}
         >
           <div>
             <CardHeader className="w-100 d-flex justify-content-end">
@@ -120,9 +127,13 @@ const TicketsList = ({ setMode }) => {
               <div className="loader-box">
                 <Spinner attrSpinner={{ className: "loader-3" }} />
               </div>
-            ) : products.length > 0 ? (
+            ) : products['data']?.length > 0 ? (
+              <>
               <div className="h-100 table-responsive">
-                <Table>
+                <ScrollBar>
+                <Table style={{
+                        width: "100%",
+                      }}>
                   <thead>
                     <tr className="table-primary">
                       <th scope="col">{"Email ID"}</th>
@@ -132,9 +143,12 @@ const TicketsList = ({ setMode }) => {
                       <th scope="col">{"Created By"}</th>
                     </tr>
                   </thead>
-                  <tbody style={{ height: "60vh", overflowY: "scroll" }}>
-                    {products.length > 0 &&
-                      products.map((ele, ind) => (
+                  <tbody style={{ height: "60vh",
+                          overflowY: "scroll",
+                          width: "100%",
+                          display: "contents"}}>
+                    {products['data'].length > 0 &&
+                      products['data'].map((ele, ind) => (
                         <tr>
                           <td>{ele?.email}</td>
                           <td>{ele?.query}</td>
@@ -145,9 +159,12 @@ const TicketsList = ({ setMode }) => {
                       ))}
                   </tbody>
                 </Table>
+                </ScrollBar>
               </div>
+               <DynPagination totalCount={products['total_count']} switchPage={fetchTicketsData}/>
+              </>
             ) : (
-              <div className="h-75 w-100 d-flex flex-column justify-content-center align-items-center gap-2">
+              <div style={{height: '200px'}} className="w-100 d-flex flex-column justify-content-center align-items-center gap-2">
                 <H6 className="fw-bolder">{"No Tickets Exist"}</H6>
               </div>
             )}

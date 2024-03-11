@@ -13,9 +13,8 @@ export const ChatProvider = (props) => {
   const [liveUser, setliveUser] = useState();
   const [sidebarToggle, setSidebarToggle] = useState(false);
 
-  const {userData, setChatPanelMsgs, chatPanelMsgs} = AppStore();
+  const {userData, setChatPanelMsgs, chatPanelMsgs, token} = AppStore();
   const [isFetching, setisFetching] = useState(false);
-  const token = sessionStorage.getItem('token');
   const [appStore, setappStore] = useState({
   isConnected: false,
   userData: JSON.parse(sessionStorage.getItem('currentUser')) || {},
@@ -52,19 +51,20 @@ export const ChatProvider = (props) => {
   const setIsConnected = (data) => setappStore((pre) => ({...pre, isConnected: data }));
   const setAllAgents = (data) => setappStore((pre) => ({...pre, allAgents: data }));
 
-  const getChatMembersData = async () => {
+  const getChatMembersData = async (page, limit, order) => {
     setisFetching(true);
     try {
+      let pageNo = page || 1, limitValue = limit || 25, orderValue = order || 'desc';
       const orgId = userData?.userId ? userData?.userId : userData?._id;
       const resp = await axios.get(
-        `${GetConversationsAPI}/${orgId}`,
+        `${GetConversationsAPI}/${orgId}?page=${pageNo}&limit=${limitValue}&order=${orderValue}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`, 
+            "Authorization": `Bearer ${token}`, 
           },
         }
       );
-      setChatPanelMsgs(resp.data.reverse());
+      setChatPanelMsgs({...resp['data'], data: resp['data']['data']});
     } catch (error) {
       console.log('error', error);
     }
@@ -206,7 +206,7 @@ export const ChatProvider = (props) => {
   };
 
   const changeChat = (userID) => {
-    setSelectedUser(chatPanelMsgs.find((x) => x._id === userID));
+    setSelectedUser(chatPanelMsgs?.data?.find((x) => x._id === userID));
   };
 
   const searchMember = (keywords) => {

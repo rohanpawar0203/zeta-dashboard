@@ -13,7 +13,7 @@ const TaskProvider = (props) => {
                 setAllTask(resp.data);
             });
         } catch (error) {
-            console.log('error', error);
+            console.log('getTask error : ', error);
         }
     };
     useEffect(() => {

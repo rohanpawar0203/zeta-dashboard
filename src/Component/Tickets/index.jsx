@@ -5,7 +5,11 @@ import CreateTicketContent from "./CreateTicketContent";
 const CreateTicketContain = () => {
   return (
     <Fragment>
+      <Container fluid={true}>
+        <Row>
           <CreateTicketContent />
+          </Row>
+          </Container>
     </Fragment>
   );
 };

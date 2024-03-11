@@ -23,7 +23,10 @@ import FormHeader from "./FormHeader";
 import FormPassword from "./FormPassword";
 import SignInWith from "./SignInWith";
 import { cls } from "react-image-crop";
-import { connectWithSocketIOServer, sendLoggedAgentInfo } from "../../../Component/Live Chats/Client/wss";
+import {
+  connectWithSocketIOServer,
+  sendLoggedAgentInfo,
+} from "../../../Component/Live Chats/Client/wss";
 import appStore from "../../../Component/Live Chats/Client/AppStore";
 import { getSessionId } from "../../../Component/Bots/sessionSetup";
 import { v4 as uuidv4 } from "uuid";
@@ -37,7 +40,12 @@ const AgentLogin = ({ selected }) => {
   const [togglePassword, setTogglePassword] = useState(false);
   const history = useNavigate();
   const inputRef = useRef();
-  const { setUserData, setToken, userData } = appStore();
+  const {
+    setUserData,
+    setToken,
+    userData: userInfo,
+    token: tokenInfo,
+  } = appStore.getState();
   const [apiError, setApiError] = useState("");
 
   const userLogin = async (e) => {
@@ -59,7 +67,7 @@ const AgentLogin = ({ selected }) => {
         setPassword("");
         let { agent: user, token } = resBody;
         // Agent AutoLogout trigger
-        user = {...user, logIn_sessionID: token};
+        user = { ...user, logIn_sessionID: token };
         handleStorageNRoutes(user, token);
         sendLoggedAgentInfo(user);
       } else {
@@ -68,26 +76,26 @@ const AgentLogin = ({ selected }) => {
       }
     } catch (err) {
       setApiError(err);
-
+      console.log("Agent Login Error : ", err);
       // toast.error(`${err.message}`);
     }
     setLoading(false);
   };
 
   const handleStorageNRoutes = (user, token) => {
-        sessionStorage.setItem("token", token);
-        sessionStorage.setItem("currentUser", JSON.stringify(user));
-        setUserData(user);
-        setToken(token);
-        toast.success("User Logged In successfully");
-        if (user.userId) {
-          history(`${process.env.PUBLIC_URL}/live-chat`);
-        } else if (!user.store && !user.userId) {
-          history(`${process.env.PUBLIC_URL}/store`);
-        } else if (user.store && !user.userId) {
-          history(`${process.env.PUBLIC_URL}/dashboard`);
-        }
-  }
+    sessionStorage.setItem("token", token);
+    sessionStorage.setItem("currentUser", JSON.stringify(user));
+    setUserData(user);
+    setToken(token);
+    // connectSocketToServer();
+    if (user.userId) {
+      history(`${process.env.PUBLIC_URL}/live-chat`);
+    } else if (!user.store && !user.userId) {
+      history(`${process.env.PUBLIC_URL}/store`);
+    } else if (user.store && !user.userId) {
+      history(`${process.env.PUBLIC_URL}/dashboard`);
+    }
+  };
 
   const formValidate = () => {
     isErrors.current = false;
@@ -107,6 +115,10 @@ const AgentLogin = ({ selected }) => {
       isErrors.current = Object.values(errorsObj).length > 0;
       setErrors(errorsObj);
     }
+  };
+
+  const connectSocketToServer = () => {
+    // connectWithSocketIOServer();
   };
 
   return (

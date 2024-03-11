@@ -106,10 +106,10 @@ const BotsContent = () => {
       } else {
         setMyBots([]);
         // setMyBots([]);
-        toast.error(responseData.message);
+        console.log('getAllBot res error : ',responseData.message);
       }
     } catch (error) {
-      toast.error(error);
+      console.log('getAllBot  error : ',error);
     }
     setLoading(false);
   };
@@ -132,7 +132,7 @@ const BotsContent = () => {
         toast.error(responseData.message);
       }
     } catch (error) {
-      toast.error(error);
+      console.log('deleteBot error: ', error);
     }
     setLoading(false);
   };
@@ -148,7 +148,7 @@ const BotsContent = () => {
     <Fragment>
       <div
         style={{
-          height: "73vh",
+          height: "70vh",
           background: "white",
           padding: "15px",
           borderRadius: "12px",
@@ -187,19 +187,25 @@ const BotsContent = () => {
                   <H6 className="mb-2 fw-bolder text-gray">
                     {myBots.length ? myBots.length : ""} live bots
                   </H6>
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-md"
-                    onClick={toggle}
-                  >
-                    Create new bot
-                  </button>
-                  <CreateBotFormModal
-                    modal={modal}
-                    NewMessage={"New Bot"}
-                    toggle={toggle}
-                    getAllBot={getAllBot}
-                  ></CreateBotFormModal>
+                  {myBots?.length < 1 ? (
+                    <>
+                      <button
+                        type="button"
+                        className={`btn btn-primary btn-md`}
+                        onClick={toggle}
+                      >
+                        Create new bot
+                      </button>
+                      <CreateBotFormModal
+                        modal={modal}
+                        NewMessage={"New Bot"}
+                        toggle={toggle}
+                        getAllBot={getAllBot}
+                      ></CreateBotFormModal>
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 {myBots.map((myBot, i) => (
                   <div
@@ -281,7 +287,7 @@ const BotsContent = () => {
                               Rename Bot
                             </H5>
                           </DropdownItem>
-                          <DropdownItem
+                          {/* <DropdownItem
                             onClick={() => {
                               deleteBot(myBot._id);
                             }}
@@ -291,7 +297,7 @@ const BotsContent = () => {
                             >
                               Delete Bot
                             </H5>
-                          </DropdownItem>
+                          </DropdownItem> */}
                         </DropdownMenu>
                       </Dropdown>
                       <UpdateBotFormModal

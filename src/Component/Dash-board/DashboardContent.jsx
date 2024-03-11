@@ -34,7 +34,7 @@ import { Bar } from "react-chartjs-2";
 import Chart from "react-apexcharts";
 import configDB from "../../Config/Theme-Config";
 import { apiCall } from "./chartData";
-import {ProductSvg, DollerSvg} from './Elements/svgs/Product'
+import { ProductSvg, DollerSvg } from "./Elements/svgs/Product";
 import {
   apexBarChart,
   apexColumnChartsone,
@@ -42,6 +42,7 @@ import {
 
 const DashboardContent = () => {
   const { userData, token } = appStore();
+  const [user_id, setUser_id] = useState(userData?.userId ? userData?.userId :  userData?._id);
   const [orderInfo, setorderInfo] = useState({});
   // const userDataToken = JSON.parse(appStore);
   const [chatSeries, setChatSeries] = useState([]);
@@ -59,40 +60,42 @@ const DashboardContent = () => {
   const [trendingSeries, setTrendingSeries] = useState([]);
   const [trendingOptions, setTrendingOptions] = useState({});
 
-  
-  const getTotalOrdersCount = async() => {
+  const getTotalOrdersCount = async () => {
     try {
-      const res = await axios.get(`${TotalOrdersCountAPI}/${userData?._id}/orders-till-now/data`,{
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if(res?.status ===  "200" ||res?.status ===  200){
+      const res = await axios.get(
+        `${TotalOrdersCountAPI}/${user_id}/orders-till-now/data`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res?.status === "200" || res?.status === 200) {
         let result = res?.data?.data[0];
         setorderInfo(result);
       }
     } catch (error) {
-      console.log('cancelled', error);
+      console.log("cancelled", error);
     }
-  }
-  
-  useEffect(() =>{
+  };
+
+  useEffect(() => {
     getTotalOrdersCount();
   }, []);
 
   useEffect(async () => {
-    connectWithSocketIOServer();
+    // connectWithSocketIOServer();
 
     let getChatData = await apiCall(
-      userData._id,
+      user_id,
       "no-of-chat-session-each-day"
     );
-    getChatData.sort((a, b) => new Date(a._id) - new Date(b._id));
+    getChatData?.sort((a, b) => new Date(a._id) - new Date(b._id));
     if (getChatData.length !== 0) {
-      const newOptions = getChatData.map((element) =>
+      const newOptions = getChatData?.map((element) =>
         new Date(element._id).getDate()
       );
-      const newSeriesData = getChatData.map((element) => element.count);
+      const newSeriesData = getChatData?.map((element) => element.count);
 
       setChatOptions({
         chart: {
@@ -154,7 +157,7 @@ const DashboardContent = () => {
       ]);
     }
 
-    let getCartData = await apiCall(userData._id, "no-of-carts-each-day");
+    let getCartData = await apiCall(user_id, "no-of-carts-each-day");
     getCartData.sort((a, b) => new Date(a._id) - new Date(b._id));
     if (getCartData.length !== 0) {
       const newOptions = getCartData.map((element) =>
@@ -221,7 +224,7 @@ const DashboardContent = () => {
       ]);
     }
 
-    let getOrderData = await apiCall(userData._id, "no-orders-for-each-day");
+    let getOrderData = await apiCall(user_id, "no-orders-for-each-day");
     getOrderData.sort((a, b) => new Date(a._id) - new Date(b._id));
     if (getOrderData.length !== 0) {
       const newOptions = getOrderData.map((element) =>
@@ -288,7 +291,7 @@ const DashboardContent = () => {
       ]);
     }
 
-    let getChatHourData = await apiCall(userData._id, "no-chats-for-each-hour");
+    let getChatHourData = await apiCall(user_id, "no-chats-for-each-hour");
     // getChatHourData.sort((a, b) => new Date(a._id) - new Date(b._id));
     if (getChatHourData.length !== 0) {
       getChatHourData.forEach((dayData) => {
@@ -388,7 +391,7 @@ const DashboardContent = () => {
     }
 
     let getTrendingProductData = await apiCall(
-      userData._id,
+      user_id,
       "products-searched-for-each-day"
     );
     getTrendingProductData
@@ -464,56 +467,71 @@ const DashboardContent = () => {
 
   return (
     <Fragment>
-       <Row style={{justifyContent: 'space-evenly'}}>
+      <Row style={{ justifyContent: "space-evenly" }}>
         <Col sm="6" xl="3" lg="6" key={2}>
-              <Card className="o-hidden">
-                <CardBody>
-                  <Media className="static-widget">
-                    <Media body><H6 attrH6={{ className: 'font-roboto' }}>{"Total Orders"}</H6>
-                      <H4 attrH4={{ className: 'mb-0 counter mt-4 text-center' }}><CountUp end={orderInfo?.noOfOrders} /></H4>
-                    </Media>
-                  </Media>
-                  {/* <div className="progress-widget">
+          <Card className="o-hidden">
+            <CardBody>
+              <Media className="static-widget">
+                <Media body>
+                  <H6 attrH6={{ className: "font-roboto" }}>
+                    {"Total Orders"}
+                  </H6>
+                  <H4 attrH4={{ className: "mb-0 counter mt-4 text-center" }}>
+                    <CountUp end={orderInfo?.noOfOrders} />
+                  </H4>
+                </Media>
+              </Media>
+              {/* <div className="progress-widget">
                     <div className="progress sm-progress-bar progress-animate">
                       <div className={"progress-gradient-success"} role="progressbar" style={{ width: '75%' }} aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><span className="animate-circle"></span></div>
                     </div>
                   </div> */}
-                </CardBody>
-              </Card>
-          </Col>
+            </CardBody>
+          </Card>
+        </Col>
         <Col sm="6" xl="3" lg="6" key={2}>
-              <Card className="o-hidden">
-                <CardBody>
-                  <Media className="static-widget">
-                    <Media body><H6 attrH6={{ className: 'font-roboto' }}>{"Total Order Value"}</H6>
-                      <H4 attrH4={{ className: 'mb-0 counter  mt-4 text-center' }}><CountUp end={orderInfo?.totalOrderValue} /></H4>
-                    </Media>
-                  </Media>
-                  {/* <div className="progress-widget">
+          <Card className="o-hidden">
+            <CardBody>
+              <Media className="static-widget">
+                <Media body>
+                  <H6 attrH6={{ className: "font-roboto" }}>
+                    {"Total Order Value"}
+                  </H6>
+                  <H4 attrH4={{ className: "mb-0 counter  mt-4 text-center" }}>
+                    <CountUp end={orderInfo?.totalOrderValue} />
+                  </H4>
+                </Media>
+              </Media>
+              {/* <div className="progress-widget">
                     <div className="progress sm-progress-bar progress-animate">
                       <div className={"progress-gradient-success"} role="progressbar" style={{ width: '75%' }} aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><span className="animate-circle"></span></div>
                     </div>
                   </div> */}
-                </CardBody>
-              </Card>
-          </Col>
+            </CardBody>
+          </Card>
+        </Col>
         <Col sm="6" xl="3" lg="6" key={2}>
-              <Card className="o-hidden">
-                <CardBody>
-                  <Media className="static-widget">
-                    <Media body><H6 attrH6={{ className: 'font-roboto' }}>{"Avg Order Value"}</H6>
-                      <H4 attrH4={{ className: 'mb-0 counter mt-4 text-center' }}><CountUp end={orderInfo?.averageOrderValue} /></H4>
-                    </Media>
-                  </Media>
-                  {/* <div className="progress-widget">
+          <Card className="o-hidden">
+            <CardBody>
+              <Media className="static-widget">
+                <Media body>
+                  <H6 attrH6={{ className: "font-roboto" }}>
+                    {"Avg Order Value"}
+                  </H6>
+                  <H4 attrH4={{ className: "mb-0 counter mt-4 text-center" }}>
+                    <CountUp end={orderInfo?.averageOrderValue} />
+                  </H4>
+                </Media>
+              </Media>
+              {/* <div className="progress-widget">
                     <div className="progress sm-progress-bar progress-animate">
                       <div className={"progress-gradient-success"} role="progressbar" style={{ width: '75%' }} aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><span className="animate-circle"></span></div>
                     </div>
                   </div> */}
-                </CardBody>
-              </Card>
-          </Col>
-        </Row>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
       <Col sm="6" xl="5" lg="10" style={{ marginBottom: "10px" }}>
         <Card className="o-hidden">
           <CardBody>

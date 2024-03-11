@@ -5,14 +5,15 @@ import { NewBot, BotCreationQstn} from '../../../Constant';
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import { BotCreate } from '../../../api';
+import appStore from '../../Live Chats/Client/AppStore';
+import { updateUserDetails } from '../../../Services/UsersServices';
 
 const CreateBotForm = ({modal, title, toggle, getAllBot}) => {
   const [formValues, setformValues] = useState({botName: '', error: ''});
-  const user = JSON.parse(sessionStorage.getItem("currentUser"));
-  const token = sessionStorage.getItem("token");
+  const {userData, token} = appStore();
   const history = useNavigate();
   const customBot = {
-    userId: user._id,
+    userId: userData._id,
     botName: '',
     companyName: "Ulai",
     botAvatar:
@@ -66,6 +67,7 @@ const CreateBotForm = ({modal, title, toggle, getAllBot}) => {
         // console.log(response.ok);
         getAllBot && getAllBot();
         setformValues({botName: '', error: ''})
+        await updateUserDetails(userData?._id)
         toast.success(responseData?.message);
         toggle();
         setTimeout(() =>{history(`${process.env.PUBLIC_URL}/bots`)}, 2000);

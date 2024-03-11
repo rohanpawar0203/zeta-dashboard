@@ -43,6 +43,7 @@ const EditMyProfile = () => {
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -51,18 +52,14 @@ const EditMyProfile = () => {
       email: userDetails.email,
       companyName: userDetails.companyName,
       contact: userDetails.contact,
-      // planId: userDetails.planId,
+      planId: userDetails.planId,
       websiteLink: userDetails.websiteLink,
     },
   });
 
-  const handlePlanChange = (e) => {
-    const selectedValue = e.target.value;
-    // console.log("Selected value", selectedValue);
-    setValue("planId", selectedValue);
-  };
 
   const onEditSubmit = async (data) => {
+    // console.log('data', data);
     setLoading(true);
     try {
       const response = await fetch(`${User}/${userDetails._id}`, {
@@ -124,6 +121,7 @@ const EditMyProfile = () => {
     };
 
     getPlans();
+    // console.log('plans =>', plans);
   }, []);
 
   // console.log("Plans", plans);
@@ -162,7 +160,7 @@ const EditMyProfile = () => {
                   type="text"
                   placeholder="Company"
                   disabled
-                  {...register("companyName", { required: true })}
+                  // {...register("companyName", { required: false })}
                 />
                 <span style={{ color: "red" }}>
                   {errors.companyName && "Company is required"}{" "}
@@ -180,7 +178,7 @@ const EditMyProfile = () => {
                   // defaultValue={userDetails.email}
                   placeholder="Email"
                   disabled
-                  {...register("email", { required: true })}
+                  // {...register("email", { required: false })}
                 />
                 <span style={{ color: "red" }}>
                   {errors.email && "EmailAddress is required"}{" "}
@@ -230,14 +228,14 @@ const EditMyProfile = () => {
                   // value={userDetails.contact}
                   // defaultValue={userDetails.contact}
                   disabled
-                  {...register("contact", { 
-                    required: true ,
-                    pattern: {
-                      value: /^(0|91)?[6-9][0-9]{9}$/,
-                      message: 'Invalid email address',
-                    }
-                  }
-                  )}
+                  // {...register("contact", { 
+                    // required: false ,
+                    // pattern: {
+                    //   value: /^(0|91)?[6-9][0-9]{9}$/,
+                    //   message: 'Invalid email address',
+                    // }
+                  // }
+                  // )}
                 />
                 <span style={{ color: "red" }}>
                   {errors.contact && "contact is required"}{" "}
@@ -253,17 +251,10 @@ const EditMyProfile = () => {
                   type="url"
                   placeholder="Website"
                   // defaultValue={userDetails.websiteLink}
-                  {...register("websiteLink", { 
-                    required: true ,
-                    pattern: {
-                      value: /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/g,
-                      message: 'Invalid email address',
-                    }
-                  })}
                   disabled 
                 />
                 <span style={{ color: "red" }}>
-                  {errors.websiteLink && "WebsiteLink is required"}{" "}
+                  {errors.websiteLink && "Domain is required"}{" "}
                 </span>
               </FormGroup>
             </Col>
@@ -273,21 +264,20 @@ const EditMyProfile = () => {
               <Col md="12">
                 <FormGroup>
                   <Label className="form-label">Plan</Label>
-                  <Input
+                  <select
                     id="exampleSelect"
                     name="planId"
-                    type="select"
-                    onChange={handlePlanChange}
-                    defaultValue={userDetails.planId}
-                    // {...register("planId", { required: true })}
+                    className="form-control"
+                    defaultValue={plans.find((plan) => (plan?._id === userDetails['planId']))?.name}
+                    {...register("planId", { required: true })}
                   >
                     {plans &&
                       plans.map((plan) => {
-                        return <option value={plan._id}>{plan.name}</option>;
+                        return <option key={plan._id} value={plan._id}>{plan.name}</option>;
                       })}
-                  </Input>
+                  </select>
                   <span style={{ color: "red" }}>
-                    {errors.websiteLink && "WebsiteLink is required"}{" "}
+                    {errors.planId && "Plan is required"}{" "}
                   </span>
                 </FormGroup>
               </Col>
@@ -297,11 +287,13 @@ const EditMyProfile = () => {
           
         </CardBody>
         </div>
+        {!loading && (
         <CardFooter className="text-end">
-          <Btn attrBtn={{ color: "primary", type: "submit" }}>
-            {UpdateProfile}
-          </Btn>
-        </CardFooter>
+        <Btn attrBtn={{ color: "primary", type: "submit" }}>
+          {UpdateProfile}
+        </Btn>
+      </CardFooter>
+        )}
       </Form>
     </Fragment>
   );
