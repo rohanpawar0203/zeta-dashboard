@@ -41,6 +41,7 @@ const SignupTab = ({ selected }) => {
   const [otpTokenId, setOtpTokenId] = useState("");
   const [showOtp, setShowOtp] = useState(false);
   const [otpError, setOtpError] = useState("");
+
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -94,7 +95,7 @@ const SignupTab = ({ selected }) => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: otpTokenId, otpTokenId, ...userData }),
+      body: JSON.stringify({ id: otpTokenId, otp, ...userData }),
     };
     try {
       const res = await fetch(
@@ -103,8 +104,8 @@ const SignupTab = ({ selected }) => {
         requestOptions
       );
       const resBody = await res.json();
-      const { token, user } = resBody;
-      if (`${res.status}` === "200") {
+      if (res.status === 200 || res.status === 201) {
+        const { token, user } = resBody;
         setLoading(false);
         setUserData((pre) => {
           for (let key in pre) {
