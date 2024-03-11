@@ -93,3 +93,44 @@
 @import "layout/sidebar";
 @import "layout/rtl";
 @import "layout/box-layout";
+
+.otp-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  .otp-input-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+
+    .otp-input {
+      width: 5% !important;
+      height: 100%;
+      font-size: 24px;
+      font-weight: 700;
+      color: #000;
+
+      @media screen and (max-width: 700px) {
+        width: 15% !important;
+      }
+
+      @media screen and (min-width: 701px) and (max-width: 1000px) {
+        width: 20% !important;
+      }
+    }
+  }
+}
+
+section.popup-background {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
