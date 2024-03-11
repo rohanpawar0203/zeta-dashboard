@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { PlanDetails } from "../../../api";
 const appStore = create((set, get) => ({
   isConnected: false,
+  socket: null,
   userData: JSON.parse(sessionStorage.getItem("currentUser")) || {},
   token: sessionStorage.getItem("token") || "",
   conversation: [],
@@ -13,7 +14,8 @@ const appStore = create((set, get) => ({
   currentLocationPathname: "",
   plans: [],
   whatsAppAnalytics: {},
-  chatPanelMsgs: [],
+  chatPanelMsgs: {},
+  setSocket: (data) => set(data),
   setChatPanelMsgs: (data) => set({ chatPanelMsgs: data }),
   setwhatsAppAnalytics: (data) => set({ whatsAppAnalytics: data }),
   setUserData: (data) => set({ userData: data }),
@@ -28,10 +30,11 @@ const appStore = create((set, get) => ({
   setNewProductModalId: (status) => set({ newProductModalId: status }),
   liveConversation: [],
   isFetchLiveConversation: false,
-  setisFetchLiveConversation: (value) => set({isFetchLiveConversation: value}),
+  setisFetchLiveConversation: (value) =>
+    set({ isFetchLiveConversation: value }),
   setLiveConversation: (data) => set({ liveConversation: data }),
   setLiveConversationNewEntry: (data) =>
-  set({ liveConversationNewEntry: data }),
+    set({ liveConversationNewEntry: data }),
   setIsConnected: (status) => set({ isConnected: status }),
   setAllAgents: (data) => set({ allAgents: data }),
   setCurrentLocationPathName: (data) => set({ currentLocationPathname: data }),

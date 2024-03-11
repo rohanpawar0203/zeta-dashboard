@@ -13,7 +13,7 @@ const TodoProvider = (props) => {
         setAllTodo(resp.data);
       });
     } catch (error) {
-      console.log('error', error);
+      console.log('fetchTodo error : ', error);
     }
   };
 

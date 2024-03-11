@@ -1,1 +1,29 @@
 @import "./assets/scss/app.scss";
+
+.rs-status {
+  height: 63vh !important;
+  @media screen and (max-width: 700px) {
+    height: auto !important;
+  }
+}
+
+.com {
+  margin-bottom: 10%;
+}
+
+.chat-rows {
+  display: flex;
+  flex-direction: row;
+
+  .body {
+    width: 60%;
+
+    @media screen and (max-width: 700px) {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    flex-direction: column;
+  }
+}

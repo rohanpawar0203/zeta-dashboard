@@ -67,12 +67,9 @@ const UpdateBotFormModal = ({
       });
       const responseData = await response.json();
       if (response.ok) {
-        getAllBot && getAllBot();
         toast.success(responseData?.message);
+        await getAllBot();
         toggle();
-        setTimeout(() => {
-          history(`${process.env.PUBLIC_URL}/bots`);
-        }, 2000);
       } else {
         toast.error(responseData.message);
       }

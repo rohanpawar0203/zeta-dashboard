@@ -9,10 +9,14 @@ import "@fortawesome/react-fontawesome";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./i18n";
+import SocketContextProvider from "./Component/Live Chats/Context/socketContext";
 // import dotenv from 'dotenv';
 
 // dotenv.config();
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+<SocketContextProvider>
+<App />
+</SocketContextProvider>, document.getElementById("root"));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

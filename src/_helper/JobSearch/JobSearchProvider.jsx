@@ -13,7 +13,7 @@ const JobSearchProvider = (props) => {
                     setJobData(resp.data);
                 });
             } catch (error) {
-                console.log('cancelled', error);
+                console.log('getJobData cancelled : ', error);
             }
         };
         getJobData();

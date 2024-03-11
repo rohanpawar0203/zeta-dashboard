@@ -13,7 +13,7 @@ const GoogleChartProvider = (props) => {
           setGoogleChart(resp.data);
         });
       } catch (error) {
-        console.log('cancelled', error);
+        console.log('getChartData error : ', error);
       }
     };
     getChartData();

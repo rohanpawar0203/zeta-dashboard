@@ -42,9 +42,10 @@ const ChatMessage = ({ viewConversation, showKeyboard }) => {
   useEffect(() => {
     // console.log("showKeyboard", showKeyboard);
     if (showKeyboard === true) {
-      toast.success("Live chat connected!");
-      // console.log("Live chat connected!")
-      joinSession(viewConversation.roomId);
+      console.log('viewConversation ===>', viewConversation.roomId)
+      if(viewConversation.roomId){
+        joinSession(viewConversation.roomId);
+      }
     }
   }, [showKeyboard]);
 
@@ -66,9 +67,8 @@ const ChatMessage = ({ viewConversation, showKeyboard }) => {
   }, [viewConversation, liveConversation]);
   return (
     <Fragment>
-      <div
+      <div style={{height: '55vh'}}
         ref={chatContainerRef}
-        style={{ overflowY: "auto" }}
         className="chat-history chat-msg-box custom-scrollbar"
       >
         {viewConversation?.chat &&

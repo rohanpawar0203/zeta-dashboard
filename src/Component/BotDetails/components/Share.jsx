@@ -29,7 +29,7 @@ const Share = ({ myBot }) => {
   const [selectedTab, setselectedTab] = useState("Embed the bot");
 
   return (
-    <Fragment className="h-100">
+    <Fragment>
       <Container className="h-100" fluid={true}>
         <Row>
           <Col sm="12 h-100">
@@ -39,7 +39,7 @@ const Share = ({ myBot }) => {
               </CardHeader> */}
               <CardBody className="p-0 m-0 pt-2 h-100">
                 <Col sm="10" className=" h-100">
-                  <Fragment className="h-100">
+                  <Fragment>
                     {/* <div
                       style={{
                         background: "whitesmoke",

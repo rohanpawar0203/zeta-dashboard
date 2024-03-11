@@ -3,7 +3,7 @@
 ==========================**/
 @media (max-width: 1800px) {
   .table-responsive {
-    overflow-x: scroll;
+    overflow-x: none;
   }
 }
 @media screen and (max-width: 1660px) {
@@ -67,14 +67,17 @@
     .chat-right-aside {
       .chat {
         .chat-msg-box {
-          height: 440px;
+          // height: 440px;
+          overflow: scroll;
         }
       }
     }
     .people-list {
       ul {
-        max-height: 450px;
-        overflow: auto;
+        height: 350px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        padding: 0;
       }
     }
   }
@@ -87,7 +90,7 @@
         }
       }
       overflow: hidden;
-      height: 625px;
+      max-height: 75vh;
     }
   }
   .caller-img {
@@ -621,6 +624,13 @@
   .chat-body {
     padding: 10px;
   }
+
+  .call-chat-sidebar .card .card-body,
+  .chat-body .card .card-body {
+    @media screen and (max-width: 700px) {
+      height: auto !important;
+    }
+  }
   .chat-box {
     .chat-history {
       .call-content {
@@ -688,8 +698,8 @@
     .people-list {
       height: 420px;
       ul {
-        max-height: 376px;
-        overflow-y: auto;
+        // max-height: 376px;
+        // overflow-y: auto;
       }
     }
     .status-circle {
@@ -797,8 +807,8 @@
     .people-list {
       height: 490px;
       ul {
-        max-height: 434px;
-        overflow-y: auto;
+        // max-height: 434px;
+        // overflow-y: auto;
       }
     }
   }
@@ -835,6 +845,7 @@
       .chat {
         .chat-msg-box {
           height: 410px;
+          overflow: scroll;
           .chat-user-img {
             margin-top: -30px;
           }
@@ -1089,8 +1100,8 @@
     .people-list {
       height: 490px;
       ul {
-        max-height: 434px;
-        overflow-y: auto;
+        // max-height: 434px;
+        // overflow-y: auto;
       }
     }
   }
@@ -1771,8 +1782,7 @@
   }
   .call-chat-body {
     .chat-box {
-      overflow: auto;
-      height: auto;
+      // overflow: scroll;
     }
   }
   // icons
@@ -2904,6 +2914,7 @@
       .chat {
         .chat-msg-box {
           margin-bottom: 50px;
+          overflow: scroll;
         }
       }
     }
@@ -3481,7 +3492,8 @@
     .chat-right-aside {
       .chat {
         .chat-msg-box {
-          height: auto;
+          // height: auto;
+          overflow: scroll;
         }
       }
     }
@@ -5008,7 +5020,7 @@
         }
       }
       .page-body {
-        padding: 0 !important;
+        // padding: 0 !important;
       }
       .page-title {
         padding-top: 15px;

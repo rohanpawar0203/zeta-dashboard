@@ -142,7 +142,7 @@ const SignupTab = ({ selected }) => {
         headers: { "Content-Type": "application/json" },
         data: payload,
       }).then((resp) => {
-        console.log("resendOTP", resp);
+        // console.log("resendOTP", resp);
       });
     } catch (error) {
       console.log("resendOTP", error);

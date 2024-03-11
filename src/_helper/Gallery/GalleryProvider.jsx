@@ -22,7 +22,7 @@ const GalleryProvider = (props) => {
                 });
 
             } catch (error) {
-                console.log('cancelled', error);
+                console.log('getChartData error : ', error);
             }
         };
         getChartData();

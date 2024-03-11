@@ -11,7 +11,7 @@ import {v4 as uuid4} from 'uuid';
 import CustomSpinner from '../../CommonElements/CustomSpinner/CustomSpinner';
 import { toast } from 'react-toastify';
 
-const styles = {
+export const styles = {
   colorPicker: {
     width: "75px",
     height: "35px",
@@ -114,7 +114,7 @@ const Customization = () => {
   };
 
   const handleChanges = (section, name, value) => {
-    console.log("formdata -->", formData);
+    // console.log("formdata -->", formData);
     setformData((pre) => ({
       ...pre,
       [section]: { ...pre[section], [name]: value },
@@ -135,11 +135,11 @@ const Customization = () => {
       <Container className="h-100" fluid={true}>
         {/* <Row> */}
         <Col sm="12 h-100">
-          <Card className="shadow-none h-100">
+          {/* <Card className="shadow-none h-100"> */}
             {/* <CardHeader className="p-0 m-0 mt-2">
             <H5 attrH5={{ className: "my-0 mt-2" }}>{"Customize Bot"}</H5>
           </CardHeader> */}
-          <CardBody>
+          {/* <CardBody> */}
             {
               isLoading ? 
               <div className="loader-box">
@@ -351,8 +351,8 @@ const Customization = () => {
               </Form>
             </Fragment>
             }
-            </CardBody>
-          </Card>
+            {/* </CardBody> */}
+          {/* </Card> */}
         </Col>
         {/* </Row> */}
       </Container>

@@ -107,10 +107,9 @@ const WebSdkInfoContent = () => {
             <Card>
               <div
                 style={{
-                  height: "70vh",
+                  // height: "65vh",
                   marginBottom: "5vh",
-                  overflow: "hidden",
-                  paddingBottom: "10vh",
+                  // overflowY: "scroll",
                 }}
               >
                 <CardBody className="h-100">
@@ -147,7 +146,7 @@ const WebSdkInfoContent = () => {
                       </div>
                     </div>
                   </Nav>
-                  <div style={{ height: "95%" }}>
+                  <div style={{ height: "100%" }}>
                     {loading ? (
                       <div className="vh-75 loader-box">
                         <Spinner attrSpinner={{ className: "loader-3" }} />

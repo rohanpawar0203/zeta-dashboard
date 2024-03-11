@@ -21,40 +21,24 @@ const ChatAppContain = () => {
 
   const checkValid = async (el) => {
     try {
-      console.log("checkValid", el);
       if (el) {
+        console.log("checkValid  item ", el);
         const resp = await getRoomExists(el.chatSessionId);
-        console.log("roomExists");
-        if (resp.roomExists) {
-          setViewConversation(el);
-        } else {
-          setError(true);
-        }
+        setViewConversation(el);
       }
     } catch (error) {
       // toast.error("Please try in a while !");
       console.log(error);
     }
   };
-
   useEffect(() => {
     // console.log("First useEffect triggered");
     setCurrentLocationPathName(window.location.pathname);
-    if (liveConversation?.length) {
-    }
-    (async () => {
-      try {
-        if (liveConversation.length === 0) {
-          getLiveRooms();
-        }
-      } catch (error) {
-        console.log("Error", error);
-      }
-    })();
-  }, [liveConversation]);
+  }, []);
 
   useEffect(() => {
-    // console.log("Second useEffect triggered");
+    getLiveRooms();
+    console.log("Second useEffect triggered", liveConversation);
 
     setViewConversation({});
     // console.log("notified");

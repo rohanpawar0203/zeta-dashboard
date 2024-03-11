@@ -24,7 +24,7 @@
     }
     ul {
       height: 80vh;
-      overflow: scroll;
+      overflow-y: scroll;
       padding: 0;
       li {
         padding-bottom: 20px;
@@ -96,8 +96,8 @@
         // height: 95%;
         // margin-bottom: 90px;
         padding: 20px;
-        overflow-x: scroll;
-        height: 50vh !important;
+        // overflow-y: scroll;
+        // max-height: 50vh !important;
 
         @media screen and (max-height: 700px) {
           height: 50vh !important;
@@ -448,18 +448,18 @@
 }
 .call-chat-sidebar {
   max-width: 320px;
-  height: 77vh;
+  // height: 77vh;
 
-  // @media screen and (max-height: 700px) {
-  //   height: 65vh;
-  // }
+  @media screen and (max-height: 700px) {
+    height: 65vh;
+  }
 }
 .call-chat-sidebar,
 .chat-body {
   .card {
     .card-body {
       padding: 15px;
-      margin-bottom: 15px;
+      // margin-bottom: 15px;
     }
   }
 }
