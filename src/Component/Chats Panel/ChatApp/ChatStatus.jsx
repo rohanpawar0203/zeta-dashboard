@@ -5,26 +5,37 @@ import errorImg from "../../../assets/images/search-not-found.png";
 import SearchChatList from "./SearchChatList";
 import CurrentUser from "./CurrentUser";
 import { Media } from "reactstrap";
-import { FaRegUser, FaWhatsapp  } from "react-icons/fa";
+import { FaRegUser, FaWhatsapp } from "react-icons/fa";
 import { HiMiniComputerDesktop } from "react-icons/hi2";
 import UserProfile from "../../../assets/images/user/userProfile.png";
 import appStore from "../../Live Chats/Client/AppStore";
 import axios from "axios";
 
-
-export const customStyles = { listItem: { cursor: "pointer", paddingBottom: '5px'},
-mediaContainer: {border: '1px solid lightgray', borderRadius: "4px",  paddingBottom: '5px'},
-selectedMsg: "bg-light border-lightgreen",
-iconStyles: {height: '12px', width: '12px'},
-chatInfoTxt: {fontSize: "12px", color: "gray",lineHeight: 1},
-msgLineTxt: { fontSize: "13px", color: "gray", marginTop: '2px'},
-aboutStyle: {width: '100%', paddingTop: '5px'}
-}
+export const customStyles = {
+  listItem: { cursor: "pointer", paddingBottom: "5px" },
+  mediaContainer: {
+    border: "1px solid lightgray",
+    borderRadius: "4px",
+    paddingBottom: "5px",
+  },
+  selectedMsg: "bg-light border-lightgreen",
+  iconStyles: { height: "12px", width: "12px" },
+  chatInfoTxt: { fontSize: "12px", color: "gray", lineHeight: 1 },
+  msgLineTxt: { fontSize: "13px", color: "gray", marginTop: "2px" },
+  aboutStyle: { width: "100%", paddingTop: "5px" },
+};
 
 export const getLocaleTimeFormat = (date) => {
-  const timeFormOption = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
-  return `${new Date(`${date}`).toLocaleString('en-IN', timeFormOption)}`
-} 
+  const timeFormOption = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  };
+  return `${new Date(`${date}`).toLocaleString("en-IN", timeFormOption)}`;
+};
 
 const ChatStatus = ({ isFetching }) => {
   const {
@@ -102,7 +113,11 @@ const ChatStatus = ({ isFetching }) => {
         <div className="chat-left-aside h-100">
           {/* <CurrentUser /> */}
           <h5>All Chats</h5>
-          <div className="people-list" id="people-list">
+          <div
+            className="people-list"
+            id="people-list"
+            style={{ height: "100%" }}
+          >
             {isFetching ? (
               <div className="loader-box">
                 <Spinner attrSpinner={{ className: "loader-3" }} />
@@ -112,7 +127,10 @@ const ChatStatus = ({ isFetching }) => {
                 <SearchChatList />
                 {chatPanelMsgs && chatPanelMsgs["data"]?.length > 0 ? (
                   <UL
-                    attrUL={{ className: "simple-list list custom-scrollbar" }}
+                    attrUL={{
+                      className:
+                        "simple-list list custom-scrollbar chat-panel-scroll-bar",
+                    }}
                   >
                     {chatPanelMsgs?.data
                       ?.filter((x) => x._id !== userData._id)
@@ -129,10 +147,13 @@ const ChatStatus = ({ isFetching }) => {
                             }}
                             key={i}
                           >
-                            <Media style={customStyles?.mediaContainer} className={`d-flex align-items-center ${
+                            <Media
+                              style={customStyles?.mediaContainer}
+                              className={`d-flex align-items-center ${
                                 activeChat === item?._id &&
                                 `${customStyles?.selectedMsg}`
-                              }`}>
+                              }`}
+                            >
                               {/* <Image
                                 attrImage={{
                                   src: `${UserProfile}`,
@@ -143,7 +164,10 @@ const ChatStatus = ({ isFetching }) => {
                               {/* <div className={`status-circle ${item.online === true ? 'online' : 'offline'}`}
                         ></div> */}
                               <Media body>
-                                <div style={customStyles?.aboutStyle} className="about">
+                                <div
+                                  style={customStyles?.aboutStyle}
+                                  className="about"
+                                >
                                   <div className="name">
                                     {item?.customer?.firstName &&
                                     item?.customer?.firstName !== ""
@@ -152,29 +176,42 @@ const ChatStatus = ({ isFetching }) => {
                                           " " +
                                           item?.customer?.lastName
                                         }`
-                                      : item?.chatSessionId ? `Web User-${item?.chatSessionId?.slice(-4)}` : item?.phoneNumber}
+                                      : item?.chatSessionId
+                                      ? `Web User-${item?.chatSessionId?.slice(
+                                          -4
+                                        )}`
+                                      : item?.phoneNumber}
                                     <br />
                                     <div className="w-100 d-flex justify-content-between align-items-center">
                                       <div>
-                                      {item?.chatSessionId ? <HiMiniComputerDesktop style={customStyles?.iconStyles}/> : <FaWhatsapp style={customStyles?.iconStyles}/>}
+                                        {item?.chatSessionId ? (
+                                          <HiMiniComputerDesktop
+                                            style={customStyles?.iconStyles}
+                                          />
+                                        ) : (
+                                          <FaWhatsapp
+                                            style={customStyles?.iconStyles}
+                                          />
+                                        )}
                                       </div>
                                       <div>
-                                      <p
-                                      style={customStyles?.chatInfoTxt}
-                                    >
-                                      {`#${item?.chat?.length}`}
-                                    </p>
+                                        <p style={customStyles?.chatInfoTxt}>
+                                          {`#${item?.chat?.length}`}
+                                        </p>
                                       </div>
                                       <div>
-                                      <p
-                                      style={customStyles?.chatInfoTxt}
-                                    >
-                                      {getLocaleTimeFormat(`${item?.updatedAt}`)}
-                                    </p>
+                                        <p style={customStyles?.chatInfoTxt}>
+                                          {getLocaleTimeFormat(
+                                            `${item?.updatedAt}`
+                                          )}
+                                        </p>
                                       </div>
                                     </div>
                                   </div>
-                                  <div style={customStyles?.msgLineTxt} className="status">
+                                  <div
+                                    style={customStyles?.msgLineTxt}
+                                    className="status"
+                                  >
                                     {checkMessageType(
                                       item?.chat[item?.chat.length - 1]?.message
                                     )}

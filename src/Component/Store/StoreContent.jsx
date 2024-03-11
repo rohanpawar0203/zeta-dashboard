@@ -76,7 +76,7 @@ const StoreContent = () => {
   const { setUserData, userData } = appStore();
 
   const handleRegisterTypeChange = (e) => {
-    let {name} = e.target;
+    let { name } = e.target;
     name && setregisterType(name);
   };
 
@@ -241,10 +241,12 @@ const StoreContent = () => {
                           <div className="radio radio-primary">
                             <Input
                               type="radio"
-                              id='radioinline1'
+                              id="radioinline1"
                               name="bigCommerce"
                               checked={registerType === "bigCommerce"}
-                              onChange={(e) => {handleRegisterTypeChange(e)}}
+                              onChange={(e) => {
+                                handleRegisterTypeChange(e);
+                              }}
                             />
                             <Label className="mb-0" for="radioinline1">
                               {Option}
@@ -254,10 +256,12 @@ const StoreContent = () => {
                           <div className="radio radio-primary">
                             <Input
                               type="radio"
-                              id='radioinline2'
+                              id="radioinline2"
                               name="shopify"
                               checked={registerType === "shopify"}
-                              onChange={(e) => {handleRegisterTypeChange(e)}}
+                              onChange={(e) => {
+                                handleRegisterTypeChange(e);
+                              }}
                             />
                             <Label className="mb-0" for="radioinline2">
                               {Option}
@@ -267,10 +271,12 @@ const StoreContent = () => {
                           <div className="radio radio-primary">
                             <Input
                               type="radio"
-                              id='radioinline3'
+                              id="radioinline3"
                               name="custom"
                               checked={registerType === "custom"}
-                              onChange={(e) => {handleRegisterTypeChange(e)}}
+                              onChange={(e) => {
+                                handleRegisterTypeChange(e);
+                              }}
                             />
                             <Label className="mb-0" for="radioinline3">
                               {Option}
@@ -280,10 +286,12 @@ const StoreContent = () => {
                           <div className="radio radio-primary">
                             <Input
                               type="radio"
-                              id='radioinline4'
+                              id="radioinline4"
                               name="crawler"
                               checked={registerType === "crawler"}
-                              onChange={(e) => {handleRegisterTypeChange(e)}}
+                              onChange={(e) => {
+                                handleRegisterTypeChange(e);
+                              }}
                             />
                             <Label className="mb-0" for="radioinline4">
                               {Option}
@@ -293,9 +301,9 @@ const StoreContent = () => {
                         </div>
                       </Col>
                     </Row>
-                    <Btn attrBtn={{ color: "primary" }}>{
-                      submitLoader ? <CustomSpinner/> : "Register"
-                    }</Btn>
+                    <Btn attrBtn={{ color: "primary" }}>
+                      {submitLoader ? <CustomSpinner /> : "Register"}
+                    </Btn>
                   </Form>
                 </Fragment>
               </CardBody>

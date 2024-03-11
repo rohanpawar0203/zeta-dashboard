@@ -7,11 +7,12 @@ import {
   InputGroup,
   InputGroupText,
   Label,
+  Modal,
   Row,
 } from "reactstrap";
 import { Btn, H5, P, UL } from "../../../AbstractElements";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -38,6 +39,7 @@ const pattern = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}([\/?].*)?$/;
 
 const SignupTab = ({ selected }) => {
   const [otp, setOtp] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const [otpTokenId, setOtpTokenId] = useState("");
   const [showOtp, setShowOtp] = useState(false);
   const [otpError, setOtpError] = useState("");
@@ -53,6 +55,7 @@ const SignupTab = ({ selected }) => {
     productList: "",
     ipAddress: "",
   });
+  const [termsChecked, setTermsChecked] = useState(true);
   const [planIds, setPlanIds] = useState([]);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -221,6 +224,438 @@ const SignupTab = ({ selected }) => {
           style={{ fontSize: "30px", cursor: "pointer" }}
           onClick={() => setShowOtp(false)}
         ></i>
+      )}
+      {showModal && (
+        <section className="popup-background">
+          <div
+            className="terms-block"
+            style={{
+              backgroundColor: "#ffffff",
+              maxWidth: "80%",
+              maxHeight: "60vh",
+              overflow: "scroll",
+              borderRadius: "20px",
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "end",
+                padding: "20px 50px 0 0",
+              }}
+            >
+              <i
+                className="fa fa-times"
+                style={{ fontSize: "25px", cursor: "pointer" }}
+                onClick={() => setShowModal(false)}
+              ></i>
+            </div>
+            <div className="card-body" style={{ padding: "2% 5%" }}>
+              <h2 className="medium-heading career-description-heading">
+                Terms of Service
+              </h2>
+              <div className="text-large">Updated 01 Feb, 2024</div>
+              <div className="article w-richtext">
+                <h3>
+                  <strong>Introduction</strong>
+                </h3>
+                <p style={{ textAlign: "justify" }}>
+                  These terms of service (Terms) govern your use of any
+                  Platform, Software and the Services (as defined below), owned
+                  and operated by Sashakti Ventures Private Limited, a private
+                  limited company incorporated under the provision of the
+                  Companies act 1956 having its register office at #309, Bharat
+                  Nilaya,Kundalahalli, Bangalore Karnataka 560037 India. This
+                  website, is one such example.
+                </p>
+
+                <p style={{ textAlign: "justify" }}>
+                  The terms "user", "you", "your" hereinafter refer to customers
+                  registering, accessing and using the Platform or the Software
+                  and the terms "we", "us", "our" refer to Sashakti Ventures
+                  Private Limited.
+                </p>
+
+                <p style={{ textAlign: "justify" }}>
+                  Before registering on the Platform, using the Software or any
+                  Services (as defined below), please read these Terms carefully
+                  and select the "I Agree To The Terms and Conditions" option
+                  provided in the login and/or sign up page. By selecting the "I
+                  Agree To The Terms and Conditions" option, you signify your
+                  acceptance of the Terms (as amended from time to time) and
+                  agree to be bound by them for as long as you are using or
+                  accessing the Platform or the Services (as defined below).
+                </p>
+
+                <p style={{ textAlign: "justify" }}>
+                  We reserve the right to unilaterally amend these terms from
+                  time to time. We will notify you of any changes that we make
+                  to the Terms.
+                </p>
+
+                <p style={{ textAlign: "justify" }}>
+                  <strong>
+                    IF YOU DO NOT AGREE TO THESE TERMS, YOU WILL NOT BE ABLE TO
+                    REGISTER ON, ACCESS OR USE THE PLATFORM OR THE SERVICES.
+                  </strong>
+                </p>
+
+                <h3 style={{ marginTop: "20px", marginBottom: "10px" }}>
+                  <strong>Services:</strong>
+                </h3>
+
+                <p style={{ textAlign: "justify" }}>
+                  The Services may be provided through the Platform or through
+                  the provision of the Software in the Customer's systems.
+                </p>
+
+                <p style={{ textAlign: "justify" }}>
+                  When provided through the Platform, the Services comprise the
+                  Platform and the APIs to integrate the Platform with your
+                  systems. When provided through a software, the Services
+                  comprise the Software and any Software Development Kit
+                  provided with that Software. You may integrate the Software
+                  with your business applications (Integrated Applications) only
+                  upon obtaining our consent and in accordance with these terms.
+                  The Services allow you to store, analyze and send automated
+                  messages between your business systems and your customers on
+                  third party messaging channels through a web-based
+                  interface(Services). Using the Services, you can send and
+                  receive messages between your business or a business client of
+                  yours (together referred to as Business) and any individual
+                  that communicates with the Business (Chat Participant) on a
+                  third-party messaging platform that may be used by the Chat
+                  Participant to transmit and receive messages with that
+                  Business (Third-Party Messengers).Thesecommunications may be
+                  manual or automated. The Services can integrate with your
+                  Client Records Management (CRM) systems. You may also use the
+                  Services to obtain analytics about the interaction of
+                  Businesses and Chat Participants using the Services. Where
+                  applicable, a "conversation" refers to one outgoing message
+                  sent using any of the tools and software on ourplatform,
+                  including custom built APKs and plugins. The fee applicable to
+                  the Services (Fees) shall be fixed and paid in the manner
+                  agreed between Sashakti Ventures Private Limited and the user.
+                </p>
+
+                <h3 style={{ marginTop: "20px", marginBottom: "10px" }}>
+                  <strong>Access And Use:</strong>
+                </h3>
+                <p style={{ textAlign: "justify" }}>
+                  Upon your request, we may create and provide multiple profiles
+                  (Administrator's Profile) that may be used to access the
+                  Services by individuals employed or contracted by you (each,
+                  an Administrative User). You must not share credentials of the
+                  Administrator's Profile with any person other than an
+                  Administrative User and prohibit an Administrative User to
+                  share the credentials for the Administrator's Profile with any
+                  other person.
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  Any Administrative User may use the Services only through the
+                  Account and shall have access to the Account only for the
+                  purposes provided under these Terms. You will be responsible
+                  for the activities and communications of all Customer's
+                  Clients, Administrative Users and Chat Participants (as
+                  defined below) and shall ensure that they comply with these
+                  Terms and any guidelines and policies that we publish from
+                  time to time.
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  Without limiting the generality of our right to regulate the
+                  use of our Services, you will not and will not permit any
+                  other person to:
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  a. Use the Services to send, upload, collect, transmit, store,
+                  use, disclose or process, any data or messages:
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  i. That contains any computer viruses, worms, malicious code,
+                  or any software intended to damage or alter a computer system
+                  or data;
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  ii. That is false, intentionally misleading, or impersonates
+                  any other person;
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  iii. That is bullying, harassing, abusive, threatening,
+                  vulgar, obscene, or offensive, or that contains pornography,
+                  nudity, or graphic or gratuitous violence, or that promotes
+                  violence, racism, discrimination, bigotry, hatred, or physical
+                  harm of any kind against any group or individual
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  iv. That is harmful to minors in any way or targeted at
+                  persons under the age of 18;
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  v. That violates the obligations of the Customer or any other
+                  person under any applicable laws, or infringes, violates or
+                  otherwise misappropriates the rights of any person or entity;
+                  or
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  vi. that encourages any conduct that may violate, any
+                  applicable laws or would give rise to civil or criminal
+                  liability;
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  b. disable, overly burden, impair, or otherwise interfere with
+                  servers or networks connected to the Platform or the Software
+                  (e.g., a denial of service attack);
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  c. Attempt to gain unauthorized access to the Platform;
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  d. use any data mining, robots, or similar data gathering or
+                  extraction methods, or copy, modify, reverse engineer, reverse
+                  assemble, disassemble, or decompile the Services or any part
+                  thereof or otherwise attempt to discover any source code,
+                  except as expressly provided for under these Terms;
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  e. use the Services in a manner that cause harm, disruption,
+                  interference to the Services or for the purpose of building a
+                  similar or competitive product or service; or
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  f. use the Services other than as permitted by these Terms.
+                  <br />
+                </p>
+                <h3 style={{ marginTop: "20px", marginBottom: "10px" }}>
+                  <strong>Unauthorized Use or Access</strong>
+                </h3>
+                <p style={{ textAlign: "justify" }}>
+                  You will promptly notify us of any actual or suspected
+                  unauthorized access or use of the Platform or Software. We
+                  reserve the right to suspend, deactivate or replace any
+                  Account or Administrator's Profiles that may have been used
+                  for an unauthorized purpose. Sashakti Ventures Private Limited
+                  reserves the right to investigate complaints or alleged
+                  violation of these Terms or any unauthorized use of the
+                  Services.
+                </p>
+                <h3 style={{ marginTop: "20px", marginBottom: "10px" }}>
+                  <strong>Your Obligations</strong>
+                </h3>
+                <p style={{ textAlign: "justify" }}>You must:</p>
+                <p style={{ textAlign: "justify" }}>
+                  a. comply with the terms and conditions applicable to the use
+                  of any Third-Party Messengers, Integrated Applications and any
+                  other applications used with the Platform or Software;
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  b. take all steps necessary to enable interoperability between
+                  the Platform or Software and any Third-Party Messengers or any
+                  Integrated Applications;
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  c. comply with all applicable privacy and data protection laws
+                  to ensure that AIYO can process personal data provided or
+                  generated in the course of the use of the Services in
+                  accordance with these Terms;
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  d. ensure that all users have the legal right to process any
+                  data processed using the Services;
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  e. ensure that you have the right to use and license any
+                  Intellectual Property that you use along with the Software or
+                  Platform and the Services;
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  f. obtain the necessary permits, registrations, licenses
+                  required under any applicable law for the use of the Services
+                  by any user;
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  g. provide us your trademarks and logos or the trademarks and
+                  logos of your business clients so that we can market our
+                  Services;
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  h. pay the Fees when it becomes payable in a timely manner;
+                  and.
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  i. preserve the confidentiality of any information provided by
+                  AIYO in the course of the Services with respect to which a
+                  reasonable expectation of confidentiality may arise
+                </p>
+
+                <h3 style={{ marginTop: "20px", marginBottom: "10px" }}>
+                  <strong>Modifications to the Service and Fees</strong>
+                </h3>
+                <p style={{ textAlign: "justify" }}>
+                  Sashakti Ventures Private Limited reserves the right to
+                  modify, suspend, or discontinue the Service at any time for
+                  any reason with or without notice.
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  Sashakti Ventures Private Limited reserves the right to change
+                  our monthly/annually fees upon 30 days notice. Fee change will
+                  be notified per email to all our subscribers and will be
+                  reflected on the pricing page at automaite.in /pricing.
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  Sashakti Ventures Private Limited reserves the right to update
+                  and change the Terms of Service from time to time without
+                  notice. Any new features that augment or enhance the current
+                  Service, including the release of new tools and resources,
+                  shall be subject to the Terms of Service. Should you continue
+                  to use the Service after any such modifications have been
+                  made, this shall constitute your agreement to such
+                  modifications.
+                  <br />
+                </p>
+
+                <h3 style={{ marginTop: "20px", marginBottom: "10px" }}>
+                  <strong>Subscription &amp; Conversation Fees</strong>
+                </h3>
+                <p style={{ textAlign: "justify" }}>
+                  You shall pay Sashakti Ventures Private Limited a required
+                  subscription fee (the “Subscription Fee”) for the Service
+                  provided and a conversation fee (the “Conversation Fee”) for
+                  your usage. Any and all payments made by you to Sashakti
+                  Ventures Private Limited for the Services are final and
+                  non-refundable.
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  Subscription and Conversation Fee shall be paid within 10
+                  business days from the date of invoice. Sashakti Ventures
+                  Private Limited may terminate this agreement with immediate
+                  effect by delivering notice of termination to you if you fail
+                  to pay the fee within 7 business days after written notice.
+                </p>
+
+                <h3 style={{ marginTop: "20px", marginBottom: "10px" }}>
+                  <strong>Limited Liability</strong>
+                </h3>
+                <p style={{ textAlign: "justify" }}>
+                  TO THE MAXIMUM EXTENT PERMITTED UNDER APPLICABLE LAW, IN NO
+                  EVENT WILL AIYO BE LIABLE TO CUSTOMER OR ANY USER FOR ANY: (I)
+                  SPECIAL, EXEMPLARY, PUNITIVE, INDIRECT, INCIDENTAL OR
+                  CONSEQUENTIAL DAMAGES, (II) LOST SAVINGS, PROFIT, DATA, USE,
+                  OR GOODWILL; (III) BUSINESS INTERRUPTION; (IV) ANY COSTS FOR
+                  THE PROCUREMENT OF SUBSTITUTE PRODUCTS OR SERVICES; (V)
+                  PERSONAL INJURY OR DEATH; OR (VI) PERSONAL OR PROPERTY DAMAGE
+                  ARISING OUT OF OR IN ANY WAY CONNECTED TO THESE TERMS,
+                  REGARDLESS OF CAUSE OF ACTION OR THE THEORY OF LIABILITY,
+                  WHETHER IN CONTRACT, TORT (INCLUDING NEGLIGENCE, GROSS
+                  NEGLIGENCE, FUNDAMENTAL BREACH, BREACH OF A FUNDAMENTAL TERM)
+                  OR OTHERWISE AND EVEN IF NOTIFIED IN ADVANCE OF THE
+                  POSSIBILITIES OF SUCH DAMAGES.
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  AIYO SHALL NOT BE LIABLE TO THE CUSTOMER FOR ANY CHANGES IN
+                  INTEGRATED APPLICATIONS THIRD-PARTY MESSENGERS OR ANY OTHER
+                  DOMAIN, SOFTWARE OR HARDWARE THAT IS USED FOR PROVIDING THE
+                  SERVICES BUT IS NOT A PART OF THE PLATFORM OR SOFTWARE THAT
+                  PREVENT THE SERVICES FROM WORKING WITH THOSE INTEGRATED
+                  APPLICATIONS, THIRD-PARTY MESSENGER OR THIRD-PARTY SERVICES
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  IN ANY CASE, WE WILL NEVER BECOME LIABLE TO PAY YOU ANY AMOUNT
+                  GREATER THAN THE FEE THAT YOU PAY FOR ONE MONTH OF
+                  SUBSCRIPTION.
+                </p>
+
+                <h3 style={{ marginTop: "20px", marginBottom: "10px" }}>
+                  <strong>Disclaimer</strong>
+                </h3>
+                <p style={{ textAlign: "justify" }}>
+                  Sashakti Ventures Private Limited PROVIDES THE SERVICES ON AN
+                  "AS IS" BASIS AND GRANTS NO WARRANTIES OF ANY KIND WITH
+                  RESPECT TO THEM. AIYO SPECIFICALLY DISCLAIMS ANY IMPLIED
+                  WARRANTIES OF MERCANTIBILITY, FITNESS FOR A PARTICULAR
+                  PURPOSE, FREEDOM FROM COMPUTER VIRUS OR HARMFUL CODE, TITLE OR
+                  NON-INFRINGEMENT. ACCESS AND USE OF THE SERVICES IS ENTIRELY
+                  AT YOUR OWN RISK AND AIYO DOES NOT ACCEPT ANY LEGAL LIABILITY
+                  FOR THE USE OF THE SERVICES BY THEMSELVES OR IN CONJUNCTION
+                  WITH ANY OTHER SERVICES OR THE DEVELOPMENT AND USE OF ANY
+                  INTEGRATED APPLICATIONS OR ANY OTHER INTELLECTUAL PROPERTY IN
+                  COURSE OF THE USE OF SERVICES. AIYO WILL NOT BE LEGALLY
+                  RESPONSIBLE FOR ANY VIOLATIONS OF THE OBLIGATIONS OF THE
+                  CUSTOMER UNDER THESE TERMS.
+                </p>
+                <p style={{ textAlign: "justify" }}>
+                  THE CUSTOMER UNDERSTANDS AND ACKNOWLEDGES THAT THE SERVICES
+                  ARE CONTINGENT ON THE FUNCTIONING OF THIRD PARTY MESSENGERS,
+                  INTEGRATED APPLICATIONS AND ANY OTHER DOMAIN, SOFTWARE OR
+                  HARDWARE THAT DOES NOT FORM A PART OF THE PLATFORM OR
+                  SOFTWARE. AIYO SHALL NOT BE LEGALLY RESPONSIBLE FOR ANY
+                  CHANGES TO THESE THIRD-PARTY MESSENGERS, INTEGRATED
+                  APPLICATIONAND OTHER SOFTWARE OR HARDWARE THAT DOES NOT FORM A
+                  PART OF THE PLATFORM OR SOFTWARE THAT LEAD TO A DISRUPTION,
+                  INTERFERENCE, SUSPENSION OR CANCELLATION OF THE SERVICES. YOUR
+                  ACCESS AND USE OF THE SERVICES MAY BE DISRUPTED DUE TO
+                  TECHNICAL OR OPERATIONAL DIFFICULTIES AND WITH NO PRIOR NOTICE
+                  OF DOWNTIME. WE MAKE NO GUARANTEE AS TO THE CONTINUOUS UPTIME
+                  AND AVAILABILITY OF THE SERVICES.
+                </p>
+
+                <h3 style={{ marginTop: "20px", marginBottom: "10px" }}>
+                  <strong>Indemnity</strong>
+                </h3>
+                <p style={{ textAlign: "justify" }}>
+                  You hereby agree to keep and hold Sashakti Ventures Private
+                  Limited fully indemnified and harmless from and against all
+                  claims, proceedings, penalties, damages, losses, actions,
+                  costs and expenses arising out of or in relation to your
+                  access and use of the Services, Integrated Applications and
+                  Third-Party Messengers, the breach of these Terms and
+                  violation of any applicable law, rules or regulations. You
+                  will keep us fully indemnified and harmless against any claim
+                  relating to the infringement of Intellectual Property with
+                  respect to any Intellectual Property that you have licensed to
+                  us or used with our Services under these Terms.
+                </p>
+
+                <h3 style={{ marginTop: "20px", marginBottom: "10px" }}>
+                  <strong>Term and Termination</strong>
+                </h3>
+                <p style={{ textAlign: "justify" }}>
+                  The Services will be offered on a subscription basis on such
+                  terms as may be agreed between you and Sashakti Ventures
+                  Private Limited. The Fees shall be charged on the subscription
+                  basis the rates prevalent at the time the subscription is
+                  obtained. No refund of Fees shall be granted in the case of
+                  cancellation of the subscription. We may cancel your
+                  subscription upon discovering any breach of these Terms.
+                </p>
+
+                <h3 style={{ marginTop: "20px", marginBottom: "10px" }}>
+                  <strong>Force Majeure</strong>
+                </h3>
+                <p style={{ textAlign: "justify" }}>
+                  Neither Party will be liable for delays caused by any event or
+                  circumstances beyond Sashakti Ventures Private Limited’s
+                  reasonable control, including acts of God, acts of government,
+                  flood, fire, earthquakes, civil unrest, acts of terror,
+                  strikes or other labor problems (other than those involving
+                  Sashakti Ventures Private Limited employees), Internet service
+                  provider failures or delays, or the unavailability or
+                  modification by third parties of third party services
+                  necessary for the provision of the Services
+                </p>
+
+                <h3 style={{ marginTop: "20px", marginBottom: "10px" }}>
+                  <strong>Jurisdiction</strong>
+                </h3>
+                <p style={{ textAlign: "justify" }}>
+                  These Terms shall be governed by the laws of India and any
+                  disputes or proceedings arising hereunder shall be subject to
+                  the jurisdiction of the courts in Bangalore.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       )}
 
       <Form className="theme-form login-form">
@@ -449,10 +884,47 @@ const SignupTab = ({ selected }) => {
                 )}
               </FormGroup>
             </Col>
+            <Col xl="12">
+              <FormGroup>
+                <label
+                  htmlFor="t&c"
+                  style={{
+                    marginTop: "20px",
+                    display: "flex",
+                    gap: "20px",
+                    alignItems: "center",
+                  }}
+                >
+                  <input
+                    style={{
+                      width: "15px",
+                      height: "15px",
+                      accentColor: "var(--theme-default)",
+                    }}
+                    type="checkbox"
+                    name=""
+                    id="t&c"
+                    checked={termsChecked}
+                    onChange={() => setTermsChecked(!termsChecked)}
+                  />
+                  <p>
+                    I have read the{" "}
+                    <Link
+                      onClick={() => {
+                        setShowModal(true);
+                      }}
+                    >
+                      Terms & Conditions
+                    </Link>{" "}
+                    and consent to process.
+                  </p>
+                </label>
+              </FormGroup>
+            </Col>
           </Row>
         )}
 
-        <div class="w-100 my-4 d-flex justify-content-center align-items-center">
+        <div className="w-100 my-4 d-flex justify-content-center align-items-center">
           <button
             onClick={(e) => {
               if (!showOtp) {
