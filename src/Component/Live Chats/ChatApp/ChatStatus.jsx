@@ -352,12 +352,12 @@ const ChatStatus = ({ checkValid, isFetchLiveConversation }) => {
                                   <br />
                                   <div className="w-100 d-flex justify-content-between align-items-center">
                                     <div>
-                                      {item?.chatSessionId ? (
-                                        <HiMiniComputerDesktop
+                                      {(item?.customer?.firstName && item?.customer?.firstName !== "" )? (
+                                        <FaWhatsapp
                                           style={customStyles?.iconStyles}
                                         />
                                       ) : (
-                                        <FaWhatsapp
+                                        <HiMiniComputerDesktop
                                           style={customStyles?.iconStyles}
                                         />
                                       )}
