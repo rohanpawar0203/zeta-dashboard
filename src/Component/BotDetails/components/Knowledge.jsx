@@ -394,7 +394,7 @@ const CSVFileInfoList = ({
         <Table style={{ maxWidth: "100%" }}>
           <thead>
             <tr className="table-primary">
-              <th scope="col" style={{ width: "80%" }}>
+              <th scope="col" style={{ width: "80%"}}>
                 {"File Name"}
               </th>
               <th scope="col" style={{ textAlign: "center" }}>
@@ -406,7 +406,7 @@ const CSVFileInfoList = ({
             {faqList?.length > 0 &&
               faqList?.map((ele, ind) => (
                 <tr key={ele?.id}>
-                  <td>{ele?.fileName ? ele?.fileName : "NA"}</td>
+                  <td style={{textAlign: 'left'}}>{ele?.fileName ? ele?.fileName : "NA"}</td>
                   <td style={{ textAlign: "center" }}>
                     <button
                       className="btn btn-danger"
