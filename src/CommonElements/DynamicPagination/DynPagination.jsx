@@ -20,13 +20,15 @@ const DynPagination = ({ totalCount, switchPage }) => {
   const [records, setRecords] = useState({ str: 1, las: 1 });
 
   const handlePageChange = (eventType) => {
+    let pageValue;
     if (eventType === "NEXT" && page < totalPages) {
-      setPage((pre) => pre + 1);
+      pageValue = page + 1;
     }
     if (eventType === "PREVIOUS" && page > 1) {
-      setPage((pre) => pre - 1);
+      pageValue = page - 1;
     }
-    executeSwitchChange({page , limit});
+    setPage(pageValue);
+    executeSwitchChange({page: pageValue , limit});
   };
 
   const executeSwitchChange = ({page, limit}) => {
@@ -82,7 +84,7 @@ const DynPagination = ({ totalCount, switchPage }) => {
               let val = +e?.target?.value;
               setlimit(pre => (val));
               setPage(1);
-              executeSwitchChange({page: page, limit: val});
+              executeSwitchChange({page: 1, limit: val});
             }}
             className="form-control form-control-primary-fill btn-square"
             name="select"
