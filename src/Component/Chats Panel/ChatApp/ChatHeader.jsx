@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from "react";
 import { Button, Media } from "reactstrap";
 import ChatAppContext from "../../../_helper/chat-app/index";
-import { Image, LI, UL } from "../../../AbstractElements";
+import { Btn, Image, LI, UL } from "../../../AbstractElements";
 import UserProfile from "../../../assets/images/user/userProfile.png";
 import moment from "moment-timezone";
 
@@ -89,7 +89,7 @@ const ChatHeader = () => {
             </div> */}
             </div>
           </Media>
-          <Button onClick={() => export2Txt()}>Download</Button>
+          <button  className={"btn btn-primary"} onClick={() => {export2Txt()}}>Download</button>
         </Media>
       )}
     </Fragment>

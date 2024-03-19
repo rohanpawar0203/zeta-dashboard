@@ -138,7 +138,7 @@ const DynPagination = ({ totalCount, switchPage }) => {
           <p
             style={{
               fontSize: "14px",
-              fontWeight: "600",
+              fontWeight: "500",
               color: "teal",
               margin: "0",
             }}

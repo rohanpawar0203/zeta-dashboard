@@ -20,19 +20,19 @@ export const customStyles = {
   },
   selectedMsg: "bg-light border-lightgreen",
   iconStyles: { height: "12px", width: "12px" },
-  chatInfoTxt: { fontSize: "12px", color: "gray", lineHeight: 1 },
-  msgLineTxt: { fontSize: "13px", color: "gray", marginTop: "2px" },
+  chatInfoTxt: { fontSize: "12px", color: "gray", lineHeight: 1, fontWeight:'normal'},
+  msgLineTxt: { fontSize: "13px", color: "gray", marginTop: "0px" },
   aboutStyle: { width: "100%", paddingTop: "5px" },
 };
 
 export const getLocaleTimeFormat = (date) => {
   const timeFormOption = {
-    year: "numeric",
+    year: "2-digit",
     month: "numeric",
     day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
+    // hour: "numeric",
+    // minute: "numeric",
+    // hour12: true,
   };
   return `${new Date(`${date}`).toLocaleString("en-IN", timeFormOption)}`;
 };
@@ -169,6 +169,8 @@ const ChatStatus = ({ isFetching }) => {
                                   className="about"
                                 >
                                   <div className="name">
+                                    <div className="w-100 d-flex justify-content-between align-items-center pe-2">
+                                    <span>
                                     {item?.customer?.firstName &&
                                     item?.customer?.firstName !== ""
                                       ? `${
@@ -181,8 +183,16 @@ const ChatStatus = ({ isFetching }) => {
                                           -4
                                         )}`
                                       : item?.phoneNumber}
-                                    <br />
-                                    <div className="w-100 d-flex justify-content-between align-items-center">
+                                    </span>
+                                    <div>
+                                        <p style={customStyles?.chatInfoTxt}>
+                                          {getLocaleTimeFormat(
+                                            `${item?.updatedAt}`
+                                          )}
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <div style={{width: '35%'}} className="d-flex justify-content-between align-items-center">
                                       <div>
                                         {(item?.customer?.firstName &&
                                         item?.customer?.firstName !== "") ? (
@@ -198,13 +208,6 @@ const ChatStatus = ({ isFetching }) => {
                                       <div>
                                         <p style={customStyles?.chatInfoTxt}>
                                           {`#${item?.chat?.length}`}
-                                        </p>
-                                      </div>
-                                      <div>
-                                        <p style={customStyles?.chatInfoTxt}>
-                                          {getLocaleTimeFormat(
-                                            `${item?.updatedAt}`
-                                          )}
                                         </p>
                                       </div>
                                     </div>
