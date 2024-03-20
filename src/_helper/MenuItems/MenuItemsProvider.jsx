@@ -54,6 +54,9 @@ export const MenuItemsContextProvider = ({ children }) => {
 
       let filteredRoutes = routeItemsRef.current.filter((ele) => (ele.path === `${process.env.PUBLIC_URL}/bots`));
       setRoutesData([...filteredRoutes]);
+
+      console.log("filteredRoutes ==>", filteredRoutes);
+      console.log("replacedItems ==>", replacedItems);
     }
 
     
@@ -65,7 +68,9 @@ export const MenuItemsContextProvider = ({ children }) => {
         handleFilterForStoreAbsence();
       }
       if(userData?.store && !userData.userId){
+        console.log('bots length ==>', userData['bots']?.length);
         if(!userData['bots']?.length){
+          console.log('bots length 2==>', userData['bots']?.length);
           handleFilterForNoBots();
         }else{
           handleFilterForFinalAccess();

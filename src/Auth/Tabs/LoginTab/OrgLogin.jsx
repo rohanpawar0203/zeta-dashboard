@@ -40,7 +40,7 @@ const OrgLogin = ({ selected, showToast }) => {
   const [togglePassword, setTogglePassword] = useState(false);
   const history = useNavigate();
   const inputRef = useRef();
-  const { setUserData, setToken, userData } = appStore();
+  const { setUserData, setToken, userData } = appStore.getState();
   const [apiError, setApiError] = useState("");
   const [ipAddress, setIpAddress] = useState("");
 
@@ -67,15 +67,20 @@ const OrgLogin = ({ selected, showToast }) => {
         setUserData(user);
         setToken(token);
         toast.success("User Logged In successfully");
-        if (user.userId) {
-          history(`${process.env.PUBLIC_URL}/live-chat`);
-        } else if (!user.store && !user.userId) {
-          history(`${process.env.PUBLIC_URL}/store`);
-        } else if (user.store && !user.userId) {
-          history(`${process.env.PUBLIC_URL}/dashboard`);
-        } else {
-          // console.log("adasd");
-        }
+        setTimeout(() => {
+          if (user.userId) {
+            history(`${process.env.PUBLIC_URL}/live-chat`);
+          } else if (!user.store && !user.userId) {
+            history(`${process.env.PUBLIC_URL}/store`);
+          } else if (user.store && !user.userId) {
+            if(!user['bots']?.length){
+              history(`${process.env.PUBLIC_URL}/bots`);
+            }
+            if(user['bots']?.length){
+              history(`${process.env.PUBLIC_URL}/dashboard`);
+            }
+          }
+        }, 1000); 
       } else {
         // console.log("ENERED IN ERROR", resBody.msg);
         setApiError(resBody.msg);

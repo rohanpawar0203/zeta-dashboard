@@ -17,7 +17,7 @@ const CommonModal = (props) => {
         {props.title}
       </ModalHeader>
       <ModalBody className={props.bodyClass}>{props.children}</ModalBody>
-      {/* <ModalFooter>
+      <ModalFooter>
         {props?.event && (
           <>
             <Btn attrBtn={{ color: "secondary", onClick: props.toggler }}>
@@ -41,7 +41,7 @@ const CommonModal = (props) => {
             </Btn>
           </>
         )}
-      </ModalFooter> */}
+      </ModalFooter>
     </Modal>
   );
 };
