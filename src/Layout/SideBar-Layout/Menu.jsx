@@ -36,6 +36,7 @@ import {
   WidgetsSvg,
   WhatsappIcon,
   BotIcon,
+  AdminUsersSvg
 } from "../../Data/svgIcons";
 
 export const MENUITEMS = [
@@ -192,6 +193,18 @@ export const MENUITEMS = [
         bookmark: true,
         icon: FilemanagerSvg,
         title: "Request a feature",
+        type: "link",
+      },
+    ],
+  },
+  {
+    menutitle: "Account",
+    Items: [
+      {
+        path: `${process.env.PUBLIC_URL}/users/userprofile`,
+        bookmark: true,
+        icon: AdminUsersSvg,
+        title: "Account",
         type: "link",
       },
     ],

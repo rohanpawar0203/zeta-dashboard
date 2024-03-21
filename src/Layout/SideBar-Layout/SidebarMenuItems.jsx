@@ -1,17 +1,38 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LI, UL } from "../../AbstractElements";
 // import { MENUITEMS } from './Menu';
 import { Label } from "reactstrap";
 import { Back } from "../../Constant";
 import { GetMenuItemsProps } from "../../_helper/MenuItems/MenuItemsProvider";
+import { LogOutSvg } from "../../Data/svgIcons";
+import { MdOutlineLogout } from "react-icons/md";
+import UserLogoutHook from "../../Services/Custom_Hooks/user_log_out";
+import { RiLogoutCircleRLine } from "react-icons/ri";
+import { LogIn } from "react-feather";
+import appStore from "../../Component/Live Chats/Client/AppStore";
+import ChatAppContext from "../../_helper/chat-app";
 
 const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
   // eslint-disable-next-line
   const [active, setActive] = useState(false);
   const { data: MENUITEMS } = GetMenuItemsProps();
   const { t } = useTranslation();
+  const {
+    setUserData,
+    setToken,
+    userData,
+    setConversation,
+    messages,
+    setShowTyping,
+    clearMessages,
+    liveConversation,
+    setLiveConversation,
+  } = appStore();
+  const { setMembers, memberss } = useContext(ChatAppContext);
+  const history = useNavigate();
+
   const toggletNavActive = (item) => {
     if (window.innerWidth <= 991) {
       document.querySelector(".page-header").className =
@@ -50,7 +71,18 @@ const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
     }
     setMainMenu({ mainmenu: MENUITEMS });
   };
-
+  
+  const userLogout = () => {
+    setConversation([]);
+    setLiveConversation([]);
+    setMembers([]);
+    clearMessages();
+    setUserData({});
+    setShowTyping(false);
+    setToken("");
+    sessionStorage.clear();
+    window.location.reload();
+  }
   return (
     <Fragment>
       <UL
@@ -236,6 +268,17 @@ const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
                       ))}
                     </Fragment>
                   ))}
+                  
+                  <LI attrLI={{ className: "sidebar-list" }} key={'logout'}>
+                  <Link to={''} 
+                  className={`sidebar-link sidebar-title`}
+                  onClick={() => {
+                    userLogout();
+                  }}>
+                  <LogIn />
+                 <span>{t('Log Out')}</span>
+                  </Link>
+                  </LI>
                 </div>
               </div>
             </div>

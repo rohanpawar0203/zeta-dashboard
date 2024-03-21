@@ -43,7 +43,7 @@ const HeaderContain = () => {
   const auth0_profile = JSON.parse(localStorage.getItem("auth0_profile"));
   const history = useNavigate();
   const { handleForLogout } = GetMenuItemsProps();
-  const Logout = () => {
+   const Logout = () => {
     setConversation([]);
     setLiveConversation([]);
     setMembers([]);

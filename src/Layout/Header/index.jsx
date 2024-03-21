@@ -6,10 +6,11 @@ import SearchBar from "./SearchBar";
 import ulaiLogo from "../../assets/images/dashboard/ulai-logo-01-dark-small.png";
 import CheckContext from "../../_helper/customizer/index";
 import { ToggleIconss } from "../../Data/svgIcons";
+import { GetMenuItemsProps } from "../../_helper/MenuItems/MenuItemsProvider";
 
 const Header = () => {
   const { toggleSidebar } = useContext(CheckContext);
-  const [toggle, setToggle] = useState(false);
+  const { sideBartoggle: toggle, setSideBarToggle: setToggle } = GetMenuItemsProps();
   function useWindowSize() {
     const [size, setSize] = useState([0, 0]);
     useLayoutEffect(() => {

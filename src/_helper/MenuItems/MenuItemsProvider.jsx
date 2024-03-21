@@ -8,6 +8,7 @@ const MenuItemsContext = createContext();
 export const MenuItemsContextProvider = ({ children }) => {
     const [data, setData] = useState([...MENUITEMS]);
     const [routesData, setRoutesData] = useState([...routes])
+    const [sideBartoggle, setSideBarToggle] = useState(false);
     const menuItemsRef = useRef([...MENUITEMS]);
     const routeItemsRef = useRef([...routes]);
 
@@ -81,14 +82,14 @@ export const MenuItemsContextProvider = ({ children }) => {
     
 
     return (
-      <MenuItemsContext.Provider value={{ data, setData, handleFilterForFinalAccess, routesData}}>
+      <MenuItemsContext.Provider value={{ data, setData, handleFilterForFinalAccess, routesData, sideBartoggle, setSideBarToggle}}>
         {children}
       </MenuItemsContext.Provider>
     );
   };
 
 export const GetMenuItemsProps = () => {
-    const {data, setData, handleFilterForStorePresent, routesData} = useContext(MenuItemsContext);
+    const {data, setData, handleFilterForStorePresent, routesData, sideBartoggle, setSideBarToggle} = useContext(MenuItemsContext);
 
-    return {data, setData, handleFilterForStorePresent, routesData};
+    return {data, setData, handleFilterForStorePresent, routesData, sideBartoggle, setSideBarToggle};
   }
