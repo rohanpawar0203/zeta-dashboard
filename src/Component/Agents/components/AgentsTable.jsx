@@ -21,6 +21,7 @@ import axios from "axios";
 import AgentDeleteModal from "./AgentDeleteModal";
 import AddAgentModal from "./AddAgentModal";
 import ScrollBar from "react-perfect-scrollbar";
+import { txtAlignCenter } from "../../Products/components/ProductsTable";
 
 const AgentsTable = () => {
   const [agents, setAgents] = useState([]);
@@ -166,7 +167,7 @@ const AgentsTable = () => {
                         }}
                       >
                         <thead>
-                          <tr className="table-primary">
+                          <tr className="table-primary" style={txtAlignCenter}>
                             <th scope="col">{"Name"}</th>
                             <th scope="col">{"Email"}</th>
                             <th scope="col">{"Mobile"}</th>
@@ -186,11 +187,11 @@ const AgentsTable = () => {
                           {agents?.map((item, ind) => {
                             return (
                               <tr>
-                                <td>{item.name}</td>
+                                <td style={txtAlignCenter}>{item.name}</td>
                                 {/* <tr key={ind}> */}
-                                <td>{item.email}</td>
-                                <td>{item.mobile}</td>
-                                <td>
+                                <td style={txtAlignCenter}>{item.email}</td>
+                                <td style={txtAlignCenter}>{item.mobile}</td>
+                                <td style={txtAlignCenter}>
                                   <Input
                                     type="checkbox"
                                     checked={item?.notification_enabled}
@@ -205,7 +206,7 @@ const AgentsTable = () => {
                                   />
                                 </td>
                                 <td></td>
-                                <td>
+                                <td style={txtAlignCenter}>
                                   <Dropdown
                                     isOpen={dropdownOpenId === item?._id}
                                     toggle={() => {

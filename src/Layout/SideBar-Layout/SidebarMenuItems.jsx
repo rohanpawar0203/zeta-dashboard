@@ -29,7 +29,7 @@ const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
     clearMessages,
     liveConversation,
     setLiveConversation,
-  } = appStore();
+  } = appStore?.getState();
   const { setMembers, memberss } = useContext(ChatAppContext);
   const history = useNavigate();
 
@@ -81,7 +81,8 @@ const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
     setShowTyping(false);
     setToken("");
     sessionStorage.clear();
-    window.location.reload();
+    console.log('123456 done==>' );
+    // window.location.reload();
   }
   return (
     <Fragment>
@@ -270,7 +271,7 @@ const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
                   ))}
                   
                   <LI attrLI={{ className: "sidebar-list" }} key={'logout'}>
-                  <Link to={''} 
+                  <Link to={`${process.env.PUBLIC_URL}/login`}
                   className={`sidebar-link sidebar-title`}
                   onClick={() => {
                     userLogout();

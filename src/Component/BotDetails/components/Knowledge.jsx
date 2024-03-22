@@ -42,7 +42,6 @@ import ScrollBar from "react-perfect-scrollbar";
 import { MdCancel } from "react-icons/md";
 import { UploadFiles } from "../../../Services/Custom_Hooks/fileUpload";
 
-const { token } = appStore.getState();
 
 const Knowledge = ({ myBot }) => {
   const [loading, setLoading] = useState(false);
@@ -51,7 +50,12 @@ const Knowledge = ({ myBot }) => {
   const { userData, setUserData, token } = appStore();
 
   useEffect(() => {
-    setFaqList([...userData?.faqListURL]);
+    if(userData?.faqListURL && userData?.faqListURL?.length){
+      setFaqList([...userData?.faqListURL]);
+    }
+    return () => {
+      setFaqList([...userData?.faqListURL]);
+    }
   }, [userData]);
 
   return (
@@ -172,6 +176,7 @@ const AddCSVForm = ({
     formState: { errors },
     getValues,
   } = useForm({});
+  const { token } = appStore?.getState();
   const [csvFile, setCsvFile] = useState("");
   const [csvValidation, setcsvValidation] = useState(false);
   const [csvError, setCsvError] = useState("");
@@ -228,6 +233,7 @@ const AddCSVForm = ({
 
   const updateUser = async (responseUrl, fileName) => {
     setLoading(true);
+    console.log('patch token ==>', token);
     try {
       const response = await fetch(`${User}/${userData._id}`, {
         method: "PATCH",
@@ -344,6 +350,7 @@ const CSVFileInfoList = ({
   loading,
 }) => {
   const [btnLoading, setbtnLoading] = useState({ status: false, itemId: "" });
+  const { token } = appStore?.getState();
 
   const handleCSVFileDelete = (id) => {
     setbtnLoading((pre) => ({ ...pre, status: true, itemId: id }));

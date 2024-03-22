@@ -18,6 +18,8 @@ import ProductFormModal from "./ProductFormModal";
 import ScrollBar from "react-perfect-scrollbar";
 import DynPagination from "../../../CommonElements/DynamicPagination/DynPagination";
 
+export const txtAlignCenter = {textAlign: 'left'}
+
 const ProductsTable = () => {
   const [products, setProducts] = useState([]);
   const user = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -129,8 +131,8 @@ const ProductsTable = () => {
                 <div style={{height:'45vh'}} className="table-responsive">
                 <ScrollBar>
                 <Table>
-                  <thead>
-                    <tr className="table-primary">
+                  <thead style={txtAlignCenter}>
+                     <tr className="table-primary">
                       <th scope="col">{"Product ID"}</th>
                       <th scope="col">{"Product Name"}</th>
                       <th scope="col">{"Product SKU"}</th>
@@ -141,12 +143,12 @@ const ProductsTable = () => {
                   </thead>
                   <tbody>
                     {products['data'].map((item, ind) => (
-                      <tr key={ind}>
-                        <th scope="row">{item.productId}</th>
-                        <td>{item.productName}</td>
-                        <td>{item.productSku}</td>
-                        <td>{item.productType}</td>
-                        <td>{item.price}</td>
+                      <tr key={ind} style={txtAlignCenter}>
+                        <th style={txtAlignCenter} scope="row">{item.productId}</th>
+                        <td style={txtAlignCenter}>{item.productName}</td>
+                        <td style={txtAlignCenter}>{item.productSku}</td>
+                        <td style={txtAlignCenter}>{item.productType}</td>
+                        <td style={txtAlignCenter}>{item.price}</td>
                         {/* <td>
                           <Dropdown
                             isOpen={dropdownOpenId === item?.productId}

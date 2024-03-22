@@ -95,6 +95,10 @@ const BotInfoContent = ({ boatId }) => {
 
   useEffect(() => {
     fetchBotData(boatId);
+
+    return () => {
+      fetchBotData();
+    }
   }, []);
 
   return (
