@@ -17,6 +17,7 @@ import { AgentAPI, TicketsAPI } from "../../api";
 import axios from "axios";
 import ScrollBar from "react-perfect-scrollbar";
 import DynPagination from "../../CommonElements/DynamicPagination/DynPagination";
+import { txtAlignCenter } from "../Products/components/ProductsTable";
 
 const TicketsList = ({ setMode }) => {
   const [products, setProducts] = useState([]);
@@ -135,7 +136,7 @@ const TicketsList = ({ setMode }) => {
                         width: "100%",
                       }}>
                   <thead>
-                    <tr className="table-primary">
+                    <tr style={txtAlignCenter} className="table-primary">
                       <th scope="col">{"Email ID"}</th>
                       <th scope="col">{"Query"}</th>
                       <th scope="col">{"Subject"}</th>
@@ -150,11 +151,11 @@ const TicketsList = ({ setMode }) => {
                     {products['data'].length > 0 &&
                       products['data'].map((ele, ind) => (
                         <tr>
-                          <td>{ele?.email}</td>
-                          <td>{ele?.query}</td>
-                          <td>{ele?.subject}</td>
-                          <td>{new Date(ele?.createdAt).toLocaleString()}</td>
-                          <td>{ele?.userId}</td>
+                          <td style={txtAlignCenter}>{ele?.email}</td>
+                          <td style={txtAlignCenter}>{ele?.query}</td>
+                          <td style={txtAlignCenter}>{ele?.subject}</td>
+                          <td style={txtAlignCenter}>{new Date(ele?.createdAt).toLocaleString()}</td>
+                          <td style={txtAlignCenter}>{ele?.userId}</td>
                         </tr>
                       ))}
                   </tbody>
