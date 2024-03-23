@@ -55,7 +55,7 @@ const ProductModal = (props) => {
               <Image attrImage={{ className: 'img-fluid', src: `${singleProduct.img && require('../../../assets/images/' + singleProduct.img)}`, alt: '' }} />
             </div>
             <Col lg="6" className="product-details text-start">
-              <a href='#javascript'><H4>{singleProduct.category}</H4></a>
+              <a href='#javascript'><H4>{'prem'}</H4></a>
               <div className="product-price">{symbol}{singleProduct.price}
                 <del>{symbol}{singleProduct.discountPrice}</del>
               </div>

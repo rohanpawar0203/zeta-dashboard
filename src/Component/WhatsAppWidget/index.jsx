@@ -126,7 +126,7 @@ const WebSdkInfoContent = () => {
                               {"Integration"}
                             </NavLink>
                           </NavItem>
-                          <NavItem style={{ cursor: "pointer" }}>
+                          {/* <NavItem style={{ cursor: "pointer" }}>
                             <NavLink
                               className={
                                 pillTab === "4"
@@ -137,7 +137,7 @@ const WebSdkInfoContent = () => {
                             >
                               {"Broadcasting"}
                             </NavLink>
-                          </NavItem>
+                          </NavItem> */}
                         </div>
                       </div>
                     </Nav>
@@ -161,9 +161,9 @@ const WebSdkInfoContent = () => {
                             <TabPane tabId="3" className="vh-75">
                               <Integrations />
                             </TabPane>
-                            <TabPane tabId="4" className="vh-75">
+                            {/* <TabPane tabId="4" className="vh-75">
                               <Broadcasting />
-                            </TabPane>
+                            </TabPane> */}
                           </TabContent>
                         </>
                       )}

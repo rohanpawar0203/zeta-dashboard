@@ -79,6 +79,7 @@ const ProductGrid = () => {
                   </div>
                 </Card>
               </div>
+              
             );
           })
             : <Image attrImage={{ className: 'img-fluid m-auto', src: errorImg, alt: '' }} />}

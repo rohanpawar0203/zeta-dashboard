@@ -5,7 +5,7 @@ import { ProductsApi } from '../../../api';
 
 const ProductProvider = (props) => {
   const [productItem, setProductItem] = useState([]);
-  const symbol = '$';
+  const symbol = '₹';
   // eslint-disable-next-line
   const [singleItem, setSingleItems] = useState([]);
   const [isVertical, setIsVertical] = useState(false);

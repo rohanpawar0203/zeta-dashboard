@@ -11,8 +11,8 @@ const EmbedWidget = () => {
   const scriptTagRef = useRef("");
   const { userData } = appStore();
   const $ = window.jQuery;
-
-  const copyContent = `<script src="https://www.ulai.in/file-server/uploads/Ulai/ulaiwidget.js?12345&${userData?._id}"></script>`;
+  const domain = process.env.REACT_APP_API_DOMAIN;
+  const copyContent = `<script src="${domain}/file-server/uploads/Ulai/ulaiwidget.js?12345&${userData?._id}"></script>`;
 
   const handleCopyScript = () => {
     const input = document.createElement("input");

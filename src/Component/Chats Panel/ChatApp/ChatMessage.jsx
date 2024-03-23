@@ -5,6 +5,7 @@ import start_conversion from "../../../assets/images/start-conversion.jpg";
 import UserProfile from "../../../assets/images/user/userProfile.png";
 import moment from "moment-timezone";
 import customerService from "../../../assets/images/dashboard/icons8-customer-support-100.png";
+import CustomProducts from "../../../CommonElements/CustomProduct/CustomProduct";
 
 const ChatMessage = () => {
   const chatContainerRef = useRef();
@@ -47,9 +48,21 @@ const ChatMessage = () => {
     }
   };
 
+  const isProductsExist = (chat) => {
+    try {
+      const itemParsed  = JSON.parse(chat);
+      const products = itemParsed?.productList;
+      return products?.length ? (CustomProducts(products)) : '';
+    } catch (error) {
+      console.log('chat msg parse error ==>', error);
+    }
+  }
+
   useEffect(() => {
     // Scroll to the bottom whenever messages change
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    isProductsExist()
+    console.log('selectedChat==>', selectedChat);
   }, [selectedChat, chatPanelMsgs]);
   return (
     <Fragment>
@@ -100,6 +113,7 @@ const ChatMessage = () => {
                           </span>
                         </div>
                         {`${checkMessageType(item?.message)}`}
+                        {isProductsExist(item?.message)}
                         {/* {console.log("message", item?.message)} */}
                       </div>
                     </LI>

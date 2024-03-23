@@ -3,8 +3,8 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { toast } from "react-toastify";
 const EmbedBot = ({ myBot }) => {
   const scriptRef = useRef(null);
-
-  const copyContent = `<script defer="defer" src="https://www.ulai.in/file-server/uploads/Ulai/web-sdk-init.js"></script> <div id="chatBot" data-value=${myBot?._id}></div>`;
+  const domain = process.env.REACT_APP_API_DOMAIN;
+  const copyContent = `<script defer="defer" src="${domain}/file-server/uploads/Ulai/web-sdk-init.js"></script> <div id="chatBot" data-value=${myBot?._id}></div>`;
 
   const handleCopyScript = () => {
     const input = document.createElement("input");
